@@ -28,7 +28,12 @@ public class TmSearchContent extends AbstractTableModel{
                     rs.getDouble("DiscountMax"),
                     rs.getDouble("BalanceStop"),
                 };
-                ResultSets.add(row);
+//				System.out.println("" 
+//						+ " " + rs.getString("GoodID").toString()
+//						+ " " + rs.getString("Name").toString()
+//						+ " " + rs.getString("BalanceStop")
+//				);
+				ResultSets.add(row);
             }
         } catch (Exception e) {
             //System.out.println("Exception in TableModel: "+this.getClass().getName());

@@ -72,6 +72,16 @@ public class FrmAdmin extends javax.swing.JDialog {
 		frmOrderList.setModal(true);
 		frmOrderList.setVisible(true);
     }
+	private void jButtonReceiptActionPerformed(){
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) {
+			return;
+		}
+		dispose();
+		FrmReceiptList frmReceiptList = new FrmReceiptList();
+		frmReceiptList.setModal(true);
+		frmReceiptList.setVisible(true);
+	}
 	private void jButtonBarcodeShortReportActionPerformed() {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
@@ -218,10 +228,12 @@ public class FrmAdmin extends javax.swing.JDialog {
         jButtonCheckList = new javax.swing.JButton();
         jButtonPriceOver = new javax.swing.JButton();
         jButtonOrder = new javax.swing.JButton();
+        jButtonReceipt = new javax.swing.JButton();
         jPanelReport = new javax.swing.JPanel();
         jButtonBarcodeShortReport = new javax.swing.JButton();
         jButtonReportCash = new javax.swing.JButton();
         jButtonReportSale = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanelButton = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -229,6 +241,7 @@ public class FrmAdmin extends javax.swing.JDialog {
         jButtonCashMove = new javax.swing.JButton();
         jButtonDiscountCard = new javax.swing.JButton();
         jButtonNewDiscountCard = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -280,6 +293,21 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
+        jButtonReceipt.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonReceipt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/check-32.png"))); // NOI18N
+        jButtonReceipt.setText("Приходы товаров");
+        jButtonReceipt.setToolTipText("Приходы товаров для магазина");
+        jButtonReceipt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonReceipt.setIconTextGap(10);
+        jButtonReceipt.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonReceipt.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonReceipt.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonReceipt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReceiptActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelForms1Layout = new javax.swing.GroupLayout(jPanelForms1);
         jPanelForms1.setLayout(jPanelForms1Layout);
         jPanelForms1Layout.setHorizontalGroup(
@@ -288,7 +316,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addGroup(jPanelForms1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonCheckList, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPriceOver, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonPriceOver, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelForms1Layout.setVerticalGroup(
@@ -299,6 +328,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addComponent(jButtonPriceOver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -350,6 +381,21 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButton2.setToolTipText("");
+        jButton2.setActionCommand("");
+        jButton2.setEnabled(false);
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton2.setIconTextGap(10);
+        jButton2.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButton2.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButton2.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelReportLayout = new javax.swing.GroupLayout(jPanelReport);
         jPanelReport.setLayout(jPanelReportLayout);
         jPanelReportLayout.setHorizontalGroup(
@@ -359,7 +405,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addGroup(jPanelReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonBarcodeShortReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonReportCash, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonReportSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonReportSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
         jPanelReportLayout.setVerticalGroup(
@@ -370,6 +417,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addComponent(jButtonReportCash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonReportSale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -462,6 +511,21 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButton1.setToolTipText("");
+        jButton1.setActionCommand("");
+        jButton1.setEnabled(false);
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton1.setIconTextGap(10);
+        jButton1.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButton1.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButton1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelForms2Layout = new javax.swing.GroupLayout(jPanelForms2);
         jPanelForms2.setLayout(jPanelForms2Layout);
         jPanelForms2Layout.setHorizontalGroup(
@@ -470,7 +534,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addGroup(jPanelForms2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonCashMove, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelForms2Layout.setVerticalGroup(
@@ -481,6 +546,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -504,16 +571,10 @@ public class FrmAdmin extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelForms1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelForms2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(jPanelReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, 0))))
+                    .addComponent(jPanelForms1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelForms2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -548,7 +609,17 @@ public class FrmAdmin extends javax.swing.JDialog {
     private void jButtonOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrderActionPerformed
         jButtonOrderActionPerformed();
     }//GEN-LAST:event_jButtonOrderActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReceiptActionPerformed
+        jButtonReceiptActionPerformed();
+    }//GEN-LAST:event_jButtonReceiptActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBarcodeShortReport;
     private javax.swing.JButton jButtonCashMove;
     private javax.swing.JButton jButtonCheckList;
@@ -557,6 +628,7 @@ public class FrmAdmin extends javax.swing.JDialog {
     private javax.swing.JButton jButtonNewDiscountCard;
     private javax.swing.JButton jButtonOrder;
     private javax.swing.JButton jButtonPriceOver;
+    private javax.swing.JButton jButtonReceipt;
     private javax.swing.JButton jButtonReportCash;
     private javax.swing.JButton jButtonReportSale;
     private javax.swing.JLabel jLabel1;

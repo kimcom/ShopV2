@@ -1215,6 +1215,92 @@ public final class ConnectionDb{
 			return false;
 		}
 	}
+//receipt
+	public ResultSet getReceiptList() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getReceiptList: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_receipt_stat(?,?,?,?,?)}");
+			cs.setString(1, "list");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setString(5, "");//DocID
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public ResultSet getReceiptContent(String docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getReceiptContent: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_receipt_stat(?,?,?,?,?)}");
+			cs.setString(1, "content");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setString(5, docID);//DocID
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public ResultSet getReceiptReport(String docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getReceiptReport: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_receipt_stat(?,?,?,?,?)}");
+			cs.setString(1, "report");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setString(5, docID);//DocID
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public boolean setReceiptStatus(String docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setReceiptStatus: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_receipt_stat(?,?,?,?,?)}");
+			cs.setString(1, "status1");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setString(5, docID);//DocID
+			cs.execute();
+			if (cs.getInt(2) > 0) {
+				return true;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при установке статуса для переоценки!");
+				return false;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
 
 //order - заказы магазинов
     public ResultSet getOrderList(Date dt1, Date dt2) {

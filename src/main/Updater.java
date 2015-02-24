@@ -47,7 +47,11 @@ public class Updater implements Runnable {
 		//качаем файл с инфой о программе
 		fileName = "ver.txt";
 		d = new Download(SITE_URL + fileName, UPDATE_PATH + fileName);
-		if (d.getStatus()!=2) statusUpdate = false;
+		if (d.getStatus()!=2) {
+			statusUpdate = false;
+			notifyTread();
+			return;
+		}
 //		System.out.println("load file: " + fileName + " status: " + Download.STATUSES[d.getStatus()]);
 		
 		//перебираем файл с 2-ой строки и качаем указанные там файлы
@@ -78,7 +82,10 @@ public class Updater implements Runnable {
 			//качаем указанный файл
 			fileName = strings.get(i);
 			d = new Download(SITE_URL + fileName, UPDATE_PATH + fileName);
-			if (d.getStatus() != 2)	statusUpdate = false;
+			if (d.getStatus() != 2)	{
+				statusUpdate = false;
+				continue;
+			}
 //			System.out.println("load file: " + fileName + " status: " + Download.STATUSES[d.getStatus()]);
 		}
 		//копируем директорию update
