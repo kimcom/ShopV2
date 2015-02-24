@@ -1933,4 +1933,5 @@ public final class ConnectionDb{
 	public void setFlagReturn(boolean newValue){
 		flagReturn = newValue;
 	}
+
 }
