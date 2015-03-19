@@ -8,6 +8,7 @@ if (isset($_REQUEST['cardid'])) {
 	return;
 }
 ?>
+<?php echo $row['DateOfIssue']; ?>
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#dialog").dialog({
@@ -23,7 +24,7 @@ $(document).ready(function () {
 			name: $("#name").val(),
 			dateOfIssue: $("#dateOfIssue").val(),
 			dateOfCancellation: $("#dateOfCancellation").val(),
-			clientID: $("#clientID").val(),
+			clientID: $("#select_point").val(),
 			address: $("#address").val(),
 			eMail: $("#eMail").val(),
 			phone: $("#phone").val(),
@@ -40,6 +41,16 @@ $(document).ready(function () {
 			$("#dialog").dialog("open");
 	    },"json");
 	});
+	
+	// выбор магазина 
+	$.post('../Engine/select2?action=point', function (json) {
+		$("#select_point").select2({multiple: false, placeholder: "Выберите магазин", data: {results: json, text: 'text'}});
+		$("#select_point").select2("val", "<?php echo $row['ClientID']; ?>");
+	});
+	
+	// выбор даты выдачи 
+	$("#DT_issue").datepicker({numberOfMonths: 1, dateFormat: 'dd/mm/yy', showButtonPanel: true, closeText: "Закрыть", showAnim: "fold"});
+
 });
 </script>
 <input id="cardid" name="cardid" type="hidden" value="<?php echo $row['CardID']; ?>">
@@ -72,7 +83,7 @@ $(document).ready(function () {
 				</div>               
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Дата выдачи:</span>
-					<input id="dateOfIssue" name="dateOfIssue" type="text" class="form-control TAL" value="<?php echo $row['DateOfIssue']; ?>">
+					<input id="DT_issue" name="DT_issue" type="text" class="form-control TAL" value="<?php echo $row['DateOfIssue']; ?>">
 					<span class="input-group-addon w32"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">
@@ -82,8 +93,7 @@ $(document).ready(function () {
 				</div>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Магазин:</span>
-					<input id="clientID" name="clientID" type="text" class="form-control TAL" value="<?php echo $row['ClientID']; ?>">
-					<span class="input-group-addon w45p TAL"><?php echo $row['NameShort']; ?></span>
+					<div class="w100p" id="select_point"></div>
 					<span class="input-group-addon w32"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">
