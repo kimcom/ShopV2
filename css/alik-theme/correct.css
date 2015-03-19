@@ -1,0 +1,25 @@
+.ui-jqgrid .ui-jqgrid-pager-empty { border-left: 0 none !important;border-right: 0 none !important; border-bottom: 0 none !important; margin: 0 !important; padding: 0 !important; position: relative; height: 8px;white-space: nowrap;overflow: hidden;font-size:8px;}
+.alik-tabs-width {width: 120px;}
+.alik-tabs-width2 {width: 120px;}
+.alik-tabs-width3 {width: 200px;}
+.alik-tabs-hide {display: none;}
+.ui-tabs .ui-tabs-nav2 {
+	margin: 0;
+	padding: 0;
+}
+.ui-tabs .ui-tabs-nav2 li {
+	list-style: none;
+	float: left;
+	position: relative;
+	top: 0;
+	margin: 0;
+	border-bottom-width: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+.ui-state-default2 {
+	border: 1px solid #d3d3d3;
+	background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #555555;
+}
