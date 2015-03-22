@@ -8,7 +8,6 @@ if (isset($_REQUEST['cardid'])) {
 	return;
 }
 ?>
-<?php echo $row['DateOfIssue']; ?>
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#dialog").dialog({
@@ -17,13 +16,14 @@ $(document).ready(function () {
 			$(this).dialog("close");
 	    }}]
 	});
+	console.log($("#DT_cancellation").val());
 	$("#button_save").click(function () {
 	    if ($("#cardid").val() == '') return;
 	    $.post('../engine/discoundcard_save', {
 			cardid: $("#cardid").val(),
 			name: $("#name").val(),
-			dateOfIssue: $("#dateOfIssue").val(),
-			dateOfCancellation: $("#dateOfCancellation").val(),
+			dateOfIssue: $("#DT_issue").val(),
+			dateOfCancellation: $("#DT_cancellation").val(),
 			clientID: $("#select_point").val(),
 			address: $("#address").val(),
 			eMail: $("#eMail").val(),
@@ -50,7 +50,20 @@ $(document).ready(function () {
 	
 	// выбор даты выдачи 
 	$("#DT_issue").datepicker({numberOfMonths: 1, dateFormat: 'dd/mm/yy', showButtonPanel: true, closeText: "Закрыть", showAnim: "fold"});
-
+	$("#DT_cancellation").datepicker({numberOfMonths: 1, dateFormat: 'dd/mm/yy', showButtonPanel: true, closeText: "Закрыть", showAnim: "fold"});
+	$("#datapickers a").click(function () {
+		if ($(this).attr("type") != 'button')
+		return;
+		var command = this.parentNode.previousSibling.previousSibling;
+		if (command.tagName == 'SPAN')
+		command = command.previousSibling.previousSibling;
+		if (command.tagName == "INPUT")
+		    operid = command.id;
+		if ($(this).html() == 'X')
+		    $("#" + operid).val("");
+		if ($(this).html() == '...')
+		    $("#" + operid).datepicker("show");
+	    });
 });
 </script>
 <input id="cardid" name="cardid" type="hidden" value="<?php echo $row['CardID']; ?>">
@@ -81,15 +94,19 @@ $(document).ready(function () {
 					<input id="name" name="name" type="text" class="form-control TAL" value="<?php echo $row['Name']; ?>">
 					<span class="input-group-addon w32"></span>
 				</div>               
-				<div class="input-group input-group-sm w100p">
-					<span class="input-group-addon w25p TAL">Дата выдачи:</span>
-					<input id="DT_issue" name="DT_issue" type="text" class="form-control TAL" value="<?php echo $row['DateOfIssue']; ?>">
-					<span class="input-group-addon w32"></span>
-				</div>
-				<div class="input-group input-group-sm w100p">
-					<span class="input-group-addon w25p TAL">Дата анулирования:</span>
-					<input id="dateOfCancellation" name="dateOfCancellation" type="text" class="form-control TAL" value="<?php echo $row['DateOfCancellation']; ?>">
-					<span class="input-group-addon w32"></span>
+				<div id="datapickers">
+					<div class="datapicker input-group input-group-sm w100p">
+						<span class="input-group-addon w25p TAL">Дата выдачи:</span>
+						<input id="DT_issue" name="DT_issue" type="text" class="form-control TAL" value="<?php echo $row['DateOfIssue']; ?>">
+						<span class="input-group-btn"><a class="btn btn-default w100p" type="button">X</a></span>
+						<span class="input-group-btn w32"><a class="btn btn-default w100p" type="button">...</a></span>
+					</div>
+					<div class="datapicker input-group input-group-sm w100p">
+						<span class="input-group-addon w25p TAL">Дата анулирования:</span>
+						<input id="DT_cancellation" name="DT_cancellation" type="text" class="form-control TAL" value="<?php echo $row['DateOfCancellation']; ?>">
+						<span class="input-group-btn"><a class="btn btn-default w100p" type="button">X</a></span>
+						<span class="input-group-btn w32"><a class="btn btn-default w100p" type="button">...</a></span>
+					</div>
 				</div>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Магазин:</span>

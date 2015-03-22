@@ -94,7 +94,7 @@
 		$("#" + operid).datepicker("show");
 	});
 
-    });
+});
 </script>
 <style>
 	#feedback { font-size: 12px; }

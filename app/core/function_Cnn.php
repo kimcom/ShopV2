@@ -751,9 +751,21 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		return $row;
 	}
 	public function discoundcard_save() {
-		foreach ($_REQUEST as $arg => $val)
-			${$arg} = $val;
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::paramToLog();
+		if ($clientID == '') $clientID = null;
+		if ($startPercent == '') $startPercent = 0;
+		if ($startSum == '') $startSum = 0;
+		if ($dopSum == '') $dopSum = 0;
+		if ($percentOfDiscount == '') $percentOfDiscount = 0;
+		if (isset($dateOfIssue) && $dateOfIssue != '') {
+			$dateOfIssue = DateTime::createFromFormat('d?m?Y', $dateOfIssue);
+			$dateOfIssue = $dateOfIssue->format('Ymd');
+		}
+		if (isset($dateOfCancellation) && $dateOfCancellation != '') {
+			$dateOfCancellation = DateTime::createFromFormat('d?m?Y', $dateOfCancellation);
+			$dateOfCancellation = $dateOfCancellation->format('Ymd');
+		}
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_discountCard('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $cardid, PDO::PARAM_STR);
