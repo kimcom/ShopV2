@@ -21,7 +21,8 @@ class Controller_Engine extends Controller {
 		} else {
 			//Fn::debugToLog("Engine", 'ошибка при чтении фильтра из файла: ' . $filename);
 			$response->success = false;
-			$response->message = 'Возникла ошибка получении настроек!<br>Сообщите разработчику!';
+			$response->message = 'Возникла ошибка при получении настроек!<br><br>Сообщите разработчику!';
+			$response->message = $filename;
 			$response->data = 0;
 			echo json_encode($response);
 		}

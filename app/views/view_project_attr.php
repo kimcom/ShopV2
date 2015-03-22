@@ -112,7 +112,7 @@ $(document).ready(function () {
 			},"json");
 		}
 	});
-	fs = 0;
+	fs2 = 0;
 // Creating grid2
 	$("#grid2").jqGrid({
 		sortable: true,
@@ -132,7 +132,7 @@ $(document).ready(function () {
 			{name: 'pc_DT_create',		index: 'pc.DT_create',		width: 130, align: "center",sorttype: "text", search: true},
 			{name: 'u_UserName_create',	index:'u.UserName_create',	width: 150, align: "left",	sorttype: "text", search: true},
 		    ],
-	    gridComplete: function () {if (!fs) { fs = 1; filter_restore("#grid2"); }},
+	    gridComplete: function () {if (!fs2) { fs2 = 1; filter_restore("#grid2"); }},
 		onSelectRow: function (rowid, status, e) {
 			task_open(rowid);
 		},
@@ -149,6 +149,7 @@ $(document).ready(function () {
 	    pager: '#pgrid2'
 	});
 	$("#grid2").jqGrid('navGrid', '#pgrid2', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+	$("#grid2").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid2");}});
 	$("#grid2").navButtonAdd('#grid2_toppager', {
 		title: 'Добавить задачу', buttonicon: "ui-icon-pencil", caption: 'Добавить задачу ', position: "last",
 		onClickButton: function () {
@@ -233,9 +234,67 @@ $(document).ready(function () {
 		if($(this).html()=='X') $("#"+operid).val("");
 		if($(this).html()=='...') $("#"+operid).datepicker("show");
 	});
+	
+	//список проектов для выезжающей вкладки
+	fs = 0;
+	// Creating grid1
+	$("#grid1").jqGrid({
+		sortable: true,
+		url: "../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Name&pr.Status<>1000",
+		datatype: "json",
+		height: '500',
+		colNames: ['№', 'Название'],
+		colModel: [
+		    {name: 'pr_ProjectID', index: 'pr.ProjectID', width: 50, align: "center", sorttype: "text", search: true},
+		    {name: 'pr_Name', index: 'pr.Name', width: 120, align: "left", sorttype: "text", search: true},
+		],
+		gridComplete: function () {if (!fs) {fs = 1;filter_restore("#grid1");}},
+		onSelectRow: function (rowid, status, e) {
+			project_open(rowid);
+		},
+		width: '190',
+//scrollrows : true,
+//scrollOffset:0,
+//scrollerbar:true,
+		shrinkToFit: true,
+		rowNum: 999999999,
+//		rowList: [10, 20, 30, 40, 50, 100],
+		sortname: "pr.ProjectID",
+		sortorder: "desc",
+//		viewrecords: true,
+//		gridview: true,
+//		loadonce:true,
+//		toppager: true,
+//		caption: "Список проектов",
+		editurl: '../project/operation',
+		pager: '#pgrid1'
+	});
+	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: false});
+	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
+//	    $("#pg_pgrid1").remove();
+//	    $("#pgrid1").removeClass('ui-jqgrid-pager');
+	$("#pgrid1").remove();
+	$("#rs_mgrid1").remove();
+	$("#gbox_grid1").removeClass('ui-corner-all');
+	$("#gview_grid1 .ui-jqgrid-titlebar").remove();
+//		console.log($("#gview_grid1 .ui-jqgrid-titlebar"));
+//	    $("#pgrid1").addClass('ui-jqgrid-pager-empty');
+	//клавиатура
+	$("#grid1").jqGrid('bindKeys', {"onEnter": function (rowid) {
+		alert("You enter a row with id:" + rowid)
+	}});
+	
 //$("#a_tab_task").tab('show');
 //task_create();
 });
+function project_open(id){
+	if (id != null) {
+		window.location = "../project/info?projectid=" + id;
+	} else {
+		$("#dialog>#text").html('Сначала выберите запись в таблице!');
+		$("#dialog").dialog("open");
+	}
+}
 function task_create(copy){
 	if($("#projectid").val()==0) {
 		$("#dialog>#text").html('Сначала надо сохранить новый проект!');
@@ -465,9 +524,14 @@ function task_open(rowid){
 		</div>
 	</div>
 </div>
-<div id="lpanel_button" class="border0"> »
+<div id="lpanel_button" class="border0">
+	<div style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px;width: 1ch; text-align: center; word-wrap: break-word;">Список&nbsp;Проектов</div>
 	<div id="lpanel" class="border0">
-		sssss
+		<h4>Список проектов</h4>
+		<div id='div1' class='frameL pl5' >
+			<table id="grid1"></table>
+			<div id="pgrid1"></div>
+		</div>
 	</div>
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
