@@ -257,8 +257,8 @@ input[type='text'], input[type='password'], textarea {
     top: 30%;
     left: 0;
     width: 30px;
-    height: 250px;
-/*    height: 30%;*/
+/*    height: 250px;
+    height: 30%;*/
     background: #0094d6;
 /*    color: #fff;*/
     text-align: center;
