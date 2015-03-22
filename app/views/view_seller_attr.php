@@ -123,6 +123,11 @@ if ($clientid == null)
 		</div>
 	</div>
 </div>
+<div id="lpanel_button" class="border0"> »
+	<div id="lpanel" class="border0">
+		sssss
+	</div>
+</div>
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>
 </div>

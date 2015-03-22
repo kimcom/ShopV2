@@ -29,6 +29,7 @@
 		<script src="../../js/jquery.dataTables.min.js" type="text/javascript"></script>
 		<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
 		<script src="../../js/select2.min.js"></script>
+		<script src="../../js/jquery.select2list.min.js"></script>
 		
 		<style type="text/css">
             body {
