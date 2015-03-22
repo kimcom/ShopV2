@@ -93,7 +93,49 @@
 		if ($(this).html() == '...')
 		$("#" + operid).datepicker("show");
 	});
-
+	
+	//список проектов для выезжающей вкладки
+	fs = 0;
+	// Creating grid1
+	$("#grid1").jqGrid({
+		sortable: true,
+		url: "../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Name&pr.Status<>1000",
+		datatype: "json",
+		height: 'auto',
+		colNames: ['№', 'Название'],
+		colModel: [
+		    {name: 'pr_ProjectID', index: 'pr.ProjectID', width: 80, align: "center", sorttype: "text", search: true},
+		    {name: 'pr_Name', index: 'pr.Name', width: 350, align: "left", sorttype: "text", search: true},
+		],
+		gridComplete: function () {if (!fs) {fs = 1;filter_restore("#grid1");}},
+		width: '190',
+//		shrinkToFit: false,
+		rowNum: 20,
+//		rowList: [10, 20, 30, 40, 50, 100],
+		sortname: "pr.ProjectID",
+		sortorder: "desc",
+		viewrecords: true,
+		gridview: true,
+//		toppager: true,
+		caption: "Список проектов",
+		editurl: '../project/operation',
+		pager: '#pgrid1'
+	    });
+	    $("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: false});
+	    $("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
+//	    $("#pg_pgrid1").remove();
+	    $("#pgrid1").remove();
+	    $("#rs_mgrid1").remove();
+//	    $("#pgrid1").removeClass('ui-jqgrid-pager');
+	    $("#gbox_grid1").removeClass('ui-corner-all');
+	    $("#gview_grid1 .ui-jqgrid-titlebar").remove();
+//		console.log($("#gview_grid1 .ui-jqgrid-titlebar"));
+//	    $("#pgrid1").addClass('ui-jqgrid-pager-empty');
+	    //клавиатура
+	    $("#grid1").jqGrid('bindKeys', {"onEnter": function (rowid) {
+		    alert("You enter a row with id:" + rowid)
+		}});
+	    //$("#grid1").gridResize();
 });
 </script>
 <style>
@@ -119,6 +161,21 @@
 		</div>
 		<div class="tab-pane min0 m0 w100p ui-corner-all borderColor frameL border1 h60" id="tab_2">
 			Tab-2
+		</div>
+	</div>
+</div>
+<br>
+<div id="lpanel_button" class="border0">
+	<div style="padding-left: 10px; padding-top: 10px; width: 1ch; text-align: center; word-wrap: break-word;">СПИСОК ПРОЕКТОВ</div>
+<!--	<div class="vtext border1 pt50 w100" style="display: block;">Список проектов</div>-->
+<!--	<div class="vtext border1 pt50 w100" style="display: block;">Список проектов</div>-->
+<!--	<span class="ui-icon ui-icon-triangle-1-e"></span>-->
+<!--	<img class="img-rounded pt10 m0" src="../../images/right-32.png">-->
+	<div id="lpanel" class="border0">
+		<h4>Список проектов</h4>
+		<div id='div1' class='frameL pl5' >
+			<table id="grid1"></table>
+			<div id="pgrid1"></div>
 		</div>
 	</div>
 </div>
