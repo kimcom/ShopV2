@@ -449,6 +449,163 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		}
 		echo json_encode($response);
 	}
+	public function get_report7_data() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::debugToLog('report7 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+		//echo $DT_start.' '.  $DT_stop . '<br>';
+		if (isset($DT_start)) {
+			$dt = DateTime::createFromFormat('d?m?Y', $DT_start);
+			//echo $dt->format('Ymd').'<br>';
+			$date1 = $dt->format('Ymd');
+		} else {
+			return;
+		}
+		if (isset($DT_stop)) {
+			$dt = DateTime::createFromFormat('d?m?Y', $DT_stop);
+			//echo $dt->format('Ymd');
+			$date2 = $dt->format('Ymd');
+		} else {
+			return;
+		}
+Fn::debugToLog('report', $date1.'	'.$date2);
+//Fn::paramToLog();
+		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
+		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
+		$stmt = $this->db->prepare("CALL pr_reports('sale_opt', @id, ?, ?, ?)");
+		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
+		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
+		//$stmt->bindParam(3, $url, PDO::PARAM_STR);
+		$stmt->bindParam(3, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		header("Content-type: application/json;charset=utf8");
+		$response = new stdClass();
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 0;
+		$response->error = '';
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			$response->error = $stmt->errorInfo();
+//	Fn::debugToLog("resp", json_encode($response));
+		if ($stmt->rowCount() > 0) {
+			$t = 0;
+			do {
+				$rowset = $stmt->fetchAll();
+				if ($rowset != null) {
+					if ($t == 1) {
+						foreach ($rowset as $row) {
+							//			Fn::debugToLog($t, $row[0]);
+							$response->query = $row[0];
+							$response->records = $row[1];
+						}
+					} else if ($t == 0) {
+						//Fn::debugToLog("columnCount 2", $stmt->columnCount());
+						$columnCount = $stmt->columnCount();
+						$i = 0;
+						foreach ($rowset as $row) {
+							$response->rows[$i]['id'] = $row[0];
+							$ar = array();
+							for ($f = 0; $f < $columnCount - 5; $f++) {
+								$ar[] = $row[$f];
+							}
+							$ar = array_pad($ar, 10, null);
+							for ($f = $columnCount - 5; $f < $columnCount; $f++) {
+								$ar[] = $row[$f];
+							}
+							$response->rows[$i]['cell'] = $ar;
+							$i++;
+						}
+					}
+				}
+				$t++;
+			} while ($stmt->nextRowset());
+		}
+		return json_encode($response);
+	}
+	public function get_pendel_data() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+		//echo $DT_start.' '.  $DT_stop . '<br>';
+		if (isset($DT_start)) {
+			$dt = DateTime::createFromFormat('d?m?Y', $DT_start);
+			//echo $dt->format('Ymd').'<br>';
+			$date1 = $dt->format('Ymd');
+		} else {
+			return;
+		}
+		if (isset($DT_stop)) {
+			$dt = DateTime::createFromFormat('d?m?Y', $DT_stop);
+			//echo $dt->format('Ymd');
+			$date2 = $dt->format('Ymd');
+		} else {
+			return;
+		}
+Fn::debugToLog('pendel', $date1 . '	' . $date2);
+//Fn::paramToLog();
+		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
+		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
+		$stmt = $this->db->prepare("CALL pr_reports_7('pendel', @id, ?, ?)");
+		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
+		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
+		//$stmt->bindParam(3, $url, PDO::PARAM_STR);
+		//$stmt->bindParam(3, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		header("Content-type: application/json;charset=utf8");
+		$response = new stdClass();
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 0;
+		$response->error = '';
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			$response->error = $stmt->errorInfo();
+//	Fn::debugToLog("resp", json_encode($response));
+		if ($stmt->rowCount() > 0) {
+			$t = 0;
+			do {
+				$rowset = $stmt->fetchAll();
+				if ($rowset != null) {
+					if ($t == 1) {
+						foreach ($rowset as $row) {
+							//			Fn::debugToLog($t, $row[0]);
+							$response->query = $row[0];
+							$response->records = $row[1];
+						}
+					} else if ($t == 0) {
+//Fn::debugToLog('pendel',json_encode($rowset));
+						//Fn::debugToLog("columnCount 2", $stmt->columnCount());
+						$columnCount = $stmt->columnCount();
+						$i = 0;
+						foreach ($rowset as $row) {
+//							$response->rows[$i]['id'] = $row[0];
+							$response->rows[$i]['field0'] = $row[0];
+							$response->rows[$i]['field1'] = $row[1];
+							$response->rows[$i]['field2'] = $row[2];
+							$response->rows[$i]['field3'] = $row[3];
+							$response->rows[$i]['field4'] = $row[4];
+//							$response->rows[$i]['field5'] = $row[5];
+
+//							$ar = array();
+//							for ($f = 0; $f < $columnCount - 3; $f++) {
+//								$ar[] = $row[$f];
+//							}
+////							$ar = array_pad($ar, 10, null);
+////							for ($f = $columnCount - 5; $f < $columnCount; $f++) {
+////								$ar[] = $row[$f];
+////							}
+//							$response->rows[$i]['cell'] = $ar;
+							$i++;
+						}
+					}
+				}
+				$t++;
+			} while ($stmt->nextRowset());
+		}
+Fn::debugToLog('pendel',json_encode($response));
+		echo json_encode($response);
+	}
 
 //report setting
 	public function set_report_setting() {
@@ -575,6 +732,7 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 			$DT_fact = DateTime::createFromFormat('d?m?Y', $DT_fact);
 			$DT_fact = $DT_fact->format('Ymd');
 		}
+//Fn::paramToLog();
 		$stmt = $this->db->prepare("CALL pr_project('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $projectid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $unitID, PDO::PARAM_STR);
@@ -852,8 +1010,9 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		$url = str_replace("field14", $f14, $url);
 		$url = str_replace("field15", $f15, $url);
 
-//Fn::debugToLog('QUERY_STRING', $action);
-//Fn::debugToLog('QUERY_STRING', $url);
+Fn::debugToLog('jqgrid3 action', $action);
+Fn::debugToLog('jqgrid3 url', $url);
+//Fn::paramToLog();
 
 		$stmt = $this->db->prepare("CALL pr_jqgrid(?, @id, ?)");
 		$stmt->bindParam(1, $action, PDO::PARAM_STR);
@@ -952,6 +1111,91 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		header("Content-type: application/json;charset=utf-8");
 		echo json_encode($response);
 		return;
+	}
+
+//category
+	public function get_tree_NS_category() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		$result = Shop::GetCategoryTreeNS($this->dbi, $nodeid, $n_level, $n_left, $n_right);
+		if ($nodeid > 0) {
+			$n_level = $n_level + 1;
+		} else {
+			$n_level = 0;
+		}
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 1;
+		$i = 0;
+		while ($row = $result->fetch_array(MYSQLI_BOTH)) {
+			if ($row['rgt'] == $row['lft'] + 1)
+				$leaf = 'true';
+			else
+				$leaf = 'false';
+			if ($n_level == $row['level']) { // we output only the needed level
+				$response->rows[$i]['id'] = $row['CatID'];
+				$response->rows[$i]['cell'] = array($row['CatID'],
+					//$row['name'].' ('.$row['CatID'].')',
+					$row['name'],
+					$row['level'],
+					$row['lft'],
+					$row['rgt'],
+					$leaf,
+					'false'
+				);
+			}
+			$i++;
+		}
+		header("Content-type: text/html;charset=utf-8");
+		echo json_encode($response);
+	}
+	public function category_tree_oper() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		if ($oper == 'add') {
+			$id = Shop::CreateNewElementTreeNS($this->dbi, 'category', $id, $parent_id, $name);
+			if ($id == false) {
+				$response->success = false;
+				$response->message = 'Возникла ошибка при добавлении!<br>Сообщите разработчику!';
+				$response->new_id = 0;
+			} else {
+				$response->success = true;
+				$response->message = '';
+				$response->new_id = $id;
+			}
+			echo json_encode($response);
+		}
+		if ($oper == 'edit') {
+			$response->success = Shop::SetNewNameforElementTreeNS($this->dbi, 'category', $id, $name);
+			$response->message = 'Возникла ошибка сохранения изменений!<br>Сообщите разработчику!';
+			$response->new_id = 0;
+			echo json_encode($response);
+		}
+		if ($oper == 'del') {
+			//$response->success = DeleteElementTreeNS('category',$id);
+			$response->success = Shop::MoveElementTreeNS($this->dbi, 'category', $id, 90);
+			$response->message = 'Возникла ошибка при удалении!<br>Сообщите разработчику!';
+			$response->new_id = 0;
+			echo json_encode($response);
+		}
+		if ($oper == 'copy') {
+			//echo CopyTreeByID('category',$source,$target);
+			echo Shop::CopyTreeNS($this->dbi, 'category', $source, $target);
+		}
+		if ($oper == 'move') {
+			//echo SetParentIDforTree('category','CatID',$source,$target);
+			echo Shop::MoveElementTreeNS($this->dbi, 'category', $source, $target);
+		}
+	}
+	public function add_in_cat() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::AddToCategory($this->dbi, $cat_id, $source);
+	}
+	public function del_from_cat() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::DelFromCategory($this->dbi, $cat_id, $source);
 	}
 
 //test grid for print result

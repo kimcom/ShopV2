@@ -131,9 +131,54 @@ if (isset($_REQUEST['goodid'])) {
 	    }
 	    );
 	});
-    });
+	//список проектов для выезжающей вкладки
+	fsL = 0;
+	// Creating gridL
+	$("#gridL").jqGrid({
+		sortable: true,
+		url: "../goods/list?param=goods_list_where&col=goods_list&cat_id=0",
+//		url: "../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Name&pr.Status<>1000",
+		datatype: "json",
+		height: '500',
+	    colNames: ['GoodID', 'OPT_ID', 'SHOP_ID', 'KIEV_ID', 'Артикул', 'Название'],
+		colModel: [
+			{name: 'GoodID', index: 'GoodID', hidden: true},
+			{name: 'OPT_ID', index: 'OPT_ID', hidden: true},
+			{name: 'SHOP_ID', index: 'SHOP_ID', hidden: true},
+			{name: 'KIEV_ID', index: 'KIEV_ID', hidden: true},
+			{name: 'Article', index: 'Article', width: 60, sorttype: "text", search: true, editable: true, edittype: "text"},
+		    {name: 'Name', index: 'Name', width: 150, sorttype: "text", search: true},
+//		    {name: 'pr_ProjectID', index: 'pr.ProjectID', width: 50, align: "center", sorttype: "text", search: true},
+//		    {name: 'pr_Name', index: 'pr.Name', width: 120, align: "left", sorttype: "text", search: true},
+		],
+		gridComplete: function () {if (!fsL) {fsL = 1; filter_restore("#gridL");}},
+		onSelectRow: function (rowid, status, e) {
+			var id = rowid;
+			if (id != null) {
+			    window.location = "../goods/good_edit?goodid=" + id;
+			} else {
+				$("#dialog>#text").html('Сначала выберите запись в таблице!');
+				$("#dialog").dialog("open");
+			}
+		},
+		width: '190',
+		shrinkToFit: true,
+		rowNum: 100,
+	    sortname: "Article,Name",
+		sortorder: "asc",
+		editurl: '../project/operation',
+		pager: '#pgridL'
+	    });
+	    $("#gridL").jqGrid('navGrid', '#pgridL', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: false});
+	    $("#gridL").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#gridL");
+	}});
+	$("#pgridL").remove();
+	$("#rs_mgridL").remove();
+	$("#gbox_gridL").removeClass('ui-corner-all');
+	$("#gview_gridL .ui-jqgrid-titlebar").remove();
+});
 </script>
-<div class="min570">
+<div class="container center min570">
 	<div class='p5 ui-corner-all frameL border1' style='display:table;'>
 		<legend>Карта товара:</legend>
 		<label class='w90' for="Article">Артикул:</label>
@@ -279,6 +324,16 @@ if (isset($_REQUEST['goodid'])) {
 		<?php
 	}
 	?>
+		</div>
+	</div>
+</div>
+<div id="lpanel_button" class="border0">
+	<div style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px;width: 1ch; text-align: center; word-wrap: break-word;">Список&nbsp;товаров</div>
+	<div id="lpanel" class="border0">
+		<h4>Список товаров</h4>
+		<div id='div1' class='frameL pl5' >
+			<table id="gridL"></table>
+			<div id="pgridL"></div>
 		</div>
 	</div>
 </div>

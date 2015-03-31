@@ -248,8 +248,8 @@ class Cnni {
 			else
 				$leaf = 'false';
 			if ($n_level == $row['level']) { // we output only the needed level
-				$response->rows[$i]['id'] = $row['PartnerID'];
-				$response->rows[$i]['cell'] = array($row['PartnerID'],
+				$response->rows[$i]['id'] = $row['CatID'];
+				$response->rows[$i]['cell'] = array($row['CatID'],
 					//$row['name'].' ('.$row['CatID'].')',
 					$row['name'],
 					$row['level'],

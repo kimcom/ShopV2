@@ -30,20 +30,10 @@ var source_id_copy 	= 0;
 		},
 		onSelectRow: function(cat_id) {
 			if(cat_id == null) cat_id=0;
-//			$.post('../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name', function (data) {
-//				if (data == 0) {
-//					$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
-//					$("#dialog").dialog("open");
-//				} else {
-//					$("#test").html(data);
-//				}
-//			});
-//		    $("#grid1").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name",page:1});
-//			$("#grid1").trigger('reloadGrid');
-//			$("#grid1").jqGrid('setGridParam',{url:"../goods/list?col=cat&param=in category&cat_id="+cat_id,page:1});
-//			$("#grid1").trigger('reloadGrid');
-//			$("#grid4").jqGrid('setGridParam',{url:"../goods/list?col=cat&param=not in category&cat_id="+cat_id,page:1});
-//			$("#grid4").trigger('reloadGrid');
+		    $("#grid1").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name&cat_partner_id="+cat_id,page:1});
+			$("#grid1").trigger('reloadGrid');
+			$("#grid4").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name&cat_partner_noid="+cat_id,page:1});
+			$("#grid4").trigger('reloadGrid');
 		}
 	});
 	$("#treegrid").jqGrid('navGrid','#ptreegrid', {edit:true, add:true, del:true, search:false, refresh:true, cloneToTop: true},
@@ -171,7 +161,6 @@ var source_id_copy 	= 0;
 	// Creating grid1
 	$("#grid1").jqGrid({
 		sortable: true,
-		//url:"post_goods.php?action=get_goods_list&param=in category&cat_id=-1",
 		datatype: "json",
 		width:'100%',
 		height: '100%',
@@ -193,42 +182,42 @@ var source_id_copy 	= 0;
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: true, cloneToTop: true});
 	$("#grid1").jqGrid('filterToolbar', { autosearch: true,	searchOnEnter: true	});
 
-	$("#grid1").navButtonAdd('#grid1_toppager',{
-		title:'Удалить из категории', buttonicon:"ui-icon-minusthick", caption:'из катег.', position:"last",
-		onClickButton: function(){ 
-
-			var id = $("#treegrid").jqGrid('getGridParam','selrow');
-			var node = $("#treegrid").jqGrid('getRowData',id);
-			if(id==null){
-				$("#dialog>#text").html('Вы не указали категорию!');
-				$("#dialog").dialog( "open" );
-				return;
-			}
-			var sel;
-			sel = jQuery("#grid1").jqGrid('getGridParam','selarrrow');
-			if(sel==''){
-				$("#dialog>#text").html('Вы не выбрали ни одной записи!');
-				$("#dialog").dialog( "open" );
-				return;
-			}
-
-			$("#grid1").jqGrid('delGridRow', id, {
-				modal:true,
-				closeOnEscape:true,
-				closeAfterDel:true,
-				reloadAfterSubmit: true,
-				msg: 'Удалить выбранных партнеров из категории<br/>'+node.name+'?',
-				url: '../category/del_from_cat?cat_id='+id+'&source='+sel,
-				savekey : [ true, 13 ],
-				afterSubmit : function(json, postdata) {
-					var result=$.parseJSON(json.responseText);
-					if(result.success)$("#grid4").trigger("reloadGrid");
-					return [result.success,result.message,result.new_id];
-				}
-				} 
-			);
-		}
-	});
+//	$("#grid1").navButtonAdd('#grid1_toppager',{
+//		title:'Удалить из категории', buttonicon:"ui-icon-minusthick", caption:'из катег.', position:"last",
+//		onClickButton: function(){ 
+//
+//			var id = $("#treegrid").jqGrid('getGridParam','selrow');
+//			var node = $("#treegrid").jqGrid('getRowData',id);
+//			if(id==null){
+//				$("#dialog>#text").html('Вы не указали категорию!');
+//				$("#dialog").dialog( "open" );
+//				return;
+//			}
+//			var sel;
+//			sel = jQuery("#grid1").jqGrid('getGridParam','selarrrow');
+//			if(sel==''){
+//				$("#dialog>#text").html('Вы не выбрали ни одной записи!');
+//				$("#dialog").dialog( "open" );
+//				return;
+//			}
+//
+//			$("#grid1").jqGrid('delGridRow', id, {
+//				modal:true,
+//				closeOnEscape:true,
+//				closeAfterDel:true,
+//				reloadAfterSubmit: true,
+//				msg: 'Удалить выбранных партнеров из категории<br/>'+node.name+'?',
+//				url: '../category/del_from_cat?cat_id='+id+'&source='+sel,
+//				savekey : [ true, 13 ],
+//				afterSubmit : function(json, postdata) {
+//					var result=$.parseJSON(json.responseText);
+//					if(result.success)$("#grid4").trigger("reloadGrid");
+//					return [result.success,result.message,result.new_id];
+//				}
+//				} 
+//			);
+//		}
+//	});
 	
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
@@ -238,17 +227,14 @@ var source_id_copy 	= 0;
 	// Creating grid4
 	$("#grid4").jqGrid({
 		sortable: true,
-		//url:"post_goods.php?action=get_goods_list&param=not in category&cat_id=0",
 		datatype: "json",
-		mtype: "POST",
 		width:'100%',
 		height: '100%',
-		colNames:['Артикул','Название'],
-		colModel:[
-			//{name:'GoodID', index:'GoodID', width:80, sorttype:"text", search:true},
-			{name:'Article', index:'Article', width:100, sorttype:"text", search:true},
-			{name:'Name', index:'Name', width:320, sorttype:"text", search:true}
-		],
+		colNames:['Код','Название'],
+	    colModel: [
+			{name: 'PartnerID', index: 'PartnerID', width: 80, sorttype: "text", search: true},
+			{name: 'Name', index: 'Name', width: 320, sorttype: "text", search: true}
+	    ],
 		rowNum:20,
 		rowList:[20,30,40,50,100,200,300],
 		sortname: "Name",
@@ -262,33 +248,33 @@ var source_id_copy 	= 0;
 	$("#grid4").jqGrid('navGrid','#pgrid4', {edit:false, add:false, del:false, search:false, refresh: true,	cloneToTop: true});
 	$("#grid4").jqGrid('filterToolbar', { autosearch: true,	searchOnEnter: true	});
 
-	$("#grid4").navButtonAdd('#grid4_toppager',{
-		title:'Добавить в категорию', buttonicon:"ui-icon-plusthick", caption:'в катег.', position:"last",
-		onClickButton: function(){ 
-			var id = $("#treegrid").jqGrid('getGridParam','selrow');
-			if(id==null){
-				$("#dialog>#text").html('Вы не указали категорию!');
-				$("#dialog").dialog( "open" );
-				return;
-			}
-			var sel;
-			sel = jQuery("#grid4").jqGrid('getGridParam','selarrrow');
-			if(sel==''){
-				$("#dialog>#text").html('Вы не выбрали ни одной записи!');
-				$("#dialog").dialog( "open" );
-				return;
-			}
-			$.post('../category/add_in_cat?cat_id='+id+'&source='+sel,function(data){
-				if(data==0){
-					$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
-					$("#dialog").dialog( "open" );
-				}else{
-					$("#grid1").trigger("reloadGrid");
-					$("#grid4").trigger("reloadGrid");
-				}
-			});
-		}
-	});
+//	$("#grid4").navButtonAdd('#grid4_toppager',{
+//		title:'Добавить в категорию', buttonicon:"ui-icon-plusthick", caption:'в катег.', position:"last",
+//		onClickButton: function(){ 
+//			var id = $("#treegrid").jqGrid('getGridParam','selrow');
+//			if(id==null){
+//				$("#dialog>#text").html('Вы не указали категорию!');
+//				$("#dialog").dialog( "open" );
+//				return;
+//			}
+//			var sel;
+//			sel = jQuery("#grid4").jqGrid('getGridParam','selarrrow');
+//			if(sel==''){
+//				$("#dialog>#text").html('Вы не выбрали ни одной записи!');
+//				$("#dialog").dialog( "open" );
+//				return;
+//			}
+//			$.post('../category/add_in_cat?cat_id='+id+'&source='+sel,function(data){
+//				if(data==0){
+//					$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
+//					$("#dialog").dialog( "open" );
+//				}else{
+//					$("#grid1").trigger("reloadGrid");
+//					$("#grid4").trigger("reloadGrid");
+//				}
+//			});
+//		}
+//	});
 	$("#pg_pgrid4").remove();
 	$("#pgrid4").removeClass('ui-jqgrid-pager');
 	$("#pgrid4").addClass('ui-jqgrid-pager-empty');

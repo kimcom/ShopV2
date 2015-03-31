@@ -16,10 +16,10 @@
 		url:"../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Status&f3=UnitName&f4=Name&f5=UserName&f6=DT_create&f7=DT_plan&f8=DT_fact",
 	    datatype: "json",
 	    height: 'auto',
-	    colNames: ['№ проэкта', 'Статус', 'Подразделение', 'Описание', 'Ответственный', 'Дата добавления', 'План. запуск', 'Факт. запуск'],
+	    colNames: ['№', 'Статус', 'Подразделение', 'Описание', 'Ответственный', 'Дата добавления', 'План. запуск', 'Факт. запуск'],
 	    colModel: [
-			{name: 'pr_ProjectID',	index: 'pr.ProjectID',	width:  80, align: "center",sorttype: "text", search: true},
-			{name: 'pr_Status',		index: 'pr.Status',		width:  80, align: "center",sorttype: "text", search: true},
+			{name: 'pr_ProjectID',	index: 'pr.ProjectID',	width:  40, align: "center",sorttype: "text", search: true},
+	   		{name: 'pr_Status',		index: 'pr.Status',		width: 120, align: "left",  stype:'select', editoptions:{value:":любой;20:постановка задач;30:в работе;50:пауза;60:на проверке;100:завершено"}},
 			{name: 'un_UnitName', 	index: 'un.UnitName', 	width: 120, align: "left",	sorttype: "text", search: true},
 			{name: 'pr_Name',		index: 'pr.Name',		width: 350, align: "left",	sorttype: "text", search: true},
 			{name: 'u_UserName',	index: 'u.UserName',	width: 150, align: "left",	sorttype: "text", search: true},

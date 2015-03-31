@@ -138,8 +138,8 @@ $(document).ready(function () {
 		},
 	    width: 'auto',
 	    shrinkToFit: false,
-	    rowNum: 5,
-	    rowList: [10, 20, 30, 40, 50, 100],
+	    rowNum: 6,
+	    rowList: [6, 12, 20, 30, 40, 50, 100],
 	    sortname: "OrderID",
 	    viewrecords: true,
 	    gridview: true,
@@ -236,11 +236,11 @@ $(document).ready(function () {
 	});
 	
 	//список проектов для выезжающей вкладки
-	fs = 0;
-	// Creating grid1
-	$("#grid1").jqGrid({
+	fsL = 0;
+	// Creating gridL
+	$("#gridL").jqGrid({
 		sortable: true,
-		url: "../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Name&pr.Status<>1000",
+		url: "../engine/jqgrid3?action=project_list&f1=ProjectID&f2=Name&pr.Status<>100",
 		datatype: "json",
 		height: '500',
 		colNames: ['№', 'Название'],
@@ -248,41 +248,24 @@ $(document).ready(function () {
 		    {name: 'pr_ProjectID', index: 'pr.ProjectID', width: 50, align: "center", sorttype: "text", search: true},
 		    {name: 'pr_Name', index: 'pr.Name', width: 120, align: "left", sorttype: "text", search: true},
 		],
-		gridComplete: function () {if (!fs) {fs = 1;filter_restore("#grid1");}},
+		gridComplete: function () {if (!fsL) {fsL = 1;filter_restore("#gridL");}},
 		onSelectRow: function (rowid, status, e) {
 			project_open(rowid);
 		},
 		width: '190',
-//scrollrows : true,
-//scrollOffset:0,
-//scrollerbar:true,
 		shrinkToFit: true,
 		rowNum: 999999999,
-//		rowList: [10, 20, 30, 40, 50, 100],
 		sortname: "pr.ProjectID",
 		sortorder: "desc",
-//		viewrecords: true,
-//		gridview: true,
-//		loadonce:true,
-//		toppager: true,
-//		caption: "Список проектов",
 		editurl: '../project/operation',
-		pager: '#pgrid1'
+		pager: '#pgridL'
 	});
-	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: false});
-	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
-//	    $("#pg_pgrid1").remove();
-//	    $("#pgrid1").removeClass('ui-jqgrid-pager');
-	$("#pgrid1").remove();
-	$("#rs_mgrid1").remove();
-	$("#gbox_grid1").removeClass('ui-corner-all');
-	$("#gview_grid1 .ui-jqgrid-titlebar").remove();
-//		console.log($("#gview_grid1 .ui-jqgrid-titlebar"));
-//	    $("#pgrid1").addClass('ui-jqgrid-pager-empty');
-	//клавиатура
-	$("#grid1").jqGrid('bindKeys', {"onEnter": function (rowid) {
-		alert("You enter a row with id:" + rowid)
-	}});
+	$("#gridL").jqGrid('navGrid', '#pgridL', {edit: false, add: false, del: false, search: false, refresh: false, cloneToTop: false});
+	$("#gridL").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#gridL");}});
+	$("#pgridL").remove();
+	$("#rs_mgridL").remove();
+	$("#gbox_gridL").removeClass('ui-corner-all');
+	$("#gview_gridL .ui-jqgrid-titlebar").remove();
 	
 //$("#a_tab_task").tab('show');
 //task_create();
@@ -441,7 +424,7 @@ function task_open(rowid){
 			</div>
 		</div>
 
-		<div class="tab-pane min260 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_task">
+		<div class="tab-pane min250 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_task">
 			<div class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Задача:</span>
@@ -516,7 +499,7 @@ function task_open(rowid){
 			</div>
 		</div>
 		
-		<div class="min260 p5 w100p ui-corner-top0 borderTop0 borderColor frameL border1" id="tab_project">
+		<div class="min260 p5 pt0 w100p ui-corner-top0 1borderTop0 borderColor frameL border1" id="tab_project">
 				<div id='div2' class='frameL'>
 					<table id="grid2"></table>
 					<div id="pgrid2"></div>
@@ -529,8 +512,8 @@ function task_open(rowid){
 	<div id="lpanel" class="border0">
 		<h4>Список проектов</h4>
 		<div id='div1' class='frameL pl5' >
-			<table id="grid1"></table>
-			<div id="pgrid1"></div>
+			<table id="gridL"></table>
+			<div id="pgridL"></div>
 		</div>
 	</div>
 </div>

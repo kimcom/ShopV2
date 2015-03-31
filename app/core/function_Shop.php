@@ -170,7 +170,7 @@ Fn::DebugToLog('start: ',$ssql);
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('add', @id, " . $parent_id . ", '" . $name . "', " . $_SESSION['UserID'] . ");";
 
-//Fn::DebugToLog('start: ',$ssql);
+Fn::DebugToLog('add: ',$ssql);
 
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
@@ -191,6 +191,8 @@ Fn::DebugToLog('start: ',$ssql);
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('edit', @id, 0, '" . $name . "', " . $_SESSION['UserID'] . ");";
 
+Fn::DebugToLog('edit: ', $ssql);
+
 		$res = $dbi->query("SET @id=" . $id . ";");
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
@@ -205,8 +207,8 @@ Fn::DebugToLog('start: ',$ssql);
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 
-		$res = $dbi->query("SET @id=" . $id . ";");
-//Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
+//		$res = $dbi->query("SET @id=" . $id . ";");
+Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;
@@ -438,8 +440,8 @@ Fn::DebugToLog('start: ',$ssql);
 			$n_left = 'null';
 		if ($n_right == '')
 			$n_right = 'null';
-		$ssql = "CALL pr_tree_NS('cat_partner', 'PartnerID', " . $nodeid . ", " . $n_level . ", " . $n_left . ", " . $n_right . ");";
-//DebugToLog('start: ',$ssql);
+		$ssql = "CALL pr_tree_NS('cat_partner', 'CatID', " . $nodeid . ", " . $n_level . ", " . $n_left . ", " . $n_right . ");";
+Fn::debugToLog('Shop::GetCategoryTreeNS_cat_partner: ',$ssql);
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;

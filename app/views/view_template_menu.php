@@ -42,9 +42,15 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 		$controller == "/reports"){
 		$active_menu5 = 'active';
 	}else if (
+		$controller == "/reports_fin"){
+		$active_menu9 = 'active';
+	}else if (
+		$controller == "/documents"){
+		$active_menu10 = 'active';
+	}else if (
 		$controller == "/project") {
 		$active_menu6 = 'active';
-	} else if (
+	}else if (
 		$controller == "/helper") {
 		$active_menu8 = 'active';
 	}else if (
@@ -101,14 +107,28 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 					<ul class="dropdown-menu">
 						<li><a href="/reports/report1">Отчет "Средняя сумма чека и среднее кол-во чеков"</a></li>
 						<li><a href="/reports/report4">Отчет "Продажи товаров в рознице"</a></li>
+						<li><a href="/reports/report7">Отчет "Продажи товаров в опте"</a></li>
 						<li><a href="/reports/report5">Отчет "Товарный ассортимент"</a></li>
 						<!--<li><a href="/reports/jqgrid3">Отчет №4</a></li>-->
 					</ul>
 				</li>
 <?php
-if($_SESSION['AccessLevel'] > 100){
+if($_SESSION['AccessLevel'] >= 1000){
 ?>
-<!--				<li class="<?php echo $active_menu8;?>"><a href="/helper/control">CONTROLS</a></li>-->
+				<li class="<?php echo $active_menu10; ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="/documents/sale?operID=0">Расходные накладные</a></li>
+						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
+					</ul>
+				</li>
+				<li class="<?php echo $active_menu9; ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Фин. отчеты<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="/reports_fin/pendel">Profit and Loss (Отчет о прибылях и убытках/доходах и расходах)</a></li>
+						<li><a href="/reports_fin/cashflow">Cash Flow (Отчет о движении денежных средств)</a></li>
+					</ul>
+				</li>
 <?php
 }
 ?>
@@ -144,10 +164,10 @@ if($_SESSION['AccessLevel'] >= 1000){
 					</ul>
 				</li>
 				<li class="<?php echo $active_menu6; ?>"><a href="/project/list">Проекты</a></li>
+				<li class="<?php echo $active_menu7; ?>"><a href="/task/list">Задачи</a></li>
 <?php
 }
 ?>
-				<li class="<?php echo $active_menu7; ?>"><a href="/task/list">Задачи</a></li>
 				<li class="navbar-text mb5 font12"><?php echo $_SESSION['UserName'].'<br>'. $_SESSION['UserPost'];?></li>
 				<li class="active"><a href="/login/logout">Выход</a></li>
             </ul>

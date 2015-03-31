@@ -15,6 +15,9 @@ class Controller_Reports extends Controller {
 	function action_report5() {
 		$this->view->generate('view_reports_5.php', 'view_template.php');
 	}
+	function action_report7() {
+		$this->view->generate('view_reports_7.php', 'view_template.php');
+	}
 
 	function action_report1_data() {
 		$this->model = new Model_Reports();
@@ -37,6 +40,11 @@ class Controller_Reports extends Controller {
 		$this->model = new Model_Reports();
 		echo $this->model->get_report5_data();
 	}
+	function action_report7_data() {
+		$this->model = new Model_Reports();
+		echo $this->model->get_report7_data();
+	}
+
 	function action_jqgrid3() {
 		$this->model = new Model_Reports();
 		echo $this->model->get_jqgrid3_data();

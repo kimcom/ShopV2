@@ -21,6 +21,10 @@ class Controller_Category extends Controller {
 		$this->model = new Model_Category();
 		echo $this->model->cat_partner_tree_oper();
 	}
+	function action_partner_add_in_cat() {
+		$cnn = new Cnni();
+		return $cnn->add_in_cat();
+	}
 
 	function action_get_tree_NS() {
 		$this->model = new Model_Category();

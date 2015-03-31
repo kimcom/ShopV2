@@ -20,6 +20,11 @@ class Model_Reports extends Model {
 		$cnn = new Cnn();
 		return $cnn->get_report5_data();
 	}
+	public function get_report7_data() {
+		$cnn = new Cnn();
+		return $cnn->get_report7_data();
+	}
+
 	public function get_jqgrid3_data() {
 		$cnn = new Cnn();
 		return $cnn->get_jqgrid3();
