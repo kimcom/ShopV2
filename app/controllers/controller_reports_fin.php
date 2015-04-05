@@ -9,5 +9,10 @@ class Controller_Reports_fin extends Controller {
 		return $cnn->get_pendel_data();
 	}
 
+	function action_pendel_data2() {
+		$cnn = new Cnn();
+		return $cnn->get_pendel_data2();
+	}
+
 }
 ?>

@@ -167,6 +167,8 @@ Fn::DebugToLog('start: ',$ssql);
 			$ssql = "CALL pr_tree_NS_action_cat('add', @id, " . $parent_id . ", '" . $name . "', " . $_SESSION['UserID'] . ");";
 		if ($table == 'cat_partner')
 			$ssql = "CALL pr_tree_NS_action_cat_partner('add', @id, " . $parent_id . ", '" . $name . "', " . $_SESSION['UserID'] . ");";
+		if ($table == 'cat_spent')
+			$ssql = "CALL pr_tree_NS_action_cat_spent('add', @id, " . $parent_id . ", '" . $name . "', " . $_SESSION['UserID'] . ");";
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('add', @id, " . $parent_id . ", '" . $name . "', " . $_SESSION['UserID'] . ");";
 
@@ -188,6 +190,8 @@ Fn::DebugToLog('add: ',$ssql);
 			$ssql = "CALL pr_tree_NS_action_cat('edit', @id, 0, '" . $name . "', " . $_SESSION['UserID'] . ");";
 		if ($table == 'cat_partner')
 			$ssql = "CALL pr_tree_NS_action_cat_partner('edit', @id, 0, '" . $name . "', " . $_SESSION['UserID'] . ");";
+		if ($table == 'cat_spent')
+			$ssql = "CALL pr_tree_NS_action_cat_spent('edit', @id, 0, '" . $name . "', " . $_SESSION['UserID'] . ");";
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('edit', @id, 0, '" . $name . "', " . $_SESSION['UserID'] . ");";
 
@@ -204,6 +208,8 @@ Fn::DebugToLog('edit: ', $ssql);
 			$ssql = "CALL pr_tree_NS_action_cat('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 		if ($table == 'cat_partner')
 			$ssql = "CALL pr_tree_NS_action_cat_partner('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
+		if ($table == 'cat_spent')
+			$ssql = "CALL pr_tree_NS_action_cat_spent('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_promo('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 
@@ -219,6 +225,8 @@ Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
 			$ssql = "CALL pr_tree_NS_action_cat('copy', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 		if ($table == 'cat_partner')
 			$ssql = "CALL pr_tree_NS_action_cat_partner('copy', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
+		if ($table == 'cat_spent')
+			$ssql = "CALL pr_tree_NS_action_cat_spent('copy', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 		if ($table == 'promo')
 			$ssql = "CALL pr_tree_NS_action_cat('copy', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 //Fn::debugToLog('CopyTreeNS id='.$id, $ssql);
@@ -442,6 +450,22 @@ Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
 			$n_right = 'null';
 		$ssql = "CALL pr_tree_NS('cat_partner', 'CatID', " . $nodeid . ", " . $n_level . ", " . $n_left . ", " . $n_right . ");";
 Fn::debugToLog('Shop::GetCategoryTreeNS_cat_partner: ',$ssql);
+		$res = $dbi->query($ssql);
+		if (!Fn::checkErrorMySQLi($dbi))
+			return false;
+		return $res;
+	}
+	public static function GetCategoryTreeNS_cat_spent($dbi, $nodeid, $n_level, $n_left, $n_right) {
+		if ($nodeid == '')
+			$nodeid = 'null';
+		if ($n_level == '')
+			$n_level = 0;
+		if ($n_left == '')
+			$n_left = 'null';
+		if ($n_right == '')
+			$n_right = 'null';
+		$ssql = "CALL pr_tree_NS('cat_spent', 'CatID', " . $nodeid . ", " . $n_level . ", " . $n_left . ", " . $n_right . ");";
+//Fn::debugToLog('Shop::GetCategoryTreeNS_cat_spent: ', $ssql);
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;

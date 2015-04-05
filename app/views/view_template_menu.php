@@ -67,6 +67,8 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 						<li><a href="/category/var3">Категории товаров 3</a></li>
 						<li class="divider"></li>
 						<li><a href="/category/cat_partner3">Категории партнеров</a></li>
+						<li class="divider"></li>
+						<li><a href="/category/cat_partner4">Категории "Статьи затрат"</a></li>
 						</ul>
 				</li>
 				<li class="<?php echo $active_menu2;?>">
@@ -102,6 +104,19 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 					<ul class="dropdown-menu">
 					</ul>
 				</li>-->
+<?php
+if($_SESSION['AccessLevel'] >= 1000){
+?>
+				<li class="<?php echo $active_menu10; ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="/documents/sale?operID=1">Расходные накладные</a></li>
+						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
+					</ul>
+				</li>
+<?php 
+}
+?>
 				<li class="<?php echo $active_menu5; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Отчеты<b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -113,15 +128,8 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 					</ul>
 				</li>
 <?php
-if($_SESSION['AccessLevel'] >= 1000){
+if ($_SESSION['AccessLevel'] >= 1000) {
 ?>
-				<li class="<?php echo $active_menu10; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="/documents/sale?operID=0">Расходные накладные</a></li>
-						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
-					</ul>
-				</li>
 				<li class="<?php echo $active_menu9; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Фин. отчеты<b class="caret"></b></a>
 					<ul class="dropdown-menu">

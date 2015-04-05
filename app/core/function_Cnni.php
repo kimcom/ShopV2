@@ -305,6 +305,83 @@ class Cnni {
 			echo Shop::MoveElementTreeNS($this->dbi, 'cat_partner', $source, $target);
 		}
 	}
+//category spent
+	public function get_tree_NS_cat_spent() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		$result = Shop::GetCategoryTreeNS_cat_spent($this->dbi, $nodeid, $n_level, $n_left, $n_right);
+		if ($nodeid > 0) {
+			$n_level = $n_level + 1;
+		} else {
+			$n_level = 0;
+		}
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 1;
+		$i = 0;
+		while ($row = $result->fetch_array(MYSQLI_BOTH)) {
+			if ($row['rgt'] == $row['lft'] + 1)
+				$leaf = 'true';
+			else
+				$leaf = 'false';
+			if ($n_level == $row['level']) { // we output only the needed level
+				$response->rows[$i]['id'] = $row['CatID'];
+				$response->rows[$i]['cell'] = array($row['CatID'],
+					//$row['name'].' ('.$row['CatID'].')',
+					$row['name'],
+					$row['level'],
+					$row['lft'],
+					$row['rgt'],
+					$leaf,
+					'false'
+				);
+			}
+			$i++;
+		}
+		header("Content-type: text/html;charset=utf-8");
+		echo json_encode($response);
+	}
+	public function cat_spent_tree_oper() {
+		foreach ($_REQUEST as $arg => $val) {
+			${$arg} = $val;
+//			Fn::debugToLog('arg', $arg." = ".  $val);
+		}
+		$response = new stdClass();
+		if ($oper == 'add') {
+			$id = Shop::CreateNewElementTreeNS($this->dbi, 'cat_spent', $id, $parent_id, $name);
+			if ($id == false) {
+				$response->success = false;
+				$response->message = 'Возникла ошибка при добавлении!<br>Сообщите разработчику!';
+				$response->new_id = 0;
+			} else {
+				$response->success = true;
+				$response->message = '';
+				$response->new_id = $id;
+			}
+			echo json_encode($response);
+		}
+		if ($oper == 'edit') {
+			$response->success = Shop::SetNewNameforElementTreeNS($this->dbi, 'cat_spent', $id, $name);
+			$response->message = 'Возникла ошибка сохранения изменений!<br>Сообщите разработчику!';
+			$response->new_id = 0;
+			echo json_encode($response);
+		}
+		if ($oper == 'del') {
+			//$response->success = DeleteElementTreeNS('category',$id);
+			$response->success = Shop::MoveElementTreeNS($this->dbi, 'cat_spent', $id, 90);
+			$response->message = 'Возникла ошибка при удалении!<br>Сообщите разработчику!';
+			$response->new_id = 0;
+			echo json_encode($response);
+		}
+		if ($oper == 'copy') {
+			//echo CopyTreeByID('category',$source,$target);
+			echo Shop::CopyTreeNS($this->dbi, 'cat_spent', $source, $target);
+		}
+		if ($oper == 'move') {
+			//echo SetParentIDforTree('category','CatID',$source,$target);
+			echo Shop::MoveElementTreeNS($this->dbi, 'cat_spent', $source, $target);
+		}
+	}
 
 //category
 	public function get_tree_NS_category() {

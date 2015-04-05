@@ -1,5 +1,6 @@
 <?php
 class Model_Category extends Model {
+//категории партнеров	
 	public function get_tree_NS_cat_partner() {
 		$cnn = new Cnni();
 		echo $cnn->get_tree_NS_cat_partner();
@@ -8,6 +9,16 @@ class Model_Category extends Model {
 		$cnn = new Cnni();
 		echo $cnn->cat_partner_tree_oper();
 	}
+//категории статьи затрат
+	public function get_tree_NS_cat_spent() {
+		$cnn = new Cnni();
+		echo $cnn->get_tree_NS_cat_spent();
+	}
+	public function cat_spent_tree_oper() {
+		$cnn = new Cnni();
+		echo $cnn->cat_spent_tree_oper();
+	}
+
 
 	public function get_tree_NS() {
 		$cnn = new Cnni();

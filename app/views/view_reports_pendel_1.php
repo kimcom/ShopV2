@@ -134,9 +134,87 @@ $(document).ready(function () {
 			$("#DT_stop").datepicker("show");
 	});
 
+//test pivot
+	jQuery("#grid1").jqGrid(
+			'jqPivot',
+		    "../reports_fin/pendel_data?sid=11&DT_start=01/01/2015&DT_stop=28/02/2015",
+//			{},
+		    // pivot options
+			    {
+				xDimension: [
+//				    {dataName: 'field0', label: '№ п-п', width: 90},
+				    {dataName: 'field1', label: 'Валовый доход', width: 90}
+					//,
+//				    {dataName: 'field4', label: 'Product', width: 90},
+//				    {dataName: 'field5', label: 'Product', width: 90}
+				],
+				yDimension: [
+				    {
+						dataName: 'field2'
+//						,
+//						converter : function(value, xData, yData) {
+//								console.log(value, xData, yData);
+//							    return 'Summa'+value;
+//						}
+					}
+				],
+				aggregates: [
+					{	member: 'field3', label: 'Себест.',					
+						width: 50, align: 'right', sorttype: "number", formatter: 'number', aggregator: 'sum'}
+					,
+				    {	member: 'field4', label: 'Оборот',					
+						width: 50, align: 'right', sorttype: "number", formatter: 'number', aggregator: 'sum'},
+				    {	member: 'field5', label: 'Доход',					
+						width: 50, align: 'right', sorttype: "number", formatter: 'number', aggregator: 'sum'},
+				    {	member: 'field6', label: 'Процент',					
+						width: 50, align: 'right', sorttype: "number", formatter: 'number', aggregator: 'sum'}
+				],
+//				rowTotals: true
+//				,
+				colTotals: true
+			    },
+		    // grid options
+		    {
+		    //url: "../reports_fin/pendel_data?sid=11&DT_start=01/01/2015&DT_stop=28/02/2015",
+//			height: 'auto',
+//			colnNames: ['Валовый доход', 'Период', 'Себест.', 'Оборот', 'Доход', '% наценки'],
+//			colModel: [
+//				{name: 'field0', index: 'field0', width: 200, align: "left", sorttype: "text", summaryType: 'count', summaryTpl: '<b class="ml10">Итого ({0} эл.):</b>'},
+//				{name: 'field1', index: 'field1', width: 200, align: "left", sorttype: "text", summaryType: 'count', summaryTpl: '<b class="ml10">Итого ({0} эл.):</b>'},
+//				{name: 'field2', index: 'field2', width: 90, align: "right", sorttype: "number", formatter: "number", summaryType: 'sum', summaryTpl: '<b>{0} </b>'},
+//				{name: 'field3', index: 'field3', width: 90, align: "right", sorttype: "number", formatter: "number", summaryType: 'sum', summaryTpl: '<b>{0} грн.</b>'},
+//				{name: 'field4', index: 'field4', width: 90, align: "right", sorttype: "number", formatter: "number", summaryType: 'sum', summaryTpl: '<b>{0} грн.</b>'},
+//				{name: 'field5', index: 'field5', width: 90, align: "right", sorttype: "number", formatter: "number", summaryType: 'sum', summaryTpl: '<b>{0} грн.</b>'},
+//			],
+//			datatype: "json",
+			width: 700,
+//			rowNum: 10,
+			pager: "#pager",
+			caption: "Amounts and quantity by category and product"
+	});
+
 // Creating gridRep
 	var gridRep = function(){
-	$("#gridRep").jqGrid({
+	$("#gridRep").jqGrid(
+//		{
+//			xDimension : [{dataName: 'field0', width: 90}],
+//			yDimension: [
+//				{
+//				dataName: 'field1',
+//				converter: function (value, xData, yData) {
+//					return 'Period';
+//				}
+//			}, {dataName: 'field1'}],
+//			aggregates: [{
+//				member: 'field3',
+//				aggregator: 'sum',
+//				width: 50,
+//				formatter: 'number',
+//				align: 'right',
+//				summaryType: 'sum'
+//			}]
+//		},
+		{
 		sortable: true,
 	    //datatype: "json",
 		datatype: 'local',
@@ -295,32 +373,21 @@ $(document).ready(function () {
 	}
 
 	$('#button_report_run').click(function (e) {
-		//$('#example').html('');
-//		$("#gridRep").jqGrid("GridUnload");
-		//gridRep();
+		$("#gridRep").jqGrid("GridUnload");
+//		gridRep();
 		$("#dialog_progress").dialog( "option", "title", 'Ожидайте! Выполняется формирование отчета...');
 		$("#dialog_progress").dialog("open");
-//		console.log(json);
-		$.post("../reports_fin/pendel_data2?DT_start=" + $("#DT_start").val() + "&DT_stop=" + $("#DT_stop").val(), function (json) {
-			if($('#example').hasClass('dataTable'))$('#example').dataTable().fnDestroy();
-			$('#example').html(json.table1);
-			$('#example').dataTable({"bDestroy": true,"searching": false, "paging": false, "info": false, "ordering": false});
-//			$('#example').html(json.table);
-//			$('#example').dataTable({"bDestroy": true,"searching": false, "paging": false, "info": false, "ordering": false});
-			setTimeout(function () {$("#dialog_progress").dialog("close");}, 200);
-		});
-		
 		$("#a_tab_report").tab('show');
-		prmRep  = "<b>Отчет \"Profit and Lost\"</b> ";
+		prmRep = "<b>Отбор данных выполнен по критериям:</b> ";
 		prmRep += "<br>" + "Период с " + $("#DT_start").val() + " по " + $("#DT_stop").val();
 		$("#report_param_str").html(prmRep);
-//		$("#gridRep").jqGrid('setGridParam', {datatype: "json", url: "../reports_fin/pendel_data2" +
+//		$("#gridRep").jqGrid('setGridParam', {datatype: "json", url: "../reports_fin/pendel_data" +
 //			"?sid=" + reportID +
 //			"&DT_start=" + $("#DT_start").val() +
 //			"&DT_stop=" + $("#DT_stop").val() +
 //			""}).trigger('reloadGrid');
 	});
-//	$("#a_tab_report").tab('show');
+	$("#a_tab_report").tab('show');
 });
 </script>
 <style>
@@ -377,9 +444,13 @@ $(document).ready(function () {
 		<div class="tab-pane m0 w100p min530 borderTop1 frameL center border0" id="tab_report">
 			<div id='report_param_str' class="mt10 TAL font14">
 			</div>
-			<div id='div1' class='center frame0 mt10'>
-				<table id="example" class="table table-striped table-bordered" cellspacing="0"  width="100%">
-				</table>
+			<div id='div2' class='center frameL mt10 border1'>
+				<table id="grid1"></table>
+				<div id="pgrid1"></div>
+			</div>
+			<div id='div1' class='center frameL mt10'>
+				<table id="gridRep"></table>
+				<div id="pgridRep"></div>
 			</div>
 		</div>
 	</div>

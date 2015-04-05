@@ -29,6 +29,7 @@ if ($clientid == null)
 		//if ($("#sellerID").val() == '') return;
 		$.post('../engine/seller_save', {
 		sellerID: $("#sellerID").val(),
+		kod1C: $("#kod1C_span").val(),
 		name: $("#name").val(),
 		post: $("#select_post").select2("data").text,
 		postID: $("#select_post").val(),
@@ -87,6 +88,11 @@ if ($clientid == null)
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Код:</span>
 					<span id="sellerID_span" class="input-group-addon form-control TAL"><?php echo $row['SellerID']; ?></span>
+					<span class="input-group-addon w20p"></span>
+				</div>
+				<div class="input-group input-group-sm w100p">
+					<span class="input-group-addon w20p TAL">Код 1С:</span>
+					<span id="kod1C_span" class="input-group-addon form-control TAL"><?php echo $row['Kod1C']; ?></span>
 					<span class="input-group-addon w20p"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">

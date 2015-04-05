@@ -546,7 +546,7 @@ Fn::debugToLog('pendel', $date1 . '	' . $date2);
 //Fn::paramToLog();
 		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
 		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
-		$stmt = $this->db->prepare("CALL pr_reports_7('pendel', @id, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_reports_pendel('1', @id, ?, ?)");
 		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
 		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
 		//$stmt->bindParam(3, $url, PDO::PARAM_STR);
@@ -585,7 +585,8 @@ Fn::debugToLog('pendel', $date1 . '	' . $date2);
 							$response->rows[$i]['field2'] = $row[2];
 							$response->rows[$i]['field3'] = $row[3];
 							$response->rows[$i]['field4'] = $row[4];
-//							$response->rows[$i]['field5'] = $row[5];
+							$response->rows[$i]['field5'] = $row[5];
+							$response->rows[$i]['field6'] = $row[6];
 
 //							$ar = array();
 //							for ($f = 0; $f < $columnCount - 3; $f++) {
@@ -604,6 +605,243 @@ Fn::debugToLog('pendel', $date1 . '	' . $date2);
 			} while ($stmt->nextRowset());
 		}
 Fn::debugToLog('pendel',json_encode($response));
+		echo json_encode($response);
+	}
+	public function get_pendel_data2() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+		if (isset($DT_start)) {
+			$dt1 = DateTime::createFromFormat('d?m?Y', $DT_start);
+			//echo $dt->format('Ymd').'<br>';
+			$dateStart = $dt1->format('Ymd');
+		} else {
+			return;
+		}
+		if (isset($DT_stop)) {
+			$dt2 = DateTime::createFromFormat('d?m?Y', $DT_stop);
+			//echo $dt->format('Ymd');
+			$dateStop = $dt2->format('Ymd');
+		} else {
+			return;
+		}
+//Fn::paramToLog();
+		$response = new stdClass();
+		$response->error = '';
+		$response->table1 = '';
+		$str = '';
+		$part = 1;
+		if($part == 1){
+			$stmt = $this->db->prepare("CALL pr_reports_pendel(?, @id, ?, ?)");
+			$stmt->bindParam(1, $part, PDO::PARAM_STR);
+			$stmt->bindParam(2, $dateStart, PDO::PARAM_STR);
+			$stmt->bindParam(3, $dateStop, PDO::PARAM_STR);
+	// вызов хранимой процедуры
+			$stmt->execute();
+			$data1 = array();
+			if (!Fn::checkErrorMySQLstmt($stmt))
+				$response->error = $stmt->errorInfo();
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($rowset) {
+					$columnCount = $stmt->columnCount();
+					$rowCount = $stmt->rowCount();
+//конвертируем полученный rowset в удобный нам формат в array
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$period = $dt->format('Y-m');
+						$data1[6][$period]['Sebest'] = 0;
+						$data1[6][$period]['Oborot'] = 0;
+						$data1[6][$period]['Dohod'] = 0;
+					}
+					for ($tr = 0; $tr < 6; $tr++) {
+						for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+							$period = $dt->format('Y-m');
+							for ($row = 0; $row < $rowCount; $row++) {
+								if ($rowset[$row][0] != $tr+1 || $period != $rowset[$row]['Period']) continue;
+								//$data1$data1[$tr]['nn'] = $tr;
+								$data1[$tr]['Field1']['Name']  = $rowset[$row]['Stream'];
+								$data1[$tr][$period]['Period'] = $rowset[$row]['Period'];
+								$data1[$tr][$period]['Oborot'] = $rowset[$row]['Oborot'];
+								$data1[$tr][$period]['Sebest'] = $rowset[$row]['Sebest'];
+								$data1[$tr][$period]['Dohod']  = $rowset[$row]['Dohod'];
+								$data1[$tr][$period]['Percent']= $rowset[$row]['Percent'];
+								$data1[6]['Field1']['Name']	 = 'Итого:';
+								$data1[6][$period]['Oborot'] += $rowset[$row]['Oborot'];
+								$data1[6][$period]['Sebest'] += $rowset[$row]['Sebest'];
+								$data1[6][$period]['Dohod']  += $rowset[$row]['Dohod'];
+							}
+						}
+					}
+//формируем шапку 1 Валовый доход
+					$str .= '<thead><tr>
+									<th rowspan=2>№ п-п</th>
+									<th rowspan=2>Валовый доход</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$str .= '<th colspan=3>' . $dt->format('Y-m') . '</th>';
+					}
+					$str .= '</tr><tr>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$str .= '<th>Оборот</th>
+								 <th>Себестоимость</th>
+								 <th>Маржа</th>
+								';
+					}
+					$str .= '</tr></thead>';
+//формируем таблицу 1 Валовый доход
+					$str .= '<tbody>';
+					for ($tr = 0; $tr < 6; $tr++) {
+						$str .= '<tr>';
+						$str .= '<td>'.($tr+1).'</td>';
+						$str .= '<td class="TAL">'. $data1[$tr]['Field1']['Name'].'</td>';
+						for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+							$period = $dt->format('Y-m');
+							$str .= '<td class="TAR">'. Fn::nfPendel($data1[$tr][$period]['Oborot']).'</td>';
+							$str .= '<td class="TAR">'. Fn::nfPendel($data1[$tr][$period]['Sebest']).'</td>';
+							$str .= '<td class="TAR">'. Fn::nfPendelP($data1[$tr][$period]['Percent']).'</td>';
+						}
+						$str .= '</tr>';
+					}
+					$str .= "</tbody>";
+//формируем итоги 1 Валовый доход
+					$str .= '<thead>';
+					$str .= '<tr>';
+					$str .= '<th>' . ($tr + 1) . '</th>';
+					$str .= '<th class="TAL">' . $data1[$tr]['Field1']['Name'] . '</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$period = $dt->format('Y-m');
+						$str .= '<th class="TAR">' . Fn::nfPendel($data1[$tr][$period]['Oborot']). '</th>';
+						$str .= '<th class="TAR">' . Fn::nfPendel($data1[$tr][$period]['Sebest']) . '</th>';
+						$str .= '<th class="TAR"></th>';
+					}
+					$str .= '</tr>';
+					$str .= "</thead>";
+//формируем шапку 2 Валовая прибыль
+					$str .= '<thead><tr><th></th>
+									<th>Валовая прибыль</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$str .= '<th colspan=3></th>';
+					}
+					$str .= '</tr>';
+					$str .= '</thead>';
+//формируем таблицу 2 Валювая прибыль
+					$str .= '<tbody>';
+					for ($tr = 0; $tr < 6; $tr++) {
+						$str .= '<tr>';
+						$str .= '<td>' . ($tr + 1) . '</td>';
+						$str .= '<td class="TAL">' . $data1[$tr]['Field1']['Name'] . '</td>';
+						for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+							$period = $dt->format('Y-m');
+							$str .= '<td colspan=3>' . Fn::nfPendel($data1[$tr][$period]['Dohod']) . '</td>';
+						}
+						$str .= '</tr>';
+					}
+					$str .= "</tbody>";
+//формируем итоги 2 Валовая прибыль
+					$str .= '<thead>';
+					$str .= '<tr>';
+					$str .= '<th>' . ($tr + 1) . '</th>';
+					$str .= '<th class="TAL">' . $data1[$tr]['Field1']['Name'] . '</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$period = $dt->format('Y-m');
+						$str .= '<th colspan=3>' . Fn::nfPendel($data1[$tr][$period]['Dohod']) . '</th>';
+					}
+					$str .= '</tr>';
+					$str .= "</thead>";
+				}
+			} while ($stmt->nextRowset());
+		}
+		$part = 2;
+		if($part == 2){
+//формируем шапку ЗАТРАТЫ Переменные расходы
+//формируем шапку 1 Валовый доход
+	$str .= '<thead><tr><th></th>
+				<th>Переменные расходы</th>';
+	for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+		$str .= '<th colspan=3></th>';
+	}
+	$str .= '</tr>';
+	$str .= '</thead>';
+//Fn::debugToLog('pendel', $dateStart . '	' . $dateStop);
+			$stmt = $this->db->prepare("CALL pr_reports_pendel(?, @id, ?, ?)");
+			$stmt->bindParam(1, $part, PDO::PARAM_STR);
+			$stmt->bindParam(2, $dateStart, PDO::PARAM_STR);
+			$stmt->bindParam(3, $dateStop, PDO::PARAM_STR);
+			// вызов хранимой процедуры
+			$stmt->execute();
+			if (!Fn::checkErrorMySQLstmt($stmt))
+				$response->error = $stmt->errorInfo();
+			//$r = 0;
+			do {
+				$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+				if ($rowset) {
+					$data2 = array();
+					$columnCount = $stmt->columnCount();
+					$rowCount = $stmt->rowCount();
+					$max_id_row = $rowset[$rowCount-1][0];
+//Fn::debugToLog("max id row", ''.$max_id_row.'	'.  $columnCount.'	'.  $rowCount);
+//Fn::debugToLog('rowset', $rowset);
+//конвертируем полученный rowset в удобный нам формат в array
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$period = $dt->format('Y-m');
+						$data2[$max_id_row][$period]['SumSpent'] = 0;
+					}
+					for ($tr = 0; $tr < $max_id_row; $tr++) {
+						for ($dt = clone $dt1; $dt <= $dt2;	$dt->modify('+1 month')) {
+							$period = $dt->format('Y-m');
+							for ($row = 1; $row < $rowCount; $row++) {
+								if($max_id_row==2){
+//Fn::debugToLog("row	".$tr.'	'.$period, json_encode($rowset[$row]));
+								}
+								if ($rowset[$row][0] != $tr+1 || $period != $rowset[$row]['Period']) continue;
+								$data2[$tr]['Field1']['Name'] = $rowset[$row]['Stream'];
+								$data2[$tr][$period]['Period'] = $rowset[$row]['Period'];
+								$data2[$tr][$period]['SumSpent'] = $rowset[$row]['SumSpent'];
+								$data2[$max_id_row]['Field1']['Name'] = 'Итого:';
+								$data2[$max_id_row][$period]['SumSpent'] += $rowset[$row]['SumSpent'];
+							}
+						}
+					}
+//Fn::debugToLog("rowset", json_encode($data2));
+//формируем шапку 1
+					$str .= '<thead><tr><th></th>
+					<th>'.$rowset[0]['Stream'].'</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$str .= '<th colspan=3></th>';
+					}
+					$str .= '</tr>';
+					$str .= '</thead>';
+//формируем таблицу 3
+					$str .= '<tbody>';
+					for ($tr = 0; $tr < $max_id_row; $tr++) {
+						$str .= '<tr>';
+						$str .= '<td>' . ($tr + 1) . '</td>';
+						$str .= '<td class="TAL">' . $data2[$tr]['Field1']['Name'] . '</td>';
+						for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+							$period = $dt->format('Y-m');
+							$str .= '<td colspan=3>' . Fn::nfPendel($data2[$tr][$period]['SumSpent']) . '</td>';
+						}
+						$str .= '</tr>';
+					}
+					$str .= "</tbody>";
+//формируем итоги 3
+					$str .= '<thead>';
+					$str .= '<tr>';
+					$str .= '<th>' . ($tr + 1) . '</th>';
+					$str .= '<th class="TAL">' . $data2[$tr]['Field1']['Name'] . '</th>';
+					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
+						$period = $dt->format('Y-m');
+						$str .= '<th colspan=3>' . Fn::nfPendel($data2[$tr][$period]['SumSpent']) . '</th>';
+					}
+					$str .= '</tr>';
+					$str .= "</thead>";
+				}
+			} while ($stmt->nextRowset());
+		}
+//Fn::debugToLog("data2", json_encode($data2));
+		$response->table1 = $str;
+
+//Fn::DebugToLog("тест jqgrid3", json_encode($response));
+		header("Content-type: application/json;charset=utf8");
 		echo json_encode($response);
 	}
 
@@ -951,13 +1189,14 @@ Fn::debugToLog('pendel',json_encode($response));
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
-		$stmt = $this->db->prepare("CALL pr_seller('info', @id, ?, ?, ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_seller('info', @id, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $sellerID, PDO::PARAM_STR);
-		$stmt->bindParam(2, $clientID, PDO::PARAM_STR);
-		$stmt->bindParam(3, $name, PDO::PARAM_STR);
-		$stmt->bindParam(4, $post, PDO::PARAM_STR);
-		$stmt->bindParam(5, $postID, PDO::PARAM_STR);
-		$stmt->bindParam(6, $fired, PDO::PARAM_STR);
+		$stmt->bindParam(2, $kod1C, PDO::PARAM_STR);
+		$stmt->bindParam(3, $clientID, PDO::PARAM_STR);
+		$stmt->bindParam(4, $name, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $postID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $fired, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		if (!Fn::checkErrorMySQLstmt($stmt))
@@ -976,13 +1215,14 @@ Fn::debugToLog('pendel',json_encode($response));
 		if ($sellerID == '') $sellerID = null;
 		if ($postID == '')	$postID = null;
 		if ($clientID == '') $clientID = 0;
-		$stmt = $this->db->prepare("CALL pr_seller('save', @id, ?, ?, ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_seller('save', @id, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $sellerID, PDO::PARAM_STR);
-		$stmt->bindParam(2, $clientID, PDO::PARAM_STR);
-		$stmt->bindParam(3, $name, PDO::PARAM_STR);
-		$stmt->bindParam(4, $post, PDO::PARAM_STR);
-		$stmt->bindParam(5, $postID, PDO::PARAM_STR);
-		$stmt->bindParam(6, $fired, PDO::PARAM_STR);
+		$stmt->bindParam(2, $kod1C, PDO::PARAM_STR);
+		$stmt->bindParam(3, $clientID, PDO::PARAM_STR);
+		$stmt->bindParam(4, $name, PDO::PARAM_STR);
+		$stmt->bindParam(5, $post, PDO::PARAM_STR);
+		$stmt->bindParam(6, $postID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $fired, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		$this->echo_response($stmt);
@@ -1041,7 +1281,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 					$i = 0;
 					$colCount = $stmt->columnCount();
 					foreach ($rowset as $row) {
-						$response->rows[$i]['id'] = $row[0];
+						$response->rows[$i]['id'] = str_replace('.','_',$row[0]);
 						$response->rows[$i]['cell'] = array($row[$f1],
 							$row[$f2],
 							$row[$f3],

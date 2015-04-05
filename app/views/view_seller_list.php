@@ -10,10 +10,10 @@ $(document).ready(function(){
 // Creating grid1
 	$("#grid1").jqGrid({
 		sortable: true,
-	    url:"../engine/jqgrid3?action=sellers_list&f1=SellerID&f2=Name&f3=Post&f4=Fired&f5=ClientID&f6=City&f7=NameShort",
+	    url:"../engine/jqgrid3?action=sellers_list&f1=SellerID&f2=Name&f3=Post&f4=Fired&f5=ClientID&f6=City&f7=NameShort&f8=Kod1C",
 		datatype: "json",
 		height:'auto',
-		colNames:['Код','ФИО','Должность','Статус','Код маг.','Город','Магазин'],
+		colNames:['Код','ФИО','Должность','Статус','Код маг.','Город','Магазин', 'Код 1С'],
 		colModel:[
 			{name:'SellerID',	index:'SellerID', width: 60, align:"center", sorttype:"text", search:true},
 			{name:'Name',		index:'Name', 	  width:160, align:"left",   sorttype:"text", search:true},
@@ -21,7 +21,8 @@ $(document).ready(function(){
 			{name:'Fired',		index:'Fired',	  width: 60, align:"center", sorttype:"text", search: true},
 			{name:'c_ClientID',	index:'c.ClientID', width: 60, align:"center", sorttype:"text", search:true},
 			{name:'c_City',		index:'c.City',	  width:100, sorttype:"text", search:true},
-			{name:'c_NameShort',index:'c.NameShort', width:160, sorttype:"text", search:true}
+			{name:'c_NameShort',index:'c.NameShort', width:160, sorttype:"text", search:true},
+			{name:'Kod1C',		index:'Kod1C',	  width: 60, align:"center", sorttype:"text", search:true}
 		],
 		//gridComplete: function() {if (!fs) {fs = 1;	filter_restore("#grid1");}},
 		width:'auto',
