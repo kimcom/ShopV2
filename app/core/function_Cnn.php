@@ -786,7 +786,7 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 // вызов хранимой процедуры
 		$stmt->execute();
 		$this->echo_response($stmt);
-	}
+	}	
 
 //sellers
 	public function seller_info() {
@@ -853,7 +853,7 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		$url = str_replace("field15", $f15, $url);
 
 //Fn::debugToLog('QUERY_STRING', $action);
-//Fn::debugToLog('QUERY_STRING', $url);
+Fn::debugToLog('QUERY_STRING', $url);
 
 		$stmt = $this->db->prepare("CALL pr_jqgrid(?, @id, ?)");
 		$stmt->bindParam(1, $action, PDO::PARAM_STR);
@@ -994,5 +994,6 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		}
 		return;
 	}
-}
+
+		}
 ?>
