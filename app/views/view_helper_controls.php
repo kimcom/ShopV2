@@ -136,6 +136,35 @@
 		    alert("You enter a row with id:" + rowid)
 		}});
 	    //$("#gridL").gridResize();
+	// Creating gridH
+	$("#gridH").jqGrid({
+		sortable: true,
+		datatype: "json",
+		url: '../engine/jqgrid3?action=spent_history&cat_spent_id=10055&spent_period=2015-01&f1=DocID&f2=Number1C&f3=DT_doc&f4=SellerName&f5=SpentName&f6=Sum',
+		width: '100%',
+		height: '333',
+		//&f1=DocID&f2=Number1C&f3=DT_doc&f4=SellerName&f5=SpentName&f7=Sum
+		colNames: ['DocID', 'Номер 1С', 'Дата', 'Сотрудник', 'Статья затрат', 'Сумма'],
+		colModel: [
+		    {name: 'dl_DocID', index: 'dl.DocID', width: 80, sorttype: "number", align: "center", search: true},
+		    {name: 'dl_Number1C', index: 'dl.Number1C', width: 80, sorttype: "text", align: "center", search: true},
+		    {name: 'dl_DT_doc', index: 'dl.DT_doc', width: 120, sorttype: "datatime", align: "center", search: true},
+		    {name: 's_Name', index: 's.Name', width: 200, sorttype: "text", align: "left", search: true},
+		    {name: 'p_Name', index: 'p.Name', width: 200, sorttype: "text", align: "left", search: true},
+		    {name: 'dc_Sum', index: 'dc.Sum', width: 80, sorttype: "number", align: "right", search: true},
+		],
+		shrinkToFit: true,
+		rowNum: 999999999,
+//		rowNum: 20,
+//		rowList: [20, 30, 40, 50, 100, 200, 300],
+		sortname: "dl.DT_doc",
+		viewrecords: true,
+		gridview: true,
+//		toppager: true,
+		pager: '#pgridH'
+	    });
+	    $("#gridH").jqGrid('navGrid', '#pgridH', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+	    $("#gridH").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
 });
 </script>
 <style>
@@ -275,6 +304,10 @@
 				<a class="btn btn-default w100p" type="button">...</a>
 			</span>
 		</div>
+	</div>
+	<div id="history" class="pt10" title="Расшифровка движений">
+		<table id="gridH"></table>
+		<div id="pgridH"></div>
 	</div>
 
 </div>

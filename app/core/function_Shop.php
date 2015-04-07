@@ -214,7 +214,8 @@ Fn::DebugToLog('edit: ', $ssql);
 			$ssql = "CALL pr_tree_NS_action_promo('move', @id, " . $target . ", '', " . $_SESSION['UserID'] . ");";
 
 //		$res = $dbi->query("SET @id=" . $id . ";");
-Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
+//Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
+		$res = $dbi->query("SET @id=" . $id . ";");
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;
@@ -236,6 +237,21 @@ Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
 			return false;
 		return true;
 	}
+	public static function AddToCatSpent($dbi, $cat_id, $source) {
+		$ssql = "CALL pr_category('add_in_cat_spent'," . $cat_id . ", '" . $source . "');";
+		$res = $dbi->query($ssql);
+		if (!Fn::checkErrorMySQLi($dbi))
+			return false;
+		return true;
+	}
+	public static function DelFromCatSpent($dbi, $cat_id, $source) {
+		$ssql = "CALL pr_category('del_from_cat_spent'," . $cat_id . ", '" . $source . "');";
+		$res = $dbi->query($ssql);
+		if (!Fn::checkErrorMySQLi($dbi))
+			return false;
+		return true;
+	}
+
 	public static function GetUserList($dbi) {
 		$ssql = "CALL pr_user('getList',0,'','',null,null);";
 //DebugToLog('start: ', $ssql);
@@ -425,14 +441,14 @@ Fn::debugToLog('MoveElementTreeNS id='.$id, $ssql);
 		return $res;
 	}
 	public static function AddToCategory($dbi, $cat_id, $source) {
-		$ssql = "CALL pr_category_goods('add_in_cat'," . $cat_id . ", '" . $source . "');";
+		$ssql = "CALL pr_category('add_in_cat'," . $cat_id . ", '" . $source . "');";
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;
 		return true;
 	}
 	public static function DelFromCategory($dbi, $cat_id, $source) {
-		$ssql = "CALL pr_category_goods('del_from_cat'," . $cat_id . ", '" . $source . "');";
+		$ssql = "CALL pr_category('del_from_cat'," . $cat_id . ", '" . $source . "');";
 		$res = $dbi->query($ssql);
 		if (!Fn::checkErrorMySQLi($dbi))
 			return false;

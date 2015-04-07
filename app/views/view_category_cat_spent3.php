@@ -265,7 +265,7 @@ var source_id_copy 	= 0;
 				$("#dialog").dialog( "open" );
 				return;
 			}
-			$.post('../category/add_in_cat?cat_id='+id+'&source='+sel,function(data){
+			$.post('../category/add_in_cat_spent?cat_id='+id+'&source='+sel,function(data){
 				if(data==0){
 					$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
 					$("#dialog").dialog( "open" );

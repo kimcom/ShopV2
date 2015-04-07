@@ -750,14 +750,16 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 				}
 			} while ($stmt->nextRowset());
 		}
-		$part = 2;
-		if($part == 2){
+		$part = $action;
+		if($part == $action){
+	$full_spent = array();
 //формируем шапку ЗАТРАТЫ Переменные расходы
-//формируем шапку 1 Валовый доход
 	$str .= '<thead><tr><th></th>
 				<th>Переменные расходы</th>';
 	for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
 		$str .= '<th colspan=3></th>';
+		$period = $dt->format('Y-m');
+		$full_spent[$period]['SumSpent'] = 0;
 	}
 	$str .= '</tr>';
 	$str .= '</thead>';
@@ -778,8 +780,9 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 					$columnCount = $stmt->columnCount();
 					$rowCount = $stmt->rowCount();
 					$max_id_row = $rowset[$rowCount-1][0];
+					if($max_id_row==0)continue;
 //Fn::debugToLog("max id row", ''.$max_id_row.'	'.  $columnCount.'	'.  $rowCount);
-//Fn::debugToLog('rowset', $rowset);
+//Fn::debugToLog('rowset', json_encode($rowset));
 //конвертируем полученный rowset в удобный нам формат в array
 					for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
 						$period = $dt->format('Y-m');
@@ -789,15 +792,17 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 						for ($dt = clone $dt1; $dt <= $dt2;	$dt->modify('+1 month')) {
 							$period = $dt->format('Y-m');
 							for ($row = 1; $row < $rowCount; $row++) {
-								if($max_id_row==2){
+//								if($max_id_row==3){
 //Fn::debugToLog("row	".$tr.'	'.$period, json_encode($rowset[$row]));
-								}
+//}
+//Fn::debugToLog("", $rowset[$row][0].'	'.$rowset[$row][1]);
 								if ($rowset[$row][0] != $tr+1 || $period != $rowset[$row]['Period']) continue;
-								$data2[$tr]['Field1']['Name'] = $rowset[$row]['Stream'];
-								$data2[$tr][$period]['Period'] = $rowset[$row]['Period'];
-								$data2[$tr][$period]['SumSpent'] = $rowset[$row]['SumSpent'];
-								$data2[$max_id_row]['Field1']['Name'] = 'Итого:';
-								$data2[$max_id_row][$period]['SumSpent'] += $rowset[$row]['SumSpent'];
+									$data2[$tr]['Field1']['Name'] = $rowset[$row]['Stream'];
+									$data2[$tr][$period]['Period'] = $rowset[$row]['Period'];
+									$data2[$tr][$period]['CatID'] = $rowset[$row]['CatID'];
+									$data2[$tr][$period]['SumSpent'] = $rowset[$row]['SumSpent'];
+									$data2[$max_id_row]['Field1']['Name'] = 'Итого:';
+									$data2[$max_id_row][$period]['SumSpent'] += $rowset[$row]['SumSpent'];
 							}
 						}
 					}
@@ -818,7 +823,23 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 						$str .= '<td class="TAL">' . $data2[$tr]['Field1']['Name'] . '</td>';
 						for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
 							$period = $dt->format('Y-m');
-							$str .= '<td colspan=3>' . Fn::nfPendel($data2[$tr][$period]['SumSpent']) . '</td>';
+//							$str .= '<td colspan=3>'
+//								. '<a href="javascript:history(\'../engine/jqgrid3?action=spent_total'
+//								. ($data2[$tr][$period]['CatID']=='10000' ? '&cat_spent_noid=' : '&cat_spent_id=').$data2[$tr][$period]['CatID']
+//								. '&spent_period='.$data2[$tr][$period]['Period']
+//								. '&grouping=ca.CatID,dc.SpentID' 
+//								. '&f1=SpentID&f2=CatName&f3=SpentName&f4=Summa\');">' 
+//								. Fn::nfPendel($data2[$tr][$period]['SumSpent']) 
+//								. '</a>'
+//								. '</td>';
+//							$str .= '<td colspan=3>'
+//									. '<a href="javascript:history(\'../reports_fin/pendel_dop?'
+//									. 'catid=' . ($data2[$tr][$period]['CatID']
+//									. '&spent_period=' . $data2[$tr][$period]['Period']
+//									. '\');">'
+//									. Fn::nfPendel($data2[$tr][$period]['SumSpent'])
+//									. '</a>'
+//									. '</td>';
 						}
 						$str .= '</tr>';
 					}

@@ -26,8 +26,11 @@ class Controller_Category extends Controller {
 		return $cnn->add_in_cat();
 	}
 //категории статьи затрат
-	function action_cat_partner4() {
-		$this->view->generate('view_category_cat_partner4.php', 'view_template.php');
+	function action_cat_spent1() {
+		$this->view->generate('view_category_cat_spent1.php', 'view_template.php');
+	}
+	function action_cat_spent3() {
+		$this->view->generate('view_category_cat_spent3.php', 'view_template.php');
 	}
 	function action_get_tree_NS_cat_spent() {
 		$this->model = new Model_Category();
@@ -40,6 +43,14 @@ class Controller_Category extends Controller {
 	function action_spent_add_in_cat() {
 		$cnn = new Cnni();
 		return $cnn->add_in_cat();
+	}
+	function action_add_in_cat_spent() {
+		$this->model = new Model_Category();
+		echo $this->model->add_in_cat_spent();
+	}
+	function action_del_from_cat_spent() {
+		$this->model = new Model_Category();
+		echo $this->model->del_from_cat_spent();
 	}
 
 	function action_get_tree_NS() {

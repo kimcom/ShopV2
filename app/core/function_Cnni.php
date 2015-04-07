@@ -382,6 +382,16 @@ class Cnni {
 			echo Shop::MoveElementTreeNS($this->dbi, 'cat_spent', $source, $target);
 		}
 	}
+	public function add_in_cat_spent() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::AddToCatSpent($this->dbi, $cat_id, $source);
+	}
+	public function del_from_cat_spent() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::DelFromCatSpent($this->dbi, $cat_id, $source);
+	}
 
 //category
 	public function get_tree_NS_category() {
@@ -420,6 +430,7 @@ class Cnni {
 	}
 	public function category_tree_oper() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+Fn::paramToLog();
 		if ($oper == 'add') {
 			$id = Shop::CreateNewElementTreeNS($this->dbi, 'category', $id, $parent_id, $name);
 			if ($id == false) {
