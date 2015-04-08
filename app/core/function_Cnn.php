@@ -832,14 +832,14 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 //								. Fn::nfPendel($data2[$tr][$period]['SumSpent']) 
 //								. '</a>'
 //								. '</td>';
-//							$str .= '<td colspan=3>'
-//									. '<a href="javascript:history(\'../reports_fin/pendel_dop?'
-//									. 'catid=' . ($data2[$tr][$period]['CatID']
-//									. '&spent_period=' . $data2[$tr][$period]['Period']
-//									. '\');">'
-//									. Fn::nfPendel($data2[$tr][$period]['SumSpent'])
-//									. '</a>'
-//									. '</td>';
+							$str .= '<td colspan=3>'
+									. '<a href="javascript:history(\'../reports_fin/pendel_dop?'
+									. 'catid=' . $data2[$tr][$period]['CatID']
+									. '&spent_period=' . $data2[$tr][$period]['Period']
+									. '\');">'
+									. Fn::nfPendel($data2[$tr][$period]['SumSpent'])
+									. '</a>'
+									. '</td>';
 						}
 						$str .= '</tr>';
 					}

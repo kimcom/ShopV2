@@ -10,6 +10,9 @@ class Controller_Category extends Controller {
 		$this->view->generate('view_category_var3.php', 'view_template.php');
 	}
 //категории партнеров	
+	function action_cat_partner1() {
+		$this->view->generate('view_category_cat_partner1.php', 'view_template.php');
+	}
 	function action_cat_partner3() {
 		$this->view->generate('view_category_cat_partner3.php', 'view_template.php');
 	}
@@ -21,10 +24,15 @@ class Controller_Category extends Controller {
 		$this->model = new Model_Category();
 		echo $this->model->cat_partner_tree_oper();
 	}
-	function action_partner_add_in_cat() {
-		$cnn = new Cnni();
-		return $cnn->add_in_cat();
+	function action_add_in_cat_partner() {
+		$this->model = new Model_Category();
+		echo $this->model->add_in_cat_partner();
 	}
+	function action_del_from_cat_partner() {
+		$this->model = new Model_Category();
+		echo $this->model->del_from_cat_partner();
+	}
+
 //категории статьи затрат
 	function action_cat_spent1() {
 		$this->view->generate('view_category_cat_spent1.php', 'view_template.php');
@@ -39,10 +47,6 @@ class Controller_Category extends Controller {
 	function action_cat_spent_tree_oper() {
 		$this->model = new Model_Category();
 		echo $this->model->cat_spent_tree_oper();
-	}
-	function action_spent_add_in_cat() {
-		$cnn = new Cnni();
-		return $cnn->add_in_cat();
 	}
 	function action_add_in_cat_spent() {
 		$this->model = new Model_Category();

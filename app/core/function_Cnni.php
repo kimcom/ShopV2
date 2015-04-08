@@ -305,6 +305,17 @@ class Cnni {
 			echo Shop::MoveElementTreeNS($this->dbi, 'cat_partner', $source, $target);
 		}
 	}
+	public function add_in_cat_partner() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::AddToCatPartner($this->dbi, $cat_id, $source);
+	}
+	public function del_from_cat_partner() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		echo Shop::DelFromCatPartner($this->dbi, $cat_id, $source);
+	}
+
 //category spent
 	public function get_tree_NS_cat_spent() {
 		foreach ($_REQUEST as $arg => $val)

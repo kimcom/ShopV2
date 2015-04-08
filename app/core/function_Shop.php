@@ -251,6 +251,20 @@ Fn::DebugToLog('edit: ', $ssql);
 			return false;
 		return true;
 	}
+	public static function AddToCatPartner($dbi, $cat_id, $source) {
+		$ssql = "CALL pr_category('add_in_cat_partner'," . $cat_id . ", '" . $source . "');";
+		$res = $dbi->query($ssql);
+		if (!Fn::checkErrorMySQLi($dbi))
+			return false;
+		return true;
+	}
+	public static function DelFromCatPartner($dbi, $cat_id, $source) {
+		$ssql = "CALL pr_category('del_from_cat_partner'," . $cat_id . ", '" . $source . "');";
+		$res = $dbi->query($ssql);
+		if (!Fn::checkErrorMySQLi($dbi))
+			return false;
+		return true;
+	}
 
 	public static function GetUserList($dbi) {
 		$ssql = "CALL pr_user('getList',0,'','',null,null);";

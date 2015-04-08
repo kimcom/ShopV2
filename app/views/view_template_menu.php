@@ -66,7 +66,8 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 						<li><a href="/category/var2">Категории товаров 2</a></li>
 						<li><a href="/category/var3">Категории товаров 3</a></li>
 						<li class="divider"></li>
-						<li><a href="/category/cat_partner3">Категории партнеров</a></li>
+						<li><a href="/category/cat_partner1">Категории партнеров вар. 1</a></li>
+						<li><a href="/category/cat_partner3">Категории партнеров вар. 3</a></li>
 						<li class="divider"></li>
 						<li><a href="/category/cat_spent1">Категории "Статьи затрат" вар. 1</a></li>
 						<li><a href="/category/cat_spent3">Категории "Статьи затрат" вар. 3</a></li>

@@ -141,36 +141,6 @@ $(document).ready(function () {
 			$("#DT_stop").datepicker("show");
 	});
 
-	// Creating gridH
-	$("#gridH").jqGrid({
-		sortable: true,
-		datatype: "json",
-		width: '100%',
-		height: '333',
-		//&f1=SpentID&f2=CatName&f3=SpentName&f4=Summa
-		colNames: ['Код статьи', 'Категория', 'Статья затрат', 'Сумма'],
-		colModel: [
-		    {name: 'dc_SpentID',	index: 'dc.SpentID',	 width: 80, sorttype: "number", align:"center", search: true},
-		    {name: 'cs_Name',		index: 'cs.Name',	 width: 200,sorttype: "text",   align:"left",   search: true},
-		    {name: 'p_Name',		index: 'p.Name',	 width: 300,sorttype: "text",   align:"left",   search: true},
-		    {name: 'dc_Sum',		index: 'dc.Sum',	 width: 100,sorttype: "number", align:"right",  search: true},
-		],
-		shrinkToFit: true,
-		rowNum: 999999999,
-//		rowNum: 20,
-//		rowList: [20, 30, 40, 50, 100, 200, 300],
-		sortname: "cs.Name,p.Name",
-		viewrecords: true,
-		gridview: true,
-//		toppager: true,
-		pager: '#pgridH'
-	});
-	$("#gridH").jqGrid('navGrid', '#pgridH', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
-	$("#gridH").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
-//	$("#pg_pgridH").remove();
-//	$("#pgridH").removeClass('ui-jqgrid-pager');
-//	$("#pgridH").addClass('ui-jqgrid-pager-empty');
-
 	$('#myTab a').click(function (e) {
 		e.preventDefault();
 		$(this).tab('show');
@@ -195,10 +165,11 @@ $(document).ready(function () {
 //	$("#history").dialog("open");
 });
 function history(url){
-	$("#gridH").jqGrid('setCaption', 'Список документов с выбранными затратами');
-	$("#gridH").jqGrid('setGridParam', {url: url, page: 1});
-	$("#gridH").trigger('reloadGrid');
 	$("#history").dialog("open");
+	$.post(url, function (html) {
+		$('#history').html(html);
+		start();
+	});
 }
 </script>
 <style>
@@ -215,6 +186,9 @@ function history(url){
 		<button id="button_report_run" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
 			<span class="ui-button-text" style1='width:120px;height:22px;'>Сформировать отчет</span>
 		</button>
+	</div>
+	<div class="floatL">
+		<a href="javascript:history('../reports_fin/pendel_dop?catid=10017&spent_period=2015-01');">тест</a>
 	</div>
 	<div id='test' class='frameL mt10 text-left'></div>
 	<div class="tab-content">
@@ -263,8 +237,6 @@ function history(url){
 	</div>
 </div>
 <div id="history" title="Расшифровка движений">
-	<table id="gridH"></table>
-	<div id="pgridH"></div>
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>
