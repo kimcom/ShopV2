@@ -724,7 +724,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		} while ($stmt->nextRowset());
 //запишем суммы затрат в таблицу валовый доход		
 		$count_t = $t;
-		$count_spent = ($count_t < 5 ? $count_t : 5);
+		$count_spent = ($count_t < 6 ? $count_t : 6);
 		for ($t = 0; $t < $count_spent; $t++) {
 			for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
 				$period = $dt->format('Y-m');
@@ -923,7 +923,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 			$str .= '<th class="TAL">' . $spent[$t][$tr]['Field1']['Name'] . '</th>';
 			for ($dt = clone $dt1; $dt <= $dt2; $dt->modify('+1 month')) {
 				$period = $dt->format('Y-m');
-				if($t>=5){ 
+				if($t>=6){ 
 //					Fn::debugToLog("вошло:	$t	$tr	$period	SumSpent=", $spent[$t][$tr][$period]['SumSpent']);
 					$total[$period]['SumSpent'] += $spent[$t][$tr][$period]['SumSpent'];
 				}
