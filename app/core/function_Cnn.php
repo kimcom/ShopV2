@@ -882,7 +882,7 @@ Fn::debugToLog('QUERY_STRING', $url);
 					$i = 0;
 					$colCount = $stmt->columnCount();
 					foreach ($rowset as $row) {
-						$response->rows[$i]['id'] = $row[0];
+						$response->rows[$i]['id'] = str_replace('.', '_', $row[0]);
 						$response->rows[$i]['cell'] = array($row[$f1],
 							$row[$f2],
 							$row[$f3],

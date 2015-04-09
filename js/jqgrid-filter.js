@@ -38,6 +38,9 @@ function filter_restore(gridName){
 			//if(key=='rows') $(gridName).jqGrid('setGridParam',{'rowNum':value});
 		});
 		$(gridName).jqGrid('setGridParam',{'postData':filter}).trigger("reloadGrid");
+//	    }else{
+//		$("#dialog>#text").html(p.message);
+//		$("#dialog").dialog("open");
 	    }
 	}
     );

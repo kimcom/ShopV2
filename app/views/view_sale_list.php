@@ -22,12 +22,12 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 		height: 'auto',
 		colNames: ['ID', 'Номер 1С', 'Дата', 'Статус', 'Партнер', 'Менеджер'],
 		colModel: [
-			{name: 'SaleID',	index: 'SaleID',	width: 100, align: "center",sorttype: "number", search: true},
-			{name: 'Number1C',	index: 'Number1C',	width: 100, align: "left",	sorttype: "text",	search: true},
-			{name: 'DT_sale',	index: 'DT_sale',	width: 120, align: "center",sorttype: "date",	search: true},
-			{name: 'SaleStatus',index: 'SaleStatus',width: 100, align: "left",	stype: 'select', editoptions: {value: ":любой;1:проведен;0:не проведен;-1:удален"}},
-			{name: 'p_PartnerName',index: 'p.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
-			{name: 's_Name',	index: 's.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
+			{name: 'SaleID',		index: 'SaleID',	width: 100, align: "center",sorttype: "number", search: true},
+			{name: 'Number1C',		index: 'Number1C',	width: 100, align: "left",	sorttype: "text",	search: true},
+			{name: 'DT_sale',		index: 'DT_sale',	width: 120, align: "center",sorttype: "date",	search: true},
+			{name: 'SaleStatus',	index: 'SaleStatus',width: 100, align: "left",	stype: 'select', editoptions: {value: ":любой;1:проведен;0:не проведен;-1:удален"}},
+			{name: 'p_PartnerName', index: 'p.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
+			{name: 's_Name',		index: 's.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
 		],
 		gridComplete: function () {if (!fs) {fs = 1; filter_restore("#grid1");}},
 		width: 'auto',
@@ -57,22 +57,22 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 			row_id = row_id.replace('_','.');
 			subgrid_table_id = subgrid_id + "_t";
 			pager_id = "p_" + subgrid_table_id;
-			//console.log(subgrid_id, row_id, subgrid_table_id);
+//			console.log(subgrid_id, row_id, subgrid_table_id);
 			$("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><div id='" + pager_id + "' class='scroll'></div>");
 			$("#" + subgrid_table_id).jqGrid({
 				url: "../engine/jqgrid3?action=doc_sale_info&sc.SaleID="+row_id+"&f1=GoodID&f2=Article&f3=Name&f4=Quantity&f5=PriceBase&f6=PriceDiscount&f7=DiscountPercent&f8=Price&f9=Summa",
 			    datatype: "json",
 			    colNames: ['GoodID', 'Артикул', 'Название', 'Кол-во', 'Цена баз.', 'Скидка', '% ск.', 'Цена', 'Сумма'],
 			    colModel: [
-				{name: "sc_GoodID", index: "sc.GoodID",		width:  60,	align: "center",sorttype: "number"},
-				{name: "g_Article", index: "g.Article",		width: 100, align: "left",	sorttype: "text"},
-				{name: "g_Name",	index: "g.Name",		width: 200, align: "left",	sorttype: "text"},
-				{name: "sc_Quantity", index: "sc.Quantity", width:  60, align: "right",	sorttype: "number"},
-				{name: "sc_PriceBase", index: "sc.PriceBase", width: 60, align: "right",sorttype: "number"},
-				{name: "sc_PriceDiscount", index: "sc.PriceDiscount", width: 60, align: "right",sorttype: "number"},
-				{name: "sc_DiscountPercent", index: "sc.DiscountPercent", width: 60, align: "right",sorttype: "number"},
-				{name: "sc_Price", index: "sc.Price", width: 60, align: "right",sorttype: "number"},
-				{name: "Summa", index: "Summa", width: 80, align: "right",sorttype: "number"},
+					{name: "sc_GoodID", index: "sc.GoodID",		width:  60,	align: "center",sorttype: "number"},
+					{name: "g_Article", index: "g.Article",		width: 100, align: "left",	sorttype: "text"},
+					{name: "g_Name",	index: "g.Name",		width: 200, align: "left",	sorttype: "text"},
+					{name: "sc_Quantity", index: "sc.Quantity", width:  60, align: "right",	sorttype: "number"},
+					{name: "sc_PriceBase", index: "sc.PriceBase", width: 60, align: "right",sorttype: "number"},
+					{name: "sc_PriceDiscount", index: "sc.PriceDiscount", width: 60, align: "right",sorttype: "number"},
+					{name: "sc_DiscountPercent", index: "sc.DiscountPercent", width: 60, align: "right",sorttype: "number"},
+					{name: "sc_Price", index: "sc.Price", width: 60, align: "right",sorttype: "number"},
+					{name: "Summa", index: "Summa", width: 80, align: "right",sorttype: "number"},
 			    ],
 			    rowNum: 20,
 			    pager: pager_id,
@@ -109,7 +109,7 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 
 	//$("#grid1").draggable();
 	$("#grid1").gridResize();
-    });
+});
 </script>
 <div class="container min570">
 	<div style='display:table;'>

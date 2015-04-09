@@ -73,76 +73,103 @@ $(document).ready(function () {
 // Creating grid1
 	$("#grid1").jqGrid({
 	    sortable: true,
-		    //url:"../engine/jqgrid3?action=discountcards_history&cl.CardID=<?php echo $cardid;?>&grouping=cl.CheckID&f1=CardID&f2=CheckID&f3=DT_check&f4=TypePaymentName&f5=SumFull&f6=SumDiscount&f7=Sum",
-			datatype: "json",
-		    height:'auto',
-		    colNames:['Код чека', 'Дата', 'Магазин', 'Тип оплаты', '1', '2', '3'],
-		    colModel:[
-		    {name:'CheckID', index:'CheckID', width: 80, align:"center", sorttype:"text", search:true},
-		    {name:'DT_check', index:'DT_check', width: 120, align:"center", sorttype:"date", search:true},
-		    {name:'ClientName', index:'ClientName', width: 120, align:"center", sorttype:"text", search:true},
-		    {name:'TypePaymentName', index:'TypePaymentName', width: 80, align:"center", sorttype:"date", search:true},
-		    {name:'SumFull', index:'SumFull', width: 100, align:"right", sorttype:"number", search:true, sortable:false},
-		    {name:'SumDiscount', index:'SumDiscount', width: 100, align:"right", sorttype:"number", search:true},
-		    {name:'Sum', index:'Sum', width:100, align:"right", sorttype:"number", search:true, sortable:false},
-		    ],
-		    gridComplete: function() {if (!fs) {fs = 1; filter_restore("#grid1"); }},
-		    width:'auto',
-		    shrinkToFit:false,
+		datatype: "json",
+		height:'auto',
+		colNames:['Код чека', 'Дата', 'Магазин', 'Тип оплаты', 'Сумма без скидки', 'Скидка', 'К оплате'],
+		colModel:[
+		    {name:'cl_CheckID', index:'cl.CheckID', width: 80, align:"center", sorttype:"number", search:true},
+		    {name:'cl_CloseDateTime', index:'cl.CloseDateTime', width: 120, align:"center", sorttype:"date", search:true},
+		    {name:'c_NameShort', index:'c.NameShort', width: 120, align:"left", sorttype:"text", search:true},
+		    {name:'cl_TypePayment', index:'cl.TypePayment', width: 80, align:"center", stype: 'select', editoptions: {value: ":любой;1:без нал.;0:нал."}},
+		    {name:'SumFull', index:'SumFull', width: 100, align:"right", sorttype:"number", search:false},
+		    {name:'SumDiscount', index:'SumDiscount', width: 100, align:"right", sorttype:"number", search:false},
+		    {name:'Sum', index:'Sum', width:100, align:"right", sorttype:"number", search:false},
+		],
+		gridComplete: function() {if (!fs) {fs = 1; filter_restore("#grid1"); }},
+		width:'auto',
+		shrinkToFit:false,
 //		loadonce: true,
 //		rowNum:10000000,
-		    rowNum:20,
-		    rowList:[20, 30, 40, 50, 100],
-		    sortname: "CheckID",
-		    viewrecords: true,
-		    gridview : true,
-		    toppager: true,
-		    caption: "Список чеков",
-		    pager: '#pgrid1',
-//		grouping: true,
-//		groupingView : { 
-//			groupField : ['City','Version'],
-//			groupColumnShow : [true,true],
-//			groupText : ['<b>{0}</b>'],
-//			groupCollapse : false,
-//			groupOrder: ['asc','asc'],
-//			//groupSummary : [true,true]
-//	    }
+		rowNum:20,
+		rowList:[20, 30, 40, 50, 100],
+		sortname: "cl.CloseDateTime",
+		sortorder: "desc",
+		viewrecords: true,
+		gridview : true,
+		toppager: true,
+		caption: "Список чеков",
+		pager: '#pgrid1',
+		// subGrid
+		subGrid: true,
+		subGridOptions: {
+			plusicon  : "ui-icon-triangle-1-e",
+			minusicon : "ui-icon-triangle-1-s",
+			openicon: "ui-icon-arrowreturn-1-e",
+			// load the subgrid data only once	
+			// and the just show/hide
+			reloadOnExpand: false,
+			// select the row when the expand column is clicked
+			selectOnExpand: true
+			},
+		subGridRowExpanded: function (subgrid_id, row_id) {
+			var subgrid_table_id, pager_id;
+			subgrid_id = subgrid_id.replace('.', '_');
+			row_id = row_id.replace('_', '.');
+			subgrid_table_id = subgrid_id + "_t";
+			pager_id = "p_" + subgrid_table_id;
+			$("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><div id='" + pager_id + "' class='scroll'></div>");
+			$("#" + subgrid_table_id).jqGrid({
+				url: "../engine/jqgrid3?action=doc_check_info&sc.CheckID="+row_id+"&f1=GoodID&f2=Article&f3=Name&f4=Quantity&f5=PriceBase&f6=PriceDiscount&f7=DiscountPercent&f8=Price&f9=Summa",
+				datatype: "json",
+				colNames: ['GoodID', 'Артикул', 'Название', 'Кол-во', 'Цена баз.', 'Скидка', '% ск.', 'Цена', 'Сумма'],
+				colModel: [
+					{name: "sc_GoodID",			 index: "sc.GoodID",		  width: 60,	align: "center", sorttype: "number"},
+					{name: "g_Article",			 index: "g.Article",		  width: 70,   align: "center", sorttype: "text"},
+					{name: "g_Name",			 index: "g.Name",			  width: 185,	align: "center", sorttype: "text"},
+					{name: "sc_Quantity",		 index: "sc.Quantity",		  width: 60,	align: "right", sorttype: "number"},
+					{name: "sc_PriceBase",		 index: "sc.PriceBase",		  width: 60,	align: "right", sorttype: "number"},
+					{name: "sc_PriceDiscount",	 index: "sc.PriceDiscount",	  width: 60,	align: "right", sorttype: "number"},
+					{name: "sc_DiscountPercent", index: "sc.DiscountPercent", width: 60,	align: "right", sorttype: "number"},
+					{name: "sc_Price",			 index: "sc.Price",		      width: 60,	align: "right", sorttype: "number"},
+					{name: "Summa",				 index: "Summa",			  width: 80,	align: "right", sorttype: "number"},
+				],
+				rowNum: 20,
+				pager: pager_id,
+				sortname: "sc.DT_modi",
+				height: '100%',
+			});
+			$("#" + subgrid_table_id).jqGrid('navGrid', "#" + pager_id, {edit: false, add: false, del: false})
+			$("#pg_" + pager_id).remove();
+			$("#" + pager_id).removeClass('ui-jqgrid-pager');
+			$("#" + pager_id).addClass('ui-jqgrid-pager-empty');
+		}
+    });
+    $("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add:false, del:false, search:false, refresh: true, cloneToTop: true});
+	$("#grid1").navButtonAdd('#grid1_toppager', {
+		title: 'Открыть документ', buttonicon: "ui-icon-pencil", caption: 'Открыть документ', position: "last",
+		onClickButton: function () {
+		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+		    var node = $("#grid1").jqGrid('getRowData', id);
+		    //console.log(id,node,node.Name);
+		    //if (id != '') alert("Здесь откроем документ: "+id);
+//			window.location = "../goods/map_discountcard_edit?cardid=" + id;
+		}
 	    });
-		    $("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add:false, del:false, search:false, refresh: true, cloneToTop: true});
-//		    $("#grid1").navButtonAdd('#grid1_toppager', {
-//	    title: 'Открыть информационную карту', buttonicon: "ui-icon-pencil", caption: 'Открыть информационную карту', position: "last",
-//		    onClickButton: function () {
-//		    var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-//			    var node = $("#grid1").jqGrid('getRowData', id);
-//			    //console.log(id,node,node.Name);
-//			    if (id != '')
-//			    window.location = "../goods/map_discountcard_edit?cardid=" + id;
-//		    }
-//	    });
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function(){filter_save("#grid1"); }});
-	$("#pg_pgrid1").remove();
+	
+	$("#pg_pgrid1").remove();	
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
 	$("#pgrid1").addClass('ui-jqgrid-pager-empty');
-	//клавиатура
-	//$("#grid1").jqGrid('bindKeys', {"onEnter":function(rowid) { alert("You enter a row with id:" + rowid)} });
-	//$("#grid1").draggable();
+	
 	$("#grid1").gridResize();
 
 	$('#myTab a').click(function (e) {
 		e.preventDefault();
 		if(this.id=='a_tab_history'){
-			$("#grid1").jqGrid('setGridParam',{url:"../engine/jqgrid3?action=discountcards_history&cl.CardID="+$("#cardid").val()+"&grouping=cl.CheckID&f1=CheckID&f2=DT_check&f3=ClientName&f4=TypePaymentName&f5=SumFull&f=SumDiscount&f7=Sum",page:1});
+			$("#grid1").jqGrid('setGridParam',{url:"../engine/jqgrid3?action=discountcards_history&cl.CardID="+$("#cardid").val()+"&grouping=cl.CheckID&f1=CheckID&f2=DT_check&f3=ClientName&f4=TypePaymentName&f5=SumFull&f6=SumDiscount&f7=Sum",page:1});
 			$("#grid1").trigger('reloadGrid');
 		}
 	});
-	//$("#a_tab_history").tab('show');
-	setTimeout(function(){
-		$("#grid1").jqGrid('setGridParam',{url:"../engine/jqgrid3?action=discountcards_history&cl.CardID="+$("#cardid").val()+"&grouping=cl.CheckID"+
-			"&f1=CheckID&f2=DT_check&f3=ClientName&f4=TypePaymentName&f5=SumFull&f6=SumDiscount&f7=Sum",page:1});
-		$("#grid1").trigger('reloadGrid');
-	},100);
-	//$('#myTab a').click();
 });
 
 </script>
@@ -262,7 +289,6 @@ $(document).ready(function () {
 		<div class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_history">
 			<div class="container min570">
 				<div style='display:table;'>
-					<!--<legend>Список дисконтных карт:</legend>-->
 					<div id='div1' class='frameL pt5'>
 						<table id="grid1"></table>
 						<div id="pgrid1"></div>

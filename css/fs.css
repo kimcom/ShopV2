@@ -52,14 +52,14 @@
 .pl50{padding-left:50px;}
 .pr10{padding-right:10px;}
 .pr50{padding-right:50px;}
-.pt0 {padding-top:0px;}
 .pt5 {padding-top:5px;}
 .pt10{padding-top:10px;}
 .pt50{padding-top:50px;}
-.pb0 {padding-bottom: 0px;}
 .p0  {padding:0px;}
 .p5  {padding:5px;}
 .p10 {padding:10px;}
+.pt0 {padding-top:0px;}
+.pb0 {padding-bottom: 0px;}
 
 .wauto{width:auto;}
 .w5p{width:5%;}
@@ -257,8 +257,8 @@ input[type='text'], input[type='password'], textarea {
     top: 30%;
     left: 0;
     width: 30px;
-    height: 250px;
-/*    height: 30%;*/
+/*    height: 250px;
+    height: 30%;*/
     background: #0094d6;
 /*    color: #fff;*/
     text-align: center;
