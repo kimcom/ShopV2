@@ -127,5 +127,17 @@ EOF;
 		//return $cnn->discoundcard_save();
 	}
 
+	function action_test_ajax_json(){
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+		$response = new stdClass();
+		$response->test = '12345<br>'.$param1.'<br>'.$param2.'<br>';
+		$response->privet = 'Привет Егор!<br>Как дела?';
+		header("Content-type: application/json;charset=utf8");
+		echo json_encode($response);
+	}
+	function action_test_ajax_html(){
+		$response = "<table><thead><tr><th>123456 йжлолдукпдлцудлопдлоуц</th></tr></thead></table>";
+		echo $response;
+	}
 }
 ?>

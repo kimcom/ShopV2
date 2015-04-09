@@ -150,10 +150,14 @@ $(document).ready(function () {
 		$("#dialog_progress").dialog( "option", "title", 'Ожидайте! Выполняется формирование отчета...');
 		$("#dialog_progress").dialog("open");
 		$.post("../reports_fin/pendel_data2?action=3&DT_start=" + $("#DT_start").val() + "&DT_stop=" + $("#DT_stop").val(), function (json) {
-			if($('#example').hasClass('dataTable'))$('#example').dataTable().fnDestroy();
-			$('#example').html(json.table1);
-			$('#example').dataTable({"bDestroy": true,"searching": false, "paging": false, "info": false, "ordering": false});
-			setTimeout(function () {$("#dialog_progress").dialog("close");}, 200);
+			$('#div_report').html(json.table1);
+			//if($('#example1').hasClass('dataTable'))$('#example1').dataTable().fnDestroy();
+			//$('#example1').html(json.table1);
+			//$('#example1').dataTable({"bDestroy": true,"searching": false, "paging": false, "info": false, "ordering": false});
+//			if($('#example2').hasClass('dataTable'))$('#example2').dataTable().fnDestroy();
+//			$('#example2').html(json.table2);
+//			$('#example2').dataTable({"bDestroy": true,"searching": false, "paging": false, "info": false, "ordering": false});
+			setTimeout(function () {$("#dialog_progress").dialog("close");}, 300);
 		});
 		
 		$("#a_tab_report").tab('show');
@@ -186,9 +190,6 @@ function history(url){
 		<button id="button_report_run" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
 			<span class="ui-button-text" style1='width:120px;height:22px;'>Сформировать отчет</span>
 		</button>
-	</div>
-	<div class="floatL">
-		<a href="javascript:history('../reports_fin/pendel_dop?catid=10017&spent_period=2015-01');">тест</a>
 	</div>
 	<div id='test' class='frameL mt10 text-left'></div>
 	<div class="tab-content">
@@ -229,10 +230,13 @@ function history(url){
 		<div class="tab-pane m0 w100p min530 borderTop1 frameL center border0" id="tab_report">
 			<div id='report_param_str' class="mt10 TAL font14">
 			</div>
-			<div id='div1' class='center frame0 mt10'>
-				<table id="example" class="table table-striped table-bordered" cellspacing="0"  width="100%">
+			<div id='div_report' class='center frame0 mt10'></div>
+<!--			<div id='div1' class='center frame0 mt10'>
+				<table id="example1" class="table table-striped table-bordered" cellspacing="0"  width="100%">
 				</table>
-			</div>
+				<table id="example2" class="table table-striped table-bordered" cellspacing="0"  width="100%">
+				</table>
+			</div>-->
 		</div>
 	</div>
 </div>

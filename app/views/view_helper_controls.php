@@ -165,6 +165,28 @@
 	    });
 	    $("#gridH").jqGrid('navGrid', '#pgridH', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
 	    $("#gridH").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
+
+
+	$('#button_report_run_json').click(function (e) {
+		p1 = 'lalalal';
+		p2 = 'ogogogo';
+		$.post("../engine/test_ajax_json", {param1: p1, param2: p2}, function (json) {
+		    $('#text').html(json.test + json.privet);
+		    $("#dialog").dialog("open");
+		});
+    });
+    $('#button_report_run_html').click(function (e) {
+		$.ajax({
+		    type: "POST",
+		    data: ({param1: 'Oleg', param2: 'Malinin', age: '42'}),
+		    url: '../engine/test_ajax_html',
+		    dataType: "html",
+		    success: function (data) {
+			$("#text").html(data);
+			$("#dialog").dialog("open");
+		    }
+		});
+    });
 });
 </script>
 <style>
@@ -187,6 +209,16 @@
 	<div id="tab-content" class="tab-content">
 		<div class="tab-pane min0 m0 w100p ui-corner-all borderColor frameL border1 h60" id="tab_1">
 			Tab-1
+			<div class="floatL">
+				<button id="button_report_run_json" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
+					<span class="ui-button-text" style1='width:120px;height:22px;'>ТЕСТ AJAX JSON</span>
+				</button>
+			</div>
+			<div>
+				<button id="button_report_run_html" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
+					<span class="ui-button-text" style1='width:120px;height:22px;'>ТЕСТ AJAX HTML</span>
+				</button>
+			</div>
 		</div>
 		<div class="tab-pane min0 m0 w100p ui-corner-all borderColor frameL border1 h60" id="tab_2">
 			Tab-2
