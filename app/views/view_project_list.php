@@ -72,7 +72,7 @@
 		alert("You enter a row with id:" + rowid)
     }});
 	$("#grid1").gridResize();
-    });
+});
 </script>
 <div class="container min570">
 	<div id='div1' class='frameL pt5'>

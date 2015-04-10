@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+$(document).ready(function () {
 	//превратим div dialog в "окно сообщений"
 	$("#dialog").dialog({
 		autoOpen: false, modal: true, width: 400,
@@ -187,6 +187,10 @@
 		    }
 		});
     });
+	$(document).keypress(function(event_obj) {
+		console.log(event_obj);
+		alert(event_obj.charCode);
+	});
 });
 </script>
 <style>

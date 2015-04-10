@@ -135,7 +135,7 @@ if ($_SESSION['AccessLevel'] >= 2000) {
 				<li class="<?php echo $active_menu9; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Фин. отчеты<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="/reports_fin/pendel">Profit and Loss (Отчет о прибылях и убытках/доходах и расходах)</a></li>
+						<li><a href="/reports_fin/pendel">Profit and loss (Отчет о прибылях и убытках/доходах и расходах)</a></li>
 						<li><a href="/reports_fin/cashflow">Cash Flow (Отчет о движении денежных средств)</a></li>
 					</ul>
 				</li>

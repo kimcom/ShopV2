@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="../../css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/fs.css">
 		<link rel="stylesheet" type="text/css" href="../../css/select2.css">
+		<link rel="stylesheet" type="text/css" href="../../css/slidorion.css">
 
 		<script src="../../js/jquery-1.11.2.min.js" type="text/javascript"></script>
 		<script src="../../js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
@@ -29,6 +30,8 @@
 		<script src="../../js/jquery.dataTables.min.js" type="text/javascript"></script>
 		<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
 		<script src="../../js/select2.min.js"></script>
+		<script src="../../js/jquery.easing.js"></script>
+		<script src="../../js/jquery.slidorion.min.js"></script>
 		
 		<style type="text/css">
             body {

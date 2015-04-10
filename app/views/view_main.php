@@ -1,45 +1,24 @@
+<script type="text/javascript">
+var tab_active = '';
+$(document).ready(function () {
+    $('#slidorion').slidorion();
+});
+</script>
 <div class="container min570">
-	<div class="panel panel-default mb5">
-		<div class="panel-heading">
-			<h3><?php echo $_SESSION['titlename']; ?></h3>
+	<div id="slidorion" class="panel panel-default mb5 center-block slidorion">
+		<div class="slider">
+			<div class="slide"><img src="../../img/progress_circle3.gif" /></div>
+			<div class="slide"><img src="../../img/progress_circle4.gif" /></div>
+			<div class="slide"><img src="../../img/progress_circle5.gif" /></div>
 		</div>
-		<div class="panel-body min500">
-			<p class="text-info lead">
-				Данная система создана для накопления, управления и анализа информации<br>
-				о проданных товарах в розничной и оптовой сетях компании <?php echo $_SESSION['company']; ?>
-			</p>
-			<div class="list-group">
-				<a class="list-group-item disabled">
-					<h4>Основные возможности системы:</h4>
-				</a>
-				<div class="list-group">
-					<ul class="list-group-item">
-						<li class="list-group-item">
-							Управление товарным ассортиментом, штрих-кодами, ценами.
-						</li>
-						<li class="list-group-item">
-							Управление категориями, группами и матрицами товарного ассортимента.
-						</li>
-						<li class="list-group-item">
-							Управление списками торговых точек и продавцов.
-						</li>
-						<li class="list-group-item">
-							Управление акциями для оптовой и розничной сети.
-						</li>
-						<li class="list-group-item">
-							Получение аналитических отчетов.
-						</li>
-					</ul>
-				</div>
-			</div>
-<?php
-if ($_SESSION['AccessLevel'] == 0) {
-				echo "<h4 class='center list-group-item list-group-item-danger'>"
-					. "ВНИМАНИЕ!<br><small>Ваш аккаунт имеет ограниченный доступ!<br>"
-					. "Для получения доступа к функциям системы,<br>"
-					. "обратитесь к администратору системы: <a href='mailto:".$_SESSION['adminEmail']."'>".  $_SESSION['adminEmail'] ."</a></small></h4>";
-}
-?>
+
+		<div class="accordion">
+			<div class="header">История покупок</div>
+			<div class="content"><p>На сайте появилась возможность просмотра истории покупок</p></div>
+			<div class="header">Usain Bolt</div>
+			<div class="content"><-- CONTENT GOES HERE --></div>
+			<div class="header">Michael Jordan</div>
+			<div class="content"><-- CONTENT GOES HERE --></div>
 		</div>
 	</div>
 </div>

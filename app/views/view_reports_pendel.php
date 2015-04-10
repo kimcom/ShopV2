@@ -161,7 +161,7 @@ $(document).ready(function () {
 		});
 		
 		$("#a_tab_report").tab('show');
-		prmRep  = "<b>Отчет \"Profit and Lost\"</b> ";
+		prmRep  = "<b>Отчет \"Profit and loss\"</b> ";
 		prmRep += "<br>" + "Период с " + $("#DT_start").val() + " по " + $("#DT_stop").val();
 		$("#report_param_str").html(prmRep);
 	});
@@ -184,7 +184,7 @@ function history(url){
 <div class="container center">
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
 		<li class="active"><a href="#tab_filter" role="tab" data-toggle="tab">Настройки отбора</a></li>
-		<li><a id="a_tab_report" href="#tab_report" role="tab" data-toggle="tab">Отчет "Profit and Lost"</a></li>
+		<li><a id="a_tab_report" href="#tab_report" role="tab" data-toggle="tab">Отчет "Profit and loss"</a></li>
 	</ul>
 	<div class="floatL">
 		<button id="button_report_run" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">

@@ -209,8 +209,8 @@ var source_id_copy 	= 0;
 			{name:'p_SpentID', index:'p.SpentID', width: 60, sorttype: "number", search: true},
 			{name:'Name', index:'Name', width:220, sorttype:"text", search:true}
 		],
-		rowNum:20,
-		rowList:[20,30,40,50,100,200,300],
+		rowNum:10000,
+		rowList:[20,100,500,10000],
 		sortname: "Name",
 		viewrecords: true,
 		multiselect: true,
@@ -273,8 +273,8 @@ var source_id_copy 	= 0;
 			{name:'p_SpentID', index:'p.SpentID', width: 60, sorttype: "number", search: true},
 			{name:'Name', index:'Name', width:310, sorttype:"text", search:true}
 		],
-		rowNum:20,
-		rowList:[20,30,40,50,100,200,300],
+		rowNum:10000,
+		rowList:[20,100,500,10000],
 		sortname: "Name",
 		viewrecords: true,
 		multiselect: true,
