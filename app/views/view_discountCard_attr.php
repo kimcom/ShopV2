@@ -88,12 +88,7 @@ if (isset($_REQUEST['cardid'])) {
 		{name: 'SumDiscount', index: 'SumDiscount', width: 100, align: "right", sorttype: "number", search: false},
 		{name: 'Sum', index: 'Sum', width: 100, align: "right", sorttype: "number", search: false},
 		],
-		gridComplete: function () {
-		if (!fs) {
-			fs = 1;
-			filter_restore("#grid1");
-		}
-		},
+		gridComplete: function () {if (!fs) {fs = 1; filter_restore("#grid1");}},
 		width: 'auto',
 		shrinkToFit: false,
 //		loadonce: true,
@@ -153,19 +148,7 @@ if (isset($_REQUEST['cardid'])) {
 		}
 	});
 	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
-	$("#grid1").navButtonAdd('#grid1_toppager', {
-		title: 'Открыть документ', buttonicon: "ui-icon-pencil", caption: 'Открыть документ', position: "last",
-		onClickButton: function () {
-		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		var node = $("#grid1").jqGrid('getRowData', id);
-		//console.log(id,node,node.Name);
-		//if (id != '') alert("Здесь откроем документ: "+id);
-//			window.location = "../goods/map_discountcard_edit?cardid=" + id;
-		}
-	});
-	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {
-		filter_save("#grid1");
-		}});
+	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
 
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
@@ -176,12 +159,11 @@ if (isset($_REQUEST['cardid'])) {
 	$('#myTab a').click(function (e) {
 		e.preventDefault();
 		if (this.id == 'a_tab_history') {
-		$("#grid1").jqGrid('setGridParam', {url: "../engine/jqgrid3?action=discountcards_history&cl.CardID=" + $("#cardid").val() + "&grouping=cl.CheckID&f1=CheckID&f2=DT_check&f3=ClientName&f4=TypePaymentName&f5=SumFull&f6=SumDiscount&f7=Sum", page: 1});
-		$("#grid1").trigger('reloadGrid');
+			$("#grid1").jqGrid('setGridParam', {url: "../engine/jqgrid3?action=discountcards_history&cl.CardID=" + $("#cardid").val() + "&grouping=cl.CheckID&f1=CheckID&f2=DT_check&f3=ClientName&f4=TypePaymentName&f5=SumFull&f6=SumDiscount&f7=Sum", page: 1});
+			$("#grid1").trigger('reloadGrid');
 		}
 	});
-    });
-
+});
 </script>
 <input id="cardid" name="cardid" type="hidden" value="<?php echo $row['CardID']; ?>">
 <style>

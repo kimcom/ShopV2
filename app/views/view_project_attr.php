@@ -361,7 +361,7 @@ function task_open(rowid){
 			<div class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Проект:</span>
-					<span id="projectID_span" class="input-group-addon form-control TAL"><?php echo $row['ProjectID']; ?></span>
+					<span id="projectid_span" class="input-group-addon form-control TAL"><?php echo $row['ProjectID']; ?></span>
 					<span class="input-group-addon w32"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">
