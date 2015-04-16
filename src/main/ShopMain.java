@@ -14,6 +14,10 @@ public class ShopMain {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+//				MyEKKA2 me = new MyEKKA2();
+//				if (1==1) {
+//					System.exit(0);
+//				}
                 final ConfigReader config = ConfigReader.getInstance();
                 if (config == null) System.exit(0);
                 ConnectionDb cnn = ConnectionDb.getInstance();

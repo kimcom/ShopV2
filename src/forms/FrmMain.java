@@ -1,5 +1,8 @@
 package forms;
 
+import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.Dispatch;
+import com.jacob.com.Variant;
 import db.ConnectionDb;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +14,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
@@ -19,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,6 +40,8 @@ import main.MyTimerTask;
 import main.MyUtil;
 import main.Updater;
 import reports.ReportCheck;
+import main.MyEKKA;
+import main.MyEKKA2;
 
 public class FrmMain extends javax.swing.JFrame {
     private static FrmMain instance = null;
@@ -348,9 +356,11 @@ public class FrmMain extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+		cnn = ConnectionDb.getInstance();
+		if (cnn != null) cnn.setAppVersion();
         requery();
 //временно
-setInvisible(jButtonReturn);
+//setInvisible(jButtonReturn);
 //setInvisible(jButtonPromo);
 //setInvisible(jButtonSeller);
 //setInvisible(jButtonReturn);
@@ -1302,7 +1312,6 @@ setInvisible(jButtonReturn);
 			//JOptionPane.showMessageDialog(null, "Возникла ошибка при назначении акции.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
 			return;
 		}
-		
 		FrmReturn frmReturn = new FrmReturn();
 		frmReturn.setModal(true);
 		frmReturn.setVisible(true);

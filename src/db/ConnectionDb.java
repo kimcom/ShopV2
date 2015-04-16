@@ -168,7 +168,7 @@ public final class ConnectionDb{
 //test compression
 	public void getListCards() {
 		if (cnn == null) {
-			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getUserProperties: parameter [cnn] cannot be null!"));
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getListCards: parameter [cnn] cannot be null!"));
 			return;
 		}
 		String sql = "SELECT * FROM cards";
@@ -277,6 +277,27 @@ public final class ConnectionDb{
             return null;
         }
     }
+	public void setAppVersion() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setAppVersion: parameter [cnn] cannot be null!"));
+			return;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_user(?,?,?,?,?,?)}");
+			cs.setString(1, "setAppVersion");
+			cs.setInt(2, 0);
+			cs.setString(3, config.APP_VERSION);
+			cs.setString(4, "");
+			cs.setInt(5, clientID);
+			cs.setInt(6, 0);
+			cs.execute();
+			return;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return;
+		}
+	}
 //client
     private boolean getClientInfo(int clientID) {
         if (cnn == null) {
