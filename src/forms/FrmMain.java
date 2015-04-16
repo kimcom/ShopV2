@@ -1312,9 +1312,10 @@ public class FrmMain extends javax.swing.JFrame {
 			//JOptionPane.showMessageDialog(null, "Возникла ошибка при назначении акции.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
 			return;
 		}
-		FrmReturn frmReturn = new FrmReturn();
-		frmReturn.setModal(true);
-		frmReturn.setVisible(true);
+		
+//		FrmReturn frmReturn = new FrmReturn();
+//		frmReturn.setModal(true);
+//		frmReturn.setVisible(true);
 	}
 	private void jButtonUpdateActionPerformed(){
 		Updater u = new Updater();
