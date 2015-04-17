@@ -19,8 +19,9 @@ public class ConfigReader {
     public String       SERVER_DB;
     public String       USER_NAME;
 	public String		APP_VERSION;
-    public int          MARKET_ID;
-    public int          TERMINAL_ID;
+    public int          MARKET_ID = 0;
+    public int          TERMINAL_ID = 0;
+    public int          EKKA_TYPE = 0;
 	public int			TIME_WAIT = 10;//in second
 	public int			TIME_UPDATE = 1 * 60 * 60;//in second
 	public int			TIME_UPDATE_START = 10 * 60;//in second
@@ -45,22 +46,34 @@ public class ConfigReader {
         SERVER_DB       = props.getProperty("SERVER_DB");
         USER_NAME       = props.getProperty("USER_NAME");
         try {
-            MARKET_ID = new Integer(props.getProperty("MARKET_ID"));
+			String str = props.getProperty("MARKET_ID");
+			if (str != null)
+				MARKET_ID = new Integer(str);
         } catch (NumberFormatException e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
             MARKET_ID = 0;
         }
         try {
-            TERMINAL_ID = new Integer(props.getProperty("TERMINAL_ID"));
+			String str = props.getProperty("TERMINAL_ID");
+			if (str != null)
+	            TERMINAL_ID = new Integer(str);
         } catch (NumberFormatException e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
             TERMINAL_ID = 0;
+        }            
+        try {
+			String str = props.getProperty("EKKA_TYPE");
+			if (str!=null)
+				EKKA_TYPE = new Integer(str);
+        } catch (NumberFormatException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+            EKKA_TYPE = 0;
         }            
 
 		Package p = this.getClass().getPackage();
 		APP_VERSION = p.getImplementationVersion();
 		if(APP_VERSION == null) {
-			Properties propsMF = new Properties();
+			//Properties propsMF = new Properties();
 			File fileConfMF = new File(MANIFEST_FILE_NAME);
 			if (!fileConfMF.exists()) {
 				//throw new FileNotFoundException("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);

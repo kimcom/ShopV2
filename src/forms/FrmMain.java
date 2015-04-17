@@ -349,6 +349,11 @@ public class FrmMain extends javax.swing.JFrame {
 		comp.setFocusable(false);
 		comp.setVisible(false);
 	}
+	private void setVisible(Component comp) {
+		comp.setEnabled(true);
+		comp.setFocusable(true);
+		comp.setVisible(true);
+	}
     private FrmMain() {
         initComponents();
         conf = ConfigReader.getInstance();
@@ -359,6 +364,8 @@ public class FrmMain extends javax.swing.JFrame {
 		cnn = ConnectionDb.getInstance();
 		if (cnn != null) cnn.setAppVersion();
         requery();
+		
+		System.out.println("EKKA_TYPE:"+conf.EKKA_TYPE);
 //временно
 //setInvisible(jButtonReturn);
 //setInvisible(jButtonPromo);
@@ -370,6 +377,8 @@ public class FrmMain extends javax.swing.JFrame {
 		//уст. русской раскладки для клавиатуры
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
+//jButtonReturnActionPerformed();
+		
 //		toFront();
 //		requestFocus();
 //		setAutoRequestFocus(true);
@@ -402,6 +411,7 @@ public class FrmMain extends javax.swing.JFrame {
         jButtonNewDiscountCard = new javax.swing.JButton();
         jButtonPromo = new javax.swing.JButton();
         jButtonSeller = new javax.swing.JButton();
+        jLabelReturn = new javax.swing.JLabel();
         jPanelRight = new javax.swing.JPanel();
         jButtonAdmin = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
@@ -554,6 +564,12 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jLabelReturn.setFont(new java.awt.Font("Tahoma", 3, 30)); // NOI18N
+        jLabelReturn.setForeground(java.awt.SystemColor.activeCaption);
+        jLabelReturn.setText(" ");
+        jLabelReturn.setMaximumSize(new java.awt.Dimension(100, 70));
+        jLabelReturn.setPreferredSize(new java.awt.Dimension(100, 70));
+
         javax.swing.GroupLayout jPanelLeftLayout = new javax.swing.GroupLayout(jPanelLeft);
         jPanelLeft.setLayout(jPanelLeftLayout);
         jPanelLeftLayout.setHorizontalGroup(
@@ -576,7 +592,8 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jButtonPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSeller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelReturn, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
         );
         jPanelLeftLayout.setVerticalGroup(
             jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -590,7 +607,8 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPromo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSeller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonSeller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -820,7 +838,7 @@ public class FrmMain extends javax.swing.JFrame {
             .addComponent(jPanelLastModi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanelMiddle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanelLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -930,6 +948,46 @@ public class FrmMain extends javax.swing.JFrame {
                 jTableCheck.setRowSelectionInterval(selectedRow, selectedRow);
             }
         }
+		if (cnn.checkFlagReturn == 1) {
+			setVisible(jButtonAdmin);
+			setVisible(jButtonNewDiscountCard);
+			setVisible(jButtonPromo);
+			setInvisible(jLabelReturn);
+			jButtonReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/return.png"))); // NOI18N
+			jLabel1.setText("№ чека");
+			jLabel1.setForeground(java.awt.SystemColor.desktop);
+			jLabel2.setForeground(java.awt.SystemColor.desktop);
+			jLabel3.setForeground(java.awt.SystemColor.desktop);
+			jLabel4.setForeground(java.awt.SystemColor.desktop);
+			jLabel5.setForeground(java.awt.SystemColor.desktop);
+			jLabel6.setForeground(java.awt.SystemColor.desktop);
+			jLabel7.setForeground(java.awt.SystemColor.desktop);
+			jLabel8.setForeground(java.awt.SystemColor.desktop);
+			jLabel9.setForeground(java.awt.SystemColor.desktop);
+			jLabel10.setForeground(java.awt.SystemColor.desktop);
+			jLabel9.setText("К оплате:");
+		} else {
+			setInvisible(jButtonAdmin);
+			setInvisible(jButtonNewDiscountCard);
+			setInvisible(jButtonPromo);
+			setVisible(jLabelReturn);
+			jLabelReturn.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+			jLabelReturn.setForeground(java.awt.SystemColor.RED);
+			jLabelReturn.setText("<html><center>ОФОРМЛЕНИЕ&nbsp;&nbsp;<br>ВОЗВРАТА</html>");
+			jLabel1.setForeground(java.awt.SystemColor.RED);
+			jLabel2.setForeground(java.awt.SystemColor.RED);
+			jLabel3.setForeground(java.awt.SystemColor.RED);
+			jLabel4.setForeground(java.awt.SystemColor.RED);
+			jLabel5.setForeground(java.awt.SystemColor.RED);
+			jLabel6.setForeground(java.awt.SystemColor.RED);
+			jLabel7.setForeground(java.awt.SystemColor.RED);
+			jLabel8.setForeground(java.awt.SystemColor.RED);
+			jLabel9.setForeground(java.awt.SystemColor.RED);
+			jLabel10.setForeground(java.awt.SystemColor.RED);
+			jLabel1.setText("№ возврата");
+			jLabel9.setText("К выдаче:");
+			jButtonReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/return_on.png"))); // NOI18N
+		}
 	}
     private void goodOperationQuantity(String typeOperation) {
 		if (!checkCnnStatus()) return;
@@ -999,7 +1057,7 @@ public class FrmMain extends javax.swing.JFrame {
 			}
 		}
 	}
-    private void jButtonNewCheckActionPerformed() {
+	private void jButtonNewCheckActionPerformed() {
         if (!checkCnnStatus()) return;
 		cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
@@ -1228,6 +1286,7 @@ public class FrmMain extends javax.swing.JFrame {
     }
     private void jButtonNewDiscountCardActionPerformed(){
 		if (blDiscountCardFuture) return;
+		if (cnn.checkFlagReturn == -1) return;
 		if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
@@ -1269,6 +1328,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void jButtonPromoActionPerformed(){
         if (!checkCnnStatus()) return;
         if (blDiscountCardFuture) return;
+		if (cnn.checkFlagReturn == -1) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
 //		java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1302,17 +1362,25 @@ public class FrmMain extends javax.swing.JFrame {
 	}
 	private void jButtonAdminActionPerformed(){
 		if (!checkCnnStatus()) return;
+		if (cnn.checkFlagReturn==-1) return;
 		FrmAdmin frmAdmin = new FrmAdmin();
 		frmAdmin.setModal(true);
 		frmAdmin.setVisible(true);
 	}
 	private void jButtonReturnActionPerformed() {
+		if (!checkCnnStatus()) return;
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) return;
 		if (!cnn.checkIsBlank()) {
 			DialogBoxs.viewMessage("Сначала закройте текущий чек!");
-			//JOptionPane.showMessageDialog(null, "Возникла ошибка при назначении акции.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
 			return;
 		}
-		
+		if(cnn.checkFlagReturn!=1){
+			cnn.setCheckFlagReturn(1, cnn.currentCheckID); // уст. флаг возврата
+		}else{
+			cnn.setCheckFlagReturn(-1, cnn.currentCheckID); // уст. флаг возврата
+		}
+		requery();
 //		FrmReturn frmReturn = new FrmReturn();
 //		frmReturn.setModal(true);
 //		frmReturn.setVisible(true);
@@ -1415,6 +1483,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelReturn;
     private javax.swing.JPanel jPanelLastModi;
     private javax.swing.JPanel jPanelLeft;
     private javax.swing.JPanel jPanelMiddle;

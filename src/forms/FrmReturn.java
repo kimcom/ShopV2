@@ -348,7 +348,7 @@ public class FrmReturn extends javax.swing.JDialog {
         jButtonDiscountCard = new javax.swing.JButton();
         jButtonCalc = new javax.swing.JButton();
         jButtonPayType = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
+        jLabelReturn = new javax.swing.JLabel();
         jPanelRight = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
         jPanelMiddle = new javax.swing.JPanel();
@@ -458,9 +458,9 @@ public class FrmReturn extends javax.swing.JDialog {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 3, 30)); // NOI18N
-        jLabel11.setForeground(java.awt.SystemColor.activeCaption);
-        jLabel11.setText("<html><center>Оформление<br>возврата товара</html>");
+        jLabelReturn.setFont(new java.awt.Font("Tahoma", 3, 30)); // NOI18N
+        jLabelReturn.setForeground(java.awt.SystemColor.activeCaption);
+        jLabelReturn.setText("<html><center>Оформление<br>возврата товара</html>");
 
         javax.swing.GroupLayout jPanelLeftLayout = new javax.swing.GroupLayout(jPanelLeft);
         jPanelLeft.setLayout(jPanelLeftLayout);
@@ -479,7 +479,7 @@ public class FrmReturn extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPayType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelLeftLayout.setVerticalGroup(
             jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,7 +491,7 @@ public class FrmReturn extends javax.swing.JDialog {
                     .addComponent(jButtonPayType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCalc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -697,7 +697,7 @@ public class FrmReturn extends javax.swing.JDialog {
 		if(!checkCnnStatus())return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-		cnn.setFlagReturn(true);
+		//cnn.setFlagReturn(true);
 		cnn.lastCheck();
         if (cnn.currentCheckID == null) return;
         if (!cnn.statusValid()) return;
@@ -1069,7 +1069,7 @@ public class FrmReturn extends javax.swing.JDialog {
 		}
 	}
 	private void jButtonExitActionPerformed () {
-        cnn.setFlagReturn(false);
+        //cnn.setFlagReturn(false);
 		cnn.lastCheck();
 		dispose();
     }
@@ -1113,7 +1113,6 @@ public class FrmReturn extends javax.swing.JDialog {
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1122,6 +1121,7 @@ public class FrmReturn extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelReturn;
     private javax.swing.JPanel jPanelLastModi;
     private javax.swing.JPanel jPanelLeft;
     private javax.swing.JPanel jPanelMiddle;

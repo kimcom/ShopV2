@@ -25,11 +25,11 @@ public final class ConnectionDb{
     private Connection          cnn         = null;
     private Statement           stmt        = null;
     public int                  accessLevel = 999;
-	private boolean				flagReturn  = false;
     public BigDecimal           currentCheckID;
     private int                 userID;
     public int					clientID;
     public int					matrixID;
+	public int					checkFlagReturn;
     public int                  checkStatus;
     public int                  checkTypePayment;
     public BigDecimal           checkSumBase;
@@ -691,9 +691,7 @@ public final class ConnectionDb{
 			return BigDecimal.ZERO;
         }
         try {
-			String s = "";
-            if ( flagReturn) s = "return_";
-			CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "new");
             cs.setBigDecimal(2, BigDecimal.ZERO);
             cs.setInt(3, userID);
@@ -716,11 +714,7 @@ public final class ConnectionDb{
 			return BigDecimal.ZERO;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "last");
             cs.setBigDecimal(2, BigDecimal.ZERO);
             cs.setInt(3, userID);
@@ -743,9 +737,7 @@ public final class ConnectionDb{
 			return false;
         }
         try {
-			String s = "";
-			if (flagReturn) s = "return_";
-			CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "info");
             cs.setBigDecimal(2, checkID);
             cs.setInt(3, userID);
@@ -756,6 +748,7 @@ public final class ConnectionDb{
             while (res.next()) {
                 checkStatus         = res.getInt("CheckStatus");
                 checkTypePayment    = res.getInt("TypePayment");
+                checkFlagReturn     = res.getInt("FlagReturn");
                 checkSumBase        = res.getBigDecimal("SumBase").setScale(2);
                 checkSumDiscount    = res.getBigDecimal("SumDiscount").setScale(2);
                 checkSum            = res.getBigDecimal("Sum").setScale(2);
@@ -773,11 +766,7 @@ public final class ConnectionDb{
 			return false;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "status");
             cs.setBigDecimal(2, currentCheckID);
             cs.setInt(3, StatusCheck);
@@ -798,25 +787,49 @@ public final class ConnectionDb{
             return false;
         }
     }
-    public boolean setCheckPaymentType(int PaymentType, BigDecimal CheckID) {
+    public boolean setCheckPaymentType(int paymentType, BigDecimal checkID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckPaymentType: parameter [cnn] cannot be null!"));
 			return false;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "payment");
-            cs.setBigDecimal(2, CheckID);
-            cs.setInt(3, PaymentType);
+            cs.setBigDecimal(2, checkID);
+            cs.setInt(3, paymentType);
             cs.setInt(4, 0);
             cs.setInt(5, 0);
             cs.registerOutParameter(6, Types.INTEGER);
             cs.execute();
-            if (cs.getInt(6) == PaymentType) {
+            if (cs.getInt(6) == paymentType) {
+                getCheckInfo(currentCheckID);
+                //DialogBoxs.viewMessage("Тип оплаты установлен успешно!");
+                return true;
+            } else {
+                DialogBoxs.viewMessage("Ошибка при установке типа оплаты для чека!");
+                return false;
+            }
+        } catch (SQLException e) {
+            MyUtil.errorToLog(this.getClass().getName(),e);
+			DialogBoxs.viewError(e);
+            return false;
+        }
+    }
+    public boolean setCheckFlagReturn(int flagReturn, BigDecimal checkID) {
+        if (cnn == null) {
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckFlagReturn: parameter [cnn] cannot be null!"));
+			return false;
+        }
+        try {
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
+            cs.setString(1, "flagReturn");
+            cs.setBigDecimal(2, checkID);
+            cs.setInt(3, flagReturn);
+            cs.setInt(4, 0);
+            cs.setInt(5, 0);
+            cs.registerOutParameter(6, Types.INTEGER);
+            cs.execute();
+            if (cs.getInt(6) == flagReturn) {
                 getCheckInfo(currentCheckID);
                 //DialogBoxs.viewMessage("Тип оплаты установлен успешно!");
                 return true;
@@ -840,11 +853,7 @@ public final class ConnectionDb{
 			return null;
 		}
 		try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-			CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
 			cs.setString(1, "list");
 			cs.setBigDecimal(2, null);
 			cs.setInt(3, userID);
@@ -865,11 +874,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "content");
             cs.setBigDecimal(2, checkID);
             cs.setInt(3, userID);
@@ -890,11 +895,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check(?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "content_lastmodi");
             cs.setBigDecimal(2, checkID);
             cs.setInt(3, userID);
@@ -918,9 +919,6 @@ public final class ConnectionDb{
         if (barCode.equals("")) return 0;
         try {
 			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
             CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_add");
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -948,9 +946,6 @@ public final class ConnectionDb{
         }
         try {
 			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
             CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_add");
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -977,11 +972,7 @@ public final class ConnectionDb{
             return 0;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_delete");
 			cs.registerOutParameter(2, Types.INTEGER);
             cs.setBigDecimal(3, currentCheckID);
@@ -1008,9 +999,6 @@ public final class ConnectionDb{
         }
         try {
 			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
             CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_plus");
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -1039,9 +1027,6 @@ public final class ConnectionDb{
         }
         try {
 			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
             CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_edit_quantity");
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -1069,11 +1054,7 @@ public final class ConnectionDb{
             return false;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "discount"+Integer.toString(typeDiscount));
 			cs.registerOutParameter(2, Types.INTEGER);
             cs.setBigDecimal(3, currentCheckID);
@@ -1099,11 +1080,7 @@ public final class ConnectionDb{
             return false;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "discount_by_card");
 			cs.registerOutParameter(2, Types.INTEGER);
             cs.setBigDecimal(3, currentCheckID);
@@ -1129,11 +1106,7 @@ public final class ConnectionDb{
             return false;
         }
         try {
-			String s = "";
-			if (flagReturn) {
-				s = "return_";
-			}
-            CallableStatement cs = cnn.prepareCall("{call pr_"+s+"check_content(?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_check_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "check_new_card");
 			cs.registerOutParameter(2, Types.INTEGER);
             cs.setBigDecimal(3, currentCheckID);
@@ -1950,9 +1923,4 @@ public final class ConnectionDb{
 			return false;
 		}
 	}
-//return
-	public void setFlagReturn(boolean newValue){
-		flagReturn = newValue;
-	}
-
 }
