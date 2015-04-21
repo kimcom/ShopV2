@@ -23,6 +23,8 @@ import main.MyUtil;
 public class FrmQuantity extends javax.swing.JDialog {
     private final ConfigReader conf;
 	public int goodID = 0;
+	public int checkFlagReturn = 1;
+	public boolean blDisposeStatus = false;
 
     public FrmQuantity() {
         initComponents();
@@ -46,7 +48,7 @@ public class FrmQuantity extends javax.swing.JDialog {
 			DialogBoxs.viewError(ex);
 		}
 		BigDecimal bdQuantity = new BigDecimal(jFormattedTextField1.getValue().toString());
-		if (bdQuantity.compareTo(BigDecimal.ZERO) < 0) {
+		if (bdQuantity.compareTo(BigDecimal.ZERO) < 0 && checkFlagReturn > 0) {
 			DialogBoxs.viewMessage("Количество товара не может быть меньше 0!");
 			jButtonOK.setEnabled(false);
 			jFormattedTextField1.requestFocus();
@@ -56,6 +58,7 @@ public class FrmQuantity extends javax.swing.JDialog {
 		}
     }
     private void jButtonOKActionPerformed() {
+		blDisposeStatus = true;
         dispose();
     }
     private void jButtonExitActionPerformed() {
@@ -80,7 +83,9 @@ public class FrmQuantity extends javax.swing.JDialog {
     private class MyKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            //if (e.getKeyCode() == KeyEvent.VK_ENTER) 
+            //if (e.getKeyCode() == KeyEvent.VK_ENTER)
+//			System.out.println("KeyCode="+e.getKeyCode());
+			if (e.getKeyCode() == KeyEvent.VK_MULTIPLY) return;
             keyOverride(e);
             super.keyPressed(e); //To change body of generated methods, choose Tools | Templates.
         }
@@ -143,7 +148,8 @@ public class FrmQuantity extends javax.swing.JDialog {
         }
     }
     @SuppressWarnings("unchecked")
-    private void initComponents() {//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -169,7 +175,7 @@ public class FrmQuantity extends javax.swing.JDialog {
 
         jFormattedTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jFormattedTextField1.setForeground(new java.awt.Color(0, 0, 204));
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.000"))));
         jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jFormattedTextField1.setAutoscrolls(false);
         jFormattedTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -274,7 +280,7 @@ public class FrmQuantity extends javax.swing.JDialog {
         );
 
         pack();
-    }//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponents
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         jButtonOKActionPerformed();
     }//GEN-LAST:event_jButtonOKActionPerformed

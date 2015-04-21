@@ -1,8 +1,5 @@
 package forms;
 
-import com.jacob.activeX.ActiveXComponent;
-import com.jacob.com.Dispatch;
-import com.jacob.com.Variant;
 import db.ConnectionDb;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +11,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
@@ -23,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,12 +34,10 @@ import main.MyTimerTask;
 import main.MyUtil;
 import main.Updater;
 import reports.ReportCheck;
-import main.MyEKKA;
-import main.MyEKKA2;
 
 public class FrmMain extends javax.swing.JFrame {
     private static FrmMain instance = null;
-    private ConfigReader conf;
+    private final ConfigReader conf;
     private ConnectionDb cnn;
 	private boolean cnnState = true;
     private static String barCode = "";
@@ -193,11 +185,11 @@ public class FrmMain extends javax.swing.JFrame {
 				e.consume();
 				return;
 			}
+//			System.out.println("KeyCode=" + e.getKeyCode());
             keyOverride(e);
-            if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getSource() == jTableCheck) 
-                e.consume();
-            if (e.getKeyCode() == KeyEvent.VK_F10) 
-                e.consume();
+            if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getSource() == jTableCheck) e.consume();
+            if (e.getKeyCode() == KeyEvent.VK_F10) e.consume();
+			if (e.getKeyCode() == KeyEvent.VK_MULTIPLY) return;
             super.keyPressed(e); //To change body of generated methods, choose Tools | Templates.
         }
         private KeyEvent keyOverride(KeyEvent e) {
@@ -221,12 +213,17 @@ public class FrmMain extends javax.swing.JFrame {
 					if (blDiscountCardFuture) break;
 					//barCode = "3182550711142";
 					if (barCode.equals("")) break;
-					int res = cnn.addGoodInCheck(barCode);
+					double res = cnn.addGoodInCheck(barCode);
 					if (res == 1) {
 						requery();
-					} else if (res < 0){
+					} else if (res < 0 && cnn.checkFlagReturn > 0) {
 						DialogBoxs.viewMessage("Не достаточно товара с ШК: "+barCode+ "\n\nПродажа запрещена!");
 						barCode = "";
+					} else if (res == 0 && cnn.checkFlagReturn < 0) {
+						DialogBoxs.viewMessage("Этот товар не покупали в чеке:"+cnn.returnID.toPlainString()+" \n\nВернуть можно только то, что отпускали.");
+					} else if (res < 0 && cnn.checkFlagReturn < 0) {
+						DialogBoxs.viewMessage("Нельзя вернуть товара больше чем покупали: \n\nБыло куплено:" + (-res));
+						requery();
 					} else if(res == -99999)  {
 						DialogBoxs.viewMessage("Чек №"+cnn.currentCheckID.toString()+" уже закрыт!\n\nБудет создан новый чек!\n\nТовар нужно будет ввести снова!");
 						jButtonNewCheckActionPerformed();
@@ -365,7 +362,7 @@ public class FrmMain extends javax.swing.JFrame {
 		if (cnn != null) cnn.setAppVersion();
         requery();
 		
-		System.out.println("EKKA_TYPE:"+conf.EKKA_TYPE);
+//		System.out.println("EKKA_TYPE:"+conf.EKKA_TYPE);
 //временно
 //setInvisible(jButtonReturn);
 //setInvisible(jButtonPromo);
@@ -998,7 +995,7 @@ public class FrmMain extends javax.swing.JFrame {
         if (selectedRow == -1) return;
 		int rowNum = jTableCheck.getRowSorter().convertRowIndexToModel(selectedRow);
         int goodID = Integer.parseInt(jTableCheck.getModel().getValueAt(rowNum, 0).toString());
-        int res;
+        double res;
         if (typeOperation.equals("add")) {
             res = cnn.addGoodInCheckQuantity(goodID);
         } else if (typeOperation.equals("del")) {
@@ -1009,8 +1006,11 @@ public class FrmMain extends javax.swing.JFrame {
         }
 		if (res == 1) {
 			requery();
-		} else if (res < 0) {
+		} else if (res < 0 && cnn.checkFlagReturn > 0) {
 			DialogBoxs.viewMessage("Не достаточно товара: \n\n" + jTableCheck.getModel().getValueAt(rowNum, 2).toString() + "\n\nПродажа запрещена!");
+		} else if (res < 0 && cnn.checkFlagReturn < 0) {
+			DialogBoxs.viewMessage("Нельзя вернуть товара больше чем покупали: \n\n" + jTableCheck.getModel().getValueAt(rowNum, 2).toString() + "\n\nБыло куплено:" + (-res));
+			requery();
 		} else if (res == -99999) {
 			DialogBoxs.viewMessage("Чек №" + cnn.currentCheckID.toString() + " уже закрыт!\n\nБудет создан новый чек!");
 			jButtonNewCheckActionPerformed();
@@ -1034,6 +1034,7 @@ public class FrmMain extends javax.swing.JFrame {
 		final FrmQuantity frmQuantity = new FrmQuantity();
 		frmQuantity.jLabel1.setText("<html>"+jTableCheck.getModel().getValueAt(rowNum, 2).toString()+"</html>");
 		frmQuantity.goodID = Integer.parseInt(jTableCheck.getModel().getValueAt(rowNum, 0).toString());
+		frmQuantity.checkFlagReturn = cnn.checkFlagReturn;
 		frmQuantity.jFormattedTextField1.setValue(new BigDecimal(jTableCheck.getModel().getValueAt(rowNum, 4).toString()));
         //frmQuantity.jFormattedTextField1.selectAll();
 		frmQuantity.jFormattedTextField1.setSelectionStart(1);
@@ -1043,12 +1044,15 @@ public class FrmMain extends javax.swing.JFrame {
 		frmQuantity.setVisible(true);
 		if (!checkCnnStatus()) return;
 		BigDecimal bdQuantity = new BigDecimal(frmQuantity.jFormattedTextField1.getValue().toString());
-		if (bdQuantity.compareTo(BigDecimal.ZERO) > 0) {
-			int res = cnn.editGoodQuantityInCheck(frmQuantity.goodID,bdQuantity);
+		if (frmQuantity.blDisposeStatus) {
+			double res = cnn.editGoodQuantityInCheck(frmQuantity.goodID,bdQuantity);
 			if (res == 1) {
 				requery();
-			} else if (res < 0) {
+			} else if (res < 0 && cnn.checkFlagReturn > 0) {
 				DialogBoxs.viewMessage("Не достаточно товара: \n\n" + jTableCheck.getModel().getValueAt(rowNum, 2).toString() + "\n\nПродажа запрещена!");
+			} else if (res < 0 && cnn.checkFlagReturn < 0) {
+				DialogBoxs.viewMessage("Нельзя вернуть товара больше чем покупали: \n\n" + jTableCheck.getModel().getValueAt(rowNum, 2).toString() + "\n\nБыло куплено:"+(-res));
+				requery();
 			} else if (res == -99999) {
 				DialogBoxs.viewMessage("Чек №" + cnn.currentCheckID.toString() + " уже закрыт!\n\nБудет создан новый чек!");
 				jButtonNewCheckActionPerformed();
@@ -1133,7 +1137,7 @@ public class FrmMain extends javax.swing.JFrame {
 				this.getInputContext().selectInputMethod(frmSearch.getInputContext().getLocale());
 				if (frmSearch.goodID > 0) {
 					if (!checkCnnStatus()) return;
-					int res = cnn.addGoodInCheck(frmSearch.goodID, barCodeNew);
+					double res = cnn.addGoodInCheck(frmSearch.goodID, barCodeNew);
 					if (res == 1) {
 						requery();
 						TmCheckContent tm = (TmCheckContent) jTableCheck.getModel();
@@ -1141,8 +1145,11 @@ public class FrmMain extends javax.swing.JFrame {
 						if (row > 0) {
 							jTableCheck.setRowSelectionInterval(row, row);
 						}
-					} else if (res < 0) {
+					} else if (res < 0 && cnn.checkFlagReturn > 0) {
 						DialogBoxs.viewMessage("Не достаточно товара с кодом: " + frmSearch.goodID + "\n\nПродажа запрещена!");
+					} else if (res < 0 && cnn.checkFlagReturn < 0) {
+						DialogBoxs.viewMessage("Нельзя вернуть товара больше чем покупали: \n\nБыло куплено:" + (-res));
+						requery();
 					} else if (res == -99999) {
 						DialogBoxs.viewMessage("Чек №" + cnn.currentCheckID.toString() + " уже закрыт!\n\nБудет создан новый чек!");
 						jButtonNewCheckActionPerformed();
@@ -1375,15 +1382,16 @@ public class FrmMain extends javax.swing.JFrame {
 			DialogBoxs.viewMessage("Сначала закройте текущий чек!");
 			return;
 		}
+		DialogBoxs db = new DialogBoxs();
+		String returnID = db.showOptionDialogGetCheckID("Оформление возврата","<html>Введите № чека<br>(без дробной части):</html>",new javax.swing.ImageIcon(getClass().getResource("/png/return_on.png")));
+//System.out.println("returnID:"+returnID);
+		int rrr = new Integer(returnID);
 		if(cnn.checkFlagReturn!=1){
-			cnn.setCheckFlagReturn(1, cnn.currentCheckID); // уст. флаг возврата
+			cnn.setCheckFlagReturn(1, cnn.currentCheckID, rrr); // уст. флаг возврата
 		}else{
-			cnn.setCheckFlagReturn(-1, cnn.currentCheckID); // уст. флаг возврата
+			cnn.setCheckFlagReturn(-1, cnn.currentCheckID, rrr); // уст. флаг возврата
 		}
 		requery();
-//		FrmReturn frmReturn = new FrmReturn();
-//		frmReturn.setModal(true);
-//		frmReturn.setVisible(true);
 	}
 	private void jButtonUpdateActionPerformed(){
 		Updater u = new Updater();

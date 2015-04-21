@@ -26,6 +26,7 @@ public final class ConnectionDb{
     private Statement           stmt        = null;
     public int                  accessLevel = 999;
     public BigDecimal           currentCheckID;
+    public BigDecimal           returnID;
     private int                 userID;
     public int					clientID;
     public int					matrixID;
@@ -746,6 +747,8 @@ public final class ConnectionDb{
             cs.registerOutParameter(6, Types.DOUBLE);
             ResultSet res = cs.executeQuery();
             while (res.next()) {
+				returnID = null;
+				if(res.getBigDecimal("ReturnID")!=null)	returnID = res.getBigDecimal("ReturnID").setScale(4);
                 checkStatus         = res.getInt("CheckStatus");
                 checkTypePayment    = res.getInt("TypePayment");
                 checkFlagReturn     = res.getInt("FlagReturn");
@@ -815,7 +818,7 @@ public final class ConnectionDb{
             return false;
         }
     }
-    public boolean setCheckFlagReturn(int flagReturn, BigDecimal checkID) {
+    public boolean setCheckFlagReturn(int flagReturn, BigDecimal checkID, int returnID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckFlagReturn: parameter [cnn] cannot be null!"));
 			return false;
@@ -825,8 +828,8 @@ public final class ConnectionDb{
             cs.setString(1, "flagReturn");
             cs.setBigDecimal(2, checkID);
             cs.setInt(3, flagReturn);
-            cs.setInt(4, 0);
-            cs.setInt(5, 0);
+            cs.setInt(4, clientID);
+            cs.setInt(5, returnID);
             cs.registerOutParameter(6, Types.INTEGER);
             cs.execute();
             if (cs.getInt(6) == flagReturn) {
@@ -834,7 +837,7 @@ public final class ConnectionDb{
                 //DialogBoxs.viewMessage("Тип оплаты установлен успешно!");
                 return true;
             } else {
-                DialogBoxs.viewMessage("Ошибка при установке типа оплаты для чека!");
+                DialogBoxs.viewMessageError("Не найден чек: "+Integer.toString(returnID)+"."+Integer.toString(clientID)+"!");
                 return false;
             }
         } catch (SQLException e) {
@@ -911,7 +914,7 @@ public final class ConnectionDb{
         }
     }
 //check add good
-    public int addGoodInCheck(String barCode){
+    public double addGoodInCheck(String barCode){
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInCheck: parameter [cnn] cannot be null!"));
 			return 0;
@@ -929,14 +932,14 @@ public final class ConnectionDb{
             cs.setString(7, barCode);
             cs.execute();
             getCheckInfo(currentCheckID);
-            return cs.getInt(2);
+            return cs.getDouble(2);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return 0;
         }
     }
-    public int addGoodInCheck(int goodID,String barCodeNew) {
+    public double addGoodInCheck(int goodID,String barCodeNew) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deleteGoodFromCheck: parameter [cnn] cannot be null!"));
 			return 0;
@@ -956,14 +959,14 @@ public final class ConnectionDb{
             cs.setString(7, barCodeNew);
             cs.execute();
             getCheckInfo(currentCheckID);
-            return cs.getInt(2);
+            return cs.getDouble(2);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return 0;
         }
     }
-    public int deleteGoodFromCheck(int goodID) {
+    public double deleteGoodFromCheck(int goodID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deleteGoodFromCheck: parameter [cnn] cannot be null!"));
 			return 0;
@@ -982,14 +985,14 @@ public final class ConnectionDb{
             cs.setString(7, "");
             cs.execute();
             getCheckInfo(currentCheckID);
-            return cs.getInt(2);
+            return cs.getDouble(2);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return 0;
         }
     }
-    public int addGoodInCheckQuantity(int goodID) {
+    public double addGoodInCheckQuantity(int goodID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInCheckQuantity: parameter [cnn] cannot be null!"));
 			return 0;
@@ -1010,14 +1013,14 @@ public final class ConnectionDb{
             cs.registerOutParameter(2, Types.INTEGER);
             cs.execute();
             getCheckInfo(currentCheckID);
-            return cs.getInt(2);
+            return cs.getDouble(2);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return 0;
         }
     }
-    public int editGoodQuantityInCheck(int goodID, BigDecimal newQuantity) {
+    public double editGoodQuantityInCheck(int goodID, BigDecimal newQuantity) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("editGoodQuantityInCheck: parameter [cnn] cannot be null!"));
 			return 0;
@@ -1037,7 +1040,7 @@ public final class ConnectionDb{
             cs.setBigDecimal(7, newQuantity);
             cs.execute();
             getCheckInfo(currentCheckID);
-            return cs.getInt(2);
+            return cs.getDouble(2);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
