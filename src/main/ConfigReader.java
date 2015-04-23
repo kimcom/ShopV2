@@ -22,53 +22,46 @@ public class ConfigReader {
     public int          MARKET_ID = 0;
     public int          TERMINAL_ID = 0;
     public int          EKKA_TYPE = 0;
+    public int          EKKA_PORT = 0;
+    public int          EKKA_BAUD = 0;
 	public int			TIME_WAIT = 10;//in second
 	public int			TIME_UPDATE = 1 * 60 * 60;//in second
 	public int			TIME_UPDATE_START = 10 * 60;//in second
 
+	private int getIntegerValue(Properties props, String paramName){
+		int result = 0;
+		try {
+			String str = props.getProperty(paramName);
+			if (str != null) {
+				result = new Integer(str);
+			}
+		} catch (NumberFormatException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+		}
+		return result;
+	}
     private ConfigReader() throws FileNotFoundException, UnsupportedEncodingException, IOException
     {
         Properties props = new Properties();
         File fileConf = new File(CONF_FILE_NAME);
         if(!fileConf.exists()) {
-			//throw new FileNotFoundException("Не найден файл конфигурации:\n"+CONF_FILE_NAME);
 			DialogBoxs.viewMessage("Не найден файл конфигурации:\n" + CONF_FILE_NAME);
 			return;
 		}
         FileInputStream file = new FileInputStream(fileConf);
         InputStreamReader inChars = new InputStreamReader(file,"UTF-8");
         props.load(inChars);
-        //props.load(new FileInputStream(new File(CONF_FILE_NAME)));
         FORM_TITLE      = props.getProperty("FORM_TITLE");
         ICON_IMAGE      = props.getProperty("ICON_IMAGE");
         SERVER_ADDRESS  = props.getProperty("SERVER_ADDRESS");
         SERVER_PORT     = props.getProperty("SERVER_PORT");
         SERVER_DB       = props.getProperty("SERVER_DB");
         USER_NAME       = props.getProperty("USER_NAME");
-        try {
-			String str = props.getProperty("MARKET_ID");
-			if (str != null)
-				MARKET_ID = new Integer(str);
-        } catch (NumberFormatException e) {
-			MyUtil.errorToLog(this.getClass().getName(), e);
-            MARKET_ID = 0;
-        }
-        try {
-			String str = props.getProperty("TERMINAL_ID");
-			if (str != null)
-	            TERMINAL_ID = new Integer(str);
-        } catch (NumberFormatException e) {
-			MyUtil.errorToLog(this.getClass().getName(), e);
-            TERMINAL_ID = 0;
-        }            
-        try {
-			String str = props.getProperty("EKKA_TYPE");
-			if (str!=null)
-				EKKA_TYPE = new Integer(str);
-        } catch (NumberFormatException e) {
-			MyUtil.errorToLog(this.getClass().getName(), e);
-            EKKA_TYPE = 0;
-        }            
+		MARKET_ID		= getIntegerValue(props,"MARKET_ID");
+		TERMINAL_ID		= getIntegerValue(props,"TERMINAL_ID");
+		EKKA_TYPE		= getIntegerValue(props,"EKKA_TYPE");
+		EKKA_PORT		= getIntegerValue(props,"EKKA_PORT");
+		EKKA_BAUD		= getIntegerValue(props,"EKKA_BAUD");
 
 		Package p = this.getClass().getPackage();
 		APP_VERSION = p.getImplementationVersion();

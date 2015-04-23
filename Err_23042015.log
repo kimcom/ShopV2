@@ -1,0 +1,96 @@
+09:22:06.721
+Command:	add_plu;16156;0;0;0;0;0;1;0;0;Дезодорант для кош туалетов  п;1.000;
+  Error:	14- command disabled
+
+09:22:15.377
+Command:	add_plu;6803;0;0;0;0;0;1;0;0;Лопатка №3 д/гран и комкующ пе;1.000;
+  Error:	14- command disabled
+
+09:22:16.677
+Command:	add_plu;7801;0;0;0;0;0;1;0;0;BUDGIE Tropifit корм д/волн по;1.000;
+  Error:	14- command disabled
+
+09:29:34.982
+Command:	cashier_registration;1;0
+  Error:	14- command disabled
+
+09:29:40.497
+Command:	open_receipt;0;
+  Error:	14- command disabled
+
+09:29:41.956
+Command:	add_plu;16156;0;0;0;0;0;1;0;0;Дезодорант для кош туалетов  порошок 567м;1.000;
+  Error:	14- command disabled
+
+09:29:43.614
+Command:	add_plu;6803;0;0;0;0;0;1;0;0;Лопатка №3 д/гран и комкующ песк;1.000;
+  Error:	14- command disabled
+
+09:29:44.479
+Command:	add_plu;7801;0;0;0;0;0;1;0;0;BUDGIE Tropifit корм д/волн попуг  700г;1.000;
+  Error:	14- command disabled
+
+09:29:45.400
+Command:	add_plu;10332;0;0;0;0;0;1;0;0;Наполнитель SANI PET для котов 5кг ЛИМО;3.000;
+  Error:	14- command disabled
+
+09:29:53.833
+Command:	add_plu;16156;0;0;0;0;0;1;0;0;Дезодорант для кош туалетов  порошок 567м;1.000;
+  Error:	14- command disabled
+
+09:29:56.894
+Command:	add_plu;6803;0;0;0;0;0;1;0;0;Лопатка №3 д/гран и комкующ песк;1.000;
+  Error:	14- command disabled
+
+09:29:59.653
+Command:	add_plu;7801;0;0;0;0;0;1;0;0;BUDGIE Tropifit корм д/волн попуг  700г;1.000;
+  Error:	14- command disabled
+
+09:30:00.640
+Command:	add_plu;10332;0;0;0;0;0;1;0;0;Наполнитель SANI PET для котов 5кг ЛИМО;3.000;
+  Error:	14- command disabled
+
+09:30:19.619
+Command:	open_port;22;115200
+  Error:	301- Port error
+
+10:14:18.674
+Command:	open_port;22;115200
+  Error:	301- Port error
+
+10:25:07.607
+Command:	open_port;22;115200
+  Error:	301- Port error
+
+10:25:57.691
+Command:	sale_plu;0;0;1;1.000;19683;10.00
+  Error:	14- command disabled
+
+10:26:13.484
+Command:	sale_plu;0;0;1;1.000;19865;10.60
+  Error:	14- command disabled
+
+10:27:21.561
+Command:	sale_plu;0;0;1;1.000;19865;10.60
+  Error:	14- command disabled
+
+10:27:51.332
+Command:	sale_plu;0;0;1;1.000;16156;81.00
+  Error:	14- command disabled
+
+10:28:47.894
+Command:	sale_plu;0;0;1;1.000;16156;81.00
+  Error:	14- command disabled
+
+12:34:32.410
+Command:	open_port;22;115200
+  Error:	301- Port error
+
+12:35:43.361
+Command:	open_port;22;115200
+  Error:	301- Port error
+
+12:40:31.889
+Command:	open_port;22;115200
+  Error:	301- Port error
+

@@ -87,10 +87,6 @@ public class DialogBoxs {
 	public String showOptionDialogGetCheckID(String title, String textMessage, Icon icon) {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(textMessage);
-//		JTextField jTextField21 = new JTextField("Причина возврата:", 100);
-//		jTextField21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-//		jTextField21.setForeground(new java.awt.Color(102, 102, 102));
-//		jTextField21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		JFormattedTextField jFormattedTextField3 = new JFormattedTextField();
 		jFormattedTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		jFormattedTextField3.setForeground(new java.awt.Color(0, 0, 204));
@@ -110,7 +106,6 @@ public class DialogBoxs {
 		}
 		panel.add(label);
 		panel.add(jFormattedTextField3);
-//		panel.add(jTextField21);
 		String[] options = new String[]{"Ввод", "Отмена"};
 		JOptionPane jop = new JOptionPane(panel, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon, options, title);
         getAllComponents((Container) jop);

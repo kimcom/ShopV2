@@ -83,4 +83,25 @@ public class MyUtil {
 		} catch (SecurityException | IOException e) {
 			MyUtil.errorToLog(MyUtil.class.getName(), e);
 		}
-	}}
+	}
+	public static void errorToLog(String className, String error_info) {
+		File dir = new File("Logs");
+		dir.mkdir();
+		Logger logger = Logger.getLogger(className);
+		FileHandler fh;
+		try {
+			// This block configure the logger with handler and formatter  
+			//fh = new FileHandler("shopV2.log");
+			fh = new FileHandler(dir.getName()+"/"+className+".log",true);
+			logger.addHandler(fh);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh.setFormatter(formatter);
+			// the following statement is used to log any messages  
+			//logger.info(err.getMessage());
+			logger.log(Level.SEVERE, "Exception:"+error_info);
+			fh.close();
+		} catch (SecurityException | IOException e) {
+			MyUtil.errorToLog(MyUtil.class.getName(), e);
+		}
+	}
+}

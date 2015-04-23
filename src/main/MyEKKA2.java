@@ -2,25 +2,35 @@ package main;
 
 import com.jacob.activeX.*;
 import com.jacob.com.*;
-import static com.jacob.com.Variant.VariantArray;
 
 public class MyEKKA2 extends Dispatch{
+	final ConfigReader conf = ConfigReader.getInstance();
+	public MyEKKA2(int t){
+		System.out.println("EKKA_TYPE: "+conf.EKKA_TYPE);
+		System.out.println("EKKA_PORT: "+conf.EKKA_PORT);
+		System.out.println("EKKA_BAUD: "+conf.EKKA_BAUD);
+	}
 	public MyEKKA2() {
 		if(1==1){
 		ActiveXComponent ecr = new ActiveXComponent("ecrmini.t400");
 		boolean bl;
 		String wstr;
-		wstr = "open_port;2;115200;";
-		if(!ecr.invoke("t400me", wstr).getBoolean()){
-		System.out.println(ecr.invoke("t400me",wstr).toString());
-		wstr = "get_last_event";
-			System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
-		wstr = "get_last_result";
-			System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
-		wstr = "get_last_error";
-			System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
-		wstr = "get_error_info";
-			System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
+		wstr = "open_port;"+conf.EKKA_PORT+";"+conf.EKKA_BAUD+"";
+		if(ecr.invoke("t400me", wstr).getBoolean()){
+			wstr = "get_last_event";
+				System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
+			wstr = "get_last_result";
+				System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
+			wstr = "get_last_error";
+				System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
+			wstr = "get_error_info";
+				System.out.println(wstr + ":" + ecr.invoke(wstr).toString());
+			wstr = "close_port";
+				System.out.println(wstr + ":" + ecr.invoke("t400me", wstr).getBoolean());
+//			bl = Dispatch.call(ecr, "t400me", wstr).toBoolean();
+//			System.out.println(wstr + ":" + bl);
+		}else{
+			System.out.println("Нет связи с фиск.регистратором");
 		}
 //		wstr = "open_port;22;115200;";
 //		System.out.println(ecr.invoke("t400me",wstr).toString());
@@ -74,9 +84,6 @@ public class MyEKKA2 extends Dispatch{
 		//System.out.println(Dispatch.get(ecr, "Get_error_info").toBoolean());
 		//System.out.println(bl+"	"+wstr);
 		
-		wstr = "close_port;";
-		bl = Dispatch.call(ecr, "t400me", wstr).toBoolean();
-		System.out.println(bl+"	"+wstr);
 		//System.out.println(Dispatch.call(ecr, "t400me", "get_soft_version").toString());
 		//System.out.println(Dispatch.call(ecr, "open_port","22;115200").toString());
 		//System.out.println("wstr:"+wstr);

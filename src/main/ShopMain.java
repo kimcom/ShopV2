@@ -5,6 +5,7 @@ import forms.*;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,11 +15,13 @@ public class ShopMain {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//				MyEKKA2 me = new MyEKKA2();
+                final ConfigReader config = ConfigReader.getInstance();
+//				MyEKKA me = new MyEKKA();
+//				//me.report("z1");
+//				me.printCheck(new BigDecimal(12961.2009));
 //				if (1==1) {
 //					System.exit(0);
 //				}
-                final ConfigReader config = ConfigReader.getInstance();
                 if (config == null) System.exit(0);
                 ConnectionDb cnn = ConnectionDb.getInstance();
                 if (cnn == null) System.exit(0);

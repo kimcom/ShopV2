@@ -30,6 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import main.ConfigReader;
 import main.DialogBoxs;
+import main.MyEKKA;
 import main.MyTimerTask;
 import main.MyUtil;
 import main.Updater;
@@ -1098,30 +1099,44 @@ public class FrmMain extends javax.swing.JFrame {
 			jButtonSellerActionPerformed(-1);
 			return;
 		}
-		final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
-		if (!blIconified) {
-			rc.setModal(true);
-			rc.setVisible(true);
-			if (!checkCnnStatus()) return;
-			if (rc.blStatusPrintButton) {
-				if (rc.blStatusPrinted) {
-					if (cnn.setCheckStatus(1)) 
-						jButtonNewCheckActionPerformed();//чек распечатан успешно
-				} else {
-					if (cnn.setCheckStatus(2)) 
-						jButtonNewCheckActionPerformed();//без распечатки
+		if(conf.EKKA_TYPE!=0){
+			MyEKKA me = new MyEKKA();
+			//me.report("z1");
+			if(me.printCheck(cnn.currentCheckID)){
+				if (cnn.setCheckStatus(1)) {
+					jButtonNewCheckActionPerformed();//чек распечатан успешно
+				}
+			} else {
+				if (cnn.setCheckStatus(2)) {
+					jButtonNewCheckActionPerformed();//без распечатки
 				}
 			}
-		} else {
-//			rc.setModal(true);
-//одобрено караваном !!!
-			rc.setVisible(true);
-			if (rc.silentPrint()) {
-				if (cnn.setCheckStatus(1)) jButtonNewCheckActionPerformed();//чек распечатан успешно
+		}else{
+			final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
+			if (!blIconified) {
+				rc.setModal(true);
+				rc.setVisible(true);
+				if (!checkCnnStatus()) return;
+				if (rc.blStatusPrintButton) {
+					if (rc.blStatusPrinted) {
+						if (cnn.setCheckStatus(1)) 
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+					} else {
+						if (cnn.setCheckStatus(2)) 
+							jButtonNewCheckActionPerformed();//без распечатки
+					}
+				}
 			} else {
-				if (cnn.setCheckStatus(2)) jButtonNewCheckActionPerformed();//без распечатки
+	//			rc.setModal(true);
+	//одобрено караваном !!!
+				rc.setVisible(true);
+				if (rc.silentPrint()) {
+					if (cnn.setCheckStatus(1)) jButtonNewCheckActionPerformed();//чек распечатан успешно
+				} else {
+					if (cnn.setCheckStatus(2)) jButtonNewCheckActionPerformed();//без распечатки
+				}
+				rc.dispose();
 			}
-			rc.dispose();
 		}
     }
     private void jButtonSearchActionPerformed(final String barCodeNew) {
