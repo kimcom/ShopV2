@@ -121,8 +121,7 @@ if($_SESSION['AccessLevel'] >= 1000){
 					<ul class="dropdown-menu">
 						<li><a href="/documents/sale?operID=1">Расходные накладные</a></li>
 						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
-                                                <li><a href="/documents/check_list">Список чеков</a></li>
-                                                
+						<li><a href="/documents/check_list">Список чеков</a></li>
 					</ul>
 				</li>
 <?php 
