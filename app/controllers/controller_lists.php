@@ -36,7 +36,7 @@ class Controller_Lists extends Controller {
 	function action_discountCards() {
 		$this->view->generate('view_discountCard_list.php', 'view_template.php');
 	}
-	function action_get_promo_tree_NS() {
+        function action_get_promo_tree_NS() {
 		$this->model = new Model_Lists();
 		echo $this->model->get_promo_tree_NS();
 	}

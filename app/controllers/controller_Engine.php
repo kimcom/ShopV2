@@ -95,7 +95,7 @@ EOF;
 		$cnn = new Cnn();
 		return $cnn->discoundcard_save();
 	}
-	function action_point_save() {
+        function action_point_save() {
 		$cnn = new Cnn();
 		return $cnn->point_save();
 	}
@@ -113,7 +113,7 @@ EOF;
 	}
 
 	function action_task_info(){
-		$taskid = $_REQUEST['taskid'];
+        $taskid = $_REQUEST['taskid'];
 		if ($taskid != ''){
 //			Fn::debugToLog("task", "info ".$taskid);
 			$cnn = new Cnn();

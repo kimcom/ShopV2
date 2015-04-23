@@ -33,7 +33,6 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 		$name == "promo_tree" || 
 		$name == "points" || 
 		$name == "sellers" || 
-		$name == "discountCards" || 
 		$controller == "/goods" ||
 		$controller == "/lists" ||
 		substr($name,0,13) == "promo_control"){
@@ -112,6 +111,8 @@ if($_SESSION['AccessLevel'] >= 1000){
 					<ul class="dropdown-menu">
 						<li><a href="/documents/sale?operID=1">Расходные накладные</a></li>
 						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
+                                                <li><a href="/documents/check_list">Список чеков</a></li>
+                                                
 					</ul>
 				</li>
 <?php 
