@@ -830,29 +830,81 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 		$this->echo_response($stmt);
 	}
 
+//users
+	public function user_info() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_user_info('info', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(2, $login, PDO::PARAM_STR);
+		$stmt->bindParam(3, $password, PDO::PARAM_STR);
+		$stmt->bindParam(4, $email, PDO::PARAM_STR);
+		$stmt->bindParam(5, $clientid, PDO::PARAM_STR);
+		$stmt->bindParam(6, $userName, PDO::PARAM_STR);
+		$stmt->bindParam(7, $userPhone, PDO::PARAM_STR);
+		$stmt->bindParam(8, $accessLevel, PDO::PARAM_STR);
+		$stmt->bindParam(9, $position, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			break; //берем первую запись из результата
+		}
+//		Fn::debugToLog("row", json_encode($row));
+		return $row;
+	}
+	public function user_save() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		if ($userid == null) $userid = 0;
+		if ($eMail == null) $eMail = '';
+		if ($password == null) $password = '';
+		if ($companyName == null) $companyName = '';
+		$stmt = $this->db->prepare("CALL pr_user_info('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $userid, PDO::PARAM_STR);
+		$stmt->bindParam(2, $login, PDO::PARAM_STR);
+		$stmt->bindParam(3, $password, PDO::PARAM_STR);
+		$stmt->bindParam(4, $eMail, PDO::PARAM_STR);
+		$stmt->bindParam(5, $clientid, PDO::PARAM_STR);
+		$stmt->bindParam(6, $userName, PDO::PARAM_STR);
+		$stmt->bindParam(7, $userPhone, PDO::PARAM_STR);
+		$stmt->bindParam(8, $accessLevel, PDO::PARAM_STR);
+		$stmt->bindParam(9, $position, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		$this->echo_response($stmt);
+	}
+	
+
 //jqgrid
 	public function get_jqgrid3() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
+//Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$url = urldecode($_SERVER['QUERY_STRING']);
-		$url = str_replace("field1", $f1, $url);
-		$url = str_replace("field2", $f2, $url);
-		$url = str_replace("field3", $f3, $url);
-		$url = str_replace("field4", $f4, $url);
-		$url = str_replace("field5", $f5, $url);
-		$url = str_replace("field6", $f6, $url);
-		$url = str_replace("field7", $f7, $url);
-		$url = str_replace("field8", $f8, $url);
-		$url = str_replace("field9", $f9, $url);
-		$url = str_replace("field10", $f10, $url);
-		$url = str_replace("field11", $f11, $url);
-		$url = str_replace("field12", $f12, $url);
-		$url = str_replace("field13", $f13, $url);
-		$url = str_replace("field14", $f14, $url);
-		$url = str_replace("field15", $f15, $url);
+//		$url = str_replace("field1", $f1, $url);
+//		$url = str_replace("field2", $f2, $url);
+//		$url = str_replace("field3", $f3, $url);
+//		$url = str_replace("field4", $f4, $url);
+//		$url = str_replace("field5", $f5, $url);
+//		$url = str_replace("field6", $f6, $url);
+//		$url = str_replace("field7", $f7, $url);
+//		$url = str_replace("field8", $f8, $url);
+//		$url = str_replace("field9", $f9, $url);
+//		$url = str_replace("field10", $f10, $url);
+//		$url = str_replace("field11", $f11, $url);
+//		$url = str_replace("field12", $f12, $url);
+//		$url = str_replace("field13", $f13, $url);
+//		$url = str_replace("field14", $f14, $url);
+//		$url = str_replace("field15", $f15, $url);
 
-//Fn::debugToLog('QUERY_STRING', $action);
+Fn::debugToLog('QUERY_STRING', $action);
 Fn::debugToLog('QUERY_STRING', $url);
 
 		$stmt = $this->db->prepare("CALL pr_jqgrid(?, @id, ?)");
@@ -919,7 +971,8 @@ Fn::debugToLog('QUERY_STRING', $url);
 		} while ($stmt->nextRowset());
 		
 //Fn::DebugToLog("тест jqgrid3", json_encode($response));
-		header("Content-type: application/json;charset=utf8");
+//		header("Content-type: application/json;charset=utf8");
+		//return json_encode($response);
 		echo json_encode($response);
 }
 
@@ -976,11 +1029,12 @@ Fn::debugToLog('QUERY_STRING', $url);
 			return;
 		}
 		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
-//Fn::debugToLog("s", "1");
+Fn::debugToLog("s", "1");
+Fn::debugToLog("rowset", json_encode($rowset));
 		foreach ($rowset as $row) {
-//Fn::debugToLog("s", "2");
+Fn::debugToLog("s", "2");
 			if ($response->success)
-//Fn::debugToLog("s", json_encode($row));
+Fn::debugToLog("s", json_encode($row));
 				$response->success = $row[0];
 				$response->new_id = $row[1];
 			break;
@@ -995,5 +1049,5 @@ Fn::debugToLog('QUERY_STRING', $url);
 		return;
 	}
 
-		}
+}
 ?>

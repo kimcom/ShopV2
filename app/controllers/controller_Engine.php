@@ -125,7 +125,11 @@ EOF;
 //			return $cnn->task_info();
 		}
 		//return $cnn->discoundcard_save();
+	} 
+	
+	function action_user_save() {
+		$cnn = new Cnn();
+		return $cnn->user_save();
 	}
-
 }
 ?>
