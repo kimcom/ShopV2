@@ -1367,6 +1367,60 @@ Fn::paramToLog();
 		$this->echo_response($stmt);
 	}
 
+//users
+	public function user_info() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_user_info('info', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(2, $login, PDO::PARAM_STR);
+		$stmt->bindParam(3, $password, PDO::PARAM_STR);
+		$stmt->bindParam(4, $email, PDO::PARAM_STR);
+		$stmt->bindParam(5, $clientid, PDO::PARAM_STR);
+		$stmt->bindParam(6, $userName, PDO::PARAM_STR);
+		$stmt->bindParam(7, $userPhone, PDO::PARAM_STR);
+		$stmt->bindParam(8, $accessLevel, PDO::PARAM_STR);
+		$stmt->bindParam(9, $position, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			break; //берем первую запись из результата
+		}
+//		Fn::debugToLog("row", json_encode($row));
+		return $row;
+	}
+	public function user_save() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+		Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		if ($userid == null)
+			$userid = 0;
+		if ($eMail == null)
+			$eMail = '';
+		if ($password == null)
+			$password = '';
+		if ($companyName == null)
+			$companyName = '';
+		$stmt = $this->db->prepare("CALL pr_user_info('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $userid, PDO::PARAM_STR);
+		$stmt->bindParam(2, $login, PDO::PARAM_STR);
+		$stmt->bindParam(3, $password, PDO::PARAM_STR);
+		$stmt->bindParam(4, $eMail, PDO::PARAM_STR);
+		$stmt->bindParam(5, $clientid, PDO::PARAM_STR);
+		$stmt->bindParam(6, $userName, PDO::PARAM_STR);
+		$stmt->bindParam(7, $userPhone, PDO::PARAM_STR);
+		$stmt->bindParam(8, $accessLevel, PDO::PARAM_STR);
+		$stmt->bindParam(9, $position, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		$this->echo_response($stmt);
+	}
+
 //jqgrid
 	public function get_jqgrid3() {
 		foreach ($_REQUEST as $arg => $val)
