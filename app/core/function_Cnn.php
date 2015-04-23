@@ -1321,6 +1321,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 //Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		if ($sellerID == '') $sellerID = null;
+		if ($sellerID == '-1') $sellerID = null;
 		if ($postID == '')	$postID = null;
 		if ($clientID == '') $clientID = 0;
 		$stmt = $this->db->prepare("CALL pr_seller('save', @id, ?, ?, ?, ?, ?, ?, ?)");

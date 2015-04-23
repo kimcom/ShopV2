@@ -52,7 +52,7 @@ $(document).ready(function(){
 		onClickButton: function () {
 		    window.location = "../lists/seller_info?sellerID=-1";
 		}
-	    });
+	});
 	$("#grid1").navButtonAdd('#grid1_toppager', {
 		title: 'Открыть информационную карту', buttonicon: "ui-icon-pencil", caption: 'Открыть карту', position: "last",
 		onClickButton: function () {
