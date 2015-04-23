@@ -1254,6 +1254,33 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		}
 		return $row;
 	}
+	public function discoundcard_add_history() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::paramToLog();
+		if ($checkid == '')	$checkid = null;
+Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_discountCard('add_history', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $cardid, PDO::PARAM_STR);
+		$stmt->bindParam(2, $name, PDO::PARAM_STR);
+		$stmt->bindParam(3, $dateOfIssue, PDO::PARAM_STR);
+		$stmt->bindParam(4, $dateOfCancellation, PDO::PARAM_STR);
+		$stmt->bindParam(5, $clientID, PDO::PARAM_STR);
+		$stmt->bindParam(6, $address, PDO::PARAM_STR);
+		$stmt->bindParam(7, $eMail, PDO::PARAM_STR);
+		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
+		$stmt->bindParam(9, $animal, PDO::PARAM_STR);
+		$stmt->bindParam(10, $startPercent, PDO::PARAM_STR);
+		$stmt->bindParam(11, $startSum, PDO::PARAM_STR);
+		$stmt->bindParam(12, $checkid, PDO::PARAM_STR);
+		$stmt->bindParam(13, $percentOfDiscount, PDO::PARAM_STR);
+		$stmt->bindParam(14, $howWeLearn, PDO::PARAM_STR);
+		$stmt->bindParam(15, $notes, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		$this->echo_response($stmt);
+	}
 	public function discoundcard_save() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::paramToLog();
@@ -1263,13 +1290,16 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		if ($dopSum == '') $dopSum = 0;
 		if ($percentOfDiscount == '') $percentOfDiscount = 0;
 		if (isset($dateOfIssue) && $dateOfIssue != '') {
-			$dateOfIssue = DateTime::createFromFormat('d?m?Y', $dateOfIssue);
+			if(strlen($dateOfIssue)<=10)$dateOfIssue .= "00:00:00";
+			$dateOfIssue = DateTime::createFromFormat('d?m?Y H?i?s', $dateOfIssue);
 			$dateOfIssue = $dateOfIssue->format('Ymd');
 		}
 		if (isset($dateOfCancellation) && $dateOfCancellation != '') {
-			$dateOfCancellation = DateTime::createFromFormat('d?m?Y', $dateOfCancellation);
+			if (strlen($dateOfCancellation) <= 10)	$dateOfCancellation .= "00:00:00";
+			$dateOfCancellation = DateTime::createFromFormat('d?m?Y H?i?s', $dateOfCancellation);
 			$dateOfCancellation = $dateOfCancellation->format('Ymd');
 		}
+Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_discountCard('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $cardid, PDO::PARAM_STR);

@@ -94,6 +94,10 @@ EOF;
 		$cnn = new Cnn();
 		return $cnn->discoundcard_save();
 	}
+	function action_discoundcard_add_history(){
+		$cnn = new Cnn();
+		return $cnn->discoundcard_add_history();
+	}
 	function action_point_save() {
 		$cnn = new Cnn();
 		return $cnn->point_save();

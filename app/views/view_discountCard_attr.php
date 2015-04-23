@@ -14,32 +14,52 @@ if (isset($_REQUEST['cardid'])) {
 		autoOpen: false, modal: true, width: 400,
 		buttons: [{text: "Закрыть", click: function () {
 			$(this).dialog("close");
-			}}]
+		}}]
+	});
+	$("#inputbox").dialog({
+		autoOpen: false, modal: true, width: 285,
+		buttons: [{
+			text: "Сохранить",
+			width: 80,
+			click: function() {
+				$.post('../engine/discoundcard_add_history', {
+					cardid: $("#cardid").val(),
+					checkid: $("#checkid").val()
+				},
+				function (data) {
+				    $("#dialog>#text").html(data.message);
+				    $("#dialog").dialog("open");
+				}, "json");
+			$( this ).dialog( "close" );
+		}},{
+			text: "Отмена", 
+			width: 80,
+			click: function () {$(this).dialog("close");}
+		}]
 	});
 //	console.log($("#DT_cancellation").val());
 	$("#button_save").click(function () {
-		if ($("#cardid").val() == '')
-		return;
+		if ($("#cardid").val() == '') return;
 		$.post('../engine/discoundcard_save', {
-		cardid: $("#cardid").val(),
-		name: $("#name").val(),
-		dateOfIssue: $("#DT_issue").val(),
-		dateOfCancellation: $("#DT_cancellation").val(),
-		clientID: $("#select_point").val(),
-		address: $("#address").val(),
-		eMail: $("#eMail").val(),
-		phone: $("#phone").val(),
-		animal: $("#animal").val(),
-		startPercent: $("#startPercent").val(),
-		startSum: $("#startSum").val(),
-		dopSum: $("#dopSum").val(),
-		percentOfDiscount: $("#percentOfDiscount").val(),
-		howWeLearn: $("#howWeLearn").val(),
-		notes: $("#notes").val()
-		},
-		function (data) {
-		$("#dialog>#text").html(data.message);
-		$("#dialog").dialog("open");
+			cardid: $("#cardid").val(),
+			name: $("#name").val(),
+			dateOfIssue: $("#DT_issue").val(),
+			dateOfCancellation: $("#DT_cancellation").val(),
+			clientID: $("#select_point").val(),
+			address: $("#address").val(),
+			eMail: $("#eMail").val(),
+			phone: $("#phone").val(),
+			animal: $("#animal").val(),
+			startPercent: $("#startPercent").val(),
+			startSum: $("#startSum").val(),
+			dopSum: $("#dopSum").val(),
+			percentOfDiscount: $("#percentOfDiscount").val(),
+			howWeLearn: $("#howWeLearn").val(),
+			notes: $("#notes").val()
+			},
+			function (data) {
+			$("#dialog>#text").html(data.message);
+			$("#dialog").dialog("open");
 		}, "json");
 	});
 
@@ -66,12 +86,6 @@ if (isset($_REQUEST['cardid'])) {
 		$("#" + operid).datepicker("show");
 	});
 //************************************//
-	$("#dialog").dialog({
-		autoOpen: false, modal: true, width: 400,
-		buttons: [{text: "Закрыть", click: function () {
-			$(this).dialog("close");
-			}}]
-	});
 	fs = 0;
 // Creating grid1
 	$("#grid1").jqGrid({
@@ -80,13 +94,13 @@ if (isset($_REQUEST['cardid'])) {
 		height: 'auto',
 		colNames: ['Код чека', 'Дата', 'Магазин', 'Тип оплаты', 'Сумма без скидки', 'Скидка', 'К оплате'],
 		colModel: [
-		{name: 'cl_CheckID', index: 'cl.CheckID', width: 80, align: "center", sorttype: "number", search: true},
-		{name: 'cl_CloseDateTime', index: 'cl.CloseDateTime', width: 120, align: "center", sorttype: "date", search: true},
-		{name: 'c_NameShort', index: 'c.NameShort', width: 300, align: "left", sorttype: "text", search: true},
-		{name: 'cl_TypePayment', index: 'cl.TypePayment', width: 80, align: "center", stype: 'select', editoptions: {value: ":любой;1:без нал.;0:нал."}},
-		{name: 'SumFull', index: 'SumFull', width: 100, align: "right", sorttype: "number", search: false},
-		{name: 'SumDiscount', index: 'SumDiscount', width: 100, align: "right", sorttype: "number", search: false},
-		{name: 'Sum', index: 'Sum', width: 100, align: "right", sorttype: "number", search: false},
+			{name: 'cl_CheckID', index: 'cl.CheckID', width: 80, align: "center", sorttype: "number", search: true},
+			{name: 'cl_CloseDateTime', index: 'cl.CloseDateTime', width: 120, align: "center", sorttype: "date", search: true},
+			{name: 'c_NameShort', index: 'c.NameShort', width: 300, align: "left", sorttype: "text", search: true},
+			{name: 'cl_TypePayment', index: 'cl.TypePayment', width: 80, align: "center", stype: 'select', editoptions: {value: ":любой;1:без нал.;0:нал."}},
+			{name: 'SumFull', index: 'SumFull', width: 100, align: "right", sorttype: "number", search: false},
+			{name: 'SumDiscount', index: 'SumDiscount', width: 100, align: "right", sorttype: "number", search: false},
+			{name: 'Sum', index: 'Sum', width: 100, align: "right", sorttype: "number", search: false},
 		],
 		gridComplete: function () {if (!fs) {fs = 1; filter_restore("#grid1");}},
 		width: 'auto',
@@ -149,6 +163,12 @@ if (isset($_REQUEST['cardid'])) {
 	});
 	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
+	$("#grid1").navButtonAdd('#grid1_toppager', {
+		title: 'Добавить чек в историю', buttonicon: "ui-icon-pencil", caption: 'Добавить чек в историю', position: "last",
+		onClickButton: function () {
+			$("#inputbox").dialog("open");
+		}
+	});
 
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
@@ -163,6 +183,9 @@ if (isset($_REQUEST['cardid'])) {
 			$("#grid1").trigger('reloadGrid');
 		}
 	});
+
+	$("#inputbox").dialog("open");
+	
 });
 </script>
 <input id="cardid" name="cardid" type="hidden" value="<?php echo $row['CardID']; ?>">
@@ -292,4 +315,13 @@ if (isset($_REQUEST['cardid'])) {
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>
+</div>
+<div id="inputbox" title="Ввод информации:">
+	<div class='p5 ui-corner-all border1 w250' style='display:table;'>
+		<div class="input-group input-group-sm w100p">
+			<span class="input-group-addon w25p TAL">Введите № чека:</span>
+			<input id="checkid" name="checkid" type="text" class="form-control TAR" value="12345.2009">
+			<span class="input-group-addon w32"></span>
+		</div>               
+	</div>
 </div>
