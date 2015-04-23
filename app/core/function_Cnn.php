@@ -1443,7 +1443,7 @@ Fn::paramToLog();
 		$url = str_replace("field14", $f14, $url);
 		$url = str_replace("field15", $f15, $url);
 
-Fn::debugToLog('jqgrid3 action', $action);
+//Fn::debugToLog('jqgrid3 action', $action);
 Fn::debugToLog('jqgrid3 url', $url);
 //Fn::paramToLog();
 
