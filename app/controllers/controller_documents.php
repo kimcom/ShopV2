@@ -10,4 +10,4 @@ class Controller_Documents extends Controller {
 		$this->view->generate('view_check_list.php', 'view_template.php');
 	}
 }
-?>
+
