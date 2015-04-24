@@ -441,7 +441,7 @@ class Cnni {
 	}
 	public function category_tree_oper() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
-Fn::paramToLog();
+//Fn::paramToLog();
 		if ($oper == 'add') {
 			$id = Shop::CreateNewElementTreeNS($this->dbi, 'category', $id, $parent_id, $name);
 			if ($id == false) {

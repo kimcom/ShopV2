@@ -17,24 +17,52 @@ if (isset($_REQUEST['cardid'])) {
 		}}]
 	});
 	$("#inputbox").dialog({
-		autoOpen: false, modal: true, width: 285,
-		buttons: [{
+			autoOpen: false, modal: true, width: 285,
+			buttons: [{
 			text: "Сохранить",
 			width: 80,
 			click: function() {
-				$.post('../engine/discoundcard_add_history', {
+				$.post('../engine/discoundcard_history', {
+					oper: 'add',
 					cardid: $("#cardid").val(),
 					checkid: $("#checkid").val()
 				},
 				function (data) {
-				    $("#dialog>#text").html(data.message);
+				    $("#dialog>#text").html(data.sql_message);
 				    $("#dialog").dialog("open");
+					if(data.success)$("#grid1").trigger('reloadGrid');
 				}, "json");
 			$( this ).dialog( "close" );
 		}},{
 			text: "Отмена", 
 			width: 80,
 			click: function () {$(this).dialog("close");}
+		}]
+	});
+	$("#inputbox2").dialog({
+			autoOpen: false, modal: true, width: 285,
+			buttons: [{
+			text: "Выполнить",
+			width: 80,
+			click: function() {
+				$.post('../engine/discoundcard_history', {
+					oper: 'del',
+					cardid: $("#cardid").val(),
+					checkid: $("#checkid").val()
+			    },
+			    function (data) {
+				$("#dialog>#text").html(data.sql_message);
+				$("#dialog").dialog("open");
+				if (data.success)
+				    $("#grid1").trigger('reloadGrid');
+			    }, "json");
+			    $(this).dialog("close");
+			}}, {
+			text: "Отмена",
+			width: 80,
+			click: function () {
+			    $(this).dialog("close");
+			}
 		}]
 	});
 //	console.log($("#DT_cancellation").val());
@@ -169,6 +197,19 @@ if (isset($_REQUEST['cardid'])) {
 			$("#inputbox").dialog("open");
 		}
 	});
+	$("#grid1").navButtonAdd('#grid1_toppager', {
+		title: 'Удалить чек из истории', buttonicon: "ui-icon-pencil", caption: 'Удалить чек из истории', position: "last",
+		onClickButton: function () {
+		    var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+		    var node = $("#grid1").jqGrid('getRowData', id);
+			//console.log(id,node,node.Name);
+		    if (node.cl_CheckID != ''){
+				$("#checkid").val(node.cl_CheckID);
+				$("#inputbox2>#text").html("Удалить из истории чек № "+node.cl_CheckID+"?");
+				$("#inputbox2").dialog("open");
+			}
+		}
+	});
 
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
@@ -184,7 +225,7 @@ if (isset($_REQUEST['cardid'])) {
 		}
 	});
 
-	$("#inputbox").dialog("open");
+//	$("#inputbox").dialog("open");
 	
 });
 </script>
@@ -316,11 +357,14 @@ if (isset($_REQUEST['cardid'])) {
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>
 </div>
+<div id="inputbox2" title="ВНИМАНИЕ!">
+	<p id='text'></p>
+</div>
 <div id="inputbox" title="Ввод информации:">
 	<div class='p5 ui-corner-all border1 w250' style='display:table;'>
 		<div class="input-group input-group-sm w100p">
 			<span class="input-group-addon w25p TAL">Введите № чека:</span>
-			<input id="checkid" name="checkid" type="text" class="form-control TAR" value="12345.2009">
+			<input id="checkid" name="checkid" type="text" class="form-control TAR" value="">
 			<span class="input-group-addon w32"></span>
 		</div>               
 	</div>

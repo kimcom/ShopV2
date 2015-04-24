@@ -1132,7 +1132,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		if ($version == '')	$version = null;
 		if ($priceType == '') $priceType = null;
 		if ($balanceActivity == '') $balanceActivity = null;
-		Fn::paramToLog();
+//Fn::paramToLog();
 		$stmt = $this->db->prepare("CALL pr_point('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $clientID, PDO::PARAM_STR);
 		$stmt->bindParam(2, $matrixID, PDO::PARAM_STR);
@@ -1254,29 +1254,32 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		}
 		return $row;
 	}
-	public function discoundcard_add_history() {
+	public function discoundcard_history() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
 //Fn::paramToLog();
 		if ($checkid == '')	$checkid = null;
-Fn::paramToLog();
+		$action = "history_".$oper;
+		$checkid = str_replace(",",".",$checkid);
+//Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
-		$stmt = $this->db->prepare("CALL pr_discountCard('add_history', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		$stmt->bindParam(1, $cardid, PDO::PARAM_STR);
-		$stmt->bindParam(2, $name, PDO::PARAM_STR);
-		$stmt->bindParam(3, $dateOfIssue, PDO::PARAM_STR);
-		$stmt->bindParam(4, $dateOfCancellation, PDO::PARAM_STR);
-		$stmt->bindParam(5, $clientID, PDO::PARAM_STR);
-		$stmt->bindParam(6, $address, PDO::PARAM_STR);
-		$stmt->bindParam(7, $eMail, PDO::PARAM_STR);
-		$stmt->bindParam(8, $phone, PDO::PARAM_STR);
-		$stmt->bindParam(9, $animal, PDO::PARAM_STR);
-		$stmt->bindParam(10, $startPercent, PDO::PARAM_STR);
-		$stmt->bindParam(11, $startSum, PDO::PARAM_STR);
-		$stmt->bindParam(12, $checkid, PDO::PARAM_STR);
-		$stmt->bindParam(13, $percentOfDiscount, PDO::PARAM_STR);
-		$stmt->bindParam(14, $howWeLearn, PDO::PARAM_STR);
-		$stmt->bindParam(15, $notes, PDO::PARAM_STR);
+		$stmt = $this->db->prepare("CALL pr_discountCard(?, @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $cardid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $name, PDO::PARAM_STR);
+		$stmt->bindParam(4, $dateOfIssue, PDO::PARAM_STR);
+		$stmt->bindParam(5, $dateOfCancellation, PDO::PARAM_STR);
+		$stmt->bindParam(6, $clientID, PDO::PARAM_STR);
+		$stmt->bindParam(7, $address, PDO::PARAM_STR);
+		$stmt->bindParam(8, $eMail, PDO::PARAM_STR);
+		$stmt->bindParam(9, $phone, PDO::PARAM_STR);
+		$stmt->bindParam(10, $animal, PDO::PARAM_STR);
+		$stmt->bindParam(11, $startPercent, PDO::PARAM_STR);
+		$stmt->bindParam(12, $startSum, PDO::PARAM_STR);
+		$stmt->bindParam(13, $checkid, PDO::PARAM_STR);
+		$stmt->bindParam(14, $percentOfDiscount, PDO::PARAM_STR);
+		$stmt->bindParam(15, $howWeLearn, PDO::PARAM_STR);
+		$stmt->bindParam(16, $notes, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		$this->echo_response($stmt);
@@ -1299,7 +1302,7 @@ Fn::paramToLog();
 			$dateOfCancellation = DateTime::createFromFormat('d?m?Y H?i?s', $dateOfCancellation);
 			$dateOfCancellation = $dateOfCancellation->format('Ymd');
 		}
-Fn::paramToLog();
+//Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_discountCard('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $cardid, PDO::PARAM_STR);
@@ -1396,7 +1399,7 @@ Fn::paramToLog();
 	public function user_save() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-		Fn::paramToLog();
+//Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		if ($userid == null)
 			$userid = 0;
@@ -1647,8 +1650,11 @@ Fn::debugToLog('jqgrid3 url', $url);
 		$response = new stdClass();
 		$response->new_id = 0;
 		$response->success = Fn::checkErrorMySQLstmt($stmt);
+		$response->sql_message = "";
 		if ($response->success != true) {
 			$response->message = 'Возникла ошибка при внесении информации!<br><br>Сообщите разработчику!';
+			if (strlen($response->sql_message) == 0)
+				$response->sql_message = $response->message;
 			echo json_encode($response);
 			return;
 		}
@@ -1660,13 +1666,18 @@ Fn::debugToLog('jqgrid3 url', $url);
 //Fn::debugToLog("s", json_encode($row));
 				$response->success = $row[0];
 				$response->new_id = $row[1];
+				$response->sql_message = $row[2];
 			break;
 		}
 		if ($response->success != true) {
 			$response->message = 'Вы ничего не изменили!';
+			if (strlen($response->sql_message) == 0)
+				$response->sql_message = $response->message;
 			echo json_encode($response);
 		} else {
 			$response->message = 'Информация успешно сохранена!';
+			if (strlen($response->sql_message) == 0)
+				$response->sql_message = $response->message;
 			echo json_encode($response);
 		}
 		return;
