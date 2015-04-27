@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+$(document).ready(function () {
 	//превратим div dialog в "окно сообщений"
 	$("#dialog").dialog({
 		autoOpen: false, modal: true, width: 400,
@@ -136,6 +136,61 @@
 		    alert("You enter a row with id:" + rowid)
 		}});
 	    //$("#gridL").gridResize();
+	// Creating gridH
+	$("#gridH").jqGrid({
+		sortable: true,
+		datatype: "json",
+		url: '../engine/jqgrid3?action=spent_history&cat_spent_id=10055&spent_period=2015-01&f1=DocID&f2=Number1C&f3=DT_doc&f4=SellerName&f5=SpentName&f6=Sum',
+		width: '100%',
+		height: '333',
+		//&f1=DocID&f2=Number1C&f3=DT_doc&f4=SellerName&f5=SpentName&f7=Sum
+		colNames: ['DocID', 'Номер 1С', 'Дата', 'Сотрудник', 'Статья затрат', 'Сумма'],
+		colModel: [
+		    {name: 'dl_DocID', index: 'dl.DocID', width: 80, sorttype: "number", align: "center", search: true},
+		    {name: 'dl_Number1C', index: 'dl.Number1C', width: 80, sorttype: "text", align: "center", search: true},
+		    {name: 'dl_DT_doc', index: 'dl.DT_doc', width: 120, sorttype: "datatime", align: "center", search: true},
+		    {name: 's_Name', index: 's.Name', width: 200, sorttype: "text", align: "left", search: true},
+		    {name: 'p_Name', index: 'p.Name', width: 200, sorttype: "text", align: "left", search: true},
+		    {name: 'dc_Sum', index: 'dc.Sum', width: 80, sorttype: "number", align: "right", search: true},
+		],
+		shrinkToFit: true,
+		rowNum: 999999999,
+//		rowNum: 20,
+//		rowList: [20, 30, 40, 50, 100, 200, 300],
+		sortname: "dl.DT_doc",
+		viewrecords: true,
+		gridview: true,
+//		toppager: true,
+		pager: '#pgridH'
+	    });
+	    $("#gridH").jqGrid('navGrid', '#pgridH', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+	    $("#gridH").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
+
+
+	$('#button_report_run_json').click(function (e) {
+		p1 = 'lalalal';
+		p2 = 'ogogogo';
+		$.post("../engine/test_ajax_json", {param1: p1, param2: p2}, function (json) {
+		    $('#text').html(json.test + json.privet);
+		    $("#dialog").dialog("open");
+		});
+    });
+    $('#button_report_run_html').click(function (e) {
+		$.ajax({
+		    type: "POST",
+		    data: ({param1: 'Oleg', param2: 'Malinin', age: '42'}),
+		    url: '../engine/test_ajax_html',
+		    dataType: "html",
+		    success: function (data) {
+			$("#text").html(data);
+			$("#dialog").dialog("open");
+		    }
+		});
+    });
+	$(document).keypress(function(event_obj) {
+		console.log(event_obj);
+		alert(event_obj.charCode);
+	});
 });
 </script>
 <style>
@@ -158,6 +213,16 @@
 	<div id="tab-content" class="tab-content">
 		<div class="tab-pane min0 m0 w100p ui-corner-all borderColor frameL border1 h60" id="tab_1">
 			Tab-1
+			<div class="floatL">
+				<button id="button_report_run_json" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
+					<span class="ui-button-text" style1='width:120px;height:22px;'>ТЕСТ AJAX JSON</span>
+				</button>
+			</div>
+			<div>
+				<button id="button_report_run_html" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
+					<span class="ui-button-text" style1='width:120px;height:22px;'>ТЕСТ AJAX HTML</span>
+				</button>
+			</div>
 		</div>
 		<div class="tab-pane min0 m0 w100p ui-corner-all borderColor frameL border1 h60" id="tab_2">
 			Tab-2
@@ -275,6 +340,10 @@
 				<a class="btn btn-default w100p" type="button">...</a>
 			</span>
 		</div>
+	</div>
+	<div id="history" class="pt10" title="Расшифровка движений">
+		<table id="gridH"></table>
+		<div id="pgridH"></div>
 	</div>
 
 </div>

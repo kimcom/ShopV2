@@ -357,11 +357,11 @@ function task_open(rowid){
 		</button>
 	</div>
 	<div id="tab-content" class="tab-content">
-		<div class="tab-pane min260 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_project">
+		<div class="tab-pane min250 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_project">
 			<div class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Проект:</span>
-					<span id="projectID_span" class="input-group-addon form-control TAL"><?php echo $row['ProjectID']; ?></span>
+					<span id="projectid_span" class="input-group-addon form-control TAL"><?php echo $row['ProjectID']; ?></span>
 					<span class="input-group-addon w32"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">
@@ -378,7 +378,7 @@ function task_open(rowid){
 				</div>               
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Описание:</span>
-					<textarea id="description" name="description" rows="6" type="text" style="height: auto;" class="form-control TAL p5"><?php echo $row['Description']; ?></textarea>
+					<textarea id="description" name="description" rows="7" type="text" style="height: 150px;" class="form-control TAL p5"><?php echo $row['Description']; ?></textarea>
 					<span class="input-group-addon w32"></span>
 				</div>
 			</div>
@@ -416,9 +416,9 @@ function task_open(rowid){
 					<div class="w100p" id="select_status"></div>
 					<span class="input-group-addon w32"></span>
 				</div>
-				<div class="input-group input-group-sm w100p">
+				<div class="input-group input-group-sm w100p h60">
 					<span class="input-group-addon w25p"></span>
-					<span class="input-group-addon form-control"></span>
+					<span class="input-group-addon form-control" style="height:60px"></span>
 					<span class="input-group-addon w32"></span>
 				</div>
 			</div>
@@ -499,11 +499,11 @@ function task_open(rowid){
 			</div>
 		</div>
 		
-		<div class="min260 p5 pt0 w100p ui-corner-top0 1borderTop0 borderColor frameL border1" id="tab_project">
-				<div id='div2' class='frameL'>
-					<table id="grid2"></table>
-					<div id="pgrid2"></div>
-				</div>
+		<div class="min260 p5 pt0 w100p ui-corner-top0 borderTop0 borderColor frameL border1" id="tab_project">
+			<div id='div2' class='frameL'>
+				<table id="grid2"></table>
+				<div id="pgrid2"></div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -68,6 +68,7 @@ $(document).ready(function(){
 
 	//$("#grid1").draggable();
 	$("#grid1").gridResize();
+
 });
 </script>
 <div class="container min570">

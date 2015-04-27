@@ -3,6 +3,12 @@ class Controller_Reports_fin extends Controller {
 	function action_pendel() {
 		$this->view->generate('view_reports_pendel.php', 'view_template.php');
 	}
+	function action_pendel_dop() {
+		include 'app/views/view_reports_pendel_dop.php';
+	}
+	function action_pendel2() {
+		$this->view->generate('view_reports_pendel2.php', 'view_template.php');
+	}
 
 	function action_pendel_data() {
 		$cnn = new Cnn();

@@ -9,6 +9,15 @@ class Model_Category extends Model {
 		$cnn = new Cnni();
 		echo $cnn->cat_partner_tree_oper();
 	}
+	public function add_in_cat_partner() {
+		$cnn = new Cnni();
+		return $cnn->add_in_cat_partner();
+	}
+	public function del_from_cat_partner() {
+		$cnn = new Cnni();
+		return $cnn->del_from_cat_partner();
+	}
+
 //категории статьи затрат
 	public function get_tree_NS_cat_spent() {
 		$cnn = new Cnni();
@@ -18,7 +27,14 @@ class Model_Category extends Model {
 		$cnn = new Cnni();
 		echo $cnn->cat_spent_tree_oper();
 	}
-
+	public function add_in_cat_spent() {
+		$cnn = new Cnni();
+		return $cnn->add_in_cat_spent();
+	}
+	public function del_from_cat_spent() {
+		$cnn = new Cnni();
+		return $cnn->del_from_cat_spent();
+	}
 
 	public function get_tree_NS() {
 		$cnn = new Cnni();

@@ -22,7 +22,6 @@ class Controller_Engine extends Controller {
 			//Fn::debugToLog("Engine", 'ошибка при чтении фильтра из файла: ' . $filename);
 			$response->success = false;
 			$response->message = 'Возникла ошибка при получении настроек!<br><br>Сообщите разработчику!';
-			$response->message = $filename;
 			$response->data = 0;
 			echo json_encode($response);
 		}
@@ -95,7 +94,11 @@ EOF;
 		$cnn = new Cnn();
 		return $cnn->discoundcard_save();
 	}
-        function action_point_save() {
+	function action_discoundcard_history(){
+		$cnn = new Cnn();
+		return $cnn->discoundcard_history();
+	}
+	function action_point_save() {
 		$cnn = new Cnn();
 		return $cnn->point_save();
 	}
@@ -126,7 +129,11 @@ EOF;
 //			return $cnn->task_info();
 		}
 		//return $cnn->discoundcard_save();
+	} 
+	
+	function action_user_save() {
+		$cnn = new Cnn();
+		return $cnn->user_save();
 	}
-
 }
 ?>

@@ -19,7 +19,7 @@
 	    colNames: ['№', 'Статус', 'Подразделение', 'Описание', 'Ответственный', 'Дата добавления', 'План. запуск', 'Факт. запуск'],
 	    colModel: [
 			{name: 'pr_ProjectID',	index: 'pr.ProjectID',	width:  40, align: "center",sorttype: "text", search: true},
-	   		{name: 'pr_Status',		index: 'pr.Status',		width: 120, align: "left",  stype:'select', editoptions:{value:":любой;20:постановка задач;30:в работе;50:пауза;60:на проверке;100:завершено"}},
+	   		{name: 'pr_Status',		index: 'pr.Status',		width: 120, align: "left",  stype:'select', editoptions:{value:":любой;0:можно начинать;20:постановка задач;30:в работе;50:пауза;60:на проверке;100:завершено"}},
 			{name: 'un_UnitName', 	index: 'un.UnitName', 	width: 120, align: "left",	sorttype: "text", search: true},
 			{name: 'pr_Name',		index: 'pr.Name',		width: 350, align: "left",	sorttype: "text", search: true},
 			{name: 'u_UserName',	index: 'u.UserName',	width: 150, align: "left",	sorttype: "text", search: true},
@@ -72,7 +72,7 @@
 		alert("You enter a row with id:" + rowid)
     }});
 	$("#grid1").gridResize();
-    });
+});
 </script>
 <div class="container min570">
 	<div id='div1' class='frameL pt5'>

@@ -30,9 +30,12 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 		$name == "barcodes" || 
 		$name == "without_barcodes" || 
 		$name == "barcode_verify" ||
-		$name == "promo_tree" || 
-		$name == "points" || 
-		$name == "sellers" || 
+		$name == "promo_tree" ||
+		$name == "points" ||
+		$name == "sellers" ||
+		$name == "discountCards" ||
+		$name == "user_list" || 
+		$name == "promo_list" ||
 		$controller == "/goods" ||
 		$controller == "/lists" ||
 		substr($name,0,13) == "promo_control"){
@@ -52,23 +55,28 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 	}else if (
 		$controller == "/helper") {
 		$active_menu8 = 'active';
+	} else if (
+		$controller == "/documents") {
+		$active_menu10 = 'active';
 	}else if (
 		$controller == "/task") {
 		$active_menu7 = 'active';
 	}
 ?>
 			<ul class="nav navbar-nav">
-				<li class="dropdown <?php echo $active_menu1;?>">
+				<li class="menu-item dropdown <?php echo $active_menu1;?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Категории<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="/category/var1">Категории товаров 1</a></li>
 						<li><a href="/category/var2">Категории товаров 2</a></li>
 						<li><a href="/category/var3">Категории товаров 3</a></li>
 						<li class="divider"></li>
-						<li><a href="/category/cat_partner3">Категории партнеров</a></li>
+						<li><a href="/category/cat_partner1">Категории партнеров вар. 1</a></li>
+						<li><a href="/category/cat_partner3">Категории партнеров вар. 3</a></li>
 						<li class="divider"></li>
-						<li><a href="/category/cat_partner4">Категории "Статьи затрат"</a></li>
-						</ul>
+						<li><a href="/category/cat_spent1">Категории "Статьи затрат" вар. 1</a></li>
+						<li><a href="/category/cat_spent3">Категории "Статьи затрат" вар. 3</a></li>
+					</ul>
 				</li>
 				<li class="<?php echo $active_menu2;?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Списки<b class="caret"></b></a>
@@ -84,6 +92,8 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 						<li><a href="/lists/points">Список магазинов</a></li>
 						<li><a href="/lists/sellers">Список сотрудников</a></li>
 						<li><a href="/lists/discountCards">Список дисконтных карт</a></li>
+						<li><a href="/lists/user_list">Список пользователей</a></li>
+<!--						<li><a href="/lists/promo_list">Список акций</a></li>-->
 						</ul>
 				</li>
 <!--				<li class="<?php echo $active_menu3;?>">
@@ -111,8 +121,7 @@ if($_SESSION['AccessLevel'] >= 1000){
 					<ul class="dropdown-menu">
 						<li><a href="/documents/sale?operID=1">Расходные накладные</a></li>
 						<li><a href="/documents/sale?operID=-1">Возвраты от покупателей</a></li>
-                                                <li><a href="/documents/check_list">Список чеков</a></li>
-                                                
+						<li><a href="/documents/check_list">Список чеков</a></li>
 					</ul>
 				</li>
 <?php 
@@ -129,12 +138,12 @@ if($_SESSION['AccessLevel'] >= 1000){
 					</ul>
 				</li>
 <?php
-if ($_SESSION['AccessLevel'] >= 1000) {
+if ($_SESSION['AccessLevel'] >= 2000) {
 ?>
 				<li class="<?php echo $active_menu9; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Фин. отчеты<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="/reports_fin/pendel">Profit and Loss (Отчет о прибылях и убытках/доходах и расходах)</a></li>
+						<li><a href="/reports_fin/pendel">Profit and loss (Отчет о прибылях и убытках/доходах и расходах)</a></li>
 						<li><a href="/reports_fin/cashflow">Cash Flow (Отчет о движении денежных средств)</a></li>
 					</ul>
 				</li>

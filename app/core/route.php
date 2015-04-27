@@ -7,12 +7,13 @@ class Route {
 			var_dump($_REQUEST);
 			//var_dump($_SERVER);
 			//var_dump($_POST);
-			Fn::DebugToLog("test param\n" . $_SERVER['SCRIPT_FILENAME'] . "\n".$_SERVER['REQUEST_URI']."\n", ob_get_clean());
+			Fn::DebugToLog("test param\n" . $_SERVER['SCRIPT_FILENAME'] . "\n" . $_SERVER['REQUEST_URI'] . "\n", ob_get_clean());
 			ob_end_clean();
 		}
 		$pos = strpos($_SERVER['REQUEST_URI'], 'favicon.ico');
-		if ($pos !== FALSE) Route::toFavicon ();
-		
+		if ($pos !== FALSE)
+			Route::toFavicon();
+
 //Fn::debugToLog("route REQUEST_URI ", urldecode($_SERVER['REQUEST_URI']));
 //Fn::debugToLog("route QUERY_STRING", urldecode($_SERVER['QUERY_STRING']));
 		// контроллер и действие по умолчанию
@@ -46,12 +47,17 @@ class Route {
 			return;
 		}
 //		if ($controller_name == 'css') return;
-		if ($controller_name == 'favicon.ico') return;
+		if ($controller_name == 'favicon.ico')
+			return;
 		if (!empty($routes[2]))
-			if ($routes[2] == 'favicon.ico') return;
-		if ($controller_name == 'images') return;
-		if ($action_name == 'favicon.ico') return;
-		if ($action_name == 'captcha') return;
+			if ($routes[2] == 'favicon.ico')
+				return;
+		if ($controller_name == 'images')
+			return;
+		if ($action_name == 'favicon.ico')
+			return;
+		if ($action_name == 'captcha')
+			return;
 		// добавляем префиксы
 		$model_name = 'Model_' . $controller_name;
 		$controller_name = 'Controller_' . $controller_name;
@@ -91,12 +97,13 @@ class Route {
 			$controller->$action();
 		} else {
 			//Fn::debugToLog('route controller:', $controller_name);
-			Fn::debugToLog('route action отсутствует:', $controller_name.'/'.$action);
+			Fn::debugToLog('route action отсутствует:', $controller_name . '/' . $action);
 			// здесь также разумнее было бы кинуть исключение
 			Route::ErrorPage404();
 			return;
 		}
 	}
+
 	static function ErrorPage404() {
 		Fn::redirectToController('404');
 //		$host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
@@ -104,8 +111,11 @@ class Route {
 //		header("Status: 404 Not Found");
 //		header('Location:' . $host . '404');
 	}
+
 	static function toFavicon() {
 		Fn::redirectToController('favicon.ico');
 	}
+
 }
+
 ?>

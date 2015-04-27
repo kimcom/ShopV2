@@ -9,31 +9,30 @@ var source_id_copy 	= 0;
 		treedatatype: 'json',
 		datatype: "json",
 		mtype: "POST",
-		width:284,
+		width:234,
 		height:486,
 		ExpandColumn : 'name',
-		url: '../category/get_tree_NS_cat_spent',
+		url: '../category/get_tree_NS_cat_partner',
 		colNames:["id","Категории"],
 		colModel:[
 			 {name:'id',index:'id', width:1, hidden:true, key:true},
-			 {name:'name',index:'name', width:240, resizable:false, editable:true, sorttype:"text", edittype:'text', stype:"text", search:true}
+			 {name:'name',index:'name', width:190, resizable:false, editable:true, sorttype:"text", edittype:'text', stype:"text", search:true}
 		],
 		sortname: "Name",
-		//sortable: true,
 		sortorder: "asc",
-		editurl: '../category/cat_spent_tree_oper',
+		editurl: '../category/cat_partner_tree_oper',
 		pager : "#ptreegrid",
-		caption: "Категории статьи затрат",
+		caption: "Категории",
 		toppager: true,
 		gridComplete: function() {
 			//setTimeout(function(){$("#treegrid").jqGrid('sortGrid','name', false, 'asc');},1);
+			//$("#gbox_treegrid").clone().prependTo($("#pgrid3"));
+			//$("#div3").html($("#treegrid").clone(true));
 		},
 		onSelectRow: function(cat_id) {
 			if(cat_id == null) cat_id=0;
-		    $("#grid1").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=spent_list&f1=SpentID&f2=Name&cat_spent_id="+cat_id,page:1});
+		    $("#grid1").jqGrid('setGridParam', {url: "../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name&cat_partner_id=" + cat_id, page: 1});
 			$("#grid1").trigger('reloadGrid');
-			$("#grid4").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=spent_list&f1=SpentID&f2=Name&cat_spent_noid="+cat_id,page:1});
-			$("#grid4").trigger('reloadGrid');
 		}
 	});
 	$("#treegrid").jqGrid('navGrid','#ptreegrid', {edit:true, add:true, del:true, search:false, refresh:true, cloneToTop: true},
@@ -126,9 +125,11 @@ var source_id_copy 	= 0;
 		title:'Вставить скопированную запись', buttonicon:"ui-icon-clipboard", caption:'', position:"last",
 		onClickButton: function(){ 
 			var target_id = $("#treegrid").jqGrid('getGridParam','selrow');
+			console.log(source_id_cut);
+			console.log(target_id);
 			if(source_id_cut){
 				if(source_id_cut==target_id)return false;
-				$.post('../category/cat_spent_tree_oper?oper=move&source='+source_id_cut+'&target='+target_id,function(data){
+				$.post('../category/cat_partner_tree_oper?oper=move&source='+source_id_cut+'&target='+target_id,function(data){
 					if(data==0){
 						$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
 						$("#dialog").dialog( "open" );
@@ -139,7 +140,7 @@ var source_id_copy 	= 0;
 			}
 			if(source_id_copy){
 				if(source_id_copy==target_id)return false;
-				$.post('../category/cat_spent_tree_oper?oper=copy&source='+source_id_copy+'&target='+target_id,function(data){
+				$.post('../category/cat_partner_tree_oper?oper=copy&source='+source_id_copy+'&target='+target_id,function(data){
 					if(data==0){
 						$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
 						$("#dialog").dialog( "open" );
@@ -152,12 +153,50 @@ var source_id_copy 	= 0;
 			source_id_copy= 0; 
 		}
 	});
-
 	$("#pg_ptreegrid").remove();
 	$(".ui-jqgrid-hdiv").remove();
 	$("#ptreegrid").removeClass('ui-jqgrid-pager');
 	$("#ptreegrid").addClass('ui-jqgrid-pager-empty');
-
+//***** treegrid2 *********//
+	$("#treegrid2").jqGrid({
+		treeGrid: true,
+		treeGridModel: 'nested',
+		treedatatype: 'json',
+		datatype: "json",
+		mtype: "POST",
+		width:254,
+		height:486,
+		ExpandColumn : 'name',
+		url: '../category/get_tree_NS_cat_partner',
+		colNames:["id","Категории"],
+		colModel:[
+			 {name:'id',index:'id', width:1, hidden:true, key:true},
+			 {name:'name',index:'name', width:190, resizable:false, editable:true, sorttype:"text", edittype:'text', stype:"text", search:true}
+		],
+		sortname: "Name",
+		//sortable: true,
+		sortorder: "asc",
+		editurl: '../category/cat_partner_tree_oper',
+		pager : "#ptreegrid2",
+		caption: "Категории",
+		toppager: true,
+		gridComplete: function() {
+			//setTimeout(function(){$("#treegrid2").jqGrid('sortGrid','name', false, 'asc');},1);
+			//$("#gbox_treegrid").clone().prependTo($("#pgrid3"));
+			//$("#div3").html($("#treegrid").clone(true));
+		},
+		onSelectRow: function(cat_id) {
+			if(cat_id == null) cat_id=0;
+		    $("#grid4").jqGrid('setGridParam', {url: "../engine/jqgrid3?action=partner_list&f1=PartnerID&f2=Name&cat_partner_id=" + cat_id, page: 1});
+			$("#grid4").trigger('reloadGrid');
+		}
+	});
+	$("#treegrid2").jqGrid('navGrid','#ptreegrid', {edit:false, add:false, del:false, search:false, refresh:true, cloneToTop: true});
+	$("#pg_ptreegrid2").remove();
+	$(".ui-jqgrid-hdiv").remove();
+	$("#ptreegrid2").removeClass('ui-jqgrid-pager');
+	$("#ptreegrid2").addClass('ui-jqgrid-pager-empty');
+	
 //************************************//
 	// Creating grid1
 	$("#grid1").jqGrid({
@@ -165,10 +204,10 @@ var source_id_copy 	= 0;
 		datatype: "json",
 		width:'100%',
 		height: '100%',
-		colNames:['Код','Название'],
+		colNames:['Код','Статья затрат'],
 		colModel:[
-			{name:'SpentID', index:'SpentID', width:80, sorttype:"text", search:true},
-			{name:'Name', index:'Name', width:320, sorttype:"text", search:true}
+			{name:'PartnerID', index:'PartnerID', width: 60, sorttype: "number", search: true},
+			{name:'Name', index:'Name', width:220, sorttype:"text", search:true}
 		],
 		rowNum:20,
 		rowList:[20,30,40,50,100,200,300],
@@ -177,7 +216,7 @@ var source_id_copy 	= 0;
 		multiselect: true,
 		gridview : true,
 		toppager: true,
-		caption: "Список статей затрат входящих в категорию:",
+		caption: "Список ст. затрат входящих в категорию:",
 		pager: '#pgrid1'
 	});
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: true, cloneToTop: true});
@@ -186,7 +225,6 @@ var source_id_copy 	= 0;
 	$("#grid1").navButtonAdd('#grid1_toppager',{
 		title:'Удалить из категории', buttonicon:"ui-icon-minusthick", caption:'из катег.', position:"last",
 		onClickButton: function(){ 
-
 			var id = $("#treegrid").jqGrid('getGridParam','selrow');
 			var node = $("#treegrid").jqGrid('getRowData',id);
 			if(id==null){
@@ -201,14 +239,13 @@ var source_id_copy 	= 0;
 				$("#dialog").dialog( "open" );
 				return;
 			}
-
 			$("#grid1").jqGrid('delGridRow', id, {
 				modal:true,
 				closeOnEscape:true,
 				closeAfterDel:true,
 				reloadAfterSubmit: true,
-				msg: 'Удалить выбранные статьи затрат из категории<br/>'+node.name+'?',
-				url: '../category/del_from_cat?cat_id='+id+'&source='+sel,
+				msg: 'Удалить выбранные записи из категории<br/>'+node.name+'?',
+				url: '../category/del_from_cat_partner?cat_id='+id+'&source='+sel,
 				savekey : [ true, 13 ],
 				afterSubmit : function(json, postdata) {
 					var result=$.parseJSON(json.responseText);
@@ -231,11 +268,11 @@ var source_id_copy 	= 0;
 		datatype: "json",
 		width:'100%',
 		height: '100%',
-		colNames:['Код','Название'],
-	    colModel: [
-			{name: 'SpentID', index: 'SpentID', width: 80, sorttype: "text", search: true},
-			{name: 'Name', index: 'Name', width: 320, sorttype: "text", search: true}
-	    ],
+		colNames:['Код','Статья затрат'],
+		colModel:[
+			{name:'PartnerID', index:'PartnerID', width: 60, sorttype: "number", search: true},
+			{name:'Name', index:'Name', width:310, sorttype:"text", search:true}
+		],
 		rowNum:20,
 		rowList:[20,30,40,50,100,200,300],
 		sortname: "Name",
@@ -243,7 +280,7 @@ var source_id_copy 	= 0;
 		multiselect: true,
 		gridview : true,
 		toppager: true,
-		caption: "Список статей затрат НЕ входящих в категорию:",
+		caption: "Список ст. затрат входящих в категорию:",
 		pager: '#pgrid4'
 	});
 	$("#grid4").jqGrid('navGrid','#pgrid4', {edit:false, add:false, del:false, search:false, refresh: true,	cloneToTop: true});
@@ -265,7 +302,7 @@ var source_id_copy 	= 0;
 				$("#dialog").dialog( "open" );
 				return;
 			}
-			$.post('../category/add_in_cat?cat_id='+id+'&source='+sel,function(data){
+			$.post('../category/add_in_cat_partner?cat_id='+id+'&source='+sel,function(data){
 				if(data==0){
 					$("#dialog>#text").html('Возникла ошибка.<br/>Сообщите разработчику!');
 					$("#dialog").dialog( "open" );
@@ -294,6 +331,7 @@ var source_id_copy 	= 0;
 		autoOpen: false, modal: true, width: 400,
 		buttons: [{text: "Закрыть", click: function() {$( this ).dialog( "close" );}}]
 	});
+
 });
 </script>
 <div class="min570">
@@ -305,12 +343,14 @@ var source_id_copy 	= 0;
 		<table id="grid1"></table>
 		<div id="pgrid1"></div>
 	</div>
+	<div class='frameL pl10'>
+		<table id="treegrid2"></table>
+		<div id="ptreegrid2"></div>
+	</div>
 	<div id='div4' class='frameL pl10'>
 		<table id="grid4"></table>
 		<div id="pgrid4"></div>
 	</div>
-</div>
-<div id="test" title="ВНИМАНИЕ!">
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>

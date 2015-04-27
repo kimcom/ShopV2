@@ -70,6 +70,15 @@ class Controller_Lists extends Controller {
 	function action_seller_info() {
 		$this->view->generate('view_seller_attr.php', 'view_template.php');
 	}
+	function action_user_list() {
+		$this->view->generate('view_user_list.php', 'view_template.php');
+	}
+	function action_user_info() {
+		$this->view->generate('view_user_attr.php', 'view_template.php');
+	}
+	function action_promo_list() {
+		$this->view->generate('view_promo_list.php', 'view_template.php');
+	}
 
 }
 ?>

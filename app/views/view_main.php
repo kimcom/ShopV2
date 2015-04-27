@@ -1,45 +1,54 @@
+<script type="text/javascript">
+var tab_active = '';
+$(document).ready(function () {
+    $('#slidorion').slidorion();
+});
+</script>
 <div class="container min570">
-	<div class="panel panel-default mb5">
-		<div class="panel-heading">
-			<h3><?php echo $_SESSION['titlename']; ?></h3>
+	<div id="slidorion" class="panel panel-default mb5 center-block slidorion">
+		<div class="slider">
+			<div class="slide"><img src="../../users/upload/discount history.png" /></div>
+			<div class="slide"><img src="../../users/upload/p&l.png" /></div>
+			<div class="slide"><img src="../../users/upload/sale opt.png" /></div>
+			<div class="slide"><img src="../../users/upload/discount_history.png" /></div>
+			<div class="slide"><img src="../../users/upload/user_list.png" /></div>
+			<div class="slide"><img src="../../users/upload/check_list.png" /></div>
 		</div>
-		<div class="panel-body min500">
-			<p class="text-info lead">
-				Данная система создана для накопления, управления и анализа информации<br>
-				о проданных товарах в розничной и оптовой сетях компании <?php echo $_SESSION['company']; ?>
-			</p>
-			<div class="list-group">
-				<a class="list-group-item disabled">
-					<h4>Основные возможности системы:</h4>
-				</a>
-				<div class="list-group">
-					<ul class="list-group-item">
-						<li class="list-group-item">
-							Управление товарным ассортиментом, штрих-кодами, ценами.
-						</li>
-						<li class="list-group-item">
-							Управление категориями, группами и матрицами товарного ассортимента.
-						</li>
-						<li class="list-group-item">
-							Управление списками торговых точек и продавцов.
-						</li>
-						<li class="list-group-item">
-							Управление акциями для оптовой и розничной сети.
-						</li>
-						<li class="list-group-item">
-							Получение аналитических отчетов.
-						</li>
-					</ul>
-				</div>
+
+		<div class="accordion">
+			<div class="header">Дисконт.карты "История покупок"</div>
+			<div class="content"><p>На сайте появилась возможность просмотра истории покупок для выбранной дисконтной карты.</p></div>
+			<div class="header">Отчет "Profit and loss"</div>
+			<div class="content"><p>Доступен новый отчет о прибылях и убытках</p></div>
+			<div class="header">Отчет "Продажи товаров в опте"</div>
+			<div class="content">
+				<p>Создан новый отчет,
+					отражающий информацию о продажах 
+					оптового отдела компании
+				</p>
 			</div>
-<?php
-if ($_SESSION['AccessLevel'] == 0) {
-				echo "<h4 class='center list-group-item list-group-item-danger'>"
-					. "ВНИМАНИЕ!<br><small>Ваш аккаунт имеет ограниченный доступ!<br>"
-					. "Для получения доступа к функциям системы,<br>"
-					. "обратитесь к администратору системы: <a href='mailto:".$_SESSION['adminEmail']."'>".  $_SESSION['adminEmail'] ."</a></small></h4>";
-}
-?>
+			<div class="header">Корректировка истории диск.карты</div>
+			<div class="content">
+				<p>Реализована функция добавления и удаления 
+					чеков из истории продаж для конкретной 
+					дисконтной карты
+				</p>
+			</div>
+			<div class="header">Список пользователей</div>
+			<div class="content">
+				<p>Сделан список пользователей САУ
+					с возможностью сортировки и фильтрации.
+					Также реализована возможность изменения
+					информации о пользователе.
+				</p>
+			</div>
+			<div class="header">Список чеков</div>
+			<div class="content">
+				<p>Сделан список чеков 
+					с отражением содержимого чека.
+					Есть возможность фильтрации и сортировки.
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
