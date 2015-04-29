@@ -9,5 +9,6 @@ class Controller_Documents extends Controller {
 	function action_checkContent_list() {
 		$this->view->generate('view_check_list.php', 'view_template.php');
 	}
+    
 }
 
