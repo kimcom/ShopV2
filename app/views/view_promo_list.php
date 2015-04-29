@@ -10,30 +10,26 @@ $(document).ready(function(){
 // Creating grid1
 	$("#grid1").jqGrid({
 		sortable: true,
-	    url:"../engine/jqgrid3?action=users_list&f1=UserID&f2=Login&f3=EMail&f4=UserName&f5=Position&f6=NameShort&f7=City&f8=AccessLevel&f9=DT_create&f11=NameShort",
+	    url:"../engine/jqgrid3?action=promo_list_full&f1=PromoID&f2=PromoType&f3=Name&f4=Description&f5=TypeID",
 		datatype: "json",
 		height:'auto',
-		colNames:['ID','Логин','E-mail','ФИО','Должность','Подразделение','Город','Доступ','Дата создания'],
+		colNames:['ID','Тип','Название','Описание','TypeID'],
 		colModel:[
-			{name:'UserID',		index:'UserID',		width: 60, align:"center", sorttype:"number", search:true},
-			{name:'Login',		index:'Login',		width: 130, align:"left",   sorttype:"text", search:true},
-			{name:'EMail',		index:'EMail',		width: 170, align:"left", sorttype:"text", search: true},
-			{name:'UserName',	index:'UserName',	width: 185, align:"left", sorttype:"text", search:true},
-			{name:'Position',	index:'Position',	width: 185, align:"left", sorttype:"text", search:true},
-			{name:'NameShort',	index:'NameShort', width: 120, align:"left", sorttype:"text", search:true},
-			{name:'City',		index:'City',		width: 80, align:"center", sorttype:"text", search:true},
-			{name:'AccessLevel',index:'AccessLevel',width: 40, align:"center", sorttype:"number", search:true},
-			{name:'DT_create',	index:'DT_create',	width: 120, align:"center", sorttype:"date", search:true}
-		],// 40
+			{name:'PromoID',	 index:'PromoID',	  width: 80, align:"center", sorttype:"number", search:true},
+			{name:'PromoType',	 index:'PromoType',	  width: 200, align:"left",  sorttype:"text",   search:true},
+			{name:'Name',		 index:'Name',		  width: 250, align:"left",  sorttype:"text",   search:true},
+			{name:'Description', index:'Description', width: 645, align:"left",  sorttype:"text",   search:true},
+			{name:'TypeID',		 index:'TypeID',	  width: 250, align:"left",  sorttype:"text",   search:true, hidden:true}
+		],
 		//gridComplete: function() {if (!fs) {fs = 1;	filter_restore("#grid1");}},
 		width:'auto',
 		shrinkToFit:false,
 		rowNum:20,
 		rowList:[20,30,40,50,100],
-		sortname: "UserID",
+		sortname: "PromoID",
 		viewrecords: true,
 		toppager: true,
-		caption: "Список пользователей",
+		caption: "Список акций",
 		pager: '#pgrid1',
 		grouping: true
 //,
@@ -49,19 +45,42 @@ $(document).ready(function(){
 	});
 	$("#grid1").jqGrid('navGrid','#pgrid1', {edit:false, add:false, del:false, search:false, refresh: true, cloneToTop: true});
 	$("#grid1").navButtonAdd('#grid1_toppager', {
-		title: 'Добавить пользователя', buttonicon: "ui-icon-pencil", caption: 'Добавить', position: "last",
+		title: 'Открыть информационную карту', buttonicon: "ui-icon-pencil", caption: 'Открыть инф. карту', position: "last",
 		onClickButton: function () {
-		    window.location = "../lists/user_info?userID=0";
+		    var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+			var node = $("#grid1").jqGrid('getRowData', id);
+			if (id != '')
+				window.location = "../lists/promo_tree?promoid=" + id;
 		}
 	    });
 	$("#grid1").navButtonAdd('#grid1_toppager', {
-		title: 'Открыть информационную карту пользователя', buttonicon: "ui-icon-pencil", caption: 'Открыть карту', position: "last",
+		title: 'Открыть дополнительную информационную карту', buttonicon: "ui-icon-pencil", caption: 'Открыть доп. инф. карту', position: "last",
 		onClickButton: function () {
 		    var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		    var node = $("#grid1").jqGrid('getRowData', id);
-		    //console.log(id,node,node.Name);
-		    if (id != '')
-				window.location = "../lists/user_info?userID=" + id;
+			var node = $("#grid1").jqGrid('getRowData', id);
+		    console.log(id,node,node.Name,node.TypeID);
+			if (id != '' && node.TypeID != ''){
+				section = "";
+				promo_type_id = node.TypeID;
+			    if (promo_type_id == '10')		 {//Акционная цена
+				section = "promo_control_price";
+				} else if (promo_type_id == '30'){//Скидка, если комплект
+				section = "promo_control_disc_complect";
+				} else if (promo_type_id == '40'){//Скидка, если кол-во
+				section = "promo_control_disc";
+				} else if (promo_type_id == '50'){//Скидка на дополн.товар
+				section = "promo_control_disc_dop";
+				} else if (promo_type_id == '80'){//Подарок, если комплект
+				section = "promo_control_gift_complect";
+				} else if (promo_type_id == '90'){//Подарок, если кол-во
+				section = "promo_control_gift";
+				} else if (promo_type_id == '70'){//1+1=3
+				section = "promo_control_1plus1";
+				} else if (promo_type_id == '60'){//фикс.сумма
+				section = "promo_control_fixsumma";
+				} else{return; }
+				window.location = "../lists/"+section+ "?promoid=" + id;
+			}
 		}
 	});
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});

@@ -1,5 +1,7 @@
 <?php
-echo $_REQUEST['id'];
+//echo $_REQUEST['id'];
+$promoid = null;
+if(isset($_REQUEST['promoid'])) $promoid = $_REQUEST['promoid'];
 ?>
 <script src="../../js/jquery.validate.min.js"></script>
 <script type="text/javascript">
@@ -30,45 +32,7 @@ var source_id_copy 	= 0;
 		toppager: true,
 		onSelectRow: function(row_id) {
 			if(row_id == null) row_id=0;
-			$.post('../lists/get_promo_tree_info',{
-				id:row_id
-				},
-				function(json){
-					var node = $("#treegrid").jqGrid('getRowData',row_id);
-					if(node.level!=0){
-						$("#PromoID").val(json.PromoID);
-						$("#Name").removeAttr("disabled");
-						$("#Description").removeAttr("disabled");
-						$("#select_promo_type").removeAttr("disabled");
-						$("#select_user_list").removeAttr("disabled");
-						$("#DT_start").removeAttr("disabled");
-						$("#DT_stop").removeAttr("disabled");
-						$("#button_save").removeAttr("disabled");
-						$("#button_open").removeAttr("disabled");
-
-					}else{
-						$("#Name").attr("disabled","disabled");
-						$("#Description").attr("disabled","disabled");
-						$("#select_promo_type").attr("disabled","disabled");
-						$("#select_user_list").attr("disabled","disabled");
-						$("#DT_start").attr("disabled","disabled");
-						$("#DT_stop").attr("disabled","disabled");
-						$("#button_save").attr("disabled","disabled");
-						$("#button_open").attr("disabled","disabled");
-					}
-					$("#Name").val(json.Name);
-					$("#Description").val(json.Description);
-					$("#DT_start").datepicker("setDate",json.DT_start);
-					$("#DT_stop").datepicker("setDate",json.DT_stop);
-					$("#DT_create").val(json.DT_create);
-					$("#UserID_create").val(json.UserName_create);
-					$("#DT_modi").val(json.DT_modi);
-					$("#UserID_modi").val(json.UserName_modi);
-					$("#select_promo_type").select2("val", json.TypeID);
-					$("#select_user_list").select2("val", json.UserID_response);
-					$("#promo_quantity").val(json.promo_quantity);
-				}
-			);
+			promo_info(row_id);
 		}
 		// ,
  // gridComplete: function(){
@@ -271,7 +235,49 @@ var source_id_copy 	= 0;
 		}else{return;}
 		window.location = "../lists/"+section+"?promoid="+$("#PromoID").val();
 	});
+	promo_info(<?php echo $promoid;?>);
 });
+function promo_info(row_id){
+	if(row_id==null)return;
+		$.post('../lists/get_promo_tree_info',{
+			id:row_id
+			},
+			function(json){
+			var node = $("#treegrid").jqGrid('getRowData', row_id);
+			if (node.level != 0) {
+			    $("#PromoID").val(json.PromoID);
+			    $("#Name").removeAttr("disabled");
+			    $("#Description").removeAttr("disabled");
+			    $("#select_promo_type").removeAttr("disabled");
+			    $("#select_user_list").removeAttr("disabled");
+			    $("#DT_start").removeAttr("disabled");
+			    $("#DT_stop").removeAttr("disabled");
+			    $("#button_save").removeAttr("disabled");
+			    $("#button_open").removeAttr("disabled");
+
+			} else {
+			    $("#Name").attr("disabled", "disabled");
+			    $("#Description").attr("disabled", "disabled");
+			    $("#select_promo_type").attr("disabled", "disabled");
+			    $("#select_user_list").attr("disabled", "disabled");
+			    $("#DT_start").attr("disabled", "disabled");
+			    $("#DT_stop").attr("disabled", "disabled");
+			    $("#button_save").attr("disabled", "disabled");
+			    $("#button_open").attr("disabled", "disabled");
+			}
+			$("#Name").val(json.Name);
+			$("#Description").val(json.Description);
+			$("#DT_start").datepicker("setDate", json.DT_start);
+			$("#DT_stop").datepicker("setDate", json.DT_stop);
+			$("#DT_create").val(json.DT_create);
+			$("#UserID_create").val(json.UserName_create);
+			$("#DT_modi").val(json.DT_modi);
+			$("#UserID_modi").val(json.UserName_modi);
+			$("#select_promo_type").select2("val", json.TypeID);
+			$("#select_user_list").select2("val", json.UserID_response);
+			$("#promo_quantity").val(json.promo_quantity);
+		});
+}
 </script>
 <div class="container min570">
 	<div class='frameL'>
