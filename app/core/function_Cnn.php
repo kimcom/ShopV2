@@ -1329,6 +1329,8 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 	public function seller_info() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
+Fn::paramToLog();
+return;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_seller('info', @id, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $sellerID, PDO::PARAM_STR);
@@ -1371,10 +1373,12 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 	}
 
 //users
-	public function user_info() {
+	public function user_info($userVal) {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-		Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+                if (isset($userVal)) $userID = $userVal;
+//Fn::paramToLog();
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_user_info('info', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $userID, PDO::PARAM_STR);
 		$stmt->bindParam(2, $login, PDO::PARAM_STR);
@@ -1399,7 +1403,6 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 	public function user_save() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-//Fn::paramToLog();
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		if ($userid == null)
 			$userid = 0;
@@ -1409,6 +1412,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 			$password = '';
 		if ($companyName == null)
 			$companyName = '';
+Fn::paramToLog();
 		$stmt = $this->db->prepare("CALL pr_user_info('save', @id, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $userid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $login, PDO::PARAM_STR);

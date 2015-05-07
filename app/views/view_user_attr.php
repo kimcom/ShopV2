@@ -1,7 +1,7 @@
 <?php
 $cnn = new Cnn();
 if (isset($_REQUEST['userID'])) {
-	$row = $cnn->user_info();
+	$row = $cnn->user_info(null);
 	$clientid = $row['ClientID'];
 	if ($clientid == null) $clientid = 0;
 	$userid = $_REQUEST['userID'];
@@ -123,13 +123,7 @@ if (isset($_REQUEST['userID'])) {
 				<span class="input-group-addon w20p"></span>
 			</div>
 		</div>
-			<!--*********************-->
-			<!--
-			<div class='p5 ui-corner-all frameL ml10 border0 w400' style='float:left;'>
-			
-			</div>
-			-->
-		</div>
+            </div>
 	</div>
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
