@@ -1,9 +1,15 @@
-май 10, 2015 4:58:59 PM main.MyUtil errorToLog
+май 08, 2015 11:28:42 AM main.MyUtil errorToLog
 SEVERE: Exception:
-java.lang.NullPointerException
-	at main.ConfigReader.<init>(ConfigReader.java:96)
-	at main.ConfigReader.getInstance(ConfigReader.java:143)
-	at main.ShopMain$1.run(ShopMain.java:20)
+java.sql.SQLException: Column 'Producer' not found.
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1074)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:988)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:974)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:919)
+	at com.mysql.jdbc.ResultSetImpl.findColumn(ResultSetImpl.java:1167)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5733)
+	at reports.ReportPricePlank.fillCheck(ReportPricePlank.java:243)
+	at reports.ReportPricePlank.<init>(ReportPricePlank.java:171)
+	at main.ShopMain$1.run(ShopMain.java:30)
 	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:312)
 	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:733)
 	at java.awt.EventQueue.access$200(EventQueue.java:103)

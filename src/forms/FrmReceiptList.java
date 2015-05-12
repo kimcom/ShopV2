@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +124,23 @@ public class FrmReceiptList extends javax.swing.JDialog {
 			cnn.setReceiptStatus(currentDocID);
 		}
 		requery();
+		jTableDocList.requestFocus();
+	}
+	private void jButtonCreateStickerActionPerformed() {
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) return;
+		int selectedRow = jTableDocList.getSelectedRow();
+		if (selectedRow == -1) return;
+		currentDocID = jTableDocList.getModel().getValueAt(selectedRow, 0).toString();
+		int i = JOptionPane.showConfirmDialog(null, "Создать ценники \nна основании прихода товара?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (i == 0) {
+			BigDecimal bd_result = cnn.setCreateStickers(currentDocID, "Receipt");
+			if (bd_result.compareTo(BigDecimal.ZERO) > 0) {
+				DialogBoxs.viewMessage("Ценники успешно созданы!\n\nНомер документа: " + bd_result.setScale(4, RoundingMode.HALF_UP).toPlainString() + "!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Возникла ошибка при создании ценников.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 		jTableDocList.requestFocus();
 	}
 	private void jButtonExitActionPerformed() {
@@ -274,6 +293,7 @@ public class FrmReceiptList extends javax.swing.JDialog {
         jButtonExit = new javax.swing.JButton();
         jButtonPrintCheck = new javax.swing.JButton();
         jButtonSetStatus = new javax.swing.JButton();
+        jButtonCreateSticker = new javax.swing.JButton();
         jScrollPaneDocList = new javax.swing.JScrollPane();
         jTableDocList = new javax.swing.JTable();
         jScrollPaneDocContent = new javax.swing.JScrollPane();
@@ -325,6 +345,22 @@ public class FrmReceiptList extends javax.swing.JDialog {
             }
         });
 
+        jButtonCreateSticker.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jButtonCreateSticker.setText("<html><center>Создать ценники</html>");
+        jButtonCreateSticker.setToolTipText("Уст. отметку о выполнении");
+        jButtonCreateSticker.setActionCommand("Печать");
+        jButtonCreateSticker.setBorderPainted(false);
+        jButtonCreateSticker.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCreateSticker.setIconTextGap(0);
+        jButtonCreateSticker.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonCreateSticker.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonCreateSticker.setPreferredSize(new java.awt.Dimension(100, 70));
+        jButtonCreateSticker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCreateStickerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
         jPanelButton.setLayout(jPanelButtonLayout);
         jPanelButtonLayout.setHorizontalGroup(
@@ -338,7 +374,10 @@ public class FrmReceiptList extends javax.swing.JDialog {
                             .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelButtonLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButtonSetStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonSetStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelButtonLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonCreateSticker, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelButtonLayout.setVerticalGroup(
@@ -349,7 +388,10 @@ public class FrmReceiptList extends javax.swing.JDialog {
                 .addGap(0, 0, 0)
                 .addComponent(jButtonPrintCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jButtonSetStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonSetStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jButtonCreateSticker, javax.swing.GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         jScrollPaneDocList.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Список документов:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -427,7 +469,12 @@ public class FrmReceiptList extends javax.swing.JDialog {
     private void jButtonSetStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSetStatusActionPerformed
         jButtonSetStatusActionPerformed();
     }//GEN-LAST:event_jButtonSetStatusActionPerformed
+    private void jButtonCreateStickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateStickerActionPerformed
+        jButtonCreateStickerActionPerformed();
+    }//GEN-LAST:event_jButtonCreateStickerActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCreateSticker;
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonPrintCheck;
     private javax.swing.JButton jButtonSetStatus;

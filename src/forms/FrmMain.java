@@ -362,35 +362,25 @@ public class FrmMain extends javax.swing.JFrame {
 		cnn = ConnectionDb.getInstance();
 		if (cnn != null) cnn.setAppVersion();
         requery();
-		
-//		System.out.println("EKKA_TYPE:"+conf.EKKA_TYPE);
+
 //временно
 //setInvisible(jButtonReturn);
 //setInvisible(jButtonPromo);
 //setInvisible(jButtonSeller);
 //setInvisible(jButtonReturn);
+
 		//назначение MyKeyListener
         getAllComponents((Container) this.getContentPane());
         setVisible(true);
 		//уст. русской раскладки для клавиатуры
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
-//jButtonReturnActionPerformed();
-		
-//		toFront();
-//		requestFocus();
-//		setAutoRequestFocus(true);
-
-//jButtonDiscountActionPerformed();
-//jButtonDiscountCardActionPerformed();
-//jButtonNewDiscountCardActionPerformed();
-//jButtonAdminActionPerformed();
-
-//FrmCashMove.getInstance(this, 0);
-//ReportCash.getInstance(this, false);
-//ReportSale.getInstance(this, false);
-//ReportBarcodeShort.getInstance(this, false,2);
-//FrmPriceOverList.getInstance(this, 0);
+//		FrmStickerList frmStickerList = new FrmStickerList();
+//		frmStickerList.setModal(true);
+//		frmStickerList.setVisible(true);
+//		ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("1.2009"));
+//		reportPrice.setModal(true);
+//		reportPrice.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -1104,11 +1094,11 @@ public class FrmMain extends javax.swing.JFrame {
 			//me.report("z1");
 			if(me.printCheck(cnn.currentCheckID)){
 				if (cnn.setCheckStatus(1)) {
-					jButtonNewCheckActionPerformed();//чек распечатан успешно
+//					jButtonNewCheckActionPerformed();//чек распечатан успешно
 				}
 			} else {
 				if (cnn.setCheckStatus(2)) {
-					jButtonNewCheckActionPerformed();//без распечатки
+//					jButtonNewCheckActionPerformed();//без распечатки
 				}
 			}
 		}else{

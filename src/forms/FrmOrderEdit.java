@@ -107,7 +107,7 @@ public class FrmOrderEdit extends javax.swing.JDialog {
         jButtonDateDoc.setVisible(false);
         requery();
         //табличные части
-        requeryGoodsList(0);
+        requeryGoodsList(-1);
         requeryOrderContent();
         //назначение MyKeyListener
         getAllComponents((Container) this.getContentPane());
@@ -129,7 +129,6 @@ public class FrmOrderEdit extends javax.swing.JDialog {
         if (cnn.getOrderInfo("CheckStatus", "int").equals("10")) {
             jComboBoxStatusDoc.setSelectedItem("отправить менеджеру");
         }
-
     }
     private void requeryGoodsList(int nodeID) {
         if (!checkCnnStatus()) return;

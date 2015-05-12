@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
+import reports.ReportPricePlank;
+import reports.ReportPriceSticker;
 
 public class ShopMain {
 
@@ -19,6 +21,23 @@ public class ShopMain {
 //				MyEKKA me = new MyEKKA();
 //				//me.report("z1");
 //				me.printCheck(new BigDecimal(12961.2009));
+
+//				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
+//				reportPrice.setModal(true);
+//				reportPrice.setVisible(true);
+
+//				ReportPricePlank reportPrice = new ReportPricePlank(new BigDecimal("5.2009"));
+//				reportPrice.setModal(true);
+//				reportPrice.setVisible(true);
+
+//				ConnectionDb cnn1 = ConnectionDb.getInstance();
+//				String password1 = new StringBuffer(config.USER_NAME).reverse().toString();
+//				cnn1.login(config.USER_NAME, password1);
+//
+//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(2.5411));
+//				frmStickerEdit.setModal(true);
+//				frmStickerEdit.setVisible(true);
+//				
 //				if (1==1) {
 //					System.exit(0);
 //				}

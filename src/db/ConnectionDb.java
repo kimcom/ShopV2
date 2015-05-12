@@ -41,6 +41,7 @@ public final class ConnectionDb{
     private ResultSet           resCardInfo;
     private ResultSet           resPromoInfo;
     private ResultSet           resOrderInfo;
+    private ResultSet           resStickerInfo;
     private static ConfigReader config = ConfigReader.getInstance();
     
 //init cnn
@@ -1671,6 +1672,461 @@ public final class ConnectionDb{
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return false;
+        }
+    }
+//sticker - ценники
+    public BigDecimal newSticker() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("newSticker: parameter [cnn] cannot be null!"));
+			return BigDecimal.ZERO;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "new");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, null);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			cs.execute();
+			BigDecimal currentID = cs.getBigDecimal(2);
+			return currentID;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return BigDecimal.ZERO;
+		}
+	}
+	public boolean delSticker(BigDecimal docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("delSticker: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "del");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			cs.execute();
+			if (cs.getInt(2) > 0) {
+				return true;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при удалении документа!");
+				return false;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean copySticker(BigDecimal docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("copySticker: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "copy");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			cs.execute();
+			if (cs.getInt(2) > 0) {
+				return true;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при удалении документа!");
+				return false;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public ResultSet getStickerList(Date dt1, Date dt2) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getStickerList: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "list");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, null);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, dt1);
+			cs.setDate(8, dt2);
+			cs.setString(9, null);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public ResultSet getStickerContent(BigDecimal docID, String type) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getStickerContent: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "content" + type);
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public boolean getStickerInfo(BigDecimal docID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getStickerInfo: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (docID.compareTo(BigDecimal.ZERO) == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "info");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			resStickerInfo = cs.executeQuery();
+			//resStickerInfo.last();
+			resStickerInfo.absolute(1);
+			return resStickerInfo.getRow() != 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public String getStickerInfo(String fieldName, String typeValue) {
+		if (resStickerInfo == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getStickerInfo: parameter [resStickerInfo] cannot be null!"));
+			return "";
+		}
+		try {
+			if (fieldName.equals("")) {
+				return "";
+			}
+			String strResult = "";
+			if (resStickerInfo.absolute(1)) {
+				if (typeValue.equals("String")) {
+					strResult = resStickerInfo.getString(fieldName);
+					strResult = (strResult == null) ? "" : strResult;
+				} else if (typeValue.equals("int")) {
+					strResult = Integer.toString(resStickerInfo.getInt(fieldName));
+				} else if (typeValue.equals("BigDecimal")) {
+					if (resStickerInfo.getBigDecimal(fieldName) != null) {
+						strResult = resStickerInfo.getBigDecimal(fieldName).setScale(4, RoundingMode.HALF_UP).toPlainString();
+					}
+				} else if (typeValue.equals("DateTime")) {
+					if (resStickerInfo.getDate(fieldName) != null) {
+						strResult = resStickerInfo.getString(fieldName).toString();
+					}
+				} else if (typeValue.equals("Date")) {
+					java.sql.Date dt = resStickerInfo.getDate(fieldName);
+					if (dt != null) {
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+						strResult = dateFormat.format(dt).toString();
+					}
+				}
+			}
+			return strResult;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public boolean editGoodQuantityInSticker(BigDecimal docID, int goodID, BigDecimal newQuantity) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("editGoodQuantityInSticker: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (goodID == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "good_edit_quantity");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, goodID);
+			cs.setBigDecimal(7, newQuantity);
+			cs.execute();
+			if (cs.getInt(2) == 0) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean addGoodInStickerQuantity(BigDecimal docID, int goodID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInStickerQuantity: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (goodID == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "good_plus");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, goodID);
+			cs.setString(7, "");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.execute();
+			if (cs.getInt(2) == 0) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean addGroupAllInSticker(BigDecimal docID, String action, int nodeID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGroupAllInSticker: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (nodeID == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "add_group_" + action);
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, nodeID);
+			cs.setString(7, "");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.execute();
+			if (cs.getInt(2) == 0) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean deleteGoodFromSticker(BigDecimal docID, int goodID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deleteGoodFromSticker: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (goodID == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "good_delete");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, goodID);
+			cs.setString(7, "");
+			cs.execute();
+			if (cs.getInt(2) == 0) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean setStickerStatus(BigDecimal docID, int statusDoc) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setStickerStatus: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "status");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, statusDoc);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, null);
+			cs.execute();
+			if (cs.getInt(2) == statusDoc) {
+				return true;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при установке статуса для документа!");
+				return false;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public boolean setStickerNotes(BigDecimal docID, String notes) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setStickerNotes: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "notes");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, notes);
+			cs.execute();
+			if (cs.getInt(2) == 1) {
+				return true;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при установке статуса для документа!");
+				return false;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
+	public BigDecimal setCreateStickers(String docID, String TypeDoc) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCreateStickers: parameter [cnn] cannot be null!"));
+			return BigDecimal.ZERO;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "create_doc_"+TypeDoc);
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, BigDecimal.ZERO);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, docID);
+			cs.execute();
+			BigDecimal res = cs.getBigDecimal(2);
+			if ( res.compareTo(BigDecimal.ZERO) > 0) {
+				return res;
+			} else {
+				DialogBoxs.viewMessage("Ошибка при создании документа!");
+				return BigDecimal.ZERO;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return BigDecimal.ZERO;
+		}
+	}
+	public ResultSet getStickerReport(BigDecimal docID, String stickerType) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getStickerReport: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
+			cs.setString(1, "print_stickers");
+			cs.registerOutParameter(2, Types.DOUBLE);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, config.TERMINAL_ID);
+			cs.setDate(7, null);
+			cs.setDate(8, null);
+			cs.setString(9, stickerType);//тип ценника - стикер
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	
+//goods for sticker
+    public ResultSet getGoodsListForSticker(int catID) {
+        if (cnn == null) {
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getGoodsList: parameter [cnn] cannot be null!"));
+			return null;
+        }
+        try {
+            CallableStatement cs = cnn.prepareCall("{call pr_goods_list(?,?,?,?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1, "in category for sticker");
+            cs.setString(2, "Name");
+            cs.setString(3, "asc");
+            cs.setInt(4, 0);
+            cs.setInt(5, 0);
+            cs.setInt(6, 99999999);
+            cs.setString(7, Integer.toString(clientID));
+            cs.setString(8, "%");
+            cs.setString(9, "%");
+            cs.setString(10, "");
+            cs.setInt(11, catID);
+            cs.setInt(12, 0);
+			ResultSet res = cs.executeQuery();
+            return res;
+        } catch (SQLException e) {
+            MyUtil.errorToLog(this.getClass().getName(),e);
+			DialogBoxs.viewError(e);
+            return null;
         }
     }
 //goods    
