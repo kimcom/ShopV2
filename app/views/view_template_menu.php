@@ -30,7 +30,7 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 		$name == "barcodes" || 
 		$name == "without_barcodes" || 
 		$name == "barcode_verify" ||
-		$name == "promo_tree" ||
+		$name == "promo_list" ||
 		$name == "points" ||
 		$name == "sellers" ||
 		$name == "discountCards" ||
@@ -91,7 +91,7 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 						<li><a href="/goods/barcode_verify">Список ШК для проверки</a></li>
 						<li><a href="/goods/without_barcodes">Список товаров без ШК</a></li>
 						<li class="divider"></li>
-						<li><a href="/lists/promo_tree">Список акций</a></li>
+						<li><a href="/lists/promo_list">Список акций</a></li>
 						<li><a href="/lists/points">Список магазинов</a></li>
 						<li><a href="/lists/sellers">Список сотрудников</a></li>
 						<li><a href="/lists/discountCards">Список дисконтных карт</a></li>
