@@ -190,7 +190,11 @@ if($_SESSION['AccessLevel'] >= 1000){
 <?php
 }
 ?>
-                                <li  class="navbar-text mb5 font12"--><a id="a_name_cabinet"  href="/register/user_cabinet"><?php echo $_SESSION['UserName'].'<br />'. $_SESSION['UserPost'];?></a></li>
+                <li  class="navbar-text mb5 font12">
+					<a id="a_name_cabinet"  href="/register/user_cabinet">
+						<?php echo $_SESSION['UserName'] . '<br />' . $_SESSION['UserPost']; ?>
+					</a>
+				</li>
 				<li class="active"><a href="/login/logout">Выход</a></li>
             </ul>
         </div><!--/.nav-collapse -->

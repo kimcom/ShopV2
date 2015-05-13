@@ -63,7 +63,11 @@ if (isset($_SESSION['UserID'])) {
 </style>
 <div class="container center">
     <ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-        <li class="active"><a href="#tab_filter" role="tab" data-toggle="tab" style="padding-top: 5px; padding-bottom: 5px;"><legend class="h20">Информация о пользователе</legend></a></li>
+        <li class="active">
+			<a href="#tab_filter" role="tab" data-toggle="tab" style="padding-top: 5px; padding-bottom: 5px;">
+				<legend class="h20">Личный кабинет</legend>
+			</a>
+		</li>
     </ul>
     <div class="floatL">
         <button id="button_save" class="btn btn-sm btn-primary frameL m0 h40 hidden-print font14">
