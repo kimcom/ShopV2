@@ -26,6 +26,14 @@ $(document).ready(function(){
 			{name:'Sum',               index: 'Sum',               width: 100,  align: "right",  sorttype: "number", search: false, sortable: true},
             {name:'CardID',            index: 'CardID',            width: 100,  align: "center", sorttype: "number", search: true, sortable: true},
 		],
+		beforeRequest: function() {
+			var date = new Date();
+			formated_date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+			var postData = $("#grid1").jqGrid('getGridParam', 'postData');
+			if(postData.CreateDateTime==null)
+				postData.CreateDateTime = formated_date;
+			$("#gs_CreateDateTime").val(postData.CreateDateTime);
+	    },
 		gridComplete: function() {if(!fs) {fs = 1; filter_restore("#grid1");}},
 		width:'auto',
 		shrinkToFit:false,
