@@ -37,6 +37,14 @@ public class ShopMain {
 //				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(2.5411));
 //				frmStickerEdit.setModal(true);
 //				frmStickerEdit.setVisible(true);
+
+//				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(1); //выдача новой
+//				frmCardAttribute.setModal(true);
+//				frmCardAttribute.setVisible(true);
+
+//				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(2); //ввод анкеты
+//				frmCardAttribute.setModal(true);
+//				frmCardAttribute.setVisible(true);
 //				
 //				if (1==1) {
 //					System.exit(0);

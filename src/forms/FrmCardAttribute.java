@@ -120,6 +120,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
         }
 		BigDecimal bdPercent = new BigDecimal(jComboBox1.getSelectedItem().toString());
+		if (bdPercent.compareTo(BigDecimal.ZERO)==0){
+			JOptionPane.showMessageDialog(this, "Вы не указали процент скидки!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		BigDecimal bdSumma = new BigDecimal(jTextField28.getText());
         if (cnn.setDiscountCardAttribute((iStatus==2)?"card_attr_edit":"card_attr_new", strBarCode,
                 jTextField21.getText(), jTextField22.getText(), jTextField23.getText(),
