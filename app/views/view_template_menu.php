@@ -61,8 +61,11 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 	}else if (
 		$controller == "/task") {
 		$active_menu7 = 'active';
-	}
-?>
+	}  else if (
+            $controller == "/register") {
+        $active_menu11 = 'active';
+    }
+    ?>
 			<ul class="nav navbar-nav">
 				<li class="menu-item dropdown <?php echo $active_menu1;?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Категории<b class="caret"></b></a>
@@ -187,7 +190,7 @@ if($_SESSION['AccessLevel'] >= 1000){
 <?php
 }
 ?>
-				<li class="navbar-text mb5 font12"><?php echo $_SESSION['UserName'].'<br>'. $_SESSION['UserPost'];?></li>
+                                <li  class="navbar-text mb5 font12"--><a id="a_name_cabinet"  href="/register/user_cabinet"><?php echo $_SESSION['UserName'].'<br />'. $_SESSION['UserPost'];?></a></li>
 				<li class="active"><a href="/login/logout">Выход</a></li>
             </ul>
         </div><!--/.nav-collapse -->
