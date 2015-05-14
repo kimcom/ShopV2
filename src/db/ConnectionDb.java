@@ -2083,7 +2083,7 @@ public final class ConnectionDb{
 		}
 		try {
 			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
-			cs.setString(1, "print_stickers");
+				cs.setString(1, "print_stickers");
 			cs.registerOutParameter(2, Types.DOUBLE);
 			cs.setBigDecimal(3, docID);
 			cs.setInt(4, userID);
@@ -2180,7 +2180,7 @@ public final class ConnectionDb{
 		}
 	}
 //search
-    public ResultSet getSearchContent(String _group, String _article, String _name) {
+    public ResultSet getSearchContent(String _group, String _article, String _name, String typeSearch) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getSearchContent: parameter [cnn] cannot be null!"));
 			return null;
@@ -2188,7 +2188,7 @@ public final class ConnectionDb{
 //        if(_group.equals("") && _article.equals("") && _name.equals("")) return null;
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_goods_search(?,?,?,?,?,?)}");
-            cs.setString(1, "good_search");
+            cs.setString(1, "good_search"+typeSearch);
 			cs.registerOutParameter(2, Types.INTEGER);
 			cs.setInt(3, clientID);
             cs.setString(4, _group);

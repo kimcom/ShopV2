@@ -22,19 +22,22 @@ public class ShopMain {
 //				//me.report("z1");
 //				me.printCheck(new BigDecimal(12961.2009));
 
+//				ConnectionDb cnn1 = ConnectionDb.getInstance();
+//				String password1 = new StringBuffer(config.USER_NAME).reverse().toString();
+//				cnn1.login(config.USER_NAME, password1);
+
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
 
-//				ReportPricePlank reportPrice = new ReportPricePlank(new BigDecimal("5.2009"));
+				//ReportPricePlank reportPrice = new ReportPricePlank(new BigDecimal("17.5411"),3);
+				//Алексей администратор акв. отдел
+//				ReportPricePlank reportPrice = new ReportPricePlank(new BigDecimal("39.1453"),3);
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
 
-//				ConnectionDb cnn1 = ConnectionDb.getInstance();
-//				String password1 = new StringBuffer(config.USER_NAME).reverse().toString();
-//				cnn1.login(config.USER_NAME, password1);
-//
-//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(2.5411));
+//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(40.1453));
+//				//final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(17.5411));
 //				frmStickerEdit.setModal(true);
 //				frmStickerEdit.setVisible(true);
 
@@ -45,7 +48,7 @@ public class ShopMain {
 //				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(2); //ввод анкеты
 //				frmCardAttribute.setModal(true);
 //				frmCardAttribute.setVisible(true);
-//				
+				
 //				if (1==1) {
 //					System.exit(0);
 //				}

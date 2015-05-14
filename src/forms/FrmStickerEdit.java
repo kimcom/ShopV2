@@ -23,9 +23,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Observer;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -93,7 +95,6 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 if (myNode.getChildCount() == 1) {
                     treeModel.addNodes(getTreeNodeListRS(myNode.nodeID), myNode);
                 }
-//                System.out.println("Expansion: " + tp.getLastPathComponent()+" myNode.nodeID: " + Integer.toString(myNode.nodeID));
             }
             @Override
             public void treeCollapsed(TreeExpansionEvent tee) {
@@ -107,9 +108,8 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 TreePath tp = tse.getPath();
                 TmTree.MyDefaultMutableTreeNode myNode = (TmTree.MyDefaultMutableTreeNode) tp.getLastPathComponent();
                 if (myNode.getChildCount() == 0) {
-                    requeryGoodsList(myNode.nodeID);
+                    requeryGoodsList(myNode.nodeID,0);
                 }
-//                System.out.println("Selection event: " + tp.getLastPathComponent() + " myNode.nodeID: " + Integer.toString(myNode.nodeID));
             }
         });
 
@@ -121,12 +121,10 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		jFormattedTextFieldQtySticker.setText("65");
 		jFormattedTextFieldQtySticker.setVisible(false);
 		jLabelQtySticker.setVisible(false);
-        jButtonDateDoc.setEnabled(false);
-        jButtonDateDoc.setVisible(false);
 		
         requery();
         //табличные части
-        requeryGoodsList(-1);
+        requeryGoodsList(-1,0);
         requeryDocContent();
         //назначение MyKeyListener
         getAllComponents((Container) this.getContentPane());
@@ -178,12 +176,13 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		jComboBoxStickerType.setSelectedIndex(type);
 		viewQty();
     }
-    private void requeryGoodsList(int nodeID) {
+    private void requeryGoodsList(int nodeID, int typeSource) {
         if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
         jTableGoodsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jTableGoodsList.setModel(new TmStickerGoods(getGoodsListRS(nodeID)));
+		if (typeSource==0) jTableGoodsList.setModel(new TmStickerGoods(getGoodsListRS(nodeID)));
+		if (typeSource==1) jTableGoodsList.setModel(new TmStickerGoods(getGoodsFoundListRS()));
         jTableGoodsList.setDefaultRenderer(jTableGoodsList.getColumnClass(0), new MyRenderer());
         jTableGoodsList.getTableHeader().setDefaultRenderer(new HeaderRenderer());
         jTableGoodsList.setRowHeight(25);
@@ -372,36 +371,39 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		}
 	}
     private void jButtonSearchActionPerformed(){
-        int selRow = jTableGoodsList.getSelectedRow();
-        if (selRow==-1) selRow = 0;
-        String searchArt = jTextFieldArticle.getText();
-        String searchName = jTextFieldName.getText();
-        if (searchArt.equals("")&&searchName.equals("")){
-            DialogBoxs.viewMessage("Для поиска товара нужно ввести артикул или название!");
-            return;
-        }
-        if (jTableGoodsList.getRowCount()<1){
-            DialogBoxs.viewMessage("Негде искать!\nВыберите группу товара!");
-            return;
-        }
-        int row = 0;
-        for (row = 0; row <= jTableGoodsList.getRowCount() - 1; row++) {
-            String art  = jTableGoodsList.getValueAt(row, 1).toString();
-            String name = jTableGoodsList.getValueAt(row, 2).toString();
-            if (    art.toLowerCase().contains(searchArt.toLowerCase())
-                && name.toLowerCase().contains(searchName.toLowerCase())
-                ){
-                break;
-            }
-        }
-        if (row == jTableGoodsList.getRowCount()) {
-            row = selRow;
-            DialogBoxs.viewMessage("Товар в выбранной группе не найден!");
-        }
-        Rectangle cellRect = jTableGoodsList.getCellRect(row, 1, true);
-        jTableGoodsList.scrollRectToVisible(cellRect);
-        jTableGoodsList.setRowSelectionInterval(row, row);
-        jTableGoodsList.requestFocus();
+		requeryGoodsList(-1,1);
+		if (1==0){
+			int selRow = jTableGoodsList.getSelectedRow();
+			if (selRow==-1) selRow = 0;
+			String searchArt = jTextFieldArticle.getText();
+			String searchName = jTextFieldName.getText();
+			if (searchArt.equals("")&&searchName.equals("")){
+				DialogBoxs.viewMessage("Для поиска товара нужно ввести артикул или название!");
+				return;
+			}
+			if (jTableGoodsList.getRowCount()<1){
+				DialogBoxs.viewMessage("Негде искать!\nВыберите группу товара!");
+				return;
+			}
+			int row = 0;
+			for (row = 0; row <= jTableGoodsList.getRowCount() - 1; row++) {
+				String art  = jTableGoodsList.getValueAt(row, 2).toString();
+				String name = jTableGoodsList.getValueAt(row, 3).toString();
+				if (    art.toLowerCase().contains(searchArt.toLowerCase())
+					&& name.toLowerCase().contains(searchName.toLowerCase())
+					){
+					break;
+				}
+			}
+			if (row == jTableGoodsList.getRowCount()) {
+				row = selRow;
+				DialogBoxs.viewMessage("Товар в выбранной группе не найден!");
+			}
+			Rectangle cellRect = jTableGoodsList.getCellRect(row, 1, true);
+			jTableGoodsList.scrollRectToVisible(cellRect);
+			jTableGoodsList.setRowSelectionInterval(row, row);
+			jTableGoodsList.requestFocus();
+		}
     }
 	private void jButtonPrintActionPerformed() {
 		cnn = ConnectionDb.getInstance();
@@ -437,6 +439,12 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return null;
         ResultSet rs = cnn.getGoodsListForSticker(nodeID);
+        return rs;
+    }
+    private ResultSet getGoodsFoundListRS() {
+        cnn = ConnectionDb.getInstance();
+        if (cnn == null) return null;
+		ResultSet rs = cnn.getSearchContent("", jTextFieldArticle.getText(), jTextFieldName.getText(),"_for_sticker");
         return rs;
     }
     private ResultSet getGoodsDocRS() {
@@ -569,6 +577,19 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                         editQuantityGoodsList();
                     if (e.getSource() == jTableDocContent) 
                         editQuantityDocContent();
+					String objCanonicalName = e.getSource().getClass().getCanonicalName();
+					//System.out.println("keyOverride: "+ objCanonicalName + " keycode:" + Integer.toString(e.getKeyCode()));
+					if (objCanonicalName.endsWith("JButton")) {
+						if (e.getSource() == jButtonSearch) {
+							jButtonSearchActionPerformed();
+						}
+						if (e.getSource() == jButtonExit) {
+							jButtonExitActionPerformed();
+						}
+					} else if (objCanonicalName.endsWith("Field")) {
+						JTextField tf = (JTextField) e.getSource();
+						tf.transferFocus();
+					}
                     break;
                 default:
                     break;
@@ -586,7 +607,6 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         jTextFieldNumberDoc = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jTextFieldDateDoc = new ObservingTextField();
-        jButtonDateDoc = new javax.swing.JButton();
         jTextFieldNotes = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jPanelPrint = new javax.swing.JPanel();
@@ -611,12 +631,13 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         jTableGoodsList = new javax.swing.JTable();
         jScrollPaneDocContent = new javax.swing.JScrollPane();
         jTableDocContent = new javax.swing.JTable();
+        jPanelButton = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanelTitle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Реквизиты документа:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
-        jPanelTitle.setPreferredSize(new java.awt.Dimension(382, 80));
+        jPanelTitle.setPreferredSize(new java.awt.Dimension(345, 93));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -652,17 +673,13 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         jTextFieldDateDoc.setFocusable(false);
         jTextFieldDateDoc.setRequestFocusEnabled(false);
 
-        jButtonDateDoc.setText("...");
-        jButtonDateDoc.setToolTipText("выбор даты");
-        jButtonDateDoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDateDocActionPerformed(evt);
-            }
-        });
-
         jTextFieldNotes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldNotes.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldNotes.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldNotes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldNotes.setMaximumSize(new java.awt.Dimension(280, 22));
+        jTextFieldNotes.setMinimumSize(new java.awt.Dimension(280, 22));
+        jTextFieldNotes.setPreferredSize(new java.awt.Dimension(280, 22));
         jTextFieldNotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNotesActionPerformed(evt);
@@ -693,11 +710,9 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldDateDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDateDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextFieldNotes))
-                .addGap(0, 0, 0))
+                        .addComponent(jTextFieldDateDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelTitleLayout.setVerticalGroup(
             jPanelTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -706,9 +721,8 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNumberDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDateDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDateDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                    .addComponent(jTextFieldDateDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -716,7 +730,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         );
 
         jPanelPrint.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Параметры печати:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
-        jPanelPrint.setPreferredSize(new java.awt.Dimension(509, 80));
+        jPanelPrint.setPreferredSize(new java.awt.Dimension(564, 100));
 
         jLabelStickerType.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabelStickerType.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -791,7 +805,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 .addGap(6, 6, 6)
                 .addGroup(jPanelPrintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPlankInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelStickerInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelStickerInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -806,13 +820,13 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                                 .addComponent(jComboBoxStickerType, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabelStickerInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabelStickerType, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelPrintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelPlankInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelQtySticker, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextFieldQtySticker, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPaneTree.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -832,6 +846,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         jTextFieldName.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jButtonSearch.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonSearch.setText("Искать");
         jButtonSearch.setToolTipText("искать товары");
         jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -875,8 +890,8 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAddGroupAll, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAddGroupBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jButtonAddGroupBalance)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelSearchLayout.setVerticalGroup(
             jPanelSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -908,6 +923,9 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         jTableDocContent.setRowHeight(25);
         jScrollPaneDocContent.setViewportView(jTableDocContent);
 
+        jPanelButton.setBorder(javax.swing.BorderFactory.createTitledBorder(" "));
+        jPanelButton.setPreferredSize(new java.awt.Dimension(82, 102));
+
         jButtonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/exit.png"))); // NOI18N
         jButtonExit.setToolTipText("Выход из программы");
         jButtonExit.setActionCommand("Выход");
@@ -920,6 +938,22 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 jButtonExitActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
+        jPanelButton.setLayout(jPanelButtonLayout);
+        jPanelButtonLayout.setHorizontalGroup(
+            jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelButtonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanelButtonLayout.setVerticalGroup(
+            jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelButtonLayout.createSequentialGroup()
+                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -934,11 +968,11 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                     .addComponent(jScrollPaneGoodsList)
                     .addComponent(jPanelSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                         .addGap(0, 0, 0)
-                        .addComponent(jPanelPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPanelPrint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,15 +980,10 @@ public class FrmStickerEdit extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPaneTree)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPanelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                                    .addComponent(jPanelPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanelPrint, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                            .addComponent(jPanelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                            .addComponent(jPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
                         .addGap(0, 0, 0)
                         .addComponent(jPanelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -966,9 +995,6 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void jButtonDateDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDateDocActionPerformed
-        jButtonDateDocActionPerformed();
-    }//GEN-LAST:event_jButtonDateDocActionPerformed
     private void jTextFieldNotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNotesActionPerformed
         jTextFieldNotesActionPerformed();
     }//GEN-LAST:event_jTextFieldNotesActionPerformed
@@ -996,7 +1022,6 @@ public class FrmStickerEdit extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddGroupAll;
     private javax.swing.JButton jButtonAddGroupBalance;
-    private javax.swing.JButton jButtonDateDoc;
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonSearch;
@@ -1011,6 +1036,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
     public javax.swing.JLabel jLabelQtySticker;
     private javax.swing.JLabel jLabelStickerInfo;
     public javax.swing.JLabel jLabelStickerType;
+    private javax.swing.JPanel jPanelButton;
     private javax.swing.JPanel jPanelPrint;
     private javax.swing.JPanel jPanelSearch;
     private javax.swing.JPanel jPanelTitle;

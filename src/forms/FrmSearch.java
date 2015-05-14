@@ -133,7 +133,7 @@ public class FrmSearch extends javax.swing.JDialog {
     private ResultSet getSearchContentRS() {
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return null;
-        ResultSet rs = cnn.getSearchContent("",jTextField2.getText(),jTextField3.getText());
+        ResultSet rs = cnn.getSearchContent("",jTextField2.getText(),jTextField3.getText(),"");
         return rs;
     }
     public class MyRenderer extends DefaultTableCellRenderer {

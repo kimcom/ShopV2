@@ -224,8 +224,10 @@ public class ReportPricePlank extends JDialog{
 					y = y + height_label;
 					height_label = (int) (h * 1);
 					str = res.getString("Producer");
+					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
+					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
 					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 					jLabel15.setText("<html>Производитель:&nbsp;<strong>" + str + "</strong></html>");
 					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
@@ -234,7 +236,7 @@ public class ReportPricePlank extends JDialog{
 					height_label = h * 1;
 					str = res.getString("Article");
 					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 					jLabel13.setText("<html>Артикул:&nbsp;&nbsp;<strong>" + str + "</strong></html>");
 					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
