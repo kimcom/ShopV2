@@ -4,6 +4,7 @@ $docName = 'Документы \"Расходные накладные\"';
 if(isset($_REQUEST['operID'])) $operID = $_REQUEST['operID'];
 if($operID == -1)	$docName = 'Документы \"Возвратные накладные\"';
 ?>
+<script type="text/javascript" src="../../js/grid.filter.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 //************************************//
@@ -24,8 +25,8 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 		colModel: [
 			{name: 'SaleID',	index: 'SaleID',	width: 100, align: "center",sorttype: "number", search: true},
 			{name: 'Number1C',	index: 'Number1C',	width: 100, align: "left",	sorttype: "text",	search: true},
-			{name: 'DT_sale',	index: 'DT_sale',	width: 120, align: "center",sorttype: "date",	search: true},
-			{name: 'SaleStatus',index: 'SaleStatus',width: 100, align: "left",	stype: 'select', editoptions: {value: ":любой;1:проведен;0:не проведен;-1:удален"}},
+			{name: 'DT_sale',	index: 'DT_sale',	width: 120, align: "center",sorttype: "date",	search: true}, 
+			{name: 'SaleStatus',index: 'SaleStatus',width: 100, align: "left",	stype:	'select', 	searchoptions: {value: ":любой;1:проведен;0:не проведен;-1:удален"}},
 			{name: 'p_PartnerName',index: 'p.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
 			{name: 's_Name',	index: 's.Name',	width: 220, align: "left",	sorttype: "text",	search: true},
 		],
@@ -86,16 +87,6 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 	    }
 	});
 	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
-	$("#grid1").navButtonAdd('#grid1_toppager', {
-		title: 'Открыть документ', buttonicon: "ui-icon-pencil", caption: 'Открыть документ', position: "last",
-		onClickButton: function () {
-		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		var node = $("#grid1").jqGrid('getRowData', id);
-		//console.log(id,node,node.Name);
-		//if (id != '') alert("Здесь откроем документ: "+id);
-//			window.location = "../goods/map_discountcard_edit?cardid=" + id;
-		}
-	});
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
 
 	$("#pg_pgrid1").remove();
@@ -105,11 +96,11 @@ if($operID == -1)	$docName = 'Документы \"Возвратные накл
 	//клавиатура
 	$("#grid1").jqGrid('bindKeys', {"onEnter": function (rowid) {
 		alert("You enter a row with id:" + rowid)
-		}});
+	}});
 
 	//$("#grid1").draggable();
 	$("#grid1").gridResize();
-    });
+});
 </script>
 <div class="container min570">
 	<div style='display:table;'>

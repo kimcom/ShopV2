@@ -1,4 +1,7 @@
 @charset "UTF-8";
+/*    padding: 5px 10px;	    /*верх 5 низ  5 лево 10 право 10*/
+/*    padding: 5px 10px 15px;	    /*верх 5 низ 15 лево 10 право 10*/
+/*    padding: 5px 10px 15px 20px;  /*верх 5 право 10 низ по 15, лево 20*/
 .al{align:left;}
 .vam{vertical-align: middle;}
 
@@ -12,6 +15,8 @@
 .min570 {min-height: 570px;}
 .min600 {min-height: 600px;}
 
+.minw150 {min-width: 150px;}
+.minw200 {min-width: 200px;}
 .minw300 {min-width: 300px;}
 .minw400 {min-width: 400px;}
 .max600 {max-width: 600px;}
@@ -195,7 +200,7 @@ div.frame1 {/*?????????*/
     vertical-align:top;
 }
 input{
-    line-height: normal;
+/*    line-height: normal;*/
     border:1px #AAA solid;
 }
 input:disabled{
@@ -210,9 +215,9 @@ input[type='text'], input[type='password'], textarea {
     border: 1px solid #CCCCCC;
     margin-left: 0px;
     margin-right: 0px;
-    padding-left: 5px;
+/*    padding-left: 5px;
     padding-top: 4px;
-    padding-bottom: 3px;
+    padding-bottom: 3px;*/
     vertical-align: middle;
 }
 .input-group-sm > .input-group-btn > .btn {
@@ -225,6 +230,20 @@ input[type='text'], input[type='password'], textarea {
 
 .table > thead > tr > th {
     font-size: 12px;
+}
+.table > thead > tr > th, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+    padding: 4px;
+}
+.table-bordered > thead > tr > th, 
+.table-bordered > thead > tr > td {
+    border-bottom: 0px solid #dddddd;
+    text-align:center;
+    vertical-align: middle;
 }
 .vtext{
 /*    -moz-transform: rotate(90deg);
@@ -282,7 +301,106 @@ input[type='text'], input[type='password'], textarea {
 }
 /* это мой стиль Kaluga */
 #a_name_cabinet {
-    margin-top: -5px;
-    padding: 0px;
-   }
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 
+/*перебиваем bootstrap*/
+body {
+    font-family: "trebuchet ms", Verdana, Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    min-width: 450px;
+/*    line-height:20px;*/
+/*    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+/*    font-size: 14px;*/
+/*    line-height: 1.42857143;*/
+}
+li {
+    font-size: 14px;
+}
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-addon,
+.input-group-sm > .input-group-btn > .btn {
+    padding: 5px 5px;
+}
+.navbar-brand {
+    line-height: 50px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    padding-right: 5px;
+}
+.nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.nav-tabs > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.nav-tabs {
+    border-bottom: none;
+}
+.ui-corner-tab1 {
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.ui-jqgrid .ui-jqgrid-pager-empty { 
+    height: 8px;
+}
+.ui-jqgrid .ui-jqgrid-title{
+    font-size: 16px;
+    height: 22px;
+    line-height: 22px;
+    display: block;
+}
+.ui-jqgrid .ui-jqgrid-titlebar {
+    height:auto;
+}
+.ui-jqgrid .ui-jqgrid-htable th {
+    height:22px;
+}
+.ui-jqgrid .ui-search-table td.ui-search-clear{
+    width: auto;
+    padding-left: 3px;
+}
+.ui-jqgrid .ui-pg-input, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-input{ 
+    padding: 0;
+    text-align: right;
+    height: 18px;
+    border-radius: 4px;
+    border:1px #CCCCCC solid;
+    margin-top: -1px;
+    line-height: 19px;
+    font-size: 11px;
+    margin-top: -2px;
+}
+.ui-jqgrid .ui-pg-selbox, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-selbox{
+    margin-top: -2px;
+    padding: 0;
+    height: 18px;
+    border:1px #CCCCCC solid;
+    line-height: 19px;
+    font-size: 11px;
+}
+.ui-jqgrid .ui-search-table .ui-search-input>input,
+.ui-jqgrid .ui-search-table .ui-search-input>select{
+    height: 20px;
+/*    padding-top: 8px;*/
+    line-height: 18px;
+}
+.ui-jqgrid .ui-search-table select, .ui-jqgrid .ui-search-table input{
+    padding: 1px 2px;
+}
+.ui-datepicker {
+    position: relative;
+/*    position: absolute !important;*/
+/*    top: auto !important;*/
+/*    left: auto !important;*/
+}

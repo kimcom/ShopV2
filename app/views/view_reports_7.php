@@ -627,7 +627,7 @@ $("#select_report_setting").click();
 	}
 
 	$('#button_report_run').click(function (e) {
-		$("#gridRep").jqGrid("GridUnload");
+		if($("#gridRep").jqGrid('getRowData').length > 0) $.jgrid.gridUnload("#gridRep");
 		gridRep();
 		$("#dialog_progress").dialog( "option", "title", 'Ожидайте! Выполняется формирование отчета...');
 		$("#dialog_progress").dialog("open");
@@ -749,8 +749,8 @@ $("#select_report_setting").click();
 	</div>
 	<div id='test' class='frameL mt10 text-left'></div>
 	<div class="tab-content">
-		<div class="active tab-pane min530 m0 w100p ui-corner-all borderColor frameL border1" id="tab_filter">
-			<div id="setting_filter" class='p5 ui-corner-all frameL w400 h400 ml0 border0' style='display:table;'>
+		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1" id="tab_filter">
+			<div id="setting_filter" class='p5 frameL w400 h400 ml0 border0' style='display:table;'>
 				<legend>Параметры отбора данных:</legend>
 				<div class="input-group input-group-sm mt10 w100p">
 					<span class="input-group-addon w130">Настройки:</span>
@@ -875,7 +875,7 @@ $("#select_report_setting").click();
 			</div>
 		</div>
 		<div class="tab-pane m0 w100p min530 ui-corner-all borderColor frameL border1" id="tab_grouping">
-			<div id="divGridGrouping" class='p5 ui-corner-all frameL m10 border1'>
+			<div id="divGridGrouping" class='p5 frameL m10 border1'>
 				<legend>Выбранные группировки</legend>
 				<ol id="grouping" class="w100p selectable">
 				</ol>
@@ -931,7 +931,7 @@ $("#select_report_setting").click();
 				</ul>
 			</div>
 		</div>
-		<div class="tab-pane m0 w100p min530 borderTop1 frameL center border0" id="tab_report">
+		<div class="tab-pane m0 w100p min530 borderColor borderTop1 frameL center border0" id="tab_report">
 			<div id='report_param_str' class="mt10 TAL font14">
 			</div>
 			<div id='div1' class='center frameL mt10'>

@@ -1,6 +1,6 @@
 <!-- Fixed navbar -->
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -8,11 +8,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+			<a class="navbar-brand" href="..">
+				<img class="img-rounded border1 floatL h30 mt10" src="../../img/logo.png">
+				<div class="caption floatL pl5">
+				<?php echo $_SESSION['company']; ?>
+				</div>
+			</a>
         </div>
-		<a class="navbar-brand pt10" href="..">
-			<img class="img-rounded border1 h30 m0" src="../../img/logo.png">
-			<?php echo $_SESSION['company']; ?>
-		</a>
         <div class="navbar-collapse collapse">
 <?php 
 if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
@@ -190,13 +192,21 @@ if($_SESSION['AccessLevel'] >= 1000){
 <?php
 }
 ?>
-                <li  class="navbar-text mb5 font12">
-					<a id="a_name_cabinet"  href="/register/user_cabinet">
+<?php
+if ($_SESSION['access']){
+?>
+                <li>
+					<a id="a_name_cabinet" href="/register/user_cabinet">
 						<?php echo $_SESSION['UserName'] . '<br />' . $_SESSION['UserPost']; ?>
 					</a>
 				</li>
 				<li class="active"><a href="/login/logout">Выход</a></li>
+<?php
+}else {
+					echo '<li class="active"><a href="/login">Вход</a></li>';
+}
+?>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
-</div>
+</nav>

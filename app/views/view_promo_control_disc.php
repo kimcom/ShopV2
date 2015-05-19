@@ -322,7 +322,7 @@ $(document).ready(function(){
 	$("#grid4").gridResize();
 });
 </script>
-<div class="container min570">
+<div class="container-fluid min570">
 	<div class='p5 ui-corner-all frameL border1' style='display:block;'>
 		<div class='frameL ml10' style='display:table;'>
 			<label for="select_promo_list">Акция:</label>

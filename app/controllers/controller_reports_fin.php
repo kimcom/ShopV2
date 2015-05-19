@@ -10,7 +10,7 @@ class Controller_Reports_fin extends Controller {
 		$this->view->generate('view_reports_pendel2.php', 'view_template.php');
 	}
 
-	function action_pendel_data() {
+	function action_pendel_data_XXX() {
 		$cnn = new Cnn();
 		return $cnn->get_pendel_data();
 	}

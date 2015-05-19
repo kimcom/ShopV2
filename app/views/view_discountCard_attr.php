@@ -125,7 +125,7 @@ if (isset($_REQUEST['cardid'])) {
 			{name: 'cl_CheckID', index: 'cl.CheckID', width: 80, align: "center", sorttype: "number", search: true},
 			{name: 'cl_CloseDateTime', index: 'cl.CloseDateTime', width: 120, align: "center", sorttype: "date", search: true},
 			{name: 'c_NameShort', index: 'c.NameShort', width: 300, align: "left", sorttype: "text", search: true},
-			{name: 'cl_TypePayment', index: 'cl.TypePayment', width: 80, align: "center", stype: 'select', editoptions: {value: ":любой;1:без нал.;0:нал."}},
+			{name: 'cl_TypePayment', index: 'cl.TypePayment', width: 80, align: "center", stype: 'select', searchoptions: {value: ":любой;1:без нал.;0:нал."}},
 			{name: 'SumFull', index: 'SumFull', width: 100, align: "right", sorttype: "number", search: false},
 			{name: 'SumDiscount', index: 'SumDiscount', width: 100, align: "right", sorttype: "number", search: false},
 			{name: 'Sum', index: 'Sum', width: 100, align: "right", sorttype: "number", search: false},

@@ -44,6 +44,7 @@ $(document).ready(function () {
 	dt.setDate(0);
     $("#DT_stop").datepicker({
 		//showOn: "both", 
+		regional:'ru',
 		numberOfMonths: 1,
 		showButtonPanel: true,
 		dateFormat: 'dd/mm/yy'
@@ -181,7 +182,7 @@ function history(url){
 	.selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 	.selectable li { margin: 3px; padding: 7px 0 0 5px; text-align: left;font-size: 14px; height: 34px; }
 </style>
-<div class="container center">
+<div class="container-fluid center">
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
 		<li class="active"><a href="#tab_filter" role="tab" data-toggle="tab">Настройки отбора</a></li>
 		<li><a id="a_tab_report" href="#tab_report" role="tab" data-toggle="tab">Отчет "Profit and loss"</a></li>
@@ -193,8 +194,8 @@ function history(url){
 	</div>
 	<div id='test' class='frameL mt10 text-left'></div>
 	<div class="tab-content">
-		<div class="active tab-pane min530 m0 w100p ui-corner-all borderColor frameL border1" id="tab_filter">
-			<div id="setting_filter" class='p5 ui-corner-all frameL w400 h400 ml0 border0' style='display:table;'>
+		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1 active" id="tab_filter">
+			<div id="setting_filter" class='p5 frameL w400 h400 ml0 border0' style='display:table;'>
 				<legend>Параметры отбора данных:</legend>
 				<div class="input-group input-group-sm mt10 w100p">
 					<span class="input-group-addon w130">Настройки:</span>
@@ -227,7 +228,7 @@ function history(url){
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane m0 w100p min530 borderTop1 frameL center border0" id="tab_report">
+		<div class="tab-pane m0 w100p min530 borderColor borderTop1 frameL center border0" id="tab_report">
 			<div id='report_param_str' class="mt10 TAL font14">
 			</div>
 			<div id='div_report' class='center frame0 mt10'></div>

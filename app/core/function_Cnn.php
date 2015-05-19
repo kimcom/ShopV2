@@ -523,7 +523,7 @@ Fn::debugToLog('report', $date1.'	'.$date2);
 		}
 		return json_encode($response);
 	}
-	public function get_pendel_data() {
+	public function get_pendel_data_XXXXX() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
 Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));

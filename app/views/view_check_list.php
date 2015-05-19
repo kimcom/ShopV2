@@ -15,9 +15,9 @@ $(document).ready(function(){
 		colNames:['№ чека','Статус Чека','Тип оплаты','Тип чека','Дата, время','Город','Магазин','Сумма общая','Сумма скидки','Сумма к оплате','Номер Дисконта'],
 		colModel:[
 			{name:'cl_CheckID',        index:'cl.CheckID',         width: 100,  align:"center",  sorttype:"number",    search:true, sortable: true},
-			{name:'CheckStatus',       index:'CheckStatus',        width: 90,   align:"left",    stype:"select",     editoptions: {value: ":любой;1:распечатан;0:не закрыт" }},
-			{name:'TypePayment',       index:'TypePayment',        width: 80,   align:"center",  stype:"select",     editoptions: {value: ":любой;1:без нал;0:нал"}},
-			{name:'FlagReturn',        index:'FlagReturn',         width: 80,   align: "center", stype:"select",     editoptions: {value: ":любой;1:продажа;-1:возврат"}},
+			{name:'CheckStatus',       index:'CheckStatus',        width: 90,   align:"left",    stype:"select",     searchoptions: {value: ":любой;1:распечатан;0:не закрыт" }},
+			{name:'TypePayment',       index:'TypePayment',        width: 80,   align:"center",  stype:"select",     searchoptions: {value: ":любой;1:без нал;0:нал"}},
+			{name:'FlagReturn',        index:'FlagReturn',         width: 80,   align: "center", stype:"select",     searchoptions: {value: ":любой;1:продажа;-1:возврат"}},
 			{name:'CreateDateTime',    index:'CreateDateTime',     width: 120,  align:"center",  sorttype:"date",    search:true},
 			{name:'City',              index:'City',               width: 100,  align:"center",  sorttype:"text",    search:true, sortable:false},
 			{name:'c_NameShort',       index:'c.NameShort',        width: 120,  align:"center",  sorttype:"text",    search:true},
