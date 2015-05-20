@@ -294,8 +294,8 @@ function task_create(copy){
 		$("#taskDT_create_span").html('');
 		$("#taskDT_plan").val('');
 		$("#taskDT_fact").val('');
-		$("#taskName").val('');
-		$("#taskDescription").val('');
+		$("#taskName").val($("#name").val());
+		$("#taskDescription").val($("#description").val());
 		$("#select_taskStatus").select2("val", 0);
 		$("#select_task_userID_resp").select2("val", 0);
 		$("#taskDT_status_span").html('');

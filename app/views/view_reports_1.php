@@ -6,7 +6,12 @@ $(document).ready(function () {
 		buttons: [{text: "Закрыть", click: function () {
 			    $(this).dialog("close");
 			}}]
-	    });
+	});
+	$("#dialog_progress").dialog({
+		autoOpen: false, modal: true, width: 400, height: 400,
+		show: {effect: "explode", duration: 1000},
+		hide: {effect: "explode", duration: 1000}
+    });
 	dt = new Date();
 	dt.setMonth(dt.getMonth() - 1, 1);
 	//alert(dt.toLocaleDateString()+' '+dt.toLocaleTimeString());
@@ -57,6 +62,9 @@ $(document).ready(function () {
 			{ title: "К-во раб. дней",		width: 50, className: "TAR", targets: [ 7 ] },
 	    ]
     }).api();
+	$('#example2').dataTable().on('xhr.dt', function (e, settings, data) {
+		$("#dialog_progress").dialog("close");
+	});
 	$('#example2').on('preXhr.dt', function (e, settings, data) {
 		$('#timestamp').html('');
 		table.clear().draw();
@@ -66,6 +74,8 @@ $(document).ready(function () {
 		$('#timestamp').html('Отчет сформирован: ' + dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString());
 	});
 	$("#button_submit").click(function() {
+		$("#dialog_progress").dialog("option", "title", 'Ожидайте! Выполняется формирование отчета...');
+	    $("#dialog_progress").dialog("open");
 		table.ajax.url('../reports/report1_data?DT_start=' + $("#DT_start").val() + '&DT_stop=' + $("#DT_stop").val()).load();
 	});
 });
@@ -87,4 +97,7 @@ $(document).ready(function () {
 </div>
 <div id="dialog" title="ВНИМАНИЕ!">
 	<p id='text'></p>
+</div>
+<div id="dialog_progress" title="Ожидайте!">
+	<img class="ml30 mt20 border0 w300" src="../../img/progress_circle5.gif">
 </div>

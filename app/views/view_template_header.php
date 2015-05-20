@@ -31,9 +31,9 @@
 		<script src="../../js/jqgrid-filter.js" type="text/javascript"></script>
 		<script src="../../js/jquery.dataTables.min.js" type="text/javascript"></script>
 		<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
-		<script src="../../js/select2.min.js"></script>
-		<script src="../../js/jquery.easing.js"></script>
-		<script src="../../js/jquery.slidorion.min.js"></script>
+		<script src="../../js/select2.min.js" type="text/javascript"></script>
+		<script src="../../js/jquery.easing.js" type="text/javascript"></script>
+		<script src="../../js/jquery.slidorion.min.js" type="text/javascript"></script>
 		
 		<style type="text/css">
             body {

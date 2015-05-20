@@ -228,6 +228,8 @@ admin@" . $_SERVER['HTTP_HOST'] . "
 			$dt = DateTime::createFromFormat('d?m?Y', $DT_stop);
 			$date2 = $dt->format('Ymd');
 		}
+Fn::debugToLog('report4 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+Fn::debugToLog('report4 user:' . $_SESSION['UserName'], "".$date1."	".  $date2);
 		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
 		$stmt = $this->db->prepare("CALL pr_reports('avg_sum', @id, ?, ?, null)");
 		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
@@ -397,7 +399,7 @@ admin@" . $_SERVER['HTTP_HOST'] . "
 	public function get_report5_data() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+//Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
 //Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['REQUEST_URI']));
 		$stmt = $this->db->prepare("CALL pr_reports('goods', @id, ?, ?, ?)");
 		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
@@ -452,7 +454,7 @@ Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUER
 	public function get_report7_data() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-Fn::debugToLog('report7 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+//Fn::debugToLog('report7 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
 		//echo $DT_start.' '.  $DT_stop . '<br>';
 		if (isset($DT_start)) {
 			$dt = DateTime::createFromFormat('d?m?Y', $DT_start);
@@ -468,7 +470,7 @@ Fn::debugToLog('report7 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUER
 		} else {
 			return;
 		}
-Fn::debugToLog('report', $date1.'	'.$date2);
+//Fn::debugToLog('report', $date1.'	'.$date2);
 //Fn::paramToLog();
 		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
 		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');

@@ -11,6 +11,7 @@ $(document).ready(function () {
 	var group = new Object();
 	var good = new Object();
 	var cat = new Object();
+	var cat_type = new Object();
 	var markup = new Object();
 	var point = new Object();
 	var seller = new Object();
@@ -20,6 +21,7 @@ $(document).ready(function () {
 	settings['group']=group;
 	settings['good']=good;
 	settings['cat']=cat;
+	settings['cat_type']=cat_type;
 	settings['markup']=markup;
 	settings['point']=point;
 	settings['seller']=seller;
@@ -123,6 +125,8 @@ $("#select_report_setting").click();
 			$("#good").attr("title", strJoin(good).join("\n"));
 			$("#cat").val(strJoin(cat).join(';'));
 			$("#cat").attr("title",strJoin(cat).join("\n"));
+			$("#cat_type").val(strJoin(cat_type).join(';'));
+			$("#cat_type").attr("title",strJoin(cat_type).join("\n"));
 			$("#markup").val(strJoin(markup).join(';'));
 			$("#markup").attr("title", strJoin(markup).join("\n"));
 			$("#point").val(strJoin(point).join(';'));
@@ -182,6 +186,11 @@ $("#select_report_setting").click();
 				cat[id] = node.name;
 				$("#cat").val(strJoin(cat).join(';'));
 				$("#cat").attr("title",strJoin(cat).join("\n"));
+		    }
+			if (datastr=='cat_type'){
+				cat_type[id] = node.name;
+				$("#cat_type").val(strJoin(cat_type).join(';'));
+				$("#cat_type").attr("title",strJoin(cat_type).join("\n"));
 		    }
 			if (datastr=='markup'){
 				markup[id] = node.name;
@@ -316,6 +325,7 @@ $("#select_report_setting").click();
 					"&group="	+ keyJoin(group).join(';')	+"|"+strJoin(group).join(';')+
 					"&good="	+ keyJoin(good).join(';')	+"|"+strJoin(good).join(';')+
 					"&cat="		+ keyJoin(cat).join(';')	+"|"+strJoin(cat).join(';')+
+					"&cat_type="+ keyJoin(cat_type).join(';')+"|"+strJoin(cat_type).join(';')+
 					"&markup="	+ keyJoin(markup).join(';') +"|"+strJoin(markup).join(';')+
 					"&point="	+ keyJoin(point).join(';')	+"|"+strJoin(point).join(';')+
 					"&seller="	+ keyJoin(seller).join(';')	+"|"+strJoin(seller).join(';')+
@@ -371,6 +381,15 @@ $("#select_report_setting").click();
 			$("#treeGrid").jqGrid('setGridParam',{datastr:"cat"});
 			$("#treeGrid").jqGrid('setCaption', 'Категории товаров');
 		    $("#treeGrid").jqGrid('setGridParam', {datatype: "json", url: "../category/get_tree_NS?nodeid=50", page: 1}).trigger('reloadGrid');
+			$("#divTable").hide();
+			$("#divTree").show();
+			$("#divGrid").show();
+	    }
+		if(operid=='cat_type'){
+			$("#legendGrid").html('Выбор категории товара:');
+			$("#treeGrid").jqGrid('setGridParam',{datastr:"cat_type"});
+			$("#treeGrid").jqGrid('setCaption', 'Кат. по видам животных');
+		    $("#treeGrid").jqGrid('setGridParam', {datatype: "json", url: "../category/get_tree_NS?nodeid=70", page: 1}).trigger('reloadGrid');
 			$("#divTable").hide();
 			$("#divTree").show();
 			$("#divGrid").show();
@@ -635,7 +654,6 @@ $("#select_report_setting").click();
 
 	$('#button_report_run').click(function (e) {
 		if($("#gridRep").jqGrid('getRowData').length>0) $.jgrid.gridUnload("#gridRep");
-		//if($("#gridRep").jqGrid('getRowData').length>0) $("#gridRep").jqGrid("GridUnload");
 		gridRep();
 		$("#dialog_progress").dialog( "option", "title", 'Ожидайте! Выполняется формирование отчета...');
 		$("#dialog_progress").dialog("open");
@@ -655,6 +673,7 @@ $("#select_report_setting").click();
 		}
 		if(grouping[id]=='groupName') $("#gridRep").jqGrid('setLabel', "field"+id, "Группа товара");
 		if(grouping[id]=='catName')   $("#gridRep").jqGrid('setLabel', "field"+id, "Категория товара");
+		if(grouping[id]=='cattypeName')$("#gridRep").jqGrid('setLabel', "field"+id, "Кат.по виду животн.");
 		if(grouping[id]=='markupName')$("#gridRep").jqGrid('setLabel', "field"+id, "Категория наценки");
 		if(grouping[id]=='cc_checkID')$("#gridRep").jqGrid('setLabel', "field"+id, "Документ");
 		if(grouping[id]=='cc_promoID')$("#gridRep").jqGrid('setLabel', "field"+id, "Акция");
@@ -711,6 +730,7 @@ $("#select_report_setting").click();
 		prmRep += (Object.keys(group).length == 0) ? "" : "<br>" + "Группа товара: " + strJoin(group).join(', ');
 		prmRep += (Object.keys(good).length == 0) ? "" : "<br>" + "Товары: " + strJoin(good).join(', ');
 		prmRep += (Object.keys(cat).length == 0) ? "" : "<br>" + "Категории товаров: " + strJoin(cat).join(', ');
+		prmRep += (Object.keys(cat_type).length == 0) ? "" : "<br>" + "Категории товаров: " + strJoin(cat_type).join(', ');
 		prmRep += (Object.keys(markup).length == 0) ? "" : "<br>" + "Категории наценок: " + strJoin(markup).join(', ');
 		prmRep += (Object.keys(point).length == 0) ? "" : "<br>" + "Торговые точки: " + strJoin(point).join(', ');
 		prmRep += (Object.keys(seller).length == 0) ? "" : "<br>" + "Сотрудники: " + strJoin(seller).join(', ');
@@ -727,6 +747,7 @@ $("#select_report_setting").click();
 			"&group=" + keyJoin(group).join(';') +
 			"&good=" + keyJoin(good).join(';') +
 			"&cat=" + keyJoin(cat).join(';') +
+			"&cat_type=" + keyJoin(cat_type).join(';') +
 			"&markup=" + keyJoin(markup).join(';') +
 			"&point=" + keyJoin(point).join(';') +
 			"&seller=" + keyJoin(seller).join(';') +
@@ -811,6 +832,16 @@ $("#select_report_setting").click();
 				<div class="input-group input-group-sm mt5 w100p">
 					<span class="input-group-addon w130">Категория товара:</span>
 					<input id="cat" name="cat" type="text" class="form-control" >
+					<span class="input-group-btn w32">
+						<a class="btn btn-default w100p" type="button">X</a>
+					</span>
+					<span class="input-group-btn w32">
+						<a class="btn btn-default w100p" type="button">...</a>
+					</span>
+				</div>
+				<div class="input-group input-group-sm mt5 w100p">
+					<span class="input-group-addon w130">Кат.по видам живот.:</span>
+					<input id="cat_type" name="cat_type" type="text" class="form-control" >
 					<span class="input-group-btn w32">
 						<a class="btn btn-default w100p" type="button">X</a>
 					</span>
@@ -903,6 +934,11 @@ $("#select_report_setting").click();
 					<li class="bc3 ui-corner-all" id="catName">
 						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
 						<span class="pl5 floatL w80p">Категория товара</span>
+						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
+					</li>
+					<li class="bc3 ui-corner-all" id="cattypeName">
+						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
+						<span class="pl5 floatL w80p">Кат.по виду живот.</span>
 						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
 					</li>
 					<li class="bc4 ui-corner-all" id="markupName">
