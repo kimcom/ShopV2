@@ -328,8 +328,9 @@ Fn::debugToLog('report4 user:' . $_SESSION['UserName'], "".$date1."	".  $date2);
 	}
 	public function get_report4_data() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
-//Fn::debugToLog('report4 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
-		//echo $DT_start.' '.  $DT_stop . '<br>';
+Fn::debugToLog('report4 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+Fn::paramToLog();  
+//echo $DT_start.' '.  $DT_stop . '<br>';
 		if (isset($DT_start)) {
 			$dt = DateTime::createFromFormat('d?m?Y', $DT_start);
 			//echo $dt->format('Ymd').'<br>';
@@ -344,13 +345,17 @@ Fn::debugToLog('report4 user:' . $_SESSION['UserName'], "".$date1."	".  $date2);
 		} else {
 			return;
 		}
+		$action = '';
+		if ($sid=='4')  $action = 'sale';
+		if ($sid=='42') $action = 'sale42';
+Fn::debugToLog("report4", 'action='.$action);
 		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
 		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
-		$stmt = $this->db->prepare("CALL pr_reports('sale', @id, ?, ?, ?)");
-		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
-		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
-		//$stmt->bindParam(3, $url, PDO::PARAM_STR);
-		$stmt->bindParam(3, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+		$stmt = $this->db->prepare("CALL pr_reports(?, @id, ?, ?, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $date1, PDO::PARAM_STR);
+		$stmt->bindParam(3, $date2, PDO::PARAM_STR);
+		$stmt->bindParam(4, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		header("Content-type: application/json;charset=utf8");
@@ -394,7 +399,8 @@ Fn::debugToLog('report4 user:' . $_SESSION['UserName'], "".$date1."	".  $date2);
 				$t++;
 			} while ($stmt->nextRowset());
 		}
-		return json_encode($response);
+//Fn::debugToLog("report4", json_encode($response));
+		echo json_encode($response);
 	}
 	public function get_report5_data() {
 		foreach ($_REQUEST as $arg => $val)

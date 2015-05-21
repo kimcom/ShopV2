@@ -12,10 +12,6 @@ class Model_Reports extends Model {
 		$cnn = new Cnn();
 		return $cnn->get_report2_data();
 	}
-	public function get_report4_data() {
-		$cnn = new Cnn();
-		return $cnn->get_report4_data();
-	}
 	public function get_report5_data() {
 		$cnn = new Cnn();
 		return $cnn->get_report5_data();

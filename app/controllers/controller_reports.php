@@ -15,6 +15,9 @@ class Controller_Reports extends Controller {
 	function action_report5() {
 		$this->view->generate('view_reports_5.php', 'view_template.php');
 	}
+	function action_report42() {
+		$this->view->generate('view_reports_42.php', 'view_template.php');
+	}
 	function action_report7() {
 		$this->view->generate('view_reports_7.php', 'view_template.php');
 	}
@@ -33,8 +36,12 @@ class Controller_Reports extends Controller {
 	}
 
 	function action_report4_data() {
-		$this->model = new Model_Reports();
-		echo $this->model->get_report4_data();
+		$cnn = new Cnn();
+		return $cnn->get_report4_data();
+	}
+	function action_report42_data() {
+		$cnn = new Cnn();
+		return $cnn->get_report4_data();
 	}
 	function action_report5_data() {
 		$this->model = new Model_Reports();

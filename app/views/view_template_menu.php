@@ -138,6 +138,7 @@ if($_SESSION['AccessLevel'] >= 1000){
 					<ul class="dropdown-menu">
 						<li><a href="/reports/report1">Отчет "Средняя сумма чека и среднее кол-во чеков"</a></li>
 						<li><a href="/reports/report4">Отчет "Продажи товаров в рознице"</a></li>
+						<li><a href="/reports/report42">Отчет "Продажи товаров в рознице (себест.)"</a></li>
 						<li><a href="/reports/report7">Отчет "Продажи товаров в опте"</a></li>
 						<li><a href="/reports/report5">Отчет "Товарный ассортимент"</a></li>
 						<!--<li><a href="/reports/jqgrid3">Отчет №4</a></li>-->
