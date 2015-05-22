@@ -97,7 +97,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		//jComboBox1.setSelectedItem("0.00");
 
 //jTextField1.setText("9800000501863");
-//jTextField1.setText("9800000000014");
+//jTextField1.setText("9800001001850");
 //barCode = jTextField1.getText();
 //requery();
     }
@@ -186,6 +186,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 				jLabel25.setText(dateFormatOut.format(new Date()));
 				jComboBox1.setSelectedItem(cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal"));
             } else if (iStatus == 2) {
+				if (bgPercentCard.compareTo(BigDecimal.ZERO) == 0) {
+					JOptionPane.showMessageDialog(this, "Данную карту еще не выдавали!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+					dispose();
+				}
 				String d = cnn.getDiscountCardInfo("DateOfIssue", "DateTime").toString();
 				try {
 					if(d.equals("")){
