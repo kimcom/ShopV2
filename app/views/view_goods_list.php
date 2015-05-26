@@ -84,6 +84,16 @@
 		    window.location = "../goods/good_balance?goodid=" + id;
 	    }
 	});
+	$("#grid1").navButtonAdd('#grid1_toppager', {
+		title: 'Карта товара', buttonicon: "ui-icon-pencil", caption: 'Карта товара', position: "last",
+		onClickButton: function () {
+		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+		var node = $("#grid1").jqGrid('getRowData', id);
+		//console.log(id,node,node.Name);
+		if (id != '')
+			window.location = "../goods/good_info?goodid=" + id;
+		}
+	});
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});
 
 	$("#pg_pgrid1").remove();

@@ -998,7 +998,7 @@ $.fn.jqGrid = function( pin ) {
 			remapColumns : [],
 			ajaxGridOptions :{},
 			direction : "ltr",
-			toppager: false,
+			toppager: true,
 			headertitles: false,
 			scrollTimeout: 40,
 			data : [],
@@ -1671,6 +1671,8 @@ $.fn.jqGrid = function( pin ) {
 			ts.p.lastpage = intNum($.jgrid.getAccessor(data,dReader.total), 1);
 			ts.p.records = intNum($.jgrid.getAccessor(data,dReader.records));
 			ts.p.userData = $.jgrid.getAccessor(data,dReader.userdata) || {};
+//			ts.p.totalpages = intNum($.jgrid.getAccessor(data, dReader.total), 1);
+//console.log(ts.p);
 			if(si) {
 				addSubGridCell = $.jgrid.getMethod("addSubGridCell");
 			}
@@ -2078,6 +2080,9 @@ $.fn.jqGrid = function( pin ) {
 			pgid = ts.p.pager ? $.jgrid.jqID(ts.p.pager.substr(1)) : "",
 			tspg = pgid ? "_"+pgid : "",
 			tspg_t = ts.p.toppager ? "_"+ts.p.toppager.substr(1) : "";
+// console.log($.jgrid.jqID(pgid));
+// console.log(pgid,tspg);
+// console.log(ts.p.toppager,tspg_t);
 			base = parseInt(ts.p.page,10)-1;
 			if(base < 0) { base = 0; }
 			base = base*parseInt(ts.p.rowNum,10);
@@ -2107,11 +2112,17 @@ $.fn.jqGrid = function( pin ) {
 				if(ts.p.pginput===true) {
 					$("#input"+tspg).html($.jgrid.template($.jgrid.getRegional(ts, "defaults.pgtext", ts.p.pgtext) || "","<input class='ui-pg-input ui-corner-all' type='text' size='2' maxlength='7' value='0' role='textbox'/>","<span id='sp_1_"+$.jgrid.jqID(pgid)+"'></span>"));
 					if(ts.p.toppager) {
-						$("#input_t"+tspg_t).html($.jgrid.template($.jgrid.getRegional(ts, "defaults.pgtext", ts.p.pgtext) || "","<input class='ui-pg-input' type='text' size='2' maxlength='7' value='0' role='textbox'/>","<span id='sp_1_"+$.jgrid.jqID(pgid)+"_toppager'></span>"));
+						$("#input_t"+tspg_t).html($.jgrid.template($.jgrid.getRegional(ts, "defaults.pgtext", ts.p.pgtext) || "","<input class='ui-pg-input ui-corner-all' type='text' size='2' maxlength='7' value='0' role='textbox'/>","<span id='sp_1"+tspg_t+"'></span>"));
+						//$("#input_t"+tspg_t).html($.jgrid.template($.jgrid.getRegional(ts, "defaults.pgtext", ts.p.pgtext) || "","<input class='ui-pg-input' type='text' size='2' maxlength='7' value='0' role='textbox'/>","<span id='sp_1_"+$.jgrid.jqID(pgid)+"_toppager'></span>"));
 					}
 					$('.ui-pg-input',pgboxes).val(ts.p.page);
 					sppg = ts.p.toppager ? '#sp_1'+tspg+",#sp_1"+tspg_t : '#sp_1'+tspg;
+// console.log(sppg);
+// console.log(tspg,'sp_1'+tspg_t);
 					$(sppg).html($.fmatter ? $.fmatter.util.NumberFormat(ts.p.lastpage,fmt):ts.p.lastpage);
+// console.log($("#input"+tspg).html());
+// console.log($("#input_t"+tspg_t).html());
+// console.log($("#sp_1"+tspg_t).html());
 				}
 				if (ts.p.viewrecords){
 					if(ts.p.reccount === 0) {
@@ -8344,7 +8355,7 @@ $.jgrid.extend({
 		p = $.extend(true, {
 			top : 0,
 			left: 0,
-			width: 240,
+			width: 440,
 			height: 'auto',
 			dataheight : 'auto',
 			modal: false,
@@ -8406,6 +8417,7 @@ $.jgrid.extend({
 				var dh = isNaN(rp_ge[$t.p.id].dataheight) ? rp_ge[$t.p.id].dataheight : rp_ge[$t.p.id].dataheight+"px",
 				dw = isNaN(p.datawidth) ? p.datawidth : p.datawidth+"px",
 				tbl = "<div id='"+dtbl_id+"' class='formdata' style='width:"+dw+";overflow:auto;position:relative;height:"+dh+";'>";
+//console.log(dw,isNaN(p.datawidth),p.datawidth);
 				tbl += "<table class='DelTable'><tbody>";
 				// error data
 				tbl += "<tr id='DelError' style='display:none'><td class='ui-state-error'></td></tr>";
@@ -8582,7 +8594,7 @@ $.jgrid.extend({
 			beforeRefresh : null,
 			afterRefresh : null,
 			cloneToTop : false,
-			alertwidth : 200,
+			alertwidth : 300,
 			alertheight : 'auto',
 			alerttop: null,
 			alertleft: null,

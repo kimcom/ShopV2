@@ -190,7 +190,7 @@ class Cnni {
 	}
 	public function good_delete() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
-		if ($_SESSION['AccessLevel'] == 1000) {
+		if ($_SESSION['AccessLevel'] >= 1000) {
 			$response->success = Shop::GoodDelete($this->dbi, $goodid); //удалить товар
 			$response->message = 'Этот товар удалить невозможно, т.к. он уже продавался в магазинах!';
 			$response->new_id = 0;

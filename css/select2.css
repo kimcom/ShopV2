@@ -39,7 +39,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     color: #444;
     text-decoration: none;
 
-    border-radius: 4px;
+    border-radius: 0px;
 
     background-clip: padding-box;
 
@@ -184,7 +184,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     top: 0;
 
     border-left: 1px solid #aaa;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 0px 0px 0;
 
     background-clip: padding-box;
 
@@ -499,7 +499,7 @@ disabled look for disabled choices in the results dropdown
     cursor: default;
     border: 1px solid #aaaaaa;
 
-    border-radius: 3px;
+    border-radius: 0px;
 
     -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
             box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);

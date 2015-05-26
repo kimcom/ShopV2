@@ -9,6 +9,12 @@ class Controller_Goods extends Controller {
 	function action_good_balance() {
 		$this->view->generate('view_goods_balance.php', 'view_template.php');
 	}
+	function action_good_info() {
+		$this->view->generate('view_good_info.php', 'view_template.php');
+	}
+	function action_group_work() {
+		$this->view->generate('view_goods_group_work.php', 'view_template.php');
+	}
 	function action_barcodes() {
 		$this->view->generate('view_goods_barcodes.php', 'view_template.php');
 	}

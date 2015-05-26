@@ -47,6 +47,10 @@ class Controller_Reports extends Controller {
 		$this->model = new Model_Reports();
 		echo $this->model->get_report5_data();
 	}
+	function action_report6_data() {
+		$cnn = new Cnn();
+		return $cnn->get_report6_data();
+	}
 	function action_report7_data() {
 		$this->model = new Model_Reports();
 		echo $this->model->get_report7_data();

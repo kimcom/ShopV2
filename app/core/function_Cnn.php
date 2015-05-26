@@ -407,6 +407,7 @@ Fn::debugToLog("report4", 'action='.$action);
 			${$arg} = $val;
 //Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
 //Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['REQUEST_URI']));
+Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_reports('goods', @id, ?, ?, ?)");
 		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
 		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
@@ -457,6 +458,65 @@ Fn::debugToLog("report4", 'action='.$action);
 		}
 		echo json_encode($response);
 	}
+	public function get_report6_data() {
+		foreach ($_REQUEST as $arg => $val)
+			${$arg} = $val;
+//Fn::debugToLog('report5 user:'.  $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
+//Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['REQUEST_URI']));
+Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['QUERY_STRING']));
+		$stmt = $this->db->prepare("CALL pr_reports('goods_action', @id, ?, ?, ?)");
+		$stmt->bindParam(1, $date1, PDO::PARAM_STR);
+		$stmt->bindParam(2, $date2, PDO::PARAM_STR);
+		$stmt->bindParam(3, urldecode($_SERVER['QUERY_STRING']), PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		header("Content-type: application/json;charset=utf8");
+		$response = new stdClass();
+		$response->page = 1;
+		$response->total = 1;
+		$response->records = 0;
+		$response->query = "";
+		$response->error = '';
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			$response->error = $stmt->errorInfo();
+		//	Fn::debugToLog("resp", json_encode($response));
+		if ($stmt->rowCount() > 0) {
+			$t = 0;
+			do {
+				$rowset = $stmt->fetchAll();
+				if ($rowset != null) {
+					if ($t == 1) {
+						foreach ($rowset as $row) {
+							//			Fn::debugToLog($t, $row[0]);
+							$response->query = $row[0];
+							$response->records = $row[1];
+						}
+					} else if ($t == 0) {
+						//Fn::debugToLog("columnCount 2", $stmt->columnCount());
+						$columnCount = $stmt->columnCount();
+						$i = 0;
+						foreach ($rowset as $row) {
+							$response->rows[$i]['id'] = $row[0];
+							$ar = array();
+							for ($f = 0; $f < $columnCount - 7; $f++) {
+								$ar[] = $row[$f];
+							}
+							$ar = array_pad($ar, 8, null);
+							for ($f = $columnCount - 7; $f < $columnCount; $f++) {
+								$ar[] = $row[$f];
+							}
+							$response->rows[$i]['cell'] = $ar;
+							$i++;
+						}
+					}
+				}
+				$t++;
+			} while ($stmt->nextRowset());
+		}
+		header("Content-type: application/json;charset=utf8");
+		echo json_encode($response);
+	}
+
 	public function get_report7_data() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
@@ -1337,8 +1397,8 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 	public function seller_info() {
 		foreach ($_REQUEST as $arg => $val)
 			${$arg} = $val;
-Fn::paramToLog();
-return;
+//Fn::paramToLog();
+//return;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 		$stmt = $this->db->prepare("CALL pr_seller('info', @id, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $sellerID, PDO::PARAM_STR);
@@ -1470,9 +1530,9 @@ Fn::debugToLog('jqgrid3 url', $url);
 		if (!Fn::checkErrorMySQLstmt($stmt))
 			return false;
 		$response = new stdClass();
+		$response->records = 0;
 		$response->page = 0;
 		$response->total = 0;
-		$response->records = 0;
 		$r = 0;
 		do {
 			$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
@@ -1480,9 +1540,9 @@ Fn::debugToLog('jqgrid3 url', $url);
 				if ($r == 1) {
 					$i = 0;
 					foreach ($rowset as $row) {
+						$response->records = $row['_rows_count'];
 						$response->page = $row['_page'];
 						$response->total = $row['_total_pages'];
-						$response->records = $row['_rows_count'];
 						$i++;
 					}
 				} else {
@@ -1525,7 +1585,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 			$r++;
 		} while ($stmt->nextRowset());
 		
-//Fn::DebugToLog("тест jqgrid3", json_encode($response));
+Fn::DebugToLog("тест jqgrid3", json_encode($response));
 		header("Content-type: application/json;charset=utf8");
 		echo json_encode($response);
 }

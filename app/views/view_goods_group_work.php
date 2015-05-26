@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
-	var reportID = 5; 
+	var reportID = 6; 
 //Object Converter
 	oconv	= function (a) {var o = {};for(var i=0;i<a.length;i++) {o[a[i]] = '';} return o;}
 	strJoin = function (obj){ var ar = []; for (key in obj){ar[ar.length] = obj[key];}return ar;}
@@ -71,23 +71,24 @@ $("#select_report_setting").click();
 					}
 				}
 			}
-			$("#grouping li").each(function( index ) {
-				var id = this.id;
-				$("#" + id).appendTo($('#grouping_add'));
-				$("#" + id + ">#a1").removeClass('hide').addClass('show');
-				$("#" + id + ">#a2").removeClass('show').addClass('hide');
-			});
-			for(id in grouping){
-				$("#divGridGrouping_add #" + grouping[id]).appendTo($('#grouping'));
-				$("#" + grouping[id] + ">#a2").removeClass('hide').addClass('show');
-				$("#" + grouping[id] + ">#a1").removeClass('show').addClass('hide');
-			}
-			if(Object.keys(grouping).length==0){
-				id = 'g_goodID';
-				$("#"+id).appendTo($('#grouping'));
-				$("#" + id + ">#a2").removeClass('hide').addClass('show');
-			    $("#" + id + ">#a1").removeClass('show').addClass('hide');
-			}
+//			console.log(settings['grouping']);
+//			$("#grouping li").each(function( index ) {
+//				var id = this.id;
+//				$("#" + id).appendTo($('#grouping_add'));
+//				$("#" + id + ">#a1").removeClass('hide').addClass('show');
+//				$("#" + id + ">#a2").removeClass('show').addClass('hide');
+//			});
+//			for(id in grouping){
+//				$("#divGridGrouping_add #" + grouping[id]).appendTo($('#grouping'));
+//				$("#" + grouping[id] + ">#a2").removeClass('hide').addClass('show');
+//				$("#" + grouping[id] + ">#a1").removeClass('show').addClass('hide');
+//			}
+//			if(Object.keys(grouping).length==0){
+//				id = 'g_goodID';
+//				$("#"+id).appendTo($('#grouping'));
+//				$("#" + id + ">#a2").removeClass('hide').addClass('show');
+//			    $("#" + id + ">#a1").removeClass('show').addClass('hide');
+//			}
 			$("#group").val(strJoin(group).join(';'));
 			$("#group").attr("title", strJoin(group).join("\n"));
 			$("#good").val(strJoin(good).join(';'));
@@ -98,7 +99,7 @@ $("#select_report_setting").click();
 			$("#markup").attr("title", strJoin(markup).join("\n"));
 			$("#matrix").val(strJoin(matrix).join(';'));
 			$("#matrix").attr("title", strJoin(matrix).join("\n"));
-//$('#button_report_run').click();
+//$('#button_selection_run').click();
 		});
 	});
 		
@@ -255,13 +256,12 @@ $("#select_report_setting").click();
 				$("#dialog").dialog("open");
 				return;
 			}
-			grouping = [];
-			$("#grouping li").each(function( index ) {grouping[index] = this.id;});
+//			grouping = [];
+//			$("#grouping li").each(function( index ) {grouping[index] = this.id;});
 			setID = setting.id;
 			if(setting.id==setting.text) setID='';
 			$.post("../Engine/setting_set"+
-					"?grouping="+ keyJoin(grouping).join(';')+"|"+strJoin(grouping).join(';')+
-					"&group="	+ keyJoin(group).join(';')	+"|"+strJoin(group).join(';')+
+					"?group="	+ keyJoin(group).join(';')	+"|"+strJoin(group).join(';')+
 					"&good="	+ keyJoin(good).join(';')	+"|"+strJoin(good).join(';')+
 					"&cat="		+ keyJoin(cat).join(';')	+"|"+strJoin(cat).join(';')+
 					"&markup="	+ keyJoin(markup).join(';') +"|"+strJoin(markup).join(';')+
@@ -335,22 +335,22 @@ $("#select_report_setting").click();
 			$("#divGrid").show();
 	    }
 	});
-	$('#grouping_add').selectable({
-		selected: function(event, ui){
-			if(ui.selected.tagName!='LI') return;
-			$(ui.selected).appendTo($('#grouping'));
-			$("#"+ui.selected.id+">#a2").removeClass('hide').addClass('show');
-			$("#"+ui.selected.id+">#a1").removeClass('show').addClass('hide');
-		}
-	});
-	$('#grouping').selectable({
-		selected: function(event, ui){
-			if(ui.selected.tagName!='LI') return;
-			$(ui.selected).appendTo($('#grouping_add'));
-			$("#"+ui.selected.id+">#a1").removeClass('hide').addClass('show');
-			$("#"+ui.selected.id+">#a2").removeClass('show').addClass('hide');
-		}
-	});
+//	$('#grouping_add').selectable({
+//		selected: function(event, ui){
+//			if(ui.selected.tagName!='LI') return;
+//			$(ui.selected).appendTo($('#grouping'));
+//			$("#"+ui.selected.id+">#a2").removeClass('hide').addClass('show');
+//			$("#"+ui.selected.id+">#a1").removeClass('show').addClass('hide');
+//		}
+//	});
+//	$('#grouping').selectable({
+//		selected: function(event, ui){
+//			if(ui.selected.tagName!='LI') return;
+//			$(ui.selected).appendTo($('#grouping_add'));
+//			$("#"+ui.selected.id+">#a1").removeClass('hide').addClass('show');
+//			$("#"+ui.selected.id+">#a2").removeClass('show').addClass('hide');
+//		}
+//	});
 
 // Creating gridRep
 	var gridRep = function(){
@@ -360,9 +360,9 @@ $("#select_report_setting").click();
 		datatype: 'local',
 	    height: 'auto',
 	    colModel: [
-			{name: 'field0' , index: 'field0' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
-			{name: 'field1' , index: 'field1' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
-			{name: 'field2' , index: 'field2' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
+			{name: 'field0' , index: 'field0' , width: 60, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
+			{name: 'field1' , index: 'field1' , width: 100, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
+			{name: 'field2' , index: 'field2' , width: 300, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field3' , index: 'field3' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field4' , index: 'field4' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field5' , index: 'field5' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
@@ -382,6 +382,7 @@ $("#select_report_setting").click();
 		rowNum:10000000,
 	    gridview: true,
 		footerrow:true,
+		multiselect: true,
 		//userDataOnFooter: true,
 	    toppager: true,
 		loadComplete: function(data) {
@@ -406,11 +407,11 @@ $("#select_report_setting").click();
 				}, 1200);
 				return;
 			}
-			$("#grouping li").each(function( index ) {
-				var cl = this.className.substr(0,3);
-				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).css("background-image","none");
-				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).addClass(cl);
-			});
+//			$("#grouping li").each(function( index ) {
+//				var cl = this.className.substr(0,3);
+//				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).css("background-image","none");
+//				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).addClass(cl);
+//			});
 			var ar = new Object();
 			i = 14;
 			var summary = $("#gridRep").jqGrid('getCol', "field"+i, false, 'sum');
@@ -418,7 +419,7 @@ $("#select_report_setting").click();
 			$("#gridRep").jqGrid('footerData','set', ar);
 			$("#dialog_progress").dialog("close");
 		},
-	    caption: 'Отчет "Товарный ассортимент"',
+	    caption: 'Групповая обработка товаров',
 	    pager: '#pgridRep',
 	});
 	$("#gridRep").jqGrid('navGrid', '#pgridRep', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
@@ -437,7 +438,8 @@ $("#select_report_setting").click();
 				$(gr).find("td").filter(function () {if ($(this).css('display') == 'none') $(this).remove();});
 				$(gr).find("table").filter(function () {if ($(this).attr('border') == '0') $(this).attr('border', '1');});
 				$(gr).find("td").filter(function () {if ($(this).attr('colspan') > 1) $(this).attr('colspan', '6');});
-				$(gr).find("a").remove();
+
+		$(gr).find("a").remove();
 				$(gr).find("div").removeAttr("id");
 				$(gr).find("div").removeAttr("style");
 				$(gr).find("div").removeAttr("class");
@@ -471,7 +473,6 @@ $("#select_report_setting").click();
 				var html = $(gr).html();
 				html = html.split(" грн.").join("");
 				html = html.split("<table ").join("<table border='1' ");
-alert(html.length);
 				var file_name = 'Товарный ассортимент';
 				var report_name = 'report'+reportID;
 				$.ajax({
@@ -495,21 +496,27 @@ alert(html.length);
 	$("#pgridRep").addClass('ui-jqgrid-pager-empty');
 	$("#gridRep").gridResize();
 		
-	$('#myTab a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-	});
+//	$('#myTab a').click(function (e) {
+//		e.preventDefault();
+//		$(this).tab('show');
+//	});
 	}
 
-	$('#button_report_run').click(function (e) {
+	$('#btn_selection_run').click(function (e) {
 		if($("#gridRep").jqGrid('getRowData').length > 0) $.jgrid.gridUnload("#gridRep");
 		gridRep();
 		$("#dialog_progress").dialog( "option", "title", 'Ожидайте! Выполняется формирование отчета...');
 		$("#dialog_progress").dialog("open");
-		$("#a_tab_report").tab('show');
+		//$("#btn_action_run").removeClass('disabled');
+		$("#a_tab_action").removeClass('disabledTab');
+		$("#a_tab_selection").removeClass('disabledTab');
+		$("#a_tab_selection").tab('show');
+//		$("#button_selection_run").hide();
+//		$("#button_change_run").show();
 //return;
 		grouping = [];
-		$("#grouping li").each(function( index ) {grouping[index] = this.id;});
+		//$("#grouping li").each(function( index ) {grouping[index] = this.id;});
+		grouping[0] = "g_goodID";
 		for(i=0; i<10; i++){
 			$("#gridRep").jqGrid('showCol',"field"+i);
 		}
@@ -525,6 +532,8 @@ alert(html.length);
 		if(grouping[id]=='markupName')$("#gridRep").jqGrid('setLabel', "field"+id, "Категория наценки");
 		if(grouping[id]=='matrixName')$("#gridRep").jqGrid('setLabel', "field"+id, "Товарная матрица");
 		if(grouping[id]=='g_goodID'){
+			$("#gridRep").jqGrid('setLabel', "field"+id, "GoodID");
+			id++;
 			$("#gridRep").jqGrid('setLabel', "field"+id, "Артикул");
 			id++;
 			$("#gridRep").jqGrid('setLabel', "field"+id, "Название");
@@ -567,15 +576,15 @@ alert(html.length);
 				}
 			});
 		}
-		var grouping_str = '';
-		$("#grouping li span").each(function( index ) { grouping_str += ((grouping_str.length==0) ? '' : ', ') + $(this).html();});
+//		var grouping_str = '';
+//		$("#grouping li span").each(function( index ) { grouping_str += ((grouping_str.length==0) ? '' : ', ') + $(this).html();});
 		prmRep = "<b>Отбор данных выполнен по критериям:</b> ";
 		prmRep += (Object.keys(group).length == 0) ? "" : "<br>" + "Группа товара: " + strJoin(group).join(', ');
 		prmRep += (Object.keys(good).length == 0) ? "" : "<br>" + "Товары: " + strJoin(good).join(', ');
 		prmRep += (Object.keys(cat).length == 0) ? "" : "<br>" + "Категории товаров: " + strJoin(cat).join(', ');
 		prmRep += (Object.keys(markup).length == 0) ? "" : "<br>" + "Категории наценок: " + strJoin(markup).join(', ');
 		prmRep += (Object.keys(matrix).length == 0) ? "" : "<br>" + "Товарная матрица: " + strJoin(matrix).join(', ');
-		prmRep += (grouping_str.length == 0) ? "" : "<br>" + "Группировки отчета: " + grouping_str;
+//		prmRep += (grouping_str.length == 0) ? "" : "<br>" + "Группировки отчета: " + grouping_str;
 		$("#report_param_str").html(prmRep);
 //return;
 		$("#gridRep").jqGrid('setGridParam', {datatype: "json", url: "../reports/report"+reportID+"_data" +
@@ -588,8 +597,47 @@ alert(html.length);
 			"&matrix=" + keyJoin(matrix).join(';') +
 			""}).trigger('reloadGrid');
 	});
-});
+	$('#myTab a').click(function (e) {
+		e.preventDefault();
+		if (this.id == 'a_tab_setting') {
+//			$("#button_selection_run").show();
+//			$("#button_change_run").hide();
+		}
+		if (this.id == 'a_tab_selection') {
+//			$("#button_selection_run").hide();
+//			$("#button_change_run").show();
+		}
+    });
 
+	$('#btn_action_run').click(function (e) {
+		var sel;
+		sel = jQuery("#gridRep").jqGrid('getGridParam', 'selarrrow');
+		if (sel == '') {
+			$("#dialog>#text").html('Вы не выбрали ни одной записи!');
+			$("#dialog").dialog("open");
+			return;
+		}
+		alert(sel);
+	});
+
+	//заполнение select2 - статусы
+	var a_action = [
+		{id: 0, text: 'действие не выбрано'}, 
+		{id: 10, text: 'установить ед. измерения'}, 
+		{id: 12, text: 'установить отдел'}, 
+		{id: 14, text: 'установить макс. скидку'}, 
+		{id: 16, text: 'установить кол-во в упаковке'}, 
+		{id: 18, text: 'установить ...'}, 
+		{id: 20, text: 'установить ...'}, 
+		{id: 22, text: 'установить ...'}, 
+	];
+	$("#select_action").select2({data: a_action, placeholder: "Выберите действие"});
+	$("#select_action").select2("val", 0);
+
+//	$("#a_tab_action").removeClass('disabledTab');
+//	$("#a_tab_selection").removeClass('disabledTab');
+//	$("#a_tab_action").tab('show');
+});
 </script>
 <style>
  #feedback { font-size: 12px; }
@@ -598,15 +646,15 @@ alert(html.length);
 </style>
 <div class="container center">
 	<ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
-		<li class="active"><a href="#tab_filter" role="tab" data-toggle="tab">Настройки отбора</a></li>
-		<li><a href="#tab_grouping"  role="tab" data-toggle="tab">Настройки группировок</a></li>
-		<li><a id="a_tab_report" href="#tab_report" role="tab" data-toggle="tab">Отчет "Товарный ассортимент"</a></li>
+		<li class="active"><a id="a_tab_setting" href="#tab_filter" role="tab" data-toggle="tab">Настройки отбора</a></li>
+		<li>
+			<button id="btn_selection_run" class="btn btn-sm btn-default frameL m0 mr2 h40 hidden-print font14">
+				<span class="ui-button-text" style1='width:120px;height:22px;'>Выполнить отбор</span>
+			</button>
+		</li>
+		<li><a id="a_tab_selection" class="disabledTab" href="#tab_selection" role="tab" data-toggle="tab">Отобранные товары</a></li>
+		<li><a id="a_tab_action" class="disabledTab" href="#tab_action" role="tab" data-toggle="tab">Действия</a></li>
 	</ul>
-	<div class="floatL">
-		<button id="button_report_run" class="btn btn-sm btn-info frameL m0 h40 hidden-print font14">
-			<span class="ui-button-text" style1='width:120px;height:22px;'>Сформировать отчет</span>
-		</button>
-	</div>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1" id="tab_filter">
 			<div id="setting_filter" class='p5 frameL w400 h400 ml0 border0' style='display:table;'>
@@ -685,49 +733,36 @@ alert(html.length);
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane m0 w100p min530 ui-corner-all borderColor frameL border1" id="tab_grouping">
-			<div id="divGridGrouping" class='p5 ui-corner-all frameL m10 border1'>
-				<legend>Выбранные группировки</legend>
-				<ol id="grouping" class="w100p selectable">
-				</ol>
-			</div>
-			<div id="divGridGrouping_add" class='p5 ui-corner-all frameL m10 border1'>
-				<legend>Возможные группировки</legend>
-				<ul id="grouping_add" class="w100p selectable">
-					<li class="bc1 ui-corner-all" id="groupName">
-						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
-						<span class="pl5 floatL w80p">Группа товара</span>
-						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
-					</li>
-					<li class="bc2 ui-corner-all" id="g_goodID">
-						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
-						<span class="pl5 floatL w80p">Товар</span>
-						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
-					</li>
-					<li class="bc3 ui-corner-all" id="catName">
-						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
-						<span class="pl5 floatL w80p">Категория товара</span>
-						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
-					</li>
-					<li class="bc4 ui-corner-all" id="markupName">
-						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
-						<span class="pl5 floatL w80p">Категория наценки</span>
-						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
-					</li>
-					<li class="bc5 ui-corner-all" id="matrixName">
-						<a id="a1" class="floatL ui-icon ui-icon-triangle-1-w mt2 show" type="button"></a>
-						<span class="pl5 floatL w80p">Товарная матрица</span>
-						<a id="a2" class="floatL ui-icon ui-icon-triangle-1-e mt2 hide" type="button"></a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="tab-pane m0 w100p min530 borderColor borderTop1 frameL center border0" id="tab_report">
+		<div class="tab-pane min530 m0 w100p borderColor borderTop1 frameL center border0" id="tab_selection">
 			<div id='report_param_str' class="mt10 TAL font14">
 			</div>
 			<div id='div1' class='center frameL mt10'>
 				<table id="gridRep"></table>
 				<div id="pgridRep"></div>
+			</div>
+		</div>
+		<div class="tab-pane min530 m0 w100p ui-corner-all borderColor frameL border1" id="tab_action">
+			<div class='p5 ui-corner-all frameL m10 border1 w500'>
+				<div class="input-group input-group-sm w100p">
+					<span class="input-group-addon w100 TAL">Действие:</span>
+					<div class="w100p" id="select_action"></div>
+					<span class="input-group-addon w32"></span>
+				</div>
+				<div class="input-group input-group-sm mt20 w100p">
+					<span class="input-group-addon w100 TAL">Значение:</span>
+					<input id="group" name="group" type="text" class="form-control" placeholder="введите новое значение">
+					<span class="input-group-btn w32">
+						<a class="btn btn-default w100p" type="button">X</a>
+					</span>
+					<span class="input-group-btn w32">
+						<a class="btn btn-default w100p" type="button">...</a>
+					</span>
+				</div>
+			</div>
+			<div class='frameL m10 '>
+				<button id="btn_action_run" class="btn btn-sm btn-default frameL m0 mr2 h40 hidden-print font14">
+					<span class="ui-button-text" style1='width:120px;height:22px;'>Выполнить действие</span>
+				</button>
 			</div>
 		</div>
 	</div>

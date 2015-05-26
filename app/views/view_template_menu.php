@@ -88,6 +88,7 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 					<ul class="dropdown-menu">
 						<li><a href="/goods">Список товаров</a></li>
 						<li><a href="/goods/list_w_cost">Список товаров без себестоимости</a></li>
+						<li><a href="/goods/group_work">Групповая обработка товаров</a></li>
 						<li class="divider"></li>
 						<li><a href="/goods/barcodes">Список штрих-кодов</a></li>
 						<li><a href="/goods/barcode_verify">Список ШК для проверки</a></li>
