@@ -9,13 +9,14 @@ $(document).ready(function(){
 // Creating grid1
 	$("#grid1").jqGrid({
 		sortable: true,
-		url:"../engine/jqgrid3?action=discountCards_list&f1=CardID&f2=Name&f3=DateOfIssue&f4=DateOfCancellation&f5=ClientID&f6=PercentOfDiscount&f7=AmountOfBuying&f8=SummaAmount",	
+		url:"../engine/jqgrid3?action=discountCards_list&f1=CardID&f2=Name&f3=Phone&f4=DateOfIssue&f5=DateOfCancellation&f6=ClientID&f7=PercentOfDiscount&f8=AmountOfBuying&f9=SummaAmount",	
 		datatype: "json",
 		height:'auto',
-		colNames:['Карта','ФИО','Выдана','Аннулир.','Магазин','% скидки','Сумма накопл.','Сумма'],
+		colNames:['Карта','ФИО','Телефон','Выдана','Аннулир.','Магазин','% скидки','Сумма накопл.','Сумма'],
 		colModel:[
 			{name:'CardID',            index:'CardID',             width: 100, align:"center",sorttype:"text",  search:true},
 			{name:'Name',              index:'Name',               width: 220, align:"left",sorttype:"text",  search:true},
+                        {name:'Phone',             index:'Phone',              width: 100, align: "left", sorttype: "number", search: true},
 			{name:'DateOfIssue',       index:'DateOfIssue',        width: 120, align:"center", sorttype:"date",   search:true},
 			{name:'DateOfCancellation',index:'DateOfCancellation', width: 120, align:"center", sorttype:"date",   search:true},
 			{name:'с_ClientID',        index:'c.ClientID',         width: 60, align:"center", sorttype:"number", search:true, sortable:false},
@@ -23,7 +24,15 @@ $(document).ready(function(){
 			{name:'AmountOfBuying',    index:'AmounyOfBuying',     width:100, align:"right",  sorttype:"number", search:false, sortable:false},
 			{name:'SummaAmount',       index:'SummaAmount',        width:80,  align:"right",  sorttype:"number", search:false, sortable:false},		
 		],
-		gridComplete: function() {if(!fs) {fs = 1; filter_restore("#grid1");}},
+		beforeRequest: function() {
+                    var date = new Date();
+                    formated_date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2);
+                    var postData = $("#grid1").jqGrid('getGridParam', 'postData');
+                    if (postData.DateOfIssue == null)
+                        postData.DateOfIssue = formated_date;
+                    $("#gs_DateOfIssue").val(postData.DateOfIssue);
+                },
+                gridComplete: function() {if(!fs) {fs = 1; filter_restore("#grid1");}},
 		width:'auto',
 		shrinkToFit:false,
 //		loadonce: true,

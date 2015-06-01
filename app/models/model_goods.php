@@ -13,8 +13,8 @@ class Model_Goods extends Model {
 		return $cnn->get_barcode_edit();
 	}
 	public function good_info_save() {
-		$cnn = new Cnni();
-		return $cnn->good_info_save();
+//		$cnn = new Cnni();
+//		return $cnn->good_info_save();
 	}
 	public function synchro_info_save() {
 		$cnn = new Cnni();
@@ -80,5 +80,5 @@ class Model_Goods extends Model {
 		$cnn = new Cnni();
 		return $cnn->cats_add_in_promo2();
 	}
-}
+    }
 ?>

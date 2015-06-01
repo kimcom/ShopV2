@@ -1162,6 +1162,81 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$this->echo_response($stmt);
 	}
 
+//project
+	public function good_info() {
+		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
+//Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
+//CALL pr_goods(action, _GoodID, _Good1C, _Article, _Name, _Division, _Unit_in_pack, _Unit, _Weight, _DiscountMax, _FreeBalance, _PriceBase, _Price1, _Price2, _Price3, _Price4, _id);
+		$stmt = $this->db->prepare("CALL pr_goods_site('info', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
+		$stmt->bindParam(2, $article, PDO::PARAM_STR);
+		$stmt->bindParam(3, $name, PDO::PARAM_STR);
+		$stmt->bindParam(4, $namestickers, PDO::PARAM_STR);
+		$stmt->bindParam(5, $unit, PDO::PARAM_STR);
+		$stmt->bindParam(6, $trademark, PDO::PARAM_STR);
+		$stmt->bindParam(7, $countryproducer, PDO::PARAM_STR);
+		$stmt->bindParam(8, $typesticker, PDO::PARAM_STR);
+		$stmt->bindParam(9, $packtype, PDO::PARAM_STR);
+		$stmt->bindParam(10, $packmaterial, PDO::PARAM_STR);
+		$stmt->bindParam(11, $foldorder, PDO::PARAM_STR);
+		$stmt->bindParam(12, $segment, PDO::PARAM_STR);
+		$stmt->bindParam(13, $visible, PDO::PARAM_STR);
+		$stmt->bindParam(14, $service, PDO::PARAM_STR);
+		$stmt->bindParam(15, $division, PDO::PARAM_STR);
+		$stmt->bindParam(16, $length, PDO::PARAM_STR);
+		$stmt->bindParam(17, $width, PDO::PARAM_STR);
+		$stmt->bindParam(18, $height, PDO::PARAM_STR);
+		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
+		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
+		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR); 
+// вызов хранимой процедуры
+		$stmt->execute();
+		if (!Fn::checkErrorMySQLstmt($stmt))
+			return false;
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			break; //берем первую запись из результата
+		}
+		return $row;
+	}
+	public function good_save() {
+		foreach ($_REQUEST as $arg => $val){
+			${$arg} = $val;
+			if($val=='') ${$arg} = null;
+		}
+//Fn::paramToLog();
+		if ($visible == 'true')	{
+			$visible = true;
+		} else {
+			$visible = false;
+		}
+		$stmt = $this->db->prepare("CALL pr_goods_site('save', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
+		$stmt->bindParam(2, $article, PDO::PARAM_STR);
+		$stmt->bindParam(3, $name, PDO::PARAM_STR);
+		$stmt->bindParam(4, $namestickers, PDO::PARAM_STR);
+		$stmt->bindParam(5, $unit, PDO::PARAM_STR);
+		$stmt->bindParam(6, $trademark, PDO::PARAM_STR);
+		$stmt->bindParam(7, $countryproducer, PDO::PARAM_STR);
+		$stmt->bindParam(8, $typesticker, PDO::PARAM_STR);
+		$stmt->bindParam(9, $packtype, PDO::PARAM_STR);
+		$stmt->bindParam(10, $packmaterial, PDO::PARAM_STR);
+		$stmt->bindParam(11, $foldorder, PDO::PARAM_STR);
+		$stmt->bindParam(12, $segment, PDO::PARAM_INT);
+		$stmt->bindParam(13, $visible, PDO::PARAM_STR);
+		$stmt->bindParam(14, $service, PDO::PARAM_STR);
+		$stmt->bindParam(15, $division, PDO::PARAM_STR);
+		$stmt->bindParam(16, $length, PDO::PARAM_STR);
+		$stmt->bindParam(17, $width, PDO::PARAM_STR);
+		$stmt->bindParam(18, $height, PDO::PARAM_STR);
+		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
+		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
+		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+		$this->echo_response($stmt);
+	}
+
 //point
 	public function point_info() {
 		foreach ($_REQUEST as $arg => $val)
@@ -1730,24 +1805,25 @@ Fn::DebugToLog("тест jqgrid3", json_encode($response));
 			echo json_encode($response);
 			return;
 		}
+		//$response->success = false;
 		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
 //Fn::debugToLog("s", "1");
 		foreach ($rowset as $row) {
 //Fn::debugToLog("s", "2");
 			if ($response->success)
-//Fn::debugToLog("s", json_encode($row));
+Fn::debugToLog("s", json_encode($row));
 				$response->success = $row[0];
 				$response->new_id = $row[1];
 				$response->sql_message = $row[2];
 			break;
 		}
-		if ($response->success != true) {
-			$response->message = 'Вы ничего не изменили!';
+		if ($response->success == true) {
+			$response->message = 'Информация успешно сохранена!';
 			if (strlen($response->sql_message) == 0)
 				$response->sql_message = $response->message;
 			echo json_encode($response);
 		} else {
-			$response->message = 'Информация успешно сохранена!';
+			$response->message = 'Вы ничего не изменили!';
 			if (strlen($response->sql_message) == 0)
 				$response->sql_message = $response->message;
 			echo json_encode($response);

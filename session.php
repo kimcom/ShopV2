@@ -1,7 +1,8 @@
 <?php
 session_save_path("d:\\sites\\Session");
 session_start();
-
+	$_SESSION['nav_style'] = 'default';
+	//$_SESSION['nav_style'] = 'inverse';
 if (!isset($_SESSION['DT_sebest']))
     $_SESSION['DT_sebest'] = '11/02/2015';
 if (!isset($_SESSION['sitename']))

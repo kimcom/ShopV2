@@ -28,8 +28,8 @@ class Fn {
 	}
 
 	public static function checkErrorMySQLstmt($stmt) {
-		if ($stmt->errorCode() > 0) {
-			$ar = $stmt->errorInfo();
+		$ar = $stmt->errorInfo();
+		if ($stmt->errorCode() > 0 || $ar[1] > 0) {
 			Fn::ErrorToLog('stmt error '.$stmt->errorCode(), $ar[1].' '.$ar[2]);
 			return false;
 		}

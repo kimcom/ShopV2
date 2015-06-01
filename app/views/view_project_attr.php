@@ -331,8 +331,7 @@ function task_open(rowid){
 				$("#select_task_userID_resp").select2("val", t.UserID_resp);
 				$("#taskDT_status_span").html(t.DT_status);
 			}
-			tab_active = 'task';
-			$("#a_tab_task").tab('show');
+			
 		}, "json"
 	);
 }
