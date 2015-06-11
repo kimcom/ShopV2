@@ -106,5 +106,6 @@ class Fn {
 		if ($num == 0) return '';
 		return number_format($num, 2, '.', '').'%';
 	}
+
 }
 ?>

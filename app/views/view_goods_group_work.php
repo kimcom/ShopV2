@@ -19,7 +19,7 @@ $(document).ready(function () {
 	settings['cat']=cat;
 	settings['markup']=markup;
 	settings['matrix']=matrix;
-	var colnames = ['Ед.','Вес','Отдел','Макс.%','Себ. Киев','Себ. Харьков','К-во'];
+	var colnames = ['Ед.','Вес','Отдел','Макс.%'];
 	$("#dialog").dialog({
 		autoOpen: false, modal: true, width: 400, //height: 300,
 		buttons: [{text: "Закрыть", click: function () {
@@ -293,18 +293,19 @@ $("#select_report_setting").click();
 		if(operid=='good'){
 			$("#grid1").jqGrid('setLabel', "field1","Артикул");
 			$("#grid1").jqGrid('setLabel', "field2", "Название");
-			$("#legendGrid").html('Выбор товара или группы:');
-			$("#treeGrid").jqGrid('setGridParam',{datastr:"good"});
-			$("#treeGrid").jqGrid('setCaption','Группы товаров');
-		    $("#treeGrid").jqGrid('setGridParam', {url: "../category/get_tree_NS?nodeid=10", page: 1}).trigger('reloadGrid');
+			$("#legendGrid").html('Выбор товара:');
+//			$("#treeGrid").jqGrid('setGridParam',{datastr:"good"});
+//			$("#treeGrid").jqGrid('setCaption','Группы товаров');
+//		    $("#treeGrid").jqGrid('setGridParam', {url: "../category/get_tree_NS?nodeid=10", page: 1}).trigger('reloadGrid');
 			$("#grid1").jqGrid('setGridParam',{datastr:"good"});
 		    $("#grid1").hideCol("field3");
 		    $(".ui-search-input>input").val("");
-			//$("#grid1").jqGrid("clearGridData", true).trigger("reloadGrid");
-		    $("#grid1").jqGrid('setGridParam', {datatype: "json", url: "../goods/list?col=cat&param=in category&cat_id=-1", page: 1}).trigger('reloadGrid');
-			$("#divTable").addClass('ml10');
+				//$("#grid1").jqGrid("clearGridData", true).trigger("reloadGrid");
+		    $("#grid1").jqGrid('setGridParam', {datatype: "json", url: "../goods/list?param=goods_list_select&col=cat&cat_id=0", page: 1}).trigger('reloadGrid');
+			//$("#divTable").addClass('ml10');
 			$("#divTable").show();
-			$("#divTree").show();
+			//$("#divTree").show();
+			$("#divTree").hide();
 			$("#divGrid").show();
 		}
 		if(operid=='cat'){
@@ -358,7 +359,7 @@ $("#select_report_setting").click();
 		sortable: true,
 	    //datatype: "json",
 		datatype: 'local',
-	    height: 'auto',
+	    height: 350,
 	    colModel: [
 			{name: 'field0' , index: 'field0' , width: 60, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field1' , index: 'field1' , width: 100, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
@@ -369,9 +370,9 @@ $("#select_report_setting").click();
 			{name: 'field6' , index: 'field6' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field7' , index: 'field7' , width: 200, align: "left", sorttype: "text",summaryType:'count', summaryTpl:'<b class="ml10">Итого ({0} эл.):</b>'},
 			{name: 'field8' , index: 'field8' , width: 90, align: "center",sorttype: "text"},
-			{name: 'field9' , index: 'field9' , width: 90, align: "right", sorttype: "number", formatter:"number"},
-			{name: 'field10', index: 'field10', width: 90, align: "center",sorttype: "text"},
-			{name: 'field11', index: 'field11', width: 90, align: "right", sorttype: "number", formatter:"number"},
+			{name: 'field9' , index: 'field9' , width: 90, align: "right", sorttype: "number"},
+			{name: 'field10', index: 'field11', width: 90, align: "right", sorttype: "number"},
+			{name: 'field11', index: 'field10', width: 90, align: "center",sorttype: "text"},
 			{name: 'field12', index: 'field12', width: 90, align: "right", sorttype: "number", formatter:"number"},
 			{name: 'field13', index: 'field13', width: 90, align: "right", sorttype: "number", formatter:"number"},
 			{name: 'field14', index: 'field14', width: 60, align: "right", sorttype: "number", summaryType:'count', summaryTpl:'<b>{0} эл.</b>'},
@@ -379,12 +380,15 @@ $("#select_report_setting").click();
 	    //width: 'auto',
 	    shrinkToFit: true,
 		loadonce: true,
-		rowNum:10000000,
+		rowNum:1000000,
+	    //rowList: [20, 30, 40, 50, 100],
+		sortname: "name",
 	    gridview: true,
-		footerrow:true,
+	    viewrecords: true,
+	    toppager: true,
+		//footerrow:true,
 		multiselect: true,
 		//userDataOnFooter: true,
-	    toppager: true,
 		loadComplete: function(data) {
 			//console.log(data);
 			if(data['error']){
@@ -412,17 +416,18 @@ $("#select_report_setting").click();
 //				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).css("background-image","none");
 //				$(".jqgroup.ui-row-ltr.gridRepghead_"+index).addClass(cl);
 //			});
-			var ar = new Object();
-			i = 14;
-			var summary = $("#gridRep").jqGrid('getCol', "field"+i, false, 'sum');
-			ar["field" + i] = summary;
-			$("#gridRep").jqGrid('footerData','set', ar);
+//			var ar = new Object();
+//			i = 14;
+//			var summary = $("#gridRep").jqGrid('getCol', "field"+i, false, 'sum');
+//			ar["field" + i] = summary;
+//			$("#gridRep").jqGrid('footerData','set', ar);
 			$("#dialog_progress").dialog("close");
 		},
 	    caption: 'Групповая обработка товаров',
 	    pager: '#pgridRep',
 	});
 	$("#gridRep").jqGrid('navGrid', '#pgridRep', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+	$("#gridRep").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1")}});
 	$("#gridRep").navButtonAdd("#gridRep_toppager",{
 		caption: 'Экспорт в Excel', 
 		title: 'to Excel', 
@@ -489,6 +494,16 @@ $("#select_report_setting").click();
 			}, 1000);
 		}
 	});
+	$("#gridRep").navButtonAdd('#gridRep_toppager', {
+		title: 'Карта товара', buttonicon: "ui-icon-pencil", caption: 'Карта товара', position: "last",
+		onClickButton: function () {
+		var id = $("#gridRep").jqGrid('getGridParam', 'selrow');
+		var node = $("#gridRep").jqGrid('getRowData', id);
+		//console.log(id,node,node.Name);
+		if (id != '')
+			window.location = "../goods/good_info?goodid=" + id;
+		}
+	});
 
 	//	$("#gridRep").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
 	$("#pg_pgridRep").remove();
@@ -517,8 +532,15 @@ $("#select_report_setting").click();
 		grouping = [];
 		//$("#grouping li").each(function( index ) {grouping[index] = this.id;});
 		grouping[0] = "g_goodID";
-		for(i=0; i<10; i++){
+		var start_col = 3;
+		var max_col = 15;
+		for(i=start_col; i < max_col; i++) {
+			$("#gridRep").jqGrid('hideCol', "field" + i);
+//console.log('hideCol ' + i);
+	    }
+		for(i=(max_col - colnames.length); i<max_col; i++){
 			$("#gridRep").jqGrid('showCol',"field"+i);
+//console.log('showCol '+i);
 		}
 		var grlen = Object.keys(grouping).length;
 		var ar = [];
@@ -532,18 +554,19 @@ $("#select_report_setting").click();
 		if(grouping[id]=='markupName')$("#gridRep").jqGrid('setLabel', "field"+id, "Категория наценки");
 		if(grouping[id]=='matrixName')$("#gridRep").jqGrid('setLabel', "field"+id, "Товарная матрица");
 		if(grouping[id]=='g_goodID'){
+//console.log('setlabel '+id);
 			$("#gridRep").jqGrid('setLabel', "field"+id, "GoodID");
 			id++;
+//console.log('setlabel '+id);
 			$("#gridRep").jqGrid('setLabel', "field"+id, "Артикул");
 			id++;
+//console.log('setlabel '+id);
 			$("#gridRep").jqGrid('setLabel', "field"+id, "Название");
 		}
 		id++;
-		for(var fi=0; fi<7; fi++){
-			$("#gridRep").jqGrid('setLabel', "field"+(fi+8), colnames[fi]);
-		}
-		for(i=id; i<8; i++){
-			$("#gridRep").jqGrid('hideCol',"field"+i);
+		for(var fi=(max_col - colnames.length); fi < max_col; fi++){
+			$("#gridRep").jqGrid('setLabel', "field"+(fi), colnames[fi-(max_col - colnames.length)]);
+//console.log('setlabel '+(fi),colnames[fi-(max_col - colnames.length)]);
 		}
 		if(grlen<=1){
 			$("#gridRep").jqGrid('setGridParam', {
@@ -609,34 +632,111 @@ $("#select_report_setting").click();
 		}
     });
 
-	$('#btn_action_run').click(function (e) {
-		var sel;
-		sel = jQuery("#gridRep").jqGrid('getGridParam', 'selarrrow');
+	$('#btn_action_run, #btn_view_param').click(function (e) {
+		var id = e.currentTarget.id;
+		var set = $("#select_action").select2("val");
+		if (set == '0') {
+			$("#dialog>#text").html('Вы не выбрали действие!');
+			$("#dialog").dialog("open");
+			return;
+	    }
+		var sel = jQuery("#gridRep").jqGrid('getGridParam', 'selarrrow');
 		if (sel == '') {
 			$("#dialog>#text").html('Вы не выбрали ни одной записи!');
 			$("#dialog").dialog("open");
 			return;
 		}
-		alert(sel);
+		var val = '';
+	    if		(set == 120) { val = $("#select_type_sticker").select2("val");		} 
+		else if (set == 140) { val = $("#select_fold_order").select2("val");	}
+		else if (set == 180) { val = $("#select_visible").select2("val");		}
+		else				 { val = $("#newvalue").val();					}
+		if (val == '' && id != 'btn_view_param') {
+			$("#dialog>#text").html('Вы не указали значение!');
+			$("#dialog").dialog("open");
+			return;
+		}
+		if (id == 'btn_view_param') {
+			set = 'get'+set;
+			//$('#btn_action_run').show();
+			$("#btn_action_run").removeClass('disabled');		
+		}
+		var tbl = document.getElementById("res");
+		while(tbl.rows.length > 3){tbl.deleteRow(2);}	// очищаем результаты
+		for(var i=0;i<sel.length;i++){					// обрабатываем товары
+			$.post("../Engine/good_set_param", { goodid: sel[i], action: set, value: val, },
+				function (data) {
+					var row = tbl.insertRow(2);
+					row.insertCell(0).innerHTML = tbl.rows.length-3;
+					row.insertCell(1).innerHTML = data.goodid;
+					var cell = row.insertCell(2); $(cell).addClass('TAL'); cell.innerHTML = data.article;
+					var cell = row.insertCell(3); $(cell).addClass('TAL'); cell.innerHTML = data.name;
+					var cell = row.insertCell(4); $(cell).addClass('TAL'); cell.innerHTML = data.value_old;
+					var cell = row.insertCell(5); $(cell).addClass('TAL'); cell.innerHTML = data.value_new;
+					//row.insertCell(4).innerHTML = data.success;
+		    });
+		}
 	});
 
 	//заполнение select2 - статусы
 	var a_action = [
 		{id: 0, text: 'действие не выбрано'}, 
-		{id: 10, text: 'установить ед. измерения'}, 
-		{id: 12, text: 'установить отдел'}, 
-		{id: 14, text: 'установить макс. скидку'}, 
-		{id: 16, text: 'установить кол-во в упаковке'}, 
-		{id: 18, text: 'установить ...'}, 
-		{id: 20, text: 'установить ...'}, 
-		{id: 22, text: 'установить ...'}, 
+		{id: 100, text: 'установить страну производителя'}, 
+		{id: 110, text: 'установить торговую марку'}, 
+		{id: 120, text: 'установить тип ценника'}, 
+		{id: 130, text: 'установить процент вознагр.'}, 
+		{id: 140, text: 'установить кратность в заказе'}, 
+		{id: 150, text: 'установить вид осн. тары'}, 
+		{id: 160, text: 'установить материал осн. тары'}, 
+		{id: 170, text: 'установить сегмент ассортимента'}, 
+		{id: 180, text: 'установить доступность товара'}, 
+		{id: 190, text: 'установить ед. измерения'}, 
+		{id: 200, text: 'установить отдел'}, 
+		{id: 210, text: 'установить кол-во в упаковке'}, 
+		{id: 220, text: 'установить макс. скидку'}, 
 	];
 	$("#select_action").select2({data: a_action, placeholder: "Выберите действие"});
 	$("#select_action").select2("val", 0);
-
-//	$("#a_tab_action").removeClass('disabledTab');
-//	$("#a_tab_selection").removeClass('disabledTab');
-//	$("#a_tab_action").tab('show');
+	var select_set = function () {
+		$("#set_all").hide();
+		$("#set_fold_order").hide();
+		$("#set_stickers").hide();
+		$("#set_visible").hide();
+		set = $("#select_action").select2("val");
+		if (set == 120) {
+		    $("#set_stickers").show();
+		} else if (set == 140) {
+		    $("#set_fold_order").show();
+		} else if (set == 180) {
+		    $("#set_visible").show();
+		} else {
+		    $("#set_all").show();
+		}
+	};
+	$("#select_action").on("change", function(){select_set();});
+	$("#set_all").hide();
+	$("#set_fold_order").hide();
+	$("#set_stickers").hide();
+	$("#set_visible").hide();
+		
+	var a_status = [{id: 10, text: 'стикер'}, {id: 20, text: 'ценовая планка'}];
+	$("#select_type_sticker").select2({data: a_status, placeholder: "Выберите тип ценника"});
+	$("#select_type_sticker").select2("val", 0);
+	var a_status = [{id: 10, text: 'заказ только упаковкой'}, {id: 20, text: 'заказ по-штучно'}];
+	$("#select_fold_order").select2({data: a_status, placeholder: "Выберите кратность для заказа"});
+	$("#select_fold_order").select2("val", 0);
+	var a_status = [{id: 1, text: 'товар доступен'}, {id: 0, text: 'товар не доступен'}];
+	$("#select_visible").select2({data: a_status, placeholder: "Выберите доступность товара"});
+	$("#select_visible").select2("val", -1);
+	
+//	setTimeout(function(){
+//		$('#btn_selection_run').click();
+//		//$("#a_tab_action").click();
+//		$("#select_action").select2("val", 110);
+//		//$("#select_type_sticker").select2("val", 100);
+//		select_set();
+//		//console.log($("#res"));
+//	}, 100);
 });
 </script>
 <style>
@@ -742,27 +842,65 @@ $("#select_report_setting").click();
 			</div>
 		</div>
 		<div class="tab-pane min530 m0 w100p ui-corner-all borderColor frameL border1" id="tab_action">
-			<div class='p5 ui-corner-all frameL m10 border1 w500'>
-				<div class="input-group input-group-sm w100p">
-					<span class="input-group-addon w100 TAL">Действие:</span>
-					<div class="w100p" id="select_action"></div>
-					<span class="input-group-addon w32"></span>
+			<div class="row">
+				<div class="col-md-5">
+					<div class='ui-corner-all borderColor border1 p5 m10 w100p'>
+						<div class="input-group input-group-sm w100p">
+							<span class="input-group-addon w100 TAL">Действие:</span>
+							<div class="w100p" id="select_action"></div>
+							<span class="input-group-addon w32"></span>
+						</div>
+						<div id="set_all" class="input-group input-group-sm mt10 w100p">
+							<span class="input-group-addon w100 TAL">Значение:</span>
+							<input id="newvalue" name="group" type="text" class="form-control" placeholder="введите новое значение">
+							<span class="input-group-addon w32"></span>
+						</div>
+						<div id="set_stickers" class="input-group input-group-sm mt10 w100p">
+							<span class="input-group-addon w100 TAL">Значение:</span>
+							<div class="w100p" id="select_type_sticker"></div>
+							<span class="input-group-addon w32"></span>
+						</div>
+						<div id="set_visible" class="input-group input-group-sm mt10 w100p">
+							<span class="input-group-addon w100 TAL">Значение:</span>
+							<div class="w100p" id="select_visible"></div>
+							<span class="input-group-addon w32"></span>
+						</div>
+						<div id="set_fold_order" class="input-group input-group-sm mt10 w100p">
+							<span class="input-group-addon w100 TAL">Значение:</span>
+							<div class="w100p" id="select_fold_order"></div>
+							<span class="input-group-addon w32"></span>
+						</div>
+					</div>
+					<div class='m10 w100p'>
+						<button id="btn_view_param" class="btn btn-sm btn-default frameL m0 mr2 w100p h40 hidden-print font14">
+							<span class="ui-button-text" style1='width:120px;height:22px;'>Просмотр тек. значений</span>
+						</button>
+					</div>
+					<div class='m10 w100p'>
+						<button id="btn_action_run" class="btn btn-sm btn-default frameL m0 mr2 w100p h40 disabled hidden-print font14">
+							<span class="ui-button-text" style1='width:120px;height:22px;'>Выполнить действие</span>
+						</button>
+					</div>
 				</div>
-				<div class="input-group input-group-sm mt20 w100p">
-					<span class="input-group-addon w100 TAL">Значение:</span>
-					<input id="group" name="group" type="text" class="form-control" placeholder="введите новое значение">
-					<span class="input-group-btn w32">
-						<a class="btn btn-default w100p" type="button">X</a>
-					</span>
-					<span class="input-group-btn w32">
-						<a class="btn btn-default w100p" type="button">...</a>
-					</span>
+				<div class="col-md-7 p0">
+					<div class='ui-corner-all borderColor border1 table-responsive p5 m10 w95p h500 scroll-y'>
+						<table id="res" class="table table-striped table-bordered table-hover w100p" cellspacing="0">
+							<thead><tr><th colspan="6"><h4 class='TAC mt5 mb5' >Результаты выполнения:</h4></th></tr>
+								<tr><th>№ п-п</th><th>GoodID</th><th>Артикул</th><th>Название</th><th>Старое знач.</th><th>Новое знач.</th></tr>
+							</thead>
+							<tbody>
+								<tr class="hide">
+									<td class="TAC">1</td>
+									<td class="TAC">2</td>
+									<td class="TAC">3</td>
+									<td class="TAC">4</td>
+									<td class="TAC">5</td>
+									<td class="TAC">6</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-			<div class='frameL m10 '>
-				<button id="btn_action_run" class="btn btn-sm btn-default frameL m0 mr2 h40 hidden-print font14">
-					<span class="ui-button-text" style1='width:120px;height:22px;'>Выполнить действие</span>
-				</button>
 			</div>
 		</div>
 	</div>

@@ -19,7 +19,7 @@
         <link rel="stylesheet" type="text/css" href="../../css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/fs.css">
 		<link rel="stylesheet" type="text/css" href="../../css/select2.css">
-		<link rel="stylesheet" type="text/css" href="../../css/slidorion.css">
+<!--		<link rel="stylesheet" type="text/css" href="../../css/slidorion.css">-->
 
 		<script src="../../js/jquery-1.11.2.min.js" type="text/javascript"></script>
 		<script src="../../js/bootstrap.min.js" type="text/javascript"></script>
@@ -33,7 +33,7 @@
 		<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
 		<script src="../../js/select2.min.js" type="text/javascript"></script>
 		<script src="../../js/jquery.easing.js" type="text/javascript"></script>
-		<script src="../../js/jquery.slidorion.min.js" type="text/javascript"></script>
+<!--		<script src="../../js/jquery.slidorion.min.js" type="text/javascript"></script>-->
 		
 		<style type="text/css">
             body {

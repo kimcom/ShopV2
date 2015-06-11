@@ -778,7 +778,7 @@ $("#select_report_setting").click();
 	</div>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderColor frameL border1" id="tab_filter">
-			<div id="setting_filter" class='p5 frameL w400 h400 ml0 border0' style='display:table;'>
+			<div id="setting_filter" class='p5 frameL w500 h400 ml0 border0' style='display:table;'>
 				<legend>Параметры отбора данных:</legend>
 				<div class="input-group input-group-sm mt10 w100p">
 					<span class="input-group-addon w130">Настройки:</span>

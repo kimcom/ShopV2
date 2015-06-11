@@ -3,8 +3,8 @@ session_save_path("d:\\sites\\Session");
 session_start();
 	$_SESSION['nav_style'] = 'default';
 	//$_SESSION['nav_style'] = 'inverse';
-if (!isset($_SESSION['DT_sebest']))
-    $_SESSION['DT_sebest'] = '11/02/2015';
+    $_SESSION['DT_sebest'] = '04/03/2015';
+
 if (!isset($_SESSION['sitename']))
     $_SESSION['sitename'] = 'Система анализа статистики<br/>и управления продажами. (Сокращенно САУ)<br/>Сузирье'.'&trade;';
 if (!isset($_SESSION['titlename']))

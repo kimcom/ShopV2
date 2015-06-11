@@ -19,7 +19,7 @@
 	    colNames: ['№', 'Статус', 'Подразд.', 'Проект','Описание', 'Ответственный', 'Дата добавления', 'План. запуск', 'Факт. запуск','ddd'],
 	    colModel: [
 			{name: 'pc_TaskID',		index: 'pc.TaskID',		width:  40, align: "center",sorttype: "text", search: true},
-	   		{name: 'pc_Status',		index: 'pc.Status',		width: 120, align: "left",stype:'select', searchoptions: {value: ":любой;0:можно начинать;20:ожидаем зависимость;30:в работе;50:пауза;60:на проверке;100:завершено"}},
+	   		{name: 'pc_Status',		index: 'pc.Status',		width: 120, align: "left",stype:'select', searchoptions: {value: ":любой;-1:не завершенные;0:можно начинать;20:ожидаем зависимость;30:в работе;50:пауза;60:на проверке;100:завершено"}},
 			{name: 'un_UnitName', 	index: 'un.UnitName', 	width:  80, align: "left",	sorttype: "text", search: true},
 			{name: 'pl_ProjectName',index: 'pl.ProjectName',width: 200, align: "left",  sorttype: "text", search: true},
 			{name: 'pc_Name',		index: 'pc.Name',		width: 200, align: "left",	sorttype: "text", search: true},

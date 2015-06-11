@@ -329,7 +329,7 @@ Fn::debugToLog('report4 user:' . $_SESSION['UserName'], "".$date1."	".  $date2);
 	public function get_report4_data() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 Fn::debugToLog('report4 user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY_STRING']));
-Fn::paramToLog();  
+//Fn::paramToLog();  
 //echo $DT_start.' '.  $DT_stop . '<br>';
 		if (isset($DT_start)) {
 			$dt = DateTime::createFromFormat('d?m?Y', $DT_start);
@@ -348,7 +348,7 @@ Fn::paramToLog();
 		$action = '';
 		if ($sid=='4')  $action = 'sale';
 		if ($sid=='42') $action = 'sale42';
-Fn::debugToLog("report4", 'action='.$action);
+//Fn::debugToLog("report4", 'action='.$action);
 		//$url = 'ddd=1&'.urldecode($_SERVER['QUERY_STRING']);
 		//call pr_reports('avg_sum', @_id, '20141001', '20141031', '');
 		$stmt = $this->db->prepare("CALL pr_reports(?, @id, ?, ?, ?)");
@@ -494,18 +494,21 @@ Fn::debugToLog('REQUEST_URI', urldecode($_SERVER['QUERY_STRING']));
 					} else if ($t == 0) {
 						//Fn::debugToLog("columnCount 2", $stmt->columnCount());
 						$columnCount = $stmt->columnCount();
+						$start_col = 3;
+						$max_col = 15;
 						$i = 0;
 						foreach ($rowset as $row) {
 							$response->rows[$i]['id'] = $row[0];
 							$ar = array();
-							for ($f = 0; $f < $columnCount - 7; $f++) {
+							for ($f = 0; $f < $start_col; $f++) {
 								$ar[] = $row[$f];
 							}
-							$ar = array_pad($ar, 8, null);
-							for ($f = $columnCount - 7; $f < $columnCount; $f++) {
+							$ar = array_pad($ar, $max_col - $columnCount + $start_col, null);
+							for ($f = $start_col; $f < $columnCount; $f++) {
 								$ar[] = $row[$f];
 							}
 							$response->rows[$i]['cell'] = $ar;
+//Fn::debugToLog("ar", json_encode($ar));
 							$i++;
 						}
 					}
@@ -1167,7 +1170,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 //CALL pr_goods(action, _GoodID, _Good1C, _Article, _Name, _Division, _Unit_in_pack, _Unit, _Weight, _DiscountMax, _FreeBalance, _PriceBase, _Price1, _Price2, _Price3, _Price4, _id);
-		$stmt = $this->db->prepare("CALL pr_goods_site('info', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_goods_site('info', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $article, PDO::PARAM_STR);
 		$stmt->bindParam(3, $name, PDO::PARAM_STR);
@@ -1189,6 +1192,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
 		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR); 
+		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR); 
 // вызов хранимой процедуры
 		$stmt->execute();
 		if (!Fn::checkErrorMySQLstmt($stmt))
@@ -1205,12 +1209,12 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 			if($val=='') ${$arg} = null;
 		}
 //Fn::paramToLog();
-		if ($visible == 'true')	{
-			$visible = true;
-		} else {
-			$visible = false;
-		}
-		$stmt = $this->db->prepare("CALL pr_goods_site('save', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+//		if ($visible == 1)	{
+//			$visible = true;
+//		} else {
+//			$visible = false;
+//		}
+		$stmt = $this->db->prepare("CALL pr_goods_site('save', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $article, PDO::PARAM_STR);
 		$stmt->bindParam(3, $name, PDO::PARAM_STR);
@@ -1232,9 +1236,46 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
 		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR);
+		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		$this->echo_response($stmt);
+	}
+	public function good_param_save(){
+		foreach ($_REQUEST as $arg => $val) {
+			${$arg} = $val;
+			if ($val == '')	${$arg} = null;
+		}
+Fn::paramToLog();
+
+		$stmt = $this->db->prepare("CALL pr_goods_param( ?, ?, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $goodid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $value, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+//		$this->echo_response($stmt);
+
+		$response = new stdClass();
+		$response->success	= Fn::checkErrorMySQLstmt($stmt);
+		$response->goodid	= $goodid;
+		$response->article	= '';
+		$response->name		= '';
+		$response->value_old= '';
+		$response->value_new= '';
+
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			$response->success = $row[0];
+			$response->goodid = $row[1];
+			$response->article = $row[2];
+			$response->name = $row[3];
+			$response->value_old = $row[4];
+			$response->value_new = $row[5];
+		}
+//Fn::debugToLog("set param", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
 	}
 
 //point
@@ -1593,6 +1634,9 @@ Fn::paramToLog();
 		$url = str_replace("field14", $f14, $url);
 		$url = str_replace("field15", $f15, $url);
 
+		$url = str_replace("pr.Status=-1", "pr.Status<>100", $url);
+		$url = str_replace("pc.Status=-1", "pc.Status<>100", $url);
+
 //Fn::debugToLog('jqgrid3 action', $action);
 Fn::debugToLog('jqgrid3 url', $url);
 //Fn::paramToLog();
@@ -1660,7 +1704,7 @@ Fn::debugToLog('jqgrid3 url', $url);
 			$r++;
 		} while ($stmt->nextRowset());
 		
-Fn::DebugToLog("тест jqgrid3", json_encode($response));
+//Fn::DebugToLog("тест jqgrid3", json_encode($response));
 		header("Content-type: application/json;charset=utf8");
 		echo json_encode($response);
 }
@@ -1811,7 +1855,7 @@ Fn::DebugToLog("тест jqgrid3", json_encode($response));
 		foreach ($rowset as $row) {
 //Fn::debugToLog("s", "2");
 			if ($response->success)
-Fn::debugToLog("s", json_encode($row));
+//Fn::debugToLog("s", json_encode($row));
 				$response->success = $row[0];
 				$response->new_id = $row[1];
 				$response->sql_message = $row[2];

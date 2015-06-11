@@ -222,14 +222,14 @@ if (isset($_REQUEST['goodid'])) {
 		<div class='p5 ui-corner-all frameL ml5 mt5 border0 w180' style=''>
 			<p style='text-align:center;'>
 				<input id='section' type='hidden' value='<?php echo $_REQUEST['section'] ?>'/>
-				<button id="button_save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-focus" style='align:center;'>
+				<button id="button_save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-focus hide" style='align:center;'>
 					<span class="ui-button-text" style='width:130px;'>Сохранить</span>
 				</button>
 			</p>
 		</div>
 		<div class='p5 ui-corner-all frame1 ml5 mt5 border0 w200' style='margin-left:215px;'>
 			<p style='text-align:center;'>
-				<button id="button_save_synchro" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-focus" style='align:center;'>
+				<button id="button_save_synchro" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-focus hide" style='align:center;'>
 					<span class="ui-button-text" style='width:130px;'>Сохранить коды</span>
 				</button>
 			</p>

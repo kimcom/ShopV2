@@ -69,29 +69,41 @@
 	$("#grid1").navButtonAdd('#grid1_toppager', {
 	    title: 'Открыть карту товара', buttonicon: "ui-icon-pencil", caption: '', position: "last",
 	    onClickButton: function () {
-		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		var node = $("#grid1").jqGrid('getRowData', id);
-		if (id != '')
-		    window.location = "../goods/good_edit?goodid=" + id;
+			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+			var node = $("#grid1").jqGrid('getRowData', id);
+			if (id != null) {
+				window.location = "../goods/good_edit?goodid=" + id;
+			} else {
+				$("#dialog>#text").html('Сначала выберите запись в таблице!');
+				$("#dialog").dialog("open");
+			}
 	    }
 	});
 	$("#grid1").navButtonAdd('#grid1_toppager', {
 	    title: 'Движение товара', buttonicon: "", caption: 'Движение товара', position: "last",
 	    onClickButton: function () {
-		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		var node = $("#grid1").jqGrid('getRowData', id);
-		if (id != '')
-		    window.location = "../goods/good_balance?goodid=" + id;
+			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+			var node = $("#grid1").jqGrid('getRowData', id);
+		    if (id != null) {
+			    window.location = "../goods/good_balance?goodid=" + id;
+			} else {
+				$("#dialog>#text").html('Сначала выберите запись в таблице!');
+				$("#dialog").dialog("open");
+		    }
 	    }
 	});
 	$("#grid1").navButtonAdd('#grid1_toppager', {
 		title: 'Карта товара', buttonicon: "ui-icon-pencil", caption: 'Карта товара', position: "last",
 		onClickButton: function () {
-		var id = $("#grid1").jqGrid('getGridParam', 'selrow');
-		var node = $("#grid1").jqGrid('getRowData', id);
-		//console.log(id,node,node.Name);
-		if (id != '')
-			window.location = "../goods/good_info?goodid=" + id;
+			var id = $("#grid1").jqGrid('getGridParam', 'selrow');
+			var node = $("#grid1").jqGrid('getRowData', id);
+			//console.log(id,node,node.Name);
+		    if (id != null) {
+				window.location = "../goods/good_info?goodid=" + id;
+			} else {
+				$("#dialog>#text").html('Сначала выберите запись в таблице!');
+				$("#dialog").dialog("open");
+		    }
 		}
 	});
 	$("#grid1").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true, beforeSearch: function () {filter_save("#grid1");}});

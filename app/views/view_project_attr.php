@@ -330,6 +330,8 @@ function task_open(rowid){
 				$("#select_taskStatus").select2("val", t.Status);
 				$("#select_task_userID_resp").select2("val", t.UserID_resp);
 				$("#taskDT_status_span").html(t.DT_status);
+				$("#a_tab_task").tab('show');
+				tab_active = 'task';
 			}
 			
 		}, "json"
@@ -357,7 +359,7 @@ function task_open(rowid){
 	</div>
 	<div id="tab-content" class="tab-content">
 		<div class="tab-pane min250 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_project">
-			<div class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
+			<div class='p5 ui-corner-all frameL border0 w500' style='display:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Проект:</span>
 					<span id="projectid_span" class="input-group-addon form-control TAL"><?php echo $row['ProjectID']; ?></span>
@@ -382,7 +384,7 @@ function task_open(rowid){
 				</div>
 			</div>
 			<!--*********************-->
-			<div class='p5 ui-corner-all frameL ml10 border0 w400' style='float:left;'>
+			<div class='p5 ui-corner-all frameL ml10 border0 w500' style='float:left;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Автор:</span>
 					<span class="input-group-addon form-control TAL"><?php echo $row['UserName_create']; ?></span>
@@ -424,7 +426,7 @@ function task_open(rowid){
 		</div>
 
 		<div class="tab-pane min250 m0 w100p ui-corner-bottom0 borderBottom0 borderColor frameL border1" id="tab_task">
-			<div class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
+			<div class='p5 ui-corner-all frameL border0 w500' style='display:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Задача:</span>
 					<span id="taskID_span" class="input-group-addon form-control TAL"><?php echo $rowT['TaskID']; ?></span>
@@ -469,7 +471,7 @@ function task_open(rowid){
 				</div>
 			</div>
 			<!--*********************-->
-			<div class='p5 ui-corner-all frameL ml10 border0 w400' style='float:left;'>
+			<div class='p5 ui-corner-all frameL ml10 border0 w500' style='float:left;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Назв. задачи:</span>
 					<input id="taskName" name="taskName" type="text" class="form-control TAL" value="<?php echo $rowT['Name']; ?>">

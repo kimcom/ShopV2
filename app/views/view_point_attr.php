@@ -21,7 +21,7 @@ if ($matrixID == null)
 		autoOpen: false, modal: true, width: 400,
 		buttons: [{text: "Закрыть", click: function () {
 			$(this).dialog("close");
-			}}]
+		}}]
 	});
 	$("#button_save").click(function () {
 		if ($("#clientID").val() == '')
@@ -87,7 +87,7 @@ if ($matrixID == null)
 	</div>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_filter">
-			<div class='p5 ui-corner-all frameL border0 w400' style='display1:table;'>
+			<div class='p5 ui-corner-all frameL border0 w500' style='display1:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Код торговой точки:</span>
 					<span class="input-group-addon form-control TAL"><?php echo $row['ClientID']; ?></span>
@@ -115,6 +115,11 @@ if ($matrixID == null)
 					<span class="input-group-addon w10p"></span>
 				</div>
 				<div class="input-group input-group-sm w100p">
+					<span class="input-group-addon w25p TAL">Дата акт. остатков:</span>
+					<span class="input-group-addon form-control TAL"><?php echo $row['DateAct']; ?></span>
+					<span class="input-group-addon w10p"></span>
+				</div>
+				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Магазин:</span>
 					<input id="nameShort" name="nameShort" type="text" class="form-control TAL" value="<?php echo $row['NameShort']; ?>">
 					<span class="input-group-addon w10p"></span>
@@ -126,7 +131,7 @@ if ($matrixID == null)
 				</div>
 			</div>
 			<!--*********************-->
-			<div class='p5 ui-corner-all frameL ml10 border0 w400' style='float:left;'>
+			<div class='p5 ui-corner-all frameL ml10 border0 w500' style='float:left;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w25p TAL">Город:</span>
 					<input id="city" name="city" type="text" class="form-control TAL" value="<?php echo $row['City']; ?>">

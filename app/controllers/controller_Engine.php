@@ -90,14 +90,15 @@ EOF;
 		return $cnn->user_list();
 	}
 	
-	function action_discoundcard_save(){
-		$cnn = new Cnn();
-		return $cnn->discoundcard_save();
-	}
 	function action_discoundcard_history(){
 		$cnn = new Cnn();
 		return $cnn->discoundcard_history();
 	}
+	function action_discoundcard_save(){
+		$cnn = new Cnn();
+		return $cnn->discoundcard_save();
+	}
+
 	function action_point_save() {
 		$cnn = new Cnn();
 		return $cnn->point_save();
@@ -136,7 +137,9 @@ EOF;
 		return $cnn->user_save();
 	}
 	
-	
-
+	function action_good_set_param(){
+		$cnn = new Cnn();
+		return $cnn->good_param_save();
+	}
 }
 ?>

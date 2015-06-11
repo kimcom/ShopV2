@@ -76,7 +76,7 @@ if (isset($_SESSION['UserID'])) {
     </div>
     <div class="tab-content">
         <div class="active tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_filter">
-            <div class='p5 ui-corner-all frameL border0 w400' style='display1:table;'>
+            <div class='p5 ui-corner-all frameL border0 w500' style='display1:table;'>
 
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w25p TAL">ID пользователя:</span>

@@ -84,7 +84,7 @@ if ($clientid == null)
 	</div>
 	<div class="tab-content">
 		<div class="active tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_filter">
-			<div class='p5 ui-corner-all frameL border0 w400' style='display1:table;'>
+			<div class='p5 ui-corner-all frameL border0 w500' style='display1:table;'>
 				<div class="input-group input-group-sm w100p">
 					<span class="input-group-addon w20p TAL">Код:</span>
 					<span id="sellerID_span" class="input-group-addon form-control TAL"><?php echo $row['SellerID']; ?></span>
@@ -123,7 +123,7 @@ if ($clientid == null)
 			</div>
 
 			<!--*********************-->
-			<div class='p5 ui-corner-all frameL ml10 border0 w400' style='float:left;'>
+			<div class='p5 ui-corner-all frameL ml10 border0 w500' style='float:left;'>
 
 			</div>
 		</div>

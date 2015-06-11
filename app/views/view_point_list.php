@@ -9,26 +9,26 @@ $(document).ready(function(){
 // Creating grid1
 	$("#grid1").jqGrid({
 		sortable: true,
-		url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=Version&f3=AppVersion&f4=1C&f5=BalanceActivity&f6=NameShort&f7=NameValid&f8=City&f9=Address\n\
+		url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=DateAct&f3=AppVersion&f4=1C&f5=BalanceActivity&f6=NameShort&f7=NameValid&f8=City&f9=Address\n\
 			&f10=Telephone&f11=Label&f12=CountTerminal&f13=PriceType&f14=Matrix",
 //		url:"../lists/get_points_list?param=list",
 		datatype: "json",
 		height:'auto',
-		colNames:['Код','ПО','Версия','1C','Контроль','Торговая точка','Название','Город','Адрес','Телефон','Вид собств.','К-во комп.','Тип цены','Матрица'],
+		colNames:['Код','Дата ост.','Версия','1C','Контроль','Торговая точка','Название','Город','Адрес','Телефон','Вид собств.','К-во комп.','Тип цены','Матрица'],
 		colModel:[
 			{name:'ClientID',	index:'ClientID', width: 60, align:"center", sorttype:"text", search:true},
-			{name:'Version',	index:'Version',  width: 60, align:"center", sorttype:"text", search:false},
-			{name:'AppVersion',	index:'AppVersion',width:80, align:"center", sorttype:"text", search:true},
-			{name:'1С',			index:'1C',		  width: 60, align:"center", sorttype:"text", search:true},
-			{name:'BalanceActivity',index:'BalanceActivity',width: 60, align:"center", sorttype:"text", search:true},
+			{name:'DateAct',	index:'DateAct',  width: 80, align:"center", sorttype:"date", search:true},
+			{name:'AppVersion',	index:'AppVersion',width:90, align:"center", sorttype:"text", search:true},
+			{name:'1С',			index:'1C',		  width: 50, align:"center", sorttype:"text", search:true},
+			{name:'BalanceActivity',index:'BalanceActivity',width: 50, align:"center", sorttype:"text", search:true},
 			{name:'NameShort',	index:'NameShort',width:150, sorttype:"text", search:true},
 			{name:'NameValid',	index:'NameValid',width:120, sorttype:"text", search:true},
 			{name:'City',		index:'City',	  width: 80, sorttype:"text", search:true},
 			{name:'Address',	index:'Address',  width:150, sorttype:"text", search:true},
 			{name:'Telephone',  index:'Telephone',width: 80, sorttype:"text", search:true},
 			{name:'Label',		index:'Label',	  width: 70, align:"left", search:true},
-			{name:'Status',		index:'Status',	  width: 70, align:"left", search:true},
-			{name:'PriceType',	index:'PriceType',width: 70, align:"center", search:true},
+			{name:'Status',		index:'Status',	  width: 50, align:"left", search:true},
+			{name:'PriceType',	index:'PriceType',width: 50, align:"center", search:true},
 			{name:'Matrix',		index:'MatrixID', width: 70, align:"left", search:false}
 		],
 		width:'auto',
@@ -60,8 +60,12 @@ $(document).ready(function(){
 		    var id = $("#grid1").jqGrid('getGridParam', 'selrow');
 		    var node = $("#grid1").jqGrid('getRowData', id);
 		    //console.log(id,node,node.Name);
-		    if (id != '')
-			window.location = "../lists/point_info?clientID=" + id;
+		    if (id != null) {
+				window.location = "../lists/point_info?clientID=" + id;
+			} else {
+				$("#dialog>#text").html('Сначала выберите запись в таблице!');
+				$("#dialog").dialog("open");
+		    }
 		}
     });
 	$("#grid1").jqGrid('filterToolbar', { autosearch: true,	searchOnEnter: true	});

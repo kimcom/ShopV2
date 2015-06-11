@@ -7,7 +7,13 @@ if (isset($_REQUEST['goodid'])) {
 //    $row = $result->fetch_array(MYSQLI_BOTH);
 	$row = $cnn->good_info();
 	if (!$row) return;
-	$disabled = " disabled";
+	$TypeSticker = $row['TypeSticker'];
+	if ($TypeSticker==null) $TypeSticker = -1;
+	$FoldOrder	 = $row['FoldOrder'];
+	if ($FoldOrder==null) $FoldOrder = -1;
+	$Visible	 = $row['Visible'];
+	if ($Visible==null) $Visible = -1;
+	$disabled    = " disabled";
     if ($_SESSION['AccessLevel'] >= 1000) {
         $disabled = "";
     }
@@ -27,24 +33,24 @@ $(document).ready(function () {
 
 // Creating grid1
 	$("#grid1").jqGrid({
-	sortable: true,
-	datatype: "json",
-	height: 'auto',
-	colNames: ['Штрих-код'],
-	colModel: [
-	{name: 'EAN13', index: 'EAN13', width: 299, sorttype: "text", search: false, editable: true, edittype: "text"}
-	],
-	width: 'auto',
-	shrinkToFit: false,
-	rowNum: 5,
-	rowList: [5, 10, 20],
-	sortname: "EAN13",
-	viewrecords: true,
+		sortable: true,
+		datatype: "json",
+		height:400,
+		colNames: ['Штрих-код'],
+		colModel: [
+			{name: 'EAN13', index: 'EAN13', width: 500, sorttype: "text", search: false, editable: true, edittype: "text"}
+		],
+		width: 'auto',
+		shrinkToFit: false,
+		rowNum: 10,
+		rowList: [10, 20, 100],
+		sortname: "EAN13",
+		viewrecords: true,
 		gridview: true,
 		toppager: true,
 		caption: "Штрих-коды",
 		pager: '#pgrid1'
-	  });
+	});
 	$("#grid1").jqGrid('navGrid', '#pgrid1', {edit: false, add: true, del: true, search: false, refresh: true, cloneToTop: true},
 	{//edit
 	}, {//add
@@ -85,10 +91,23 @@ $(document).ready(function () {
 	$("#pg_pgrid1").remove();
 	$("#pgrid1").removeClass('ui-jqgrid-pager');
 	$("#pgrid1").addClass('ui-jqgrid-pager-empty');
+	$("#grid1").gridResize();
 
 	$("#button_save").click(function () {
 		if ($("#GoodID").html() == '')
 			return;
+		$.post('../goods/synchro_info_save', {
+			goodid: $("#GoodID").html(),
+			OPT_ID: $("#OPT_ID").val(),
+			SHOP_ID: $("#SHOP_ID").val(),
+			KIEV_ID: $("#KIEV_ID").val()
+		},
+		function (data) {
+			if (data == false) {
+				$("#dialog>#text").html('Возникла ошибка при сохранении кодов товаров.<br><br>Сообщите разработчику!');
+				$("#dialog").dialog("open");
+		    }
+	    });
 		$.post('../goods/good_info_save', {
 			goodid: $("#GoodID").html(),
 			article: $("#article").val(),
@@ -110,17 +129,10 @@ $(document).ready(function () {
 			height: $("#height").val(),
 			weight: $("#weight").val(),
 			unit_in_pack: $("#unitinpack").val(),
-			percentreward: $("#percentreward").val()
+			percentreward: $("#percentreward").val(),
+			discountmax: $("#discountmax").val()
 		},
 		function (data) {
-//			if (data == false) {
-//				$("#dialog>#text").html('Возникла ошибка при сохранении изменений.<br><br>Сообщите разработчику!');
-//				$("#dialog").dialog("open");
-//			} else {
-//				$("#dialog>#text").html('Данные успешно сохранены!');
-//				$("#dialog").dialog("open");
-//			}
-//		}
 			$("#dialog>#text").html(data.message);
 			$("#dialog").dialog("open");
 			if (data.new_id > 0) {
@@ -129,39 +141,19 @@ $(document).ready(function () {
 			}
 		},"json");
 	});
-	$("#button_save_synchro").click(function () {
-		if ($("#GoodID").html() == '')
-			return;
-		$.post('../goods/synchro_info_save', {
-			goodid: $("#GoodID").html(),
-			OPT_ID: $("#OPT_ID").val(),
-			SHOP_ID: $("#SHOP_ID").val(),
-			KIEV_ID: $("#KIEV_ID").val()
-		},
-		function (data) {
-			if (data == false) {
-				$("#dialog>#text").html('Возникла ошибка при сохранении кодов товаров.<br><br>Сообщите разработчику!');
-				$("#dialog").dialog("open");
-			} else {
-				$("#dialog>#text").html('Коды товара успешно сохранены!');
-				$("#dialog").dialog("open");
-			}
-		}
-		);
-	});
 	// цена
 	$("#grid2").jqGrid({
 		sortable: true,
 		datatype: "json",
-		height:'auto',
+		height:400,
 		colNames:['Код','Торговая точка','Город','Цена'],
 		colModel: [
-			{name: 'ClientID', index: 'ClientID', width: 60, align: "center", sorttype: "text", search: true},                         
-			{name: 'NameShort',     index: 'NameShort',    width: 150, sorttype: "text", search: true},
-			{name: 'City',          index: 'City',         width: 80,  sorttype: "text", search: true},
-			{name: 'Price',     index: 'Price',    width: 70,  align: "center",  search: true},
+			{name: 'c_ClientID', index: 'c.ClientID',	width: 60,	align: "center", sorttype: "text", search: true},                         
+			{name: 'c_NameShort',index: 'c.NameShort',  width: 250, sorttype: "text", search: true},
+			{name: 'c_City',     index: 'c.City',       width: 150,  sorttype: "text", search: true},
+			{name: 'p_Price',    index: 'p.Price',		width: 70,  align: "right",  search: false},
 		],
-		width: 'auto',
+		width: 546,
 		shrinkToFit: false,
 		rowNum: 20,
 		rowList: [20, 30, 40, 50, 100],
@@ -169,7 +161,7 @@ $(document).ready(function () {
 		viewrecords: true,
 		gridview: true,
 		toppager: true,
-		caption: "Цена по тогровым точкам",
+		caption: "Цена по торговым точкам",
 		pager: '#pgrid2',
 	});
 	$("#grid2").jqGrid('navGrid', '#pgrid2', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
@@ -179,51 +171,43 @@ $(document).ready(function () {
 	$("#pgrid2").removeClass('ui-jqgrid-pager');
 	$("#pgrid2").addClass('ui-jqgrid-pager-empty');
 
-	//$("#grid1").draggable();
 	$("#grid2").gridResize();
     
 	//остатки
-	$("#grid3").jqGrid({
-        sortable: true,
-		datatype: "json",
-	    height:'auto',
-	    colNames:['Код','Торговая точка','Дата. нач.ост','Ост. нач.','Приход','Расход','Ост.кон.'],
-		colModel: [
-			{name: 'ClientID',          index: 'ClientID',         width: 60,  align: "center",    sorttype: "text", search: true},
-			{name: 'NameShort',         index: 'NameShort',        width: 150, sorttype: "text",   search: true},
-			{name: 'DataBalanceStart',  index: 'DataBalanceStart', width: 80,  sorttype: "data",   search: true},
-			{name: 'BalanceStart',      index: 'BalanceStart',     width: 80,  sorttype: "number", search: true},
-			{name: 'Receipt',           index: 'Receipt',          width: 70,  align: "center",    sorttype: "number",  search: true},
-			{name: 'Sale',              index: 'Sale',             width: 70,  align: "center",    sorttype: "number",  search: true},
-			{name: 'BalanceStop',       index: 'BalanceStop',      width: 70,  align: "center",    sorttype: "number",  search: true},
-		],
-		width: 'auto',
-		shrinkToFit: false,
-		rowNum: 20,
-		rowList: [20, 30, 40, 50, 100],
-		sortname: "ClientID",
-		viewrecords: true,
-		gridview: true,
-		toppager: true,
-		caption: "Остатки товара",
-		pager: '#pgrid3',
-	});
-	$("#grid3").jqGrid('navGrid', '#pgrid3', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+//	$("#grid3").jqGrid({
+//        sortable: true,
+//		datatype: "json",
+//		height:400,
+//	    colNames:['Код','Торговая точка','Город','Дата. нач.ост','Ост. нач.','Приход','Расход','Ост.кон.'],
+//		colModel: [
+//			{name: 'ClientID',          index: 'ClientID',         width: 60,  align: "center",    sorttype: "text", search: true},
+//			{name: 'NameShort',         index: 'NameShort',        width: 250, sorttype: "text",   search: true},
+//			{name: 'c_City',			index: 'c.City',		   width: 150, sorttype: "text", search: true},
+//			{name: 'DataBalanceStart',  index: 'DataBalanceStart', width: 80,  sorttype: "data",   search: true},
+//			{name: 'BalanceStart',      index: 'BalanceStart',     width: 80,  sorttype: "number", search: true},
+//			{name: 'Receipt',           index: 'Receipt',          width: 70,  align: "center",    sorttype: "number",  search: true},
+//			{name: 'Sale',              index: 'Sale',             width: 70,  align: "center",    sorttype: "number",  search: true},
+//			{name: 'BalanceStop',       index: 'BalanceStop',      width: 70,  align: "center",    sorttype: "number",  search: true},
+//		],
+//		width: 700,
+//		shrinkToFit: false,
+//		rowNum: 20,
+//		rowList: [20, 30, 40, 50, 100],
+//		sortname: "ClientID",
+//		viewrecords: true,
+//		gridview: true,
+//		toppager: true,
+//		caption: "Остатки товара",
+//		pager: '#pgrid3',
+//	});
+//	$("#grid3").jqGrid('navGrid', '#pgrid3', {edit: false, add: false, del: false, search: false, refresh: true, cloneToTop: true});
+//	$("#grid3").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
+//	$("#pg_pgrid3").remove();
+//	$("#pgrid3").removeClass('ui-jqgrid-pager');
+//	$("#pgrid3").addClass('ui-jqgrid-pager-empty');
+//	$("#grid3").gridResize();       
 
-	$("#grid3").jqGrid('filterToolbar', {autosearch: true, searchOnEnter: true});
-
-	$("#pg_pgrid3").remove();
-	$("#pgrid3").removeClass('ui-jqgrid-pager');
-	$("#pgrid3").addClass('ui-jqgrid-pager-empty');
-
-	//клавиатура
-	$("#grid3").jqGrid('bindKeys', {"onEnter": function (rowid) {
-			alert("You enter a row with id:" + rowid)
-		}});
-
-	//$("#grid1").draggable();
-	$("#grid3").gridResize();       
-   //список проектов для выезжающей вкладки
+	//список проектов для выезжающей вкладки
 	fsL = 0;
         
 	// Creating gridL
@@ -276,27 +260,32 @@ $(document).ready(function () {
 			$("#grid1").trigger('reloadGrid');
 		}
 		if (this.id == 'a_tab_price') {
-			$("#grid2").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=NameShort&f3=City&f4=Label", page: 1});
+			$("#grid2").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=good_price&p.GoodID=<?php echo $GoodID; ?>&f1=ClientID&f2=NameShort&f3=City&f4=PriceShop", page: 1});
 			$("#grid2").trigger('reloadGrid');
 		}
         if (this.id == 'a_tab_balance') {
-			$("#grid3").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=NameShort&f3=DataBalanceStart&f4=BalanceStart&f5=Receipt&f6=Sale&f7=BalanceStop", page: 1});
-			$("#grid3").trigger('reloadGrid');
+//			$("#grid3").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=NameShort&f3=City&f4=DataBalanceStart&f5=BalanceStart&f6=Receipt&f7=Sale&f8=BalanceStop", page: 1});
+//			$("#grid3").trigger('reloadGrid');
 		}
 	});
  // select
 	var a_status = [{id: 10, text: 'стикер'},  {id: 20, text: 'ценовая планка'}];
 	$("#select_type_sticker").select2({data: a_status, placeholder: "Выберите тип ценника"});
-	$("#select_type_sticker").select2("val", 0); 
-	//$("#select_type_sticker").select2("val", <?php echo $row['TypeSticker']; ?>); 
+	$("#select_type_sticker").select2("val", <?php echo $TypeSticker; ?>); 
 
 	var a_status = [{id: 10, text: 'заказ только упаковкой'},  {id: 20, text: 'заказ по-штучно'}];
 	$("#select_fold_order").select2({data: a_status, placeholder: "Выберите кратность для заказа"});
-	$("#select_fold_order").select2("val", 0); 
+	$("#select_fold_order").select2("val", <?php echo $FoldOrder; ?>); 
 
-	var a_status = [{id: true, text: 'товар доступен'},  {id: false, text: 'товар не доступен'}];
+	var a_status = [{id: 1, text: 'товар доступен'},  {id: 0, text: 'товар не доступен'}];
 	$("#select_visible").select2({data: a_status, placeholder: "Выберите доступность товара"});
-	$("#select_visible").select2("val", -1); 
+	$("#select_visible").select2("val", <?php echo $Visible; ?>); 
+	
+//	setTimeout(function(){
+//		$("#grid3").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=NameShort&f3=DataBalanceStart&f4=BalanceStart&f5=Receipt&f6=Sale&f7=BalanceStop", page: 1});
+//		$("#grid3").trigger('reloadGrid');
+//		$("#a_tab_balance").click();
+//	}, 100);
 });
 </script>
 <style>
@@ -304,7 +293,6 @@ $(document).ready(function () {
         .selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
         .selectable li { margin: 3px; padding: 7px 0 0 5px; text-align: left;font-size: 14px; height: 34px; }
 </style>
-<?php echo 'TypeSticker'.$row['TypeSticker']; ?>
 <div class="container center">
     <ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
         <li class="active">
@@ -328,11 +316,11 @@ $(document).ready(function () {
                 <legend class="h20">Категории</legend>
             </a>
         </li>
-        <li>
+<!--        <li>
             <a id="a_tab_balance" href="#tab_balance" role="tab" data-toggle="tab" style="padding-top: 5px; padding-bottom: 5px;">
                 <legend class="h20">Остатки</legend>
             </a>
-        </li>
+        </li>-->
         <li>
             <a id="a_tab_promo" href="#tab_promo" role="tab" data-toggle="tab" style="padding-top: 5px; padding-bottom: 5px;">
                 <legend class="h20">Акции</legend>
@@ -345,7 +333,7 @@ $(document).ready(function () {
         </button>
     </div>
     <div class="tab-content">
-        <div class="active tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_filter">
+        <div class="active tab-pane min530 m0 w100p ui-corner-tab1 borderTop1 borderColor frameL border1" id="tab_filter">
             <div class='p5 ui-corner-all frameL border0 w600' style='display:table;'>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">Артикул:</span>
@@ -423,17 +411,17 @@ $(document).ready(function () {
                 </div>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">OPT_ID:</span>
-                    <input id="OPT_ID" name="OPT_ID" type="text" class="form-control TAR" value="<?php echo $row['OPT_ID']  . '\' ' . $disabled;?>">
+                    <input id="OPT_ID" name="OPT_ID" type="text" class="form-control TAR" value="<?php echo $row['OPT_ID']  . '" ' . $disabled;?>>
                     <span class="input-group-addon w32"></span>
                 </div>               
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">SHOP_ID:</span>
-                    <input id="SHOP_ID" name="SHOP_ID" type="text" class="form-control TAR" value="<?php echo $row['SHOP_ID']  . '\' ' . $disabled;?>">
+                    <input id="SHOP_ID" name="SHOP_ID" type="text" class="form-control TAR" value="<?php echo $row['SHOP_ID']  . '" ' . $disabled;?>>
                     <span class="input-group-addon w32"></span>
                 </div>       
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">KIEV_ID:</span>
-                    <input id="KIEV_ID" name="kiev_id" type="text" class="form-control TAR" value="<?php echo $row['KIEV_ID']  . '\' ' . $disabled; ?>">
+                    <input id="KIEV_ID" name="kiev_id" type="text" class="form-control TAR" value="<?php echo $row['KIEV_ID']  . '" ' . $disabled; ?>>
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
@@ -471,37 +459,32 @@ $(document).ready(function () {
                     <input id="percentreward"  type="text"  class="form-control TAR" value="<?php echo $row['PercentReward']; ?>">
                     <span class="input-group-addon w32"></span>
                 </div>
+                <div class="input-group input-group-sm w100p">
+                    <span  class="input-group-addon w130 TAL">Макс. скидка</span>
+                    <input id="discountmax"  type="text"  class="form-control TAR" value="<?php echo $row['DiscountMax']; ?>">
+                    <span class="input-group-addon w32"></span>
+                </div>
             </div>
 		</div>
         <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_barcode">
-            
-            <div  class='p5 ui-corner-all frameL border0 w400' style='display:table;'>
-                <div class='ui-corner-all frame1 ml5 border0' style=''>
-                    <table id="grid1"></table>
-                    <div id="pgrid1"></div>
-                </div>
+			<div class='p5'>
+				<table id="grid1"></table>
+                <div id="pgrid1"></div>
             </div>
-           
         </div> 
         <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_price">
-         
-            <div style='display:table;'>
-                <div id='div1' class='frameL pt5'>
-                    <table id="grid2"></table>
-                    <div id="pgrid2"></div>
-                </div>
-            </div>
+			<div class='p5'>
+				<table id="grid2"></table>
+				<div id="pgrid2"></div>
+			</div>
         </div>
-        <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_balance">
-
-            <div style='display:table;'>
-                <div id='div1' class='frameL pt5'>
-                    <table id="grid3"></table>
-                    <div id="pgrid3"></div>
-                </div>
+<!--        <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1" id="tab_balance">
+			<div class='p5'>
+				<table id="grid3"></table>
+                <div id="pgrid3"></div>
             </div>
-        </div>
-        <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1 p10" id="tab_category">
+        </div>-->
+        <div  class="tab-pane min530 m0 w100p ui-corner-all borderTop1 borderColor frameL border1 p5" id="tab_category">
             <table class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead><tr><th colspan="3"><h4 class='TAC mt10' >Категории товара:</h4></th></tr>
                     <tr><th>Код</th><th>Название</th><th>Полное имя</th></tr>

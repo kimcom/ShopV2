@@ -25,14 +25,14 @@ $(document).ready(function(){
 			{name:'SummaAmount',       index:'SummaAmount',        width:80,  align:"right",  sorttype:"number", search:false, sortable:false},		
 		],
 		beforeRequest: function() {
-                    var date = new Date();
-                    formated_date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2);
-                    var postData = $("#grid1").jqGrid('getGridParam', 'postData');
-                    if (postData.DateOfIssue == null)
-                        postData.DateOfIssue = formated_date;
-                    $("#gs_DateOfIssue").val(postData.DateOfIssue);
-                },
-                gridComplete: function() {if(!fs) {fs = 1; filter_restore("#grid1");}},
+			var date = new Date();
+			formated_date = date.getFullYear();
+			var postData = $("#grid1").jqGrid('getGridParam', 'postData');
+			if (postData.DateOfIssue == null)
+				postData.DateOfIssue = formated_date;
+			$("#gs_DateOfIssue").val(postData.DateOfIssue);
+		},
+        gridComplete: function() {if(!fs) {fs = 1; filter_restore("#grid1");}},
 		width:'auto',
 		shrinkToFit:false,
 //		loadonce: true,
