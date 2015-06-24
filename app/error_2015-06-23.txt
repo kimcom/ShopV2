@@ -1,0 +1,4 @@
+2015-06-23 09:27: stmt error 23000: 1048 Column 'Article' cannot be null
+2015-06-23 09:28: stmt error 23000: 1048 Column 'Article' cannot be null
+2015-06-23 09:38: stmt error 42S22: 1054 Unknown column 'filters' in 'where clause'
+2015-06-23 10:00: stmt error 23000: 1048 Column 'Article' cannot be null

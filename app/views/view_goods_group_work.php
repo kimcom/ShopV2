@@ -285,7 +285,7 @@ $("#select_report_setting").click();
 			$("#legendGrid").html('Выбор товара или группы:');
 			$("#treeGrid").jqGrid('setGridParam',{datastr:"group"});
 			$("#treeGrid").jqGrid('setCaption','Группы товаров');
-		    $("#treeGrid").jqGrid('setGridParam', {url: "../category/get_tree_NS?nodeid=10", page: 1}).trigger('reloadGrid');
+		    $("#treeGrid").jqGrid('setGridParam', {url: "../category/get_tree_NS?nodeid=0", page: 1}).trigger('reloadGrid');
 			$("#divTable").hide();
 			$("#divTree").show();
 			$("#divGrid").show();
@@ -684,7 +684,7 @@ $("#select_report_setting").click();
 		{id: 100, text: 'установить страну производителя'}, 
 		{id: 110, text: 'установить торговую марку'}, 
 		{id: 120, text: 'установить тип ценника'}, 
-		{id: 130, text: 'установить процент вознагр.'}, 
+		{id: 130, text: 'установить период поставок (дней)'}, 
 		{id: 140, text: 'установить кратность в заказе'}, 
 		{id: 150, text: 'установить вид осн. тары'}, 
 		{id: 160, text: 'установить материал осн. тары'}, 

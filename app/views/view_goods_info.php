@@ -129,7 +129,7 @@ $(document).ready(function () {
 			height: $("#height").val(),
 			weight: $("#weight").val(),
 			unit_in_pack: $("#unitinpack").val(),
-			percentreward: $("#percentreward").val(),
+			perioddelivery: $("#perioddelivery").val(),
 			discountmax: $("#discountmax").val()
 		},
 		function (data) {
@@ -337,17 +337,17 @@ $(document).ready(function () {
             <div class='p5 ui-corner-all frameL border0 w600' style='display:table;'>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">Артикул:</span>
-                    <input id="article" type="text" class="form-control TAL" value="<?php echo $row['Article']; ?>">
+                    <input id="article" type="text" class="form-control TAL" value='<?php echo $row['Article']; ?>'>
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">Наименование:</span>
-                    <input id="name" type="text" class="form-control TAL" value="<?php echo $row['Name']; ?>">
+                    <input id="name" type="text" class="form-control TAL" value='<?php echo ($row['Name']); ?>'>
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">Наим. для ценника:</span>
-                    <input id="namestickers" type="text" class="form-control TAL" value="<?php echo $row['NameSticker']; ?>">
+                    <input id="namestickers" type="text" class="form-control TAL" value='<?php echo $row['NameSticker']; ?>'>
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
@@ -357,7 +357,7 @@ $(document).ready(function () {
                 </div>
                 <div class="input-group input-group-sm w100p">
                     <span class="input-group-addon w130 TAL">Торговая марка:</span>
-                    <input id="trademark" type="text" class="form-control TAL" value="<?php echo $row['Trademark']; ?>">
+                    <input id="trademark" type="text" class="form-control TAL" value='<?php echo $row['Trademark']; ?>'>
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
@@ -455,8 +455,8 @@ $(document).ready(function () {
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
-                    <span  class="input-group-addon w130 TAL">Процент вознагр.</span>
-                    <input id="percentreward"  type="text"  class="form-control TAR" value="<?php echo $row['PercentReward']; ?>">
+                    <span  class="input-group-addon w130 TAL">Период поставок(дн)</span>
+                    <input id="perioddelivery"  type="text"  class="form-control TAR" value="<?php echo $row['PeriodDelivery']; ?>">
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">

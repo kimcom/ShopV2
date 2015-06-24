@@ -125,8 +125,8 @@ var source_id_copy 	= 0;
 		title:'Вставить скопированную запись', buttonicon:"ui-icon-clipboard", caption:'', position:"last",
 		onClickButton: function(){ 
 			var target_id = $("#treegrid").jqGrid('getGridParam','selrow');
-			console.log(source_id_cut);
-			console.log(target_id);
+//			console.log(source_id_cut);
+//			console.log(target_id);
 			if(source_id_cut){
 				if(source_id_cut==target_id)return false;
 				$.post('../category/cat_partner_tree_oper?oper=move&source='+source_id_cut+'&target='+target_id,function(data){

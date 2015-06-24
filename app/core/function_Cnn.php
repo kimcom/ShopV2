@@ -1165,7 +1165,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$this->echo_response($stmt);
 	}
 
-//project
+//goods
 	public function good_info() {
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
@@ -1191,7 +1191,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(18, $height, PDO::PARAM_STR);
 		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
-		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR); 
+		$stmt->bindParam(21, $perioddelivery, PDO::PARAM_STR); 
 		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR); 
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -1201,6 +1201,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		foreach ($rowset as $row) {
 			break; //берем первую запись из результата
 		}
+//Fn::debugToLog("good info", json_encode($row));
 		return $row;
 	}
 	public function good_save() {
@@ -1235,7 +1236,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(18, $height, PDO::PARAM_STR);
 		$stmt->bindParam(19, $weight, PDO::PARAM_STR);
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
-		$stmt->bindParam(21, $percentreward, PDO::PARAM_STR);
+		$stmt->bindParam(21, $perioddelivery, PDO::PARAM_STR);
 		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
@@ -1272,6 +1273,83 @@ Fn::paramToLog();
 			$response->name = $row[3];
 			$response->value_old = $row[4];
 			$response->value_new = $row[5];
+		}
+//Fn::debugToLog("set param", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+//balance_min
+	public function balance_min_set(){
+		foreach ($_REQUEST as $arg => $val) {
+			${$arg} = $val;
+			if ($val == '')	${$arg} = null;
+		}
+		$goodid = $id;
+//Fn::paramToLog();
+		$stmt = $this->db->prepare("CALL pr_balance_min( ?, @id, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $clientid, PDO::PARAM_STR);
+		$stmt->bindParam(3, $goodid, PDO::PARAM_STR);
+		$stmt->bindParam(4, $BalanceMinM, PDO::PARAM_STR);
+		$stmt->bindParam(5, $_STD, PDO::PARAM_STR);
+		$stmt->bindParam(6, $_DT_start, PDO::PARAM_STR);
+		$stmt->bindParam(7, $_DT_stop, PDO::PARAM_STR);
+		$stmt->bindParam(8, $_param, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+//		$this->echo_response($stmt);
+
+		$response = new stdClass();
+		$response->success	= Fn::checkErrorMySQLstmt($stmt);
+		$response->goodid	= $goodid;
+		$response->value_old = '';
+		$response->value_new = '';
+
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			$response->success = $row[0];
+			$response->goodid = $row[1];
+			$response->value_old = $row[2];
+			$response->value_new = $row[3];
+		}
+//Fn::debugToLog("set param", json_encode($response));
+		header("Content-type: application/json;charset=utf-8");
+		echo json_encode($response);
+	}
+	public function balance_min_set_auto(){
+		foreach ($_REQUEST as $arg => $val) {
+			${$arg} = $val;
+			if ($val == '')	${$arg} = null;
+		}
+		$goodid = $id;
+		$url = urldecode($_SERVER['QUERY_STRING']);
+Fn::paramToLog();
+		$stmt = $this->db->prepare("CALL pr_balance_min( ?, @id, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bindParam(1, $action, PDO::PARAM_STR);
+		$stmt->bindParam(2, $point_balance_min, PDO::PARAM_STR);
+		$stmt->bindParam(3, $_goodid, PDO::PARAM_STR);
+		$stmt->bindParam(4, $_BalanceMinM, PDO::PARAM_STR);
+		$stmt->bindParam(5, $_STD, PDO::PARAM_STR);
+		$stmt->bindParam(6, $_DT_start, PDO::PARAM_STR);
+		$stmt->bindParam(7, $_DT_stop, PDO::PARAM_STR);
+		$stmt->bindParam(8, $url, PDO::PARAM_STR);
+// вызов хранимой процедуры
+		$stmt->execute();
+//		$this->echo_response($stmt);
+
+		$response = new stdClass();
+		$response->success	= Fn::checkErrorMySQLstmt($stmt);
+		$response->goodid	= $goodid;
+		$response->value_old = '';
+		$response->value_new = '';
+		$response->clientid = $point_balance_min;
+
+		$rowset = $stmt->fetchAll(PDO::FETCH_BOTH);
+		foreach ($rowset as $row) {
+			$response->success = $row[0];
+			$response->goodid = $row[1];
+			$response->value_old = $row[2];
+			$response->value_new = $row[3];
 		}
 //Fn::debugToLog("set param", json_encode($response));
 		header("Content-type: application/json;charset=utf-8");

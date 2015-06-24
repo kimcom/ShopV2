@@ -90,6 +90,8 @@ if ($_SESSION['access'] and $_SESSION['AccessLevel'] > 0) {
 						<li><a href="/goods/list_w_cost">Список товаров без себестоимости</a></li>
 						<li><a href="/goods/group_work">Групповая обработка товаров</a></li>
 						<li class="divider"></li>
+						<li><a href="/goods/balance_min">Мин. остатки товаров по точкам</a></li>
+						<li class="divider"></li>
 						<li><a href="/goods/barcodes">Список штрих-кодов</a></li>
 						<li><a href="/goods/barcode_verify">Список ШК для проверки</a></li>
 						<li><a href="/goods/without_barcodes">Список товаров без ШК</a></li>

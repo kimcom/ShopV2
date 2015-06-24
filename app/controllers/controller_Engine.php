@@ -141,5 +141,13 @@ EOF;
 		$cnn = new Cnn();
 		return $cnn->good_param_save();
 	}
+	function action_balance_min_set(){
+		$cnn = new Cnn();
+		return $cnn->balance_min_set();
+	}
+	function action_balance_min_set_auto(){
+		$cnn = new Cnn();
+		return $cnn->balance_min_set_auto();
+	}
 }
 ?>
