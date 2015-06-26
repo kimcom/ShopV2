@@ -18,6 +18,7 @@ class Cnni {
 		//для отчета о продажах
 		if(!isset($Article)) $Article = $field1;
 		if(!isset($Name)) $Name = $field2;
+//Fn::paramToLog();
 		if (1 == 0) {
 			ob_start();
 			var_dump($_REQUEST);
@@ -40,7 +41,7 @@ class Cnni {
 		$where = " 	Article  like \'%" . adds($Article) . "\'";
 		$where .= " and Name 	 like \'%" . adds($Name) . "\'";
 		$where .= " and Division like \'%" . adds($Division) . "\'";
-		$where .= " and g.GoodID like \'%" . adds($GoodID) . "\'";
+		$where .= " and g.GoodID like \'%" . adds($g_GoodID) . "\'";
 		$where .= " and OPT_ID 	 like \'%" . adds($OPT_ID) . "\'";
 		$where .= " and SHOP_ID  like \'%" . adds($SHOP_ID) . "\'";
 		$where .= " and KIEV_ID	 like \'%" . adds($KIEV_ID) . "\'";

@@ -19,6 +19,13 @@ $(document).ready(function () {
 		$("#dialog>#text").html('Тестовое сообщение!');
 		$("#dialog").dialog("open");
 	});
+	$("#btn_checkbox_test").click(function () {
+		var arr = document.getElementsByTagName('INPUT');
+		for (var i = 0; i < arr.length; i++) {
+			
+		}
+		console.log(arr);
+	});
 	//отработка нажатия на ссылку btn_name_edit
 	$("#btn_name_edit").click(function () {
 		if ($("#name2").prop("disabled")) {
@@ -312,6 +319,21 @@ $(document).ready(function () {
 многострочный
 текст
 		</textarea>
+		<span class="input-group-addon w32"></span>
+	</div>
+	<div class="input-group input-group-sm w100p">
+		<span class="input-group-addon w20p TAL">checkbox 1:</span>
+		<input type="checkbox" class="form-control TAL">
+		<span class="input-group-btn w32"><a id="btn_checkbox_test" class="btn btn-default w100p" type="button">TEST</a></span>
+	</div>
+	<div class="input-group input-group-sm w100p">
+		<span class="input-group-addon w20p TAL">checkbox 2:</span>
+		<input type="checkbox" class="form-control TAL">
+		<span class="input-group-addon w32"></span>
+	</div>
+	<div class="input-group input-group-sm w100p">
+		<span class="input-group-addon w20p TAL">checkbox 3:</span>
+		<input type="checkbox" class="form-control TAL" checked>
 		<span class="input-group-addon w32"></span>
 	</div>
 	<label>datapicker</label>

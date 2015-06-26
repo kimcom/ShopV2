@@ -1170,7 +1170,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		foreach ($_REQUEST as $arg => $val) ${$arg} = $val;
 //Fn::debugToLog('QUERY_STRING', urldecode($_SERVER['QUERY_STRING']));
 //CALL pr_goods(action, _GoodID, _Good1C, _Article, _Name, _Division, _Unit_in_pack, _Unit, _Weight, _DiscountMax, _FreeBalance, _PriceBase, _Price1, _Price2, _Price3, _Price4, _id);
-		$stmt = $this->db->prepare("CALL pr_goods_site('info', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_goods_site('info', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $article, PDO::PARAM_STR);
 		$stmt->bindParam(3, $name, PDO::PARAM_STR);
@@ -1193,6 +1193,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
 		$stmt->bindParam(21, $perioddelivery, PDO::PARAM_STR); 
 		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR); 
+		$stmt->bindParam(23, $visibleinorder, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		if (!Fn::checkErrorMySQLstmt($stmt))
@@ -1215,7 +1216,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 //		} else {
 //			$visible = false;
 //		}
-		$stmt = $this->db->prepare("CALL pr_goods_site('save', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt = $this->db->prepare("CALL pr_goods_site('save', @_id, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$stmt->bindParam(1, $goodid, PDO::PARAM_STR);
 		$stmt->bindParam(2, $article, PDO::PARAM_STR);
 		$stmt->bindParam(3, $name, PDO::PARAM_STR);
@@ -1238,6 +1239,7 @@ Fn::debugToLog('pendel user:' . $_SESSION['UserName'], urldecode($_SERVER['QUERY
 		$stmt->bindParam(20, $unit_in_pack, PDO::PARAM_STR);
 		$stmt->bindParam(21, $perioddelivery, PDO::PARAM_STR);
 		$stmt->bindParam(22, $discountmax, PDO::PARAM_STR);
+		$stmt->bindParam(23, $visibleinorder, PDO::PARAM_STR);
 // вызов хранимой процедуры
 		$stmt->execute();
 		$this->echo_response($stmt);

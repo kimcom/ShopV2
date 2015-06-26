@@ -13,6 +13,8 @@ if (isset($_REQUEST['goodid'])) {
 	if ($FoldOrder==null) $FoldOrder = -1;
 	$Visible	 = $row['Visible'];
 	if ($Visible==null) $Visible = -1;
+	$VisibleInOrder = $row['VisibleInOrder'];
+	if ($VisibleInOrder ==null) $VisibleInOrder = -1;
 	$disabled    = " disabled";
     if ($_SESSION['AccessLevel'] >= 1000) {
         $disabled = "";
@@ -122,6 +124,7 @@ $(document).ready(function () {
 			foldorder: $("#select_fold_order").select2("val"),
 			segment: $("#segment").val(),
 			visible: $("#select_visible").select2("val"),
+			visibleinorder: $("#select_visible_in_order").select2("val"),
 			service: $("#service").val(),
 			division: $("#division").val(),
 			length: $("#length").val(),
@@ -278,8 +281,12 @@ $(document).ready(function () {
 	$("#select_fold_order").select2("val", <?php echo $FoldOrder; ?>); 
 
 	var a_status = [{id: 1, text: 'товар доступен'},  {id: 0, text: 'товар не доступен'}];
-	$("#select_visible").select2({data: a_status, placeholder: "Выберите доступность товара"});
+	$("#select_visible").select2({data: a_status, placeholder: "Выберите доступность товара через поиск"});
 	$("#select_visible").select2("val", <?php echo $Visible; ?>); 
+	
+	var a_status = [{id: 1, text: 'товар доступен'},  {id: 0, text: 'товар не доступен'}];
+	$("#select_visible_in_order").select2({data: a_status, placeholder: "Выберите доступность товара а заказе"});
+	$("#select_visible_in_order").select2("val", <?php echo $VisibleInOrder; ?>); 
 	
 //	setTimeout(function(){
 //		$("#grid3").jqGrid('setGridParam', {url:"../engine/jqgrid3?action=point_list_full&f1=ClientID&f2=NameShort&f3=DataBalanceStart&f4=BalanceStart&f5=Receipt&f6=Sale&f7=BalanceStop", page: 1});
@@ -297,7 +304,7 @@ $(document).ready(function () {
     <ul id="myTab" class="nav nav-tabs floatL active hidden-print" role="tablist">
         <li class="active">
             <a id="a_tab_filter" href="#tab_filter" role="tab" data-toggle="tab" style="padding-top: 5px; padding-bottom: 5px;">
-                <legend class="h20">Информация о товаре</legend>
+                <legend class="h20">Информация о товаре<?php echo $VisibleInOrder; ?></legend>
             </a>
         </li>
         
@@ -391,8 +398,13 @@ $(document).ready(function () {
                     <span class="input-group-addon w32"></span>
                 </div>
                 <div class="input-group input-group-sm w100p">
-                    <span  class="input-group-addon w130 TAL">Доступность</span>
+                    <span  class="input-group-addon w130 TAL">Доступ в поиске</span>
                     <div class="w100p" id="select_visible"></div>
+                    <span class="input-group-addon w32"></span>
+                </div>
+                <div class="input-group input-group-sm w100p">
+                    <span  class="input-group-addon w130 TAL">Доступ в заказе</span>
+                    <div class="w100p" id="select_visible_in_order"></div>
                     <span class="input-group-addon w32"></span>
                 </div>
             </div>

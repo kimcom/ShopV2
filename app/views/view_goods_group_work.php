@@ -650,6 +650,7 @@ $("#select_report_setting").click();
 	    if		(set == 120) { val = $("#select_type_sticker").select2("val");		} 
 		else if (set == 140) { val = $("#select_fold_order").select2("val");	}
 		else if (set == 180) { val = $("#select_visible").select2("val");		}
+		else if (set == 185) { val = $("#select_visible").select2("val");		}
 		else				 { val = $("#newvalue").val();					}
 		if (val == '' && id != 'btn_view_param') {
 			$("#dialog>#text").html('Вы не указали значение!');
@@ -689,7 +690,8 @@ $("#select_report_setting").click();
 		{id: 150, text: 'установить вид осн. тары'}, 
 		{id: 160, text: 'установить материал осн. тары'}, 
 		{id: 170, text: 'установить сегмент ассортимента'}, 
-		{id: 180, text: 'установить доступность товара'}, 
+		{id: 180, text: 'установить доступность товара в поиске'}, 
+		{id: 185, text: 'установить доступность товара в заказе'}, 
 		{id: 190, text: 'установить ед. измерения'}, 
 		{id: 200, text: 'установить отдел'}, 
 		{id: 210, text: 'установить кол-во в упаковке'}, 
@@ -707,7 +709,7 @@ $("#select_report_setting").click();
 		    $("#set_stickers").show();
 		} else if (set == 140) {
 		    $("#set_fold_order").show();
-		} else if (set == 180) {
+		} else if (set == 180 || set == 185) {
 		    $("#set_visible").show();
 		} else {
 		    $("#set_all").show();

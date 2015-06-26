@@ -17,7 +17,7 @@
 	    height: 'auto',
 	    colNames: ['GoodID', 'OPT_ID', 'SHOP_ID', 'KIEV_ID', 'Артикул', 'Название', 'Отдел', 'Макс.ск.', 'В упак.', 'Ед.изм.', 'Вес'],
 	    colModel: [
-			{name: 'GoodID', index: 'GoodID', width: 80, align: "center", sorttype: "text", search: true},
+			{name: 'GoodID', index: 'g.GoodID', width: 80, align: "center", sorttype: "text", search: true},
 			{name: 'OPT_ID', index: 'OPT_ID', width: 80, align: "center", sorttype: "text", search: true},
 			{name: 'SHOP_ID', index: 'SHOP_ID', width: 80, align: "center", sorttype: "text", search: true},
 			{name: 'KIEV_ID', index: 'KIEV_ID', width: 80, align: "center", sorttype: "text", search: true},
