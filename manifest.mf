@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 X-COMMENT: The program for automation in the retail trade
 Implementation-Title: ShopV2
-Implementation-Version: 15.04.24_0900
+Implementation-Version: 15.06.19_1433
 Implementation-Vendor: Alik-UANIC

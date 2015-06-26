@@ -9,15 +9,15 @@ import javax.swing.table.AbstractTableModel;
 import main.DialogBoxs;
 import main.MyUtil;
 
-public class TmOrderGoods extends AbstractTableModel{
+public class TmOrderAutoGoods extends AbstractTableModel{
     private final int colnum = 7;
     private int rownum;
     private final String[] colNames = {
-        "GoodID","Артикул","Название","Отдел","Мин.ост.","Цена","Остаток"
+        "GoodID","Артикул","Название","Мин.зак.","Мин.ост.","Цена","Остаток"
     };
     private ArrayList<Object[]> ResultSets;
 
-    public TmOrderGoods(ResultSet rs) {
+    public TmOrderAutoGoods(ResultSet rs) {
         ResultSets = new ArrayList<Object[]>();
         try {
             while (rs.next()) {
@@ -25,7 +25,7 @@ public class TmOrderGoods extends AbstractTableModel{
                     rs.getInt("GoodID"),
                     rs.getString("Article"), 
                     rs.getString("Name"),
-                    rs.getInt("Division"),
+                    rs.getInt("ZakazMin"),
                     rs.getInt("BalanceMin"),
                     rs.getBigDecimal("PriceShop").setScale(2, RoundingMode.HALF_UP),
                     rs.getInt("Balance"),

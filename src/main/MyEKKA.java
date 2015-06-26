@@ -49,11 +49,18 @@ public class MyEKKA {
 		}
 	}
 	public MyEKKA() {
+//		try {
+//			ActiveXComponent ecr = new ActiveXComponent("ecrmini.t400");
+//		} catch (Exception e) {
+//			MyUtil.errorToLog(this.getClass().getName(), e);
+//			return;
+//		}
 	}
 	public boolean printCheck(BigDecimal checkID) {
 		if (cnn == null) return false;
 		this.currentCheckID = checkID;
 		if (this.currentCheckID == null) this.currentCheckID = cnn.currentCheckID;
+//DialogBoxs.viewMessage("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "");
 		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
 			//sendCommand("execute_report;z1;12321;");
 			if (!sendCommand("cashier_registration;1;0")) return false;//регистрация кассира
@@ -81,7 +88,9 @@ public class MyEKKA {
 					String sum		= res.getBigDecimal("Sum").setScale(2, RoundingMode.HALF_UP).toString();
 					//System.out.println(""+goodid+"	"+name+"	"+quantity+" "+price+" "+sum);
 					//System.out.println("add_plu;" + goodid + ";0;" + weight + ";0;0;0;" + division + ";" + price + ";0;'" + name + "';" + quantity + ";");
+//DialogBoxs.viewMessage("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
 					sendCommand("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
+//DialogBoxs.viewMessage("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"");
 					if (!sendCommand("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"")) return false;
 					//res.getBigDecimal("Quantity").setScale(2, RoundingMode.HALF_UP).toString() + " шт. X " + 
 					//res.getBigDecimal("Price").setScale(2, RoundingMode.HALF_UP).toString()

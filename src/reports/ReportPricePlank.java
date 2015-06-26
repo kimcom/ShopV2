@@ -196,12 +196,14 @@ public class ReportPricePlank extends JDialog{
 					JLabel jLabel15 = new javax.swing.JLabel();
 					JLabel jLabel16 = new javax.swing.JLabel();
 					JLabel jLabel17 = new javax.swing.JLabel();
+					JLabel jLabel18 = new javax.swing.JLabel();
 //					JSeparator jSeparator2 = new javax.swing.JSeparator();
 
 					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // название
 					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена
 					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // артикул
 					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 10)); // дата время
+					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // кат.наценки
 					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // производитель
 					jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "Цена: "
 					jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "грн."
@@ -213,8 +215,16 @@ public class ReportPricePlank extends JDialog{
 //					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 					//дата время
 					height_label = (int) (h * 1);
+					str = "";
+					if (!res.getString("CatMargin").equals(""))
+						str = "&nbsp;&nbsp;&nbsp;("+res.getString("CatMargin")+")";
+					jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel18.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel18.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 					jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel14.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 					jLabel14.setText("<html>" + MyUtil.getCurrentDate() + "</html>");

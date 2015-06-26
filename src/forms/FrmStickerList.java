@@ -188,12 +188,7 @@ public class FrmStickerList extends javax.swing.JDialog {
         if (selectedRow == -1) return;
         int rowNum = jTableDocList.getRowSorter().convertRowIndexToModel(selectedRow);
         BigDecimal currentDocID = (BigDecimal) jTableDocList.getModel().getValueAt(rowNum, 0);
-        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 3).toString();
-        if (!statusDoc.equals("предварительный")) {
-            DialogBoxs.viewMessage("Удалять можно только предварительные документы!");
-            return;
-        }
-        int i = JOptionPane.showConfirmDialog(new JFrame(), "Подтвердите удаление:\nНомер: "+currentDocID.toString()+"\nДата: " + jTableDocList.getModel().getValueAt(rowNum, 1).toString() + "\nСумма: " + jTableDocList.getModel().getValueAt(rowNum, 2).toString() + "\nОписание: " + jTableDocList.getModel().getValueAt(rowNum, 3).toString(), "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int i = JOptionPane.showConfirmDialog(new JFrame(), "Подтвердите удаление:\nНомер: "+currentDocID.toString()+"\nДата: " + jTableDocList.getModel().getValueAt(rowNum, 1).toString() + "\nСтикеров: " + jTableDocList.getModel().getValueAt(rowNum, 3).toString() + "\nПланок: " + jTableDocList.getModel().getValueAt(rowNum, 4).toString() + "\nОписание: " + jTableDocList.getModel().getValueAt(rowNum, 2).toString(), "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (i == 0) {
             cnn.delSticker(currentDocID);
             requery();
@@ -508,7 +503,6 @@ public class FrmStickerList extends javax.swing.JDialog {
         jButtonDocDel.setText("Удалить");
         jButtonDocDel.setToolTipText("Удалить");
         jButtonDocDel.setBorderPainted(false);
-        jButtonDocDel.setEnabled(false);
         jButtonDocDel.setMaximumSize(new java.awt.Dimension(70, 70));
         jButtonDocDel.setMinimumSize(new java.awt.Dimension(70, 70));
         jButtonDocDel.setPreferredSize(new java.awt.Dimension(70, 70));

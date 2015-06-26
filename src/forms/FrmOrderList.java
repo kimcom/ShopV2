@@ -82,10 +82,11 @@ public class FrmOrderList extends javax.swing.JDialog {
         jTableDocList.setRowHeight(17);
         jTableDocList.getColumnModel().getColumn(0).setPreferredWidth(20);
         jTableDocList.getColumnModel().getColumn(1).setPreferredWidth(30);
-        jTableDocList.getColumnModel().getColumn(2).setPreferredWidth(200);
-        jTableDocList.getColumnModel().getColumn(3).setPreferredWidth(30);
+        jTableDocList.getColumnModel().getColumn(2).setPreferredWidth(30);
+        jTableDocList.getColumnModel().getColumn(3).setPreferredWidth(200);
         jTableDocList.getColumnModel().getColumn(4).setPreferredWidth(30);
         jTableDocList.getColumnModel().getColumn(5).setPreferredWidth(30);
+        jTableDocList.getColumnModel().getColumn(6).setPreferredWidth(30);
 		
 //		if (jTableDocList.getRowCount() > 0) {
 //			jTableDocList.setRowSelectionInterval(0, 0);
@@ -169,7 +170,15 @@ public class FrmOrderList extends javax.swing.JDialog {
     private void jButtonDocAddActionPerformed() {
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-        if (cnn.newOrder().compareTo(BigDecimal.ZERO)==0){
+        if (cnn.newOrder("").compareTo(BigDecimal.ZERO)==0){
+            JOptionPane.showMessageDialog(null, "Возникла ошибка!\n\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+        }
+        requery();
+    }
+    private void jButtonDocAddAutoActionPerformed() {
+        cnn = ConnectionDb.getInstance();
+        if (cnn == null) return;
+        if (cnn.newOrder("_auto").compareTo(BigDecimal.ZERO)==0){
             JOptionPane.showMessageDialog(null, "Возникла ошибка!\n\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
         }
         requery();
@@ -179,14 +188,21 @@ public class FrmOrderList extends javax.swing.JDialog {
         if (selectedRow == -1) return;
         int rowNum = jTableDocList.getRowSorter().convertRowIndexToModel(selectedRow);
         BigDecimal currentDocID = (BigDecimal) jTableDocList.getModel().getValueAt(rowNum, 0);
-        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 3).toString();
+        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 4).toString();
+        String typeDoc = jTableDocList.getModel().getValueAt(rowNum, 2).toString();
         if (!statusDoc.equals("предварительный")) {
             DialogBoxs.viewMessage("Изменять можно только предварительные заказы!");
             return;
         }
-        final FrmOrderEdit frmOrderEdit = new FrmOrderEdit(currentDocID);
-        frmOrderEdit.setModal(true);
-		frmOrderEdit.setVisible(true);
+		if (typeDoc.equals("авто")) {
+			final FrmOrderEditAuto frmOrderEdit = new FrmOrderEditAuto(currentDocID);
+			frmOrderEdit.setModal(true);
+			frmOrderEdit.setVisible(true);
+		} else {
+			final FrmOrderEdit frmOrderEdit = new FrmOrderEdit(currentDocID);
+			frmOrderEdit.setModal(true);
+			frmOrderEdit.setVisible(true);
+		}
         requery();
     }
     private void jButtonDocDelActionPerformed() {
@@ -194,7 +210,7 @@ public class FrmOrderList extends javax.swing.JDialog {
         if (selectedRow == -1) return;
         int rowNum = jTableDocList.getRowSorter().convertRowIndexToModel(selectedRow);
         BigDecimal currentDocID = (BigDecimal) jTableDocList.getModel().getValueAt(rowNum, 0);
-        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 3).toString();
+        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 4).toString();
         if (!statusDoc.equals("предварительный")) {
             DialogBoxs.viewMessage("Удалять можно только предварительные заказы!");
             return;
@@ -224,7 +240,7 @@ public class FrmOrderList extends javax.swing.JDialog {
         if (selectedRow == -1) return;
         int rowNum = jTableDocList.getRowSorter().convertRowIndexToModel(selectedRow);
         BigDecimal currentDocID = (BigDecimal) jTableDocList.getModel().getValueAt(rowNum, 0);
-        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 3).toString();
+        String statusDoc = jTableDocList.getModel().getValueAt(rowNum, 4).toString();
         if (!statusDoc.equals("предварительный")) {
             DialogBoxs.viewMessage("Отправить менеджеру\nможно только предварительные заказы!");
             return;
@@ -285,9 +301,9 @@ public class FrmOrderList extends javax.swing.JDialog {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (column == 1 || column == 4) {
+            if (column == 1 || column == 4 || column == 2) {
                 setHorizontalAlignment(SwingConstants.CENTER);
-            }else if (column == 5) {
+            }else if (column == 5 || column == 6) {
                     setHorizontalAlignment(SwingConstants.RIGHT);
             } else {
                 setHorizontalAlignment(SwingConstants.LEFT);
@@ -421,6 +437,7 @@ public class FrmOrderList extends javax.swing.JDialog {
         jTableDocList = new javax.swing.JTable();
         jPanelButtonMove = new javax.swing.JPanel();
         jButtonDocAdd = new javax.swing.JButton();
+        jButtonDocAddAuto = new javax.swing.JButton();
         jButtonDocEdit = new javax.swing.JButton();
         jButtonDocDel = new javax.swing.JButton();
         jButtonDocCopy = new javax.swing.JButton();
@@ -517,8 +534,8 @@ public class FrmOrderList extends javax.swing.JDialog {
 
         jButtonDocAdd.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonDocAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/report-add-32.png"))); // NOI18N
-        jButtonDocAdd.setText("Новый");
-        jButtonDocAdd.setToolTipText("Новый заказ");
+        jButtonDocAdd.setText("Ручной заказ");
+        jButtonDocAdd.setToolTipText("Создать ручной заказ");
         jButtonDocAdd.setBorderPainted(false);
         jButtonDocAdd.setMaximumSize(new java.awt.Dimension(70, 70));
         jButtonDocAdd.setMinimumSize(new java.awt.Dimension(70, 70));
@@ -526,6 +543,20 @@ public class FrmOrderList extends javax.swing.JDialog {
         jButtonDocAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDocAddActionPerformed(evt);
+            }
+        });
+
+        jButtonDocAddAuto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonDocAddAuto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/report-add-32.png"))); // NOI18N
+        jButtonDocAddAuto.setText("Автозаказ");
+        jButtonDocAddAuto.setToolTipText("Создать новый автозаказ");
+        jButtonDocAddAuto.setBorderPainted(false);
+        jButtonDocAddAuto.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonDocAddAuto.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonDocAddAuto.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonDocAddAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDocAddAutoActionPerformed(evt);
             }
         });
 
@@ -591,16 +622,18 @@ public class FrmOrderList extends javax.swing.JDialog {
         jPanelButtonMoveLayout.setHorizontalGroup(
             jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonMoveLayout.createSequentialGroup()
-                .addComponent(jButtonDocAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDocAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDocEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDocAddAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDocDel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDocEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDocCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonDocDel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonDocCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonDocOut, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelButtonMoveLayout.setVerticalGroup(
             jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -610,7 +643,8 @@ public class FrmOrderList extends javax.swing.JDialog {
                     .addComponent(jButtonDocEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDocDel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonDocOut, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDocCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonDocCopy, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDocAddAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -744,11 +778,15 @@ public class FrmOrderList extends javax.swing.JDialog {
     private void jButtonDT_StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDT_StopActionPerformed
         jButtonDT_StopActionPerformed();
     }//GEN-LAST:event_jButtonDT_StopActionPerformed
+    private void jButtonDocAddAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDocAddAutoActionPerformed
+        jButtonDocAddAutoActionPerformed();
+    }//GEN-LAST:event_jButtonDocAddAutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDT_Start;
     private javax.swing.JButton jButtonDT_Stop;
     private javax.swing.JButton jButtonDocAdd;
+    private javax.swing.JButton jButtonDocAddAuto;
     private javax.swing.JButton jButtonDocCopy;
     private javax.swing.JButton jButtonDocDel;
     private javax.swing.JButton jButtonDocEdit;

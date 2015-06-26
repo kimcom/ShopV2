@@ -10,10 +10,10 @@ import javax.swing.table.AbstractTableModel;
 import main.MyUtil;
 
 public class TmOrderList extends AbstractTableModel{
-    private final int colnum = 6;
+    private final int colnum = 7;
     private int rownum;
     private final String[] colNames = {
-        "Док №","Дата","Примечание","Статус","К-во товаров","Сумма"
+        "Док №","Дата","Тип","Примечание","Статус","К-во товаров","Сумма"
     };
     private ArrayList<Object[]> ResultSets;
 
@@ -24,6 +24,7 @@ public class TmOrderList extends AbstractTableModel{
 				Object[] row = {
                     rs.getBigDecimal("CheckID").setScale(4, RoundingMode.HALF_UP),
 					rs.getString("CreateDateTime"),
+					rs.getString("OrderTypeName"),
 					rs.getString("Notes"),
                     rs.getString("CheckStatus"),
                     rs.getInt("CountGood"),
@@ -46,17 +47,17 @@ public class TmOrderList extends AbstractTableModel{
             if (row[columnindex] == null) return BigDecimal.ZERO;
             BigDecimal bd = (BigDecimal) row[columnindex];
             res = bd.setScale(4, RoundingMode.HALF_UP);
-        } else if (columnindex == 1 || columnindex == 2 || columnindex == 3) { //string
+        } else if (columnindex == 1 || columnindex == 2 || columnindex == 3 || columnindex == 4) { //string
             if (row[columnindex] == null) return "";
             res = row[columnindex].toString();
-        } else if (columnindex == 5) { //summa
+        } else if (columnindex == 6) { //summa
             if (row[columnindex] == null) return "";
             BigDecimal bd = (BigDecimal) row[columnindex];
             if (bd.compareTo(BigDecimal.ZERO) == 0) return "";
 //            DecimalFormat formatter = new DecimalFormat("#0.###");
 //            res = formatter.format(bd).toString();
             res = bd.setScale(2, RoundingMode.HALF_UP).toPlainString();
-        } else if (columnindex == 4) { //int
+        } else if (columnindex == 5) { //int
             if (row[columnindex] == null) return 0;
             res = row[columnindex].toString();
         } else {

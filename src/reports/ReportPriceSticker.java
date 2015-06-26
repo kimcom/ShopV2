@@ -187,15 +187,18 @@ public class ReportPriceSticker extends JDialog{
 					JLabel jLabel12 = new javax.swing.JLabel();
 					JLabel jLabel13 = new javax.swing.JLabel();
 					JLabel jLabel14 = new javax.swing.JLabel();
+					JLabel jLabel15 = new javax.swing.JLabel();
 //					JSeparator jSeparator2 = new javax.swing.JSeparator();
 
-					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
+					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // название
+					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // цена
+					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // кат.наценки
+					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // артикул
+					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 8));  // дата
 
 //					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 					//название
@@ -210,6 +213,13 @@ public class ReportPriceSticker extends JDialog{
 					//цена
 					y = y + height_label;
 					height_label = h * 2;
+					str = "";
+					if (!res.getString("CatMargin").equals("")) 
+						str = "&nbsp;&nbsp;&nbsp;(" + res.getString("CatMargin") + ")";
+					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel15.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 					str = res.getString("Price") + "&nbsp;";
 					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.CENTER);

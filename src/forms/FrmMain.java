@@ -1089,17 +1089,23 @@ public class FrmMain extends javax.swing.JFrame {
 			jButtonSellerActionPerformed(-1);
 			return;
 		}
+//DialogBoxs.viewMessage("EKKA_PORT=" + conf.EKKA_PORT + "	EKKA_BAUD=" + conf.EKKA_BAUD + "	EKKA_TYPE="+conf.EKKA_TYPE);
 		if(conf.EKKA_TYPE!=0){
-			MyEKKA me = new MyEKKA();
+			try {
+				MyEKKA me = new MyEKKA();
 			//me.report("z1");
-			if(me.printCheck(cnn.currentCheckID)){
-				if (cnn.setCheckStatus(1)) {
-//					jButtonNewCheckActionPerformed();//чек распечатан успешно
+				if(me.printCheck(cnn.currentCheckID)){
+					if (cnn.setCheckStatus(1)) {
+						jButtonNewCheckActionPerformed();//чек распечатан успешно
+					}
+				} else {
+					if (cnn.setCheckStatus(2)) {
+						jButtonNewCheckActionPerformed();//без распечатки
+					}
 				}
-			} else {
-				if (cnn.setCheckStatus(2)) {
-//					jButtonNewCheckActionPerformed();//без распечатки
-				}
+			} catch (Exception e) {
+				MyUtil.errorToLog(this.getClass().getName(), e);
+				return;
 			}
 		}else{
 			final ReportCheck rc = new ReportCheck(cnn.currentCheckID);

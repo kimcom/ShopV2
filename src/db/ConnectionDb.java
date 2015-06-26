@@ -1438,14 +1438,14 @@ public final class ConnectionDb{
             return false;
         }
     }
-    public BigDecimal newOrder() {
+    public BigDecimal newOrder(String orderType) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("newOrder: parameter [cnn] cannot be null!"));
 			return BigDecimal.ZERO;
         }
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_order(?,?,?,?,?,?,?,?,?)}");
-            cs.setString(1, "new");
+            cs.setString(1, "new" + orderType);
             cs.registerOutParameter(2, Types.DOUBLE);
             cs.setBigDecimal(3, null);
             cs.setInt(4, userID);
@@ -1524,9 +1524,7 @@ public final class ConnectionDb{
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInOrderQuantity: parameter [cnn] cannot be null!"));
 			return false;
         }
-        if (goodID == 0) {
-            return false;
-        }
+        if (goodID == 0) return false;
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_order_content(?,?,?,?,?,?,?)}");
             cs.setString(1, "good_plus");
@@ -1548,6 +1546,35 @@ public final class ConnectionDb{
             return false;
         }
     }
+	public boolean addGroupAllInOrder(BigDecimal docID, String action, int nodeID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGroupAllInOrder: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (nodeID == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_order_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "add_group_" + action);
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, docID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, nodeID);
+			cs.setString(7, "");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.execute();
+			if (cs.getInt(2) == 0) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
     public boolean getOrderInfo(BigDecimal docID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getOrderInfo: parameter [cnn] cannot be null!"));
@@ -2083,7 +2110,7 @@ public final class ConnectionDb{
 		}
 		try {
 			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
-				cs.setString(1, "print_stickers");
+			cs.setString(1, "print_stickers");
 			cs.registerOutParameter(2, Types.DOUBLE);
 			cs.setBigDecimal(3, docID);
 			cs.setInt(4, userID);
