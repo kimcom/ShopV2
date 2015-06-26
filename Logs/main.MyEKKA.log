@@ -1,0 +1,20 @@
+июн 26, 2015 12:55:54 PM main.MyUtil errorToLog
+SEVERE: Exception:Send command: open_port;22;115200
+
+Error number:301
+Error message:301- Port error
+июн 26, 2015 1:04:40 PM main.MyUtil errorToLog
+SEVERE: Exception:Send command: open_port;22;115200
+
+Error number:301
+Error message:301- Port error
+июн 26, 2015 1:05:24 PM main.MyUtil errorToLog
+SEVERE: Exception:Send command: open_port;22;115200
+
+Error number:301
+Error message:301- Port error
+июн 26, 2015 1:11:03 PM main.MyUtil errorToLog
+SEVERE: Exception:Send command: open_port;22;115200
+
+Error number:301
+Error message:301- Port error

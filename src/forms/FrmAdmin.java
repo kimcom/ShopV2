@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import main.DialogBoxs;
 import main.MyUtil;
 import reports.ReportBarcodeShort;
 import reports.ReportCash;
+import reports.ReportCheck;
 import reports.ReportSale;
 
 public class FrmAdmin extends javax.swing.JDialog {
@@ -125,6 +127,29 @@ public class FrmAdmin extends javax.swing.JDialog {
 				return;
 			}
 		}
+	}
+	private void jButtonPrintCopyCheckActionPerformed(){
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) return;
+		DialogBoxs db = new DialogBoxs();
+		String returnID = db.showOptionDialogGetCheckID("Копия чека (на обычный принтер)", "<html>Введите № чека<br>(без дробной части):</html>", new javax.swing.ImageIcon(getClass().getResource("/png/return_on.png")));
+//System.out.println("returnID:"+returnID);
+		int rrr = new Integer(returnID);
+		BigDecimal currentCheckID = new BigDecimal(""+returnID+"."+cnn.clientID);
+		cnn.getCheckInfo(currentCheckID);
+		if (cnn.checkIsBlank()) {
+			DialogBoxs.viewMessage("Нулевые чеки не печатаем!");
+			return;
+		}
+		if (cnn.checkStatus == 0) {
+			DialogBoxs.viewMessage("Копию чека можно делать\nтолько после распечатки\nиз главной формы!");
+			return;
+		}
+		final ReportCheck rc = new ReportCheck(currentCheckID);
+		rc.setModal(true);
+		rc.setVisible(true);
+		rc.dispose();
+		cnn.getCheckInfo(cnn.currentCheckID);
 	}
 	private void jButtonNewDiscountCardActionPerformed() {
 		dispose();
@@ -241,7 +266,7 @@ public class FrmAdmin extends javax.swing.JDialog {
         jButtonBarcodeShortReport = new javax.swing.JButton();
         jButtonReportCash = new javax.swing.JButton();
         jButtonReportSale = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonPrintCopyCheck = new javax.swing.JButton();
         jPanelButton = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -389,17 +414,18 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButton2.setToolTipText("");
-        jButton2.setEnabled(false);
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.setIconTextGap(10);
-        jButton2.setMaximumSize(new java.awt.Dimension(70, 70));
-        jButton2.setMinimumSize(new java.awt.Dimension(70, 70));
-        jButton2.setPreferredSize(new java.awt.Dimension(70, 70));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPrintCopyCheck.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonPrintCopyCheck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/reports-64.png"))); // NOI18N
+        jButtonPrintCopyCheck.setText("Копия чека");
+        jButtonPrintCopyCheck.setToolTipText("Копия чека по номеру");
+        jButtonPrintCopyCheck.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonPrintCopyCheck.setIconTextGap(10);
+        jButtonPrintCopyCheck.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonPrintCopyCheck.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonPrintCopyCheck.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonPrintCopyCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPrintCopyCheckActionPerformed(evt);
             }
         });
 
@@ -413,7 +439,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                     .addComponent(jButtonBarcodeShortReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonReportCash, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonReportSale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonPrintCopyCheck, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
         jPanelReportLayout.setVerticalGroup(
@@ -425,7 +451,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonReportSale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonPrintCopyCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -622,11 +648,11 @@ public class FrmAdmin extends javax.swing.JDialog {
     private void jButtonReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReceiptActionPerformed
         jButtonReceiptActionPerformed();
     }//GEN-LAST:event_jButtonReceiptActionPerformed
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButtonPrintCopyCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintCopyCheckActionPerformed
+		jButtonPrintCopyCheckActionPerformed();
+    }//GEN-LAST:event_jButtonPrintCopyCheckActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBarcodeShortReport;
     private javax.swing.JButton jButtonCashMove;
     private javax.swing.JButton jButtonCheckList;
@@ -635,6 +661,7 @@ public class FrmAdmin extends javax.swing.JDialog {
     private javax.swing.JButton jButtonNewDiscountCard;
     private javax.swing.JButton jButtonOrder;
     private javax.swing.JButton jButtonPriceOver;
+    private javax.swing.JButton jButtonPrintCopyCheck;
     private javax.swing.JButton jButtonReceipt;
     private javax.swing.JButton jButtonReportCash;
     private javax.swing.JButton jButtonReportSale;

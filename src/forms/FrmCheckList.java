@@ -70,10 +70,11 @@ public class FrmCheckList extends javax.swing.JDialog {
         jTableChechList.getColumnModel().getColumn(6).setPreferredWidth(30);
 		
 		if (jTableChechList.getRowCount() > 0) {
-			jTableChechList.setRowSelectionInterval(jTableChechList.getRowCount() - 1, jTableChechList.getRowCount() - 1);
+			//jTableChechList.setRowSelectionInterval(jTableChechList.getRowCount() - 1, jTableChechList.getRowCount() - 1);
+			jTableChechList.setRowSelectionInterval(0, 0);
 		}
 
-		requeryChechList();
+		requeryCheckList();
 		
 		ListSelectionModel selModel = jTableChechList.getSelectionModel();
 		selModel.addListSelectionListener(new MyListSelectionListener());
@@ -104,7 +105,7 @@ public class FrmCheckList extends javax.swing.JDialog {
 		jTableCheckContent.getColumnModel().getColumn(10).setMaxWidth(0);
 		jTableCheckContent.getColumnModel().getColumn(10).setResizable(false);
 	}
-	private void requeryChechList(){
+	private void requeryCheckList(){
 		int selectedRow = jTableChechList.getSelectedRow();
 		if (selectedRow == -1) return;
 		currentCheckID = new BigDecimal(jTableChechList.getModel().getValueAt(selectedRow, 0).toString());
@@ -131,11 +132,12 @@ public class FrmCheckList extends javax.swing.JDialog {
 		final ReportCheck rc = new ReportCheck(currentCheckID);
 		rc.setModal(true);
 		rc.setVisible(true);
-		if (!blIconified){
-			return;
-		}
-		rc.silentPrint();
 		rc.dispose();
+		cnn.getCheckInfo(cnn.currentCheckID);
+//		if (!blIconified){
+//			return;
+//		}
+		//rc.silentPrint();
 	}
 	private void jButtonSetStatusActionPerformed() {
 		cnn = ConnectionDb.getInstance();
@@ -297,7 +299,7 @@ public class FrmCheckList extends javax.swing.JDialog {
 	private class MyListSelectionListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			requeryChechList();
+			requeryCheckList();
 		}
 	}
 
