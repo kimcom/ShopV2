@@ -182,9 +182,12 @@ public class FrmMain extends javax.swing.JFrame {
     private class MyKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+//System.out.println("e.getKeyCode()="+e.getKeyCode()+"	checkCnnStatus()="+checkCnnStatus());
 			if (!checkCnnStatus()) {
-				e.consume();
-				return;
+				if (e.getKeyCode() != KeyEvent.VK_F8 && e.getKeyCode() != KeyEvent.VK_F5) {
+					e.consume();
+					return;
+				}
 			}
 //			System.out.println("KeyCode=" + e.getKeyCode());
             keyOverride(e);
@@ -352,6 +355,10 @@ public class FrmMain extends javax.swing.JFrame {
 		comp.setFocusable(true);
 		comp.setVisible(true);
 	}
+	private void setEnabled(Component comp, boolean value) {
+		comp.setFocusable(value);
+		comp.setEnabled(value);
+	}
     private FrmMain() {
         initComponents();
         conf = ConfigReader.getInstance();
@@ -361,6 +368,7 @@ public class FrmMain extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 		cnn = ConnectionDb.getInstance();
 		if (cnn != null) cnn.setAppVersion();
+		if (cnn.checkCardID!=null) blDiscountCardFuture = true;
         requery();
 
 //временно
@@ -919,11 +927,13 @@ public class FrmMain extends javax.swing.JFrame {
         jTableCheckLastModi.getColumnModel().getColumn(9).setPreferredWidth(40);
         jTableCheckLastModi.getColumnModel().getColumn(10).setPreferredWidth(80);
 		
-		jButtonSearch.setEnabled(!blDiscountCardFuture);
-		jButtonDiscount.setEnabled(!blDiscountCardFuture);
-		jButtonDiscountCard.setEnabled(!blDiscountCardFuture);
-		jButtonNewDiscountCard.setEnabled(!blDiscountCardFuture);
-		jButtonPromo.setEnabled(!blDiscountCardFuture);
+		setEnabled(jButtonSearch,!blDiscountCardFuture);
+		setEnabled(jButtonDiscount, !blDiscountCardFuture);
+		setEnabled(jButtonDiscountCard, !blDiscountCardFuture);
+		setEnabled(jButtonNewDiscountCard, !blDiscountCardFuture);
+		setEnabled(jButtonPromo, !blDiscountCardFuture);
+		setEnabled(jButtonReturn, !blDiscountCardFuture);
+
 		
 		if (countRows != jTableCheck.getRowCount()) selectedRow = -1;
 		countRows = jTableCheck.getRowCount();
@@ -1285,9 +1295,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void jButtonPayTypeActionPerformed(){
 		if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
-        if (cnn == null) {
-            return;
-        }
+        if (cnn == null) return;
 		if (cnn.checkTypePayment == 0){
 			int i = JOptionPane.showConfirmDialog(null, "Оплата безналичным расчетом?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (i==0){
@@ -1317,31 +1325,23 @@ public class FrmMain extends javax.swing.JFrame {
             DialogBoxs.viewMessage("Сумма товаров недостаточна \nдля выдачи новой карты!\nМинимальная сумма: "+bdDiscountSumStart.setScale(2,RoundingMode.HALF_UP).toPlainString());
             return;
         }
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(0);
-				frmCardAttribute.setModal(true);
-				frmCardAttribute.setVisible(true);
-				if (frmCardAttribute.blDisposeStatus) {
-					if (!checkCnnStatus()) {
-						return;
-					}
-					cnn = ConnectionDb.getInstance();
-					if (cnn == null) {
-						return;
-					}
-					if (!cnn.setCheckNewCard(frmCardAttribute.strBarCode)) {
-						requery();
-						DialogBoxs.viewMessage("Ошибка при назначении скидки!");
-					} else {
-						blDiscountCardFuture = true;
-						requery();
-					}
-				} else {
-					DialogBoxs.viewMessage("Скидка не назначена!");
-				}
-//			}
-//		});
+		final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(0);
+		frmCardAttribute.setModal(true);
+		frmCardAttribute.setVisible(true);
+		if (frmCardAttribute.blDisposeStatus) {
+			if (!checkCnnStatus()) return;
+			cnn = ConnectionDb.getInstance();
+			if (cnn == null) return;
+			if (!cnn.setCheckNewCard(frmCardAttribute.strBarCode)) {
+				requery();
+				DialogBoxs.viewMessage("Ошибка при назначении скидки!");
+			} else {
+				blDiscountCardFuture = true;
+				requery();
+			}
+		} else {
+			DialogBoxs.viewMessage("Скидка не назначена!");
+		}
     }
     private void jButtonPromoActionPerformed(){
         if (!checkCnnStatus()) return;

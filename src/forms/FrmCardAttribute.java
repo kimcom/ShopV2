@@ -97,7 +97,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		//jComboBox1.setSelectedItem("0.00");
 
 //jTextField1.setText("9800000501863");
-//jTextField1.setText("9800001001850");
+//jTextField1.setText("9800000929285");
 //barCode = jTextField1.getText();
 //requery();
     }

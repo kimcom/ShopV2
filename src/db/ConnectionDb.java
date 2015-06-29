@@ -33,6 +33,7 @@ public final class ConnectionDb{
 	public int					checkFlagReturn;
     public int                  checkStatus;
     public int                  checkTypePayment;
+    public String               checkCardID;
     public BigDecimal           checkSumBase;
     public BigDecimal           checkSumDiscount;
     public BigDecimal           checkSum;
@@ -734,6 +735,7 @@ public final class ConnectionDb{
         }
     }
     public boolean getCheckInfo(BigDecimal checkID) {
+//System.out.println("getCheckInfo: checkID = "+checkID);
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCheckInfo: parameter [cnn] cannot be null!"));
 			return false;
@@ -753,6 +755,7 @@ public final class ConnectionDb{
                 checkStatus         = res.getInt("CheckStatus");
                 checkTypePayment    = res.getInt("TypePayment");
                 checkFlagReturn     = res.getInt("FlagReturn");
+                checkCardID			= res.getString("CardID");
                 checkSumBase        = res.getBigDecimal("SumBase").setScale(2);
                 checkSumDiscount    = res.getBigDecimal("SumDiscount").setScale(2);
                 checkSum            = res.getBigDecimal("Sum").setScale(2);
@@ -792,6 +795,7 @@ public final class ConnectionDb{
         }
     }
     public boolean setCheckPaymentType(int paymentType, BigDecimal checkID) {
+System.out.println("setCheckPaymentType checkID = "+checkID.toString());
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckPaymentType: parameter [cnn] cannot be null!"));
 			return false;
@@ -806,7 +810,9 @@ public final class ConnectionDb{
             cs.registerOutParameter(6, Types.INTEGER);
             cs.execute();
             if (cs.getInt(6) == paymentType) {
+System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
                 getCheckInfo(currentCheckID);
+System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
                 //DialogBoxs.viewMessage("Тип оплаты установлен успешно!");
                 return true;
             } else {

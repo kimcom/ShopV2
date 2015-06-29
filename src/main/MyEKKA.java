@@ -89,7 +89,7 @@ public class MyEKKA {
 					//System.out.println(""+goodid+"	"+name+"	"+quantity+" "+price+" "+sum);
 					//System.out.println("add_plu;" + goodid + ";0;" + weight + ";0;0;0;" + division + ";" + price + ";0;'" + name + "';" + quantity + ";");
 //DialogBoxs.viewMessage("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
-					sendCommand("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
+					if (!sendCommand("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";")) return false;
 //DialogBoxs.viewMessage("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"");
 					if (!sendCommand("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"")) return false;
 					//res.getBigDecimal("Quantity").setScale(2, RoundingMode.HALF_UP).toString() + " шт. X " + 
@@ -99,6 +99,7 @@ public class MyEKKA {
 			} catch (SQLException e) {
 				MyUtil.errorToLog(this.getClass().getName(), e);
 				DialogBoxs.viewError(e);
+				return false;
 			}
 			//show_subtotal
 			//cancel_receipt
@@ -106,6 +107,7 @@ public class MyEKKA {
 			if (!sendCommand("close_port"))return false;
 		} else {
 			DialogBoxs.viewMessageError("Нет связи с фиск.регистратором");
+			return false;
 		}
 		return true;
 	}
