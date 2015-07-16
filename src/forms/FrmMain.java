@@ -46,17 +46,17 @@ public class FrmMain extends javax.swing.JFrame {
 	private int countRows=0;
 
     public static FrmMain getInstance() {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch ( ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            //java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-			MyUtil.errorToLog(FrmMain.class.getName(), ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch ( ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            //java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//			MyUtil.errorToLog(FrmMain.class.getName(), ex);
+//        }
         if (instance == null) {
             try {
                 instance = new FrmMain();
@@ -355,6 +355,11 @@ public class FrmMain extends javax.swing.JFrame {
 		comp.setFocusable(true);
 		comp.setVisible(true);
 	}
+	private void setVisible(Component comp, boolean value) {
+		comp.setFocusable(value);
+		comp.setVisible(value);
+		comp.setEnabled(value);
+	}
 	private void setEnabled(Component comp, boolean value) {
 		comp.setFocusable(value);
 		comp.setEnabled(value);
@@ -370,7 +375,10 @@ public class FrmMain extends javax.swing.JFrame {
 		if (cnn != null) cnn.setAppVersion();
 		if (cnn.checkCardID!=null) blDiscountCardFuture = true;
         requery();
-
+		
+		setVisible(jButtonCheckCopy, false);
+		if (conf.EKKA_TYPE!=0)setVisible(jButtonCheckCopy,true);
+		
 //временно
 //setInvisible(jButtonReturn);
 //setInvisible(jButtonPromo);
@@ -411,6 +419,7 @@ public class FrmMain extends javax.swing.JFrame {
         jPanelRight = new javax.swing.JPanel();
         jButtonAdmin = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
+        jButtonCheckCopy = new javax.swing.JButton();
         jButtonUpdate = new javax.swing.JButton();
         jButtonLink = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
@@ -634,6 +643,19 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jButtonCheckCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/copy-icon2.png"))); // NOI18N
+        jButtonCheckCopy.setToolTipText("Печать копии последнего фиск. чека");
+        jButtonCheckCopy.setActionCommand("Печать копии последнего фиск. чека");
+        jButtonCheckCopy.setBorderPainted(false);
+        jButtonCheckCopy.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonCheckCopy.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonCheckCopy.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonCheckCopy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCheckCopyActionPerformed(evt);
+            }
+        });
+
         jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/update.png"))); // NOI18N
         jButtonUpdate.setToolTipText("Обновление программы");
         jButtonUpdate.setActionCommand("Обновление программы");
@@ -683,6 +705,8 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCheckCopy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonLink, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -697,8 +721,9 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(jButtonReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCheckCopy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jPanelMiddle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Информация о текущем чеке:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -841,15 +866,15 @@ public class FrmMain extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelMiddle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLastModi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
+                .addComponent(jScrollPaneCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
         );
 
         pack();
@@ -1099,23 +1124,102 @@ public class FrmMain extends javax.swing.JFrame {
 			jButtonSellerActionPerformed(-1);
 			return;
 		}
-//DialogBoxs.viewMessage("EKKA_PORT=" + conf.EKKA_PORT + "	EKKA_BAUD=" + conf.EKKA_BAUD + "	EKKA_TYPE="+conf.EKKA_TYPE);
+
 		if(conf.EKKA_TYPE!=0){
-			try {
-				MyEKKA me = new MyEKKA();
-			//me.report("z1");
-				if(me.printCheck(cnn.currentCheckID)){
-					if (cnn.setCheckStatus(1)) {
-						jButtonNewCheckActionPerformed();//чек распечатан успешно
+			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null){
+//				System.out.println("обычный чек");
+				String typePay = "0";
+				String typePayMsg = "НАЛИЧНЫЙ расчет";
+				if (cnn.checkTypePayment != 0) {
+					typePay = "2";
+					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				}
+				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+				if (i != 0) {
+					jButtonPayTypeActionPerformed();
+					return;
+				}
+				try {
+					MyEKKA me = new MyEKKA();
+					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
+						if (cnn.setCheckStatus(1)) {
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+						}
+					} else {
+						if (cnn.setCheckStatus(2)) {
+							jButtonNewCheckActionPerformed();//без распечатки
+						}
+					}
+				} catch (Exception e) {
+					MyUtil.errorToLog(this.getClass().getName(), e);
+					return;
+				}
+			} else if (cnn.returnID != null && cnn.returnIDFiscalNumber == null) {
+//				System.out.println("возврат не фискальный");
+				final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
+				if (!blIconified) {
+					rc.setModal(true);
+					rc.setVisible(true);
+					if (!checkCnnStatus()) {
+						return;
+					}
+					if (rc.blStatusPrintButton) {
+						if (rc.blStatusPrinted) {
+							if (cnn.setCheckStatus(1)) {
+								jButtonNewCheckActionPerformed();//чек распечатан успешно
+							}
+						} else {
+							if (cnn.setCheckStatus(2)) {
+								jButtonNewCheckActionPerformed();//без распечатки
+							}
+						}
 					}
 				} else {
-					if (cnn.setCheckStatus(2)) {
-						jButtonNewCheckActionPerformed();//без распечатки
+//					rc.setModal(true);
+					//одобрено караваном !!!
+					rc.setVisible(true);
+					if (rc.silentPrint()) {
+						if (cnn.setCheckStatus(1)) {
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+						}
+					} else {
+						if (cnn.setCheckStatus(2)) {
+							jButtonNewCheckActionPerformed();//без распечатки
+						}
 					}
+					rc.dispose();
 				}
-			} catch (Exception e) {
-				MyUtil.errorToLog(this.getClass().getName(), e);
-				return;
+			} else if (cnn.returnID != null && cnn.returnIDFiscalNumber != null) {
+//				System.out.println("возврат фискальный");
+				String typePay = "0";
+				String typePayMsg = "НАЛИЧНЫЙ расчет";
+				if (cnn.checkTypePayment != 0) {
+					typePay = "2";
+					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				}
+				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+				if (i != 0) {
+					jButtonPayTypeActionPerformed();
+					return;
+				}
+				try {
+					MyEKKA me = new MyEKKA();
+					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
+						if (cnn.setCheckStatus(1)) {
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+						}
+					} else {
+						if (cnn.setCheckStatus(2)) {
+							jButtonNewCheckActionPerformed();//без распечатки
+						}
+					}
+				} catch (Exception e) {
+					MyUtil.errorToLog(this.getClass().getName(), e);
+					return;
+				}
+			} else {
+				MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("jButtonPrintCheckActionPerformed: ошибка определения типа чека при печати!"));
+				DialogBoxs.viewMessage("ОШИБКА определения типа чека при печати!");
 			}
 		}else{
 			final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
@@ -1394,15 +1498,31 @@ public class FrmMain extends javax.swing.JFrame {
 			return;
 		}
 		DialogBoxs db = new DialogBoxs();
-		String returnID = db.showOptionDialogGetCheckID("Оформление возврата","<html>Введите № чека<br>(без дробной части):</html>",new javax.swing.ImageIcon(getClass().getResource("/png/return_on.png")));
+		String returnID = db.showOptionDialogGetFiscalCheckID("Оформление возврата","<html>Введите № чека <br>(без дробной части):</html>","<html>или № фискального чека:</html>",new javax.swing.ImageIcon(getClass().getResource("/png/return_on.png")));
+		boolean fiscal = false;
 //System.out.println("returnID:"+returnID);
+		if (returnID.equals("0")) return;
+		if (returnID.startsWith("f")) {
+			fiscal = true;
+			returnID = returnID.replace("f", "");
+		}
 		int rrr = new Integer(returnID);
 		if(cnn.checkFlagReturn!=1){
-			cnn.setCheckFlagReturn(1, cnn.currentCheckID, rrr); // уст. флаг возврата
+			cnn.setCheckFlagReturn(1, cnn.currentCheckID, rrr, fiscal); // уст. флаг возврата
 		}else{
-			cnn.setCheckFlagReturn(-1, cnn.currentCheckID, rrr); // уст. флаг возврата
+			cnn.setCheckFlagReturn(-1, cnn.currentCheckID, rrr, fiscal); // уст. флаг возврата
 		}
 		requery();
+	}
+	private void jButtonCheckCopyActionPerformed(){
+		if (conf.EKKA_TYPE == 0) return;
+		try {
+			MyEKKA me = new MyEKKA();
+			me.copyCheck();
+		} catch (Exception e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			return;
+		}
 	}
 	private void jButtonUpdateActionPerformed(){
 		Updater u = new Updater();
@@ -1476,10 +1596,14 @@ public class FrmMain extends javax.swing.JFrame {
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
         jButtonReturnActionPerformed();
     }//GEN-LAST:event_jButtonReturnActionPerformed
+    private void jButtonCheckCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckCopyActionPerformed
+        jButtonCheckCopyActionPerformed();
+    }//GEN-LAST:event_jButtonCheckCopyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdmin;
     private javax.swing.JButton jButtonCalc;
+    private javax.swing.JButton jButtonCheckCopy;
     private javax.swing.JButton jButtonDiscount;
     private javax.swing.JButton jButtonDiscountCard;
     private javax.swing.JButton jButtonExit;

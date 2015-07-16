@@ -57,17 +57,17 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 	private int countPlanks = 0;
     
     public FrmStickerEdit(BigDecimal docID) {
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-			//java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-			MyUtil.errorToLog(FrmMain.class.getName(), ex);
-		}
+//		try {
+//			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//				if ("Nimbus".equals(info.getName())) {
+//					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//					break;
+//				}
+//			}
+//		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//			//java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//			MyUtil.errorToLog(FrmMain.class.getName(), ex);
+//		}
         this.docID = docID;
         initComponents();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

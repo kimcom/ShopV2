@@ -27,6 +27,7 @@ public final class ConnectionDb{
     public int                  accessLevel = 999;
     public BigDecimal           currentCheckID;
     public BigDecimal           returnID;
+    public BigDecimal           returnIDFiscalNumber;
     private int                 userID;
     public int					clientID;
     public int					matrixID;
@@ -750,8 +751,9 @@ public final class ConnectionDb{
             cs.registerOutParameter(6, Types.DOUBLE);
             ResultSet res = cs.executeQuery();
             while (res.next()) {
-				returnID = null;
+				returnID = null; returnIDFiscalNumber = null;
 				if(res.getBigDecimal("ReturnID")!=null)	returnID = res.getBigDecimal("ReturnID").setScale(4);
+				if(res.getBigDecimal("ReturnFiscalNumber")!=null) returnIDFiscalNumber = res.getBigDecimal("ReturnFiscalNumber").setScale(0);
                 checkStatus         = res.getInt("CheckStatus");
                 checkTypePayment    = res.getInt("TypePayment");
                 checkFlagReturn     = res.getInt("FlagReturn");
@@ -794,8 +796,34 @@ public final class ConnectionDb{
             return false;
         }
     }
+    public boolean setCheckFiscalNumber(String str) {
+        if (cnn == null) {
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckFiscalNumber: parameter [cnn] cannot be null!"));
+			return false;
+        }
+        try {
+            CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
+            cs.setString(1, "fiscalNumber"+str);
+            cs.setBigDecimal(2, currentCheckID);
+            cs.setInt(3, 0);
+            cs.setInt(4, 0);
+            cs.setInt(5, 0);
+            cs.registerOutParameter(6, Types.INTEGER);
+            cs.execute();
+            if (cs.getInt(6) > 0 ) {
+                return true;
+            } else {
+                DialogBoxs.viewMessage("Ошибка при записи фискального номера чека!");
+                return false;
+            }
+        } catch (SQLException e) {
+            MyUtil.errorToLog(this.getClass().getName(),e);
+			DialogBoxs.viewError(e);
+            return false;
+        }
+    }
     public boolean setCheckPaymentType(int paymentType, BigDecimal checkID) {
-System.out.println("setCheckPaymentType checkID = "+checkID.toString());
+//System.out.println("setCheckPaymentType checkID = "+checkID.toString());
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckPaymentType: parameter [cnn] cannot be null!"));
 			return false;
@@ -825,7 +853,7 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
             return false;
         }
     }
-    public boolean setCheckFlagReturn(int flagReturn, BigDecimal checkID, int returnID) {
+    public boolean setCheckFlagReturn(int flagReturn, BigDecimal checkID, int returnID, boolean fiscal) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckFlagReturn: parameter [cnn] cannot be null!"));
 			return false;
@@ -833,6 +861,7 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
             cs.setString(1, "flagReturn");
+			if (fiscal) cs.setString(1, "flagReturnFiscal");
             cs.setBigDecimal(2, checkID);
             cs.setInt(3, flagReturn);
             cs.setInt(4, clientID);

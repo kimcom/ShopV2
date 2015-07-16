@@ -112,6 +112,109 @@ public class DialogBoxs {
 		JDialog dialog = jop.createDialog(null, title);
 		dialog.setVisible(true);
 		Object opt = jop.getValue();
+		if (opt == null) return "0";
+		if (opt.toString() == "Ввод") // pressing OK button
+		{
+			return jFormattedTextField3.getValue().toString();
+		} else {
+			return "0";
+		}
+	}
+	public String showOptionDialogGetFiscalCheckID(String title, String textMessage, String textMessage2, Icon icon) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+		JLabel label = new JLabel(textMessage);
+		JLabel label2 = new JLabel(textMessage2);
+		JFormattedTextField jFormattedTextField3 = new JFormattedTextField();
+		jFormattedTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		jFormattedTextField3.setForeground(new java.awt.Color(0, 0, 204));
+		jFormattedTextField3.setPreferredSize(new Dimension(96, 22));
+		jFormattedTextField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+		jFormattedTextField3.setAutoscrolls(false);
+		jFormattedTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		jFormattedTextField3.addFocusListener(new MyUtil.MyFormatedTextFocusListener());
+
+		jFormattedTextField3.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
+		if (jFormattedTextField3.getText().equals("")) {
+			jFormattedTextField3.setText("0");
+		}
+		//jFormattedTextField3.setText(jFormattedTextField3.getText().replace(".", ","));
+		try {
+			jFormattedTextField3.commitEdit();
+		} catch (ParseException ex) {
+			DialogBoxs.viewError(ex);
+		}
+		JFormattedTextField jFormattedTextField4 = new JFormattedTextField();
+		jFormattedTextField4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		jFormattedTextField4.setForeground(new java.awt.Color(0, 0, 204));
+		jFormattedTextField4.setPreferredSize(new Dimension(96, 22));
+		jFormattedTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+		jFormattedTextField4.setAutoscrolls(false);
+		jFormattedTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		jFormattedTextField4.addFocusListener(new MyUtil.MyFormatedTextFocusListener());
+
+		jFormattedTextField4.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
+		if (jFormattedTextField4.getText().equals("")) {
+			jFormattedTextField4.setText("0");
+		}
+		//jFormattedTextField4.setText(jFormattedTextField3.getText().replace(".", ","));
+		try {
+			jFormattedTextField4.commitEdit();
+		} catch (ParseException ex) {
+			DialogBoxs.viewError(ex);
+		}
+		panel.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+//		panel.add(label);
+		panel.add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 11, -1, -1));
+		panel.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 51, -1, -1));
+		panel.add(jFormattedTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 51, -1, -1));
+		String[] options = new String[]{"Ввод", "Отмена"};
+		JOptionPane jop = new JOptionPane(panel, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon, options, title);
+		getAllComponents((Container) jop);
+		JDialog dialog = jop.createDialog(null, title);
+		dialog.setVisible(true);
+		Object opt = jop.getValue();
+		if (opt == null) {
+			return "0";
+		}
+		if (opt.toString() == "Ввод") // pressing OK button
+		{
+			String res = jFormattedTextField3.getValue().toString();
+			if (res.equals("0")) res = "f" + jFormattedTextField4.getValue().toString();
+			return res;
+		} else {
+			return "0";
+		}
+	}
+	public String showOptionDialogGetSum(String title, String textMessage, Icon icon) {
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel(textMessage);
+		JFormattedTextField jFormattedTextField3 = new JFormattedTextField();
+		jFormattedTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		jFormattedTextField3.setForeground(new java.awt.Color(0, 0, 204));
+		jFormattedTextField3.setPreferredSize(new Dimension(96, 22));
+		jFormattedTextField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+		jFormattedTextField3.setAutoscrolls(false);
+		jFormattedTextField3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		jFormattedTextField3.addFocusListener(new MyUtil.MyFormatedTextFocusListener());
+
+		jFormattedTextField3.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+		if (jFormattedTextField3.getText().equals("")) jFormattedTextField3.setText("0.00");
+		//jFormattedTextField3.setText(jFormattedTextField3.getText().replace(".", ","));
+		try {
+			jFormattedTextField3.commitEdit();
+		} catch (ParseException ex) {
+			DialogBoxs.viewError(ex);
+		}
+		panel.add(label);
+		panel.add(jFormattedTextField3);
+		String[] options = new String[]{"Ввод", "Отмена"};
+		JOptionPane jop = new JOptionPane(panel, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon, options, title);
+        getAllComponents((Container) jop);
+		JDialog dialog = jop.createDialog(null, title);
+		dialog.setVisible(true);
+		Object opt = jop.getValue();
+		if (opt == null) return "0";
 		if (opt.toString() == "Ввод") // pressing OK button
 		{
 			return jFormattedTextField3.getValue().toString();

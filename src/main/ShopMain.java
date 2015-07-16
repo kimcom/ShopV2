@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.UnsupportedLookAndFeelException;
 import reports.ReportPricePlank;
 import reports.ReportPriceSticker;
 
@@ -17,6 +18,17 @@ public class ShopMain {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+				try {
+					for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+						if ("Nimbus".equals(info.getName())) {
+							javax.swing.UIManager.setLookAndFeel(info.getClassName());
+							break;
+						}
+					}
+				} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+					//java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+					MyUtil.errorToLog(FrmMain.class.getName(), ex);
+				}
                 final ConfigReader config = ConfigReader.getInstance();
 //				MyEKKA me = new MyEKKA();
 //				//me.report("z1");
@@ -56,12 +68,17 @@ public class ShopMain {
                 ConnectionDb cnn = ConnectionDb.getInstance();
                 if (cnn == null) System.exit(0);
                 
-                if(!config.USER_NAME.equals("")){
+				if(!config.USER_NAME.equals("")){
                     String password = new StringBuffer(config.USER_NAME).reverse().toString();
                     boolean loginStatus = cnn.login(config.USER_NAME, password);
 //                    if(loginStatus){
 //                        //final FrmOrderList frmOrderList = FrmOrderList.getInstance(new JFrame(),0);
-//                        final FrmOrderEdit frmOrderEdit = FrmOrderEdit.getInstance(new JFrame(),new BigDecimal(2.1453));
+//                        //final FrmOrderEdit frmOrderEdit = FrmOrderEdit.getInstance(new JFrame(),new BigDecimal(2.1453));
+//						FrmCashMove frmCashMove = new FrmCashMove();
+//						frmCashMove.setModal(true);
+//						frmCashMove.setVisible(true);
+//						cnn.destroy();
+//						System.exit(0);
 //                    }else 
                     if(loginStatus) {
                         final FrmMain frmMain = FrmMain.getInstance();
@@ -79,6 +96,7 @@ public class ShopMain {
 //						final FrmSearch frmSearch = FrmSearch.getInstance();
 //                      final FrmDiscount frmDiscount = FrmDiscount.getInstance();
                     }else{
+						cnn.destroy();
                         System.exit(0);
                     }
                 }else{

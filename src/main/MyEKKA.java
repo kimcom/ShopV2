@@ -46,17 +46,40 @@ public class MyEKKA {
 	public void report(String reportType) {
 		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
 			sendCommand("execute_report;"+reportType+";12321;");
+			if (!sendCommand("close_port"))	return;
+		}
+	}
+	public void nullCheck() {
+		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
+			if (!sendCommand("cashier_registration;1;0")) return;//регистрация кассира
+			sendCommand("print_empty_receipt;");
+			if (!sendCommand("close_port"))	return;
+		}
+	}
+	public void copyCheck() {
+		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
+			if (!sendCommand("cashier_registration;1;0")) return;//регистрация кассира
+			sendCommand("print_receipt_copy;");
+			if (!sendCommand("close_port"))	return;
+		}
+	}
+	public void in(String summa) {
+		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
+			if (!sendCommand("cashier_registration;1;0")) return;//регистрация кассира
+			sendCommand("in_out;0;0;0;0;"+summa+";;;");
+			if (!sendCommand("close_port"))	return;
+		}
+	}
+	public void out(String summa) {
+		if (sendCommand("open_port;" + conf.EKKA_PORT + ";" + conf.EKKA_BAUD + "")) {
+			if (!sendCommand("cashier_registration;1;0")) return;//регистрация кассира
+			sendCommand("in_out;0;0;0;1;"+summa+";;;");
+			if (!sendCommand("close_port"))	return;
 		}
 	}
 	public MyEKKA() {
-//		try {
-//			ActiveXComponent ecr = new ActiveXComponent("ecrmini.t400");
-//		} catch (Exception e) {
-//			MyUtil.errorToLog(this.getClass().getName(), e);
-//			return;
-//		}
 	}
-	public boolean printCheck(BigDecimal checkID) {
+	public boolean printCheck(BigDecimal checkID, String typePay, BigDecimal returnIDFiscalNumber) {
 		if (cnn == null) return false;
 		this.currentCheckID = checkID;
 		if (this.currentCheckID == null) this.currentCheckID = cnn.currentCheckID;
@@ -66,7 +89,11 @@ public class MyEKKA {
 			if (!sendCommand("cashier_registration;1;0")) return false;//регистрация кассира
 			//if (!sendCommand("get_status;0")) return false;//статус чека
 			//if(last_result_array[2]=="0") 
-			if (!sendCommand("open_receipt;0;")) return false;//открытие чека
+			if ( returnIDFiscalNumber == null){
+				if (!sendCommand("open_receipt;0;")) return false;//открытие чека
+			}else{
+				if (!sendCommand("open_receipt;1;")) return false;//открытие чека
+			}
 			ResultSet res = cnn.getCheckContent(currentCheckID);
 			int y = 0, h;
 			try {
@@ -83,9 +110,9 @@ public class MyEKKA {
 					name			= name.replace(",", " ");
 					name			= name.replace(";", " ");
 					name			= name.replaceAll("  ", " ");
-					String quantity = res.getBigDecimal("Quantity").setScale(3, RoundingMode.HALF_UP).toString();
-					String price	= res.getBigDecimal("Price").setScale(2, RoundingMode.HALF_UP).toString();
-					String sum		= res.getBigDecimal("Sum").setScale(2, RoundingMode.HALF_UP).toString();
+					String quantity = res.getBigDecimal("Quantity").setScale(3, RoundingMode.HALF_UP).abs().toString();
+					String price	= res.getBigDecimal("Price").setScale(2, RoundingMode.HALF_UP).abs().toString();
+					String sum		= res.getBigDecimal("Sum").setScale(2, RoundingMode.HALF_UP).abs().toString();
 					//System.out.println(""+goodid+"	"+name+"	"+quantity+" "+price+" "+sum);
 					//System.out.println("add_plu;" + goodid + ";0;" + weight + ";0;0;0;" + division + ";" + price + ";0;'" + name + "';" + quantity + ";");
 //DialogBoxs.viewMessage("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
@@ -103,7 +130,12 @@ public class MyEKKA {
 			}
 			//show_subtotal
 			//cancel_receipt
-			if (!sendCommand("pay;0;0;"))return false;//закрытие чека "pay;2;0;"-безнал
+			if (!sendCommand("pay;"+typePay+";0;"))return false;//закрытие чека "pay;2;0;"-безнал
+			if (sendCommand("get_last_receipt_number;")){
+				//MyUtil.errorToLog("test EKKA", last_result);
+				cnn.setCheckFiscalNumber(last_result);
+				//DialogBoxs.viewMessage(last_result);
+			}//номер последнего чека
 			if (!sendCommand("close_port"))return false;
 		} else {
 			DialogBoxs.viewMessageError("Нет связи с фиск.регистратором");
