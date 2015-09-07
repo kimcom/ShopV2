@@ -81,6 +81,10 @@ public class ShopMain {
 //						System.exit(0);
 //                    }else 
                     if(loginStatus) {
+//						UpdaterShopV1 updaterShopV1 = new UpdaterShopV1();
+//						if (1 == 1) {
+//							return;
+//						}
                         final FrmMain frmMain = FrmMain.getInstance();
 
 						TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
@@ -91,8 +95,13 @@ public class ShopMain {
 						TimerTask timerTask2 = new MyTimerTask(frmMain, "updateAppTask");
 						//running timer task as daemon thread
 						Timer timer2 = new Timer(true);
-						timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START*1000, config.TIME_UPDATE * 1000);
+						timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
 
+						TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
+						//running timer task as daemon thread
+						Timer timer3 = new Timer(true);
+						timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз
+						
 //						final FrmSearch frmSearch = FrmSearch.getInstance();
 //                      final FrmDiscount frmDiscount = FrmDiscount.getInstance();
                     }else{

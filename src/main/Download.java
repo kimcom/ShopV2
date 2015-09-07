@@ -32,6 +32,7 @@ public class Download extends Observable implements Runnable {
 	// Constructor for Download.
 	public Download(String strUrl, String fileName) {
 		try {
+			strUrl = strUrl.replaceAll(" ", "%20");
 			this.url = new URL(strUrl);
 			this.fileName = fileName;
 			size = -1;

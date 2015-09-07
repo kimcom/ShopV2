@@ -22,16 +22,12 @@ public class MyTimerTask extends TimerTask {
 		if (taskName.equals("linkStatusTask")){
 			linkStatusTask();
 		} else if (taskName.equals("updateAppTask")) {
-			updateAppTask();
+			Updater updater = new Updater();
+		} else if (taskName.equals("updaterShopV1")) {
+			UpdaterShopV1 updaterShopV1 = new UpdaterShopV1();
 		}
 	}
 	
-	private void updateAppTask() {
-		new Updater();
-//		Date dt = new Date();
-//		System.out.println("updateAppTask" + dt.toString());
-	}
-
 	private void linkStatusTask() {
 //		Date dt = new Date();
 //		System.out.println("linkStatusTask" + dt.toString());

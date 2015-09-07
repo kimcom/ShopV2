@@ -2444,4 +2444,23 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
 			return false;
 		}
 	}
+//service
+	public boolean createFileForShopV1() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("createFileForShopV1: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_service_shop_k(?,?,?)}");
+			cs.setString(1, "");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setInt(3, clientID);
+			cs.execute();
+			return cs.getInt(2) == 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
 }

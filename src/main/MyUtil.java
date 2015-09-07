@@ -3,8 +3,15 @@ package main;
 import db.ConnectionDb;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,11 +109,58 @@ public class MyUtil {
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);
 			// the following statement is used to log any messages  
-			//logger.info(err.getMessage());
+			//logger.info(error_info);
 			logger.log(Level.SEVERE, "Exception:"+error_info);
 			fh.close();
 		} catch (SecurityException | IOException e) {
 			MyUtil.errorToLog(MyUtil.class.getName(), e);
+		}
+	}
+	public static void messageToLog(String className, String error_info) {
+		File dir = new File("Logs");
+		dir.mkdir();
+		Logger logger = Logger.getLogger(className);
+		FileHandler fh;
+		try {
+			// This block configure the logger with handler and formatter  
+			//fh = new FileHandler("shopV2.log");
+			fh = new FileHandler(dir.getName() + "/" + className + ".log", true);
+			logger.addHandler(fh);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh.setFormatter(formatter);
+			// the following statement is used to log any messages  
+			logger.info(error_info);
+			//logger.log(Level.SEVERE, "Exception:" + error_info);
+			fh.close();
+		} catch (SecurityException | IOException e) {
+			MyUtil.errorToLog(MyUtil.class.getName(), e);
+		}
+	}
+	public static void replaceInFile(String fileName, String str_search, String str_new){
+		//замена подстроки в текстовом файле
+		File file = new File(fileName);
+		if (file.exists() && file.isFile()) {
+			InputStream fis = null;
+			OutputStream fos = null;
+			try {
+				fis = new BufferedInputStream(new FileInputStream(file));
+				byte[] str_in = new byte[fis.available()];
+				fis.read(str_in);
+				fis.close();
+				String str_out = new String(str_in);
+				if (str_out.indexOf(str_search) != 0) {
+					String buffer = str_out.replaceAll(str_search, str_new);
+					fos = new BufferedOutputStream(new FileOutputStream(file));
+					fos.write(buffer.getBytes());
+					if (fos != null) {
+						fos.close();
+					}
+				}
+			} catch (FileNotFoundException ex) {
+				MyUtil.errorToLog(MyUtil.class.getName(), ex);
+			} catch (IOException ex) {
+				MyUtil.errorToLog(MyUtil.class.getName(), ex);
+			}
 		}
 	}
 }

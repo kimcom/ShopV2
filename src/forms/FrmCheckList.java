@@ -120,6 +120,7 @@ public class FrmCheckList extends javax.swing.JDialog {
 		int selectedRow = jTableChechList.getSelectedRow();
 		if (selectedRow == -1) return;
 		currentCheckID = new BigDecimal(jTableChechList.getModel().getValueAt(selectedRow, 0).toString());
+//currentCheckID = new BigDecimal(5458.1247);
 		cnn.getCheckInfo(currentCheckID);
 		if (cnn.checkIsBlank()) {
 			DialogBoxs.viewMessage("Нулевые чеки не печатаем!");

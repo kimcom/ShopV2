@@ -149,6 +149,7 @@ public class ReportCheck extends JDialog implements Printable{
 //				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
 				currentDT = res.getString("CurrentDT").toString();
+//currentDT = res.getString("DT_create").toString();
 				y = y + 4;
                 h = 11;
                 String str = res.getString("Name").toString();
