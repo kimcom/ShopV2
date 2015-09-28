@@ -77,6 +77,10 @@ public class ReportPricePlank extends JDialog{
 						Report r = new Report();
 						r.setBackground(new java.awt.Color(255, 255, 255));
 						JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
+						JScrollBar verticalScrollBar = sp.getVerticalScrollBar();
+						JScrollBar horizontalScrollBar = sp.getHorizontalScrollBar();
+						verticalScrollBar.setValue(verticalScrollBar.getMinimum());
+						horizontalScrollBar.setValue(horizontalScrollBar.getMinimum());
 						Component c = (Component) sp.getViewport().getView();
 //System.out.println(""+i+" "+c.getWidth() + " " + c.getHeight());
 						r.add(c,new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, c.getWidth(), c.getHeight()));
@@ -92,6 +96,10 @@ public class ReportPricePlank extends JDialog{
 					Report r = new Report();
 					r.setBackground(new java.awt.Color(255, 255, 255));
 					JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
+					JScrollBar verticalScrollBar = sp.getVerticalScrollBar();
+					JScrollBar horizontalScrollBar = sp.getHorizontalScrollBar();
+					verticalScrollBar.setValue(verticalScrollBar.getMinimum());
+					horizontalScrollBar.setValue(horizontalScrollBar.getMinimum());
 					Component c = sp.getViewport().getView();
 //System.out.println(""+i+" "+c.getWidth() + " " + c.getHeight());
 					r.add(c, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, c.getWidth(), c.getHeight()));

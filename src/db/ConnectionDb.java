@@ -2162,6 +2162,24 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
 			return null;
 		}
 	}
+	public ResultSet getMarkupReport(int type) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getMarkupReport: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_client(?,?,?)}");
+			cs.setString(1, "getMarkupReport"+type);
+			cs.setInt(2, clientID);
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
 	
 //goods for sticker
     public ResultSet getGoodsListForSticker(int catID) {

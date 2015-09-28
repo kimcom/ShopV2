@@ -26,8 +26,16 @@ import javax.swing.SwingUtilities;
 
 public class MyUtil {
 	public static String getCurrentDateTime(){
+		return getCurrentDateTime(true);
+	}
+	public static String getCurrentDateTime(boolean labelText){
 		Date curdate = new Date();
-		SimpleDateFormat formatDT = new SimpleDateFormat("Дата: dd.MM.yyyy Время: hh:mm");
+		SimpleDateFormat formatDT;
+		if (labelText) {
+			formatDT = new SimpleDateFormat("Дата: dd.MM.yyyy Время: hh:mm");
+		} else {
+			formatDT = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+		}
 		return formatDT.format(curdate);
 	}
 	public static String getCurrentDate(){

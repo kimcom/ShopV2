@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
+import reports.ReportMarkup;
 import reports.ReportPricePlank;
 import reports.ReportPriceSticker;
 
@@ -37,7 +38,15 @@ public class ShopMain {
 //				ConnectionDb cnn1 = ConnectionDb.getInstance();
 //				String password1 = new StringBuffer(config.USER_NAME).reverse().toString();
 //				cnn1.login(config.USER_NAME, password1);
-
+//
+////				FrmAdmin frmAdmin = new FrmAdmin();
+////				frmAdmin.setModal(true);
+////				frmAdmin.setVisible(true);
+//				ReportMarkup reportMarkup = new ReportMarkup();
+//				reportMarkup.setModal(true);
+//				reportMarkup.setVisible(true);
+//				if (1 == 1) System.exit(0);
+				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
@@ -61,9 +70,8 @@ public class ShopMain {
 //				frmCardAttribute.setModal(true);
 //				frmCardAttribute.setVisible(true);
 				
-//				if (1==1) {
-//					System.exit(0);
-//				}
+				//if (1==1) System.exit(0);
+				
                 if (config == null) System.exit(0);
                 ConnectionDb cnn = ConnectionDb.getInstance();
                 if (cnn == null) System.exit(0);

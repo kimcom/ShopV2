@@ -373,7 +373,7 @@ public class FrmMain extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 		cnn = ConnectionDb.getInstance();
 		if (cnn != null) cnn.setAppVersion();
-		if (cnn.checkCardID!=null) blDiscountCardFuture = true;
+		if (cnn.checkCardID!=null && cnn.returnID==null && cnn.returnIDFiscalNumber==null) blDiscountCardFuture = true;
         requery();
 		
 		setVisible(jButtonCheckCopy, false);
