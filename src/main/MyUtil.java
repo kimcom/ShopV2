@@ -26,15 +26,23 @@ import javax.swing.SwingUtilities;
 
 public class MyUtil {
 	public static String getCurrentDateTime(){
-		return getCurrentDateTime(true);
+		return getCurrentDateTime(true,0);
+	}
+	public static String getCurrentDateTime(int type){
+		return getCurrentDateTime(false,type);
 	}
 	public static String getCurrentDateTime(boolean labelText){
+		return getCurrentDateTime(labelText,0);
+	}
+	public static String getCurrentDateTime(boolean labelText, int type){
 		Date curdate = new Date();
-		SimpleDateFormat formatDT;
-		if (labelText) {
+		SimpleDateFormat formatDT = null;
+		if (labelText && type==0) {
 			formatDT = new SimpleDateFormat("Дата: dd.MM.yyyy Время: hh:mm");
-		} else {
+		} else if (!labelText && type==0) {
 			formatDT = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+		} else {
+			formatDT = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
 		}
 		return formatDT.format(curdate);
 	}

@@ -889,14 +889,21 @@ public class FrmMain extends javax.swing.JFrame {
 		if (status==0) {
 			jButtonLink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/connect on.png")));
 			cnnState = true;
+			if (cnn.serverID == 1) {
+				jButtonLink.setToolTipText("Установлена связь с сервером: " + conf.SERVER_ADDRESS_1);
+			} else {
+				jButtonLink.setToolTipText("Установлена связь с сервером: " + conf.SERVER_ADDRESS_2);
+			}
 		}
 		if (status==1) {
 			jButtonLink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/connect search.png")));
 			cnnState = false;
+			jButtonLink.setToolTipText("Связь с сервером восстанавливается...");
 		}
 		if (status==2) {
 			jButtonLink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/connect lost.png")));
 			cnnState = false;
+			jButtonLink.setToolTipText("Связь с сервером невозможна.");
 		}
 	}
     private void requery() {

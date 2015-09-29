@@ -21,6 +21,8 @@ public class MyTimerTask extends TimerTask {
 	public void run() {
 		if (taskName.equals("linkStatusTask")){
 			linkStatusTask();
+		} else if (taskName.equals("linkStatusServer")){
+			linkStatusServerTask();
 		} else if (taskName.equals("updateAppTask")) {
 			Updater updater = new Updater();
 		} else if (taskName.equals("updaterShopV1")) {
@@ -29,43 +31,50 @@ public class MyTimerTask extends TimerTask {
 	}
 	
 	private void linkStatusTask() {
-//		Date dt = new Date();
-//		System.out.println("linkStatusTask" + dt.toString());
 		parentJFrame.setCnnStatus(1);
-		//ConnectionDb cnn = ConnectionDb.getInstanceSilent();
 		if (cnn != null){
 //			System.out.println("cnn проверяем! statusValid()="+cnn.statusValid());
 			parentJFrame.setCnnStatus(1);
 			if (!cnn.statusValid()){
 //				System.out.println("cnn is clossed!");
 				parentJFrame.setCnnStatus(2);
-				//cnn.destroy();
-				//cnn = ConnectionDb.getInstanceSilent();
 				cnn.close();
 				cnn.startConnect();
 				if (cnn != null) {
-//					System.out.println("statusValid()=" + cnn.statusValid());
-//					System.out.println("проверяем closed");
 					if(!cnn.statusClosed()){
-//						System.out.println("cnn is open!");
-//						if (cnn.currentCheckID == null) {
-//							final ConfigReader config = ConfigReader.getInstance();
-//							String password = new StringBuffer(config.USER_NAME).reverse().toString();
-//							cnn.login(config.USER_NAME, password);
-//						}
 						parentJFrame.setCnnStatus(0);
 					}
 				} else {
 //					System.out.println("1. cnn не поднимается!");
 				}
 			} else {
-//				if (cnn.currentCheckID == null) {
-//					final ConfigReader config = ConfigReader.getInstance();
-//					String password = new StringBuffer(config.USER_NAME).reverse().toString();
-//					cnn.login(config.USER_NAME, password);
-//				}
-//				System.out.println(""+Integer.toString(cnn.clientID));
-//				System.out.println(""+cnn.currentCheckID.toString());
+//				System.out.println("	коннект в порядке");
+				parentJFrame.setCnnStatus(0);
+			}
+		} else {
+//			System.out.println("2. cnn не поднимается!");
+			parentJFrame.setCnnStatus(2);
+		}
+	}
+	private void linkStatusServerTask() {
+		parentJFrame.setCnnStatus(1);
+		if (cnn != null){
+//			System.out.println("cnn проверяем! statusValid()="+cnn.statusValid());
+			parentJFrame.setCnnStatus(1);
+			
+			if (!cnn.statusValid() || cnn.serverID == 2){
+//				System.out.println("cnn is clossed!");
+				parentJFrame.setCnnStatus(2);
+				cnn.close();
+				cnn.startConnect();
+				if (cnn != null) {
+					if(!cnn.statusClosed()){
+						parentJFrame.setCnnStatus(0);
+					}
+				} else {
+//					System.out.println("1. cnn не поднимается!");
+				}
+			} else {
 //				System.out.println("	коннект в порядке");
 				parentJFrame.setCnnStatus(0);
 			}

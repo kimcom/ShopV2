@@ -16,7 +16,8 @@ public class ConfigReader {
     private static ConfigReader instance   = null;
     public String       FORM_TITLE;
     public String       ICON_IMAGE;
-    public String       SERVER_ADDRESS;
+    public String       SERVER_ADDRESS_1;
+    public String       SERVER_ADDRESS_2;
     public String       SERVER_PORT;
     public String       SERVER_DB;
     public String       USER_NAME;
@@ -77,6 +78,12 @@ public class ConfigReader {
 				zzz.println("PLANK_PADDING_LEFT     = 18");
 				zzz.println("PLANK_PADDING_TOP      = 20");
 			}
+			if(typeInfo.equals("SERVERS")){
+				zzz.println("");
+				zzz.println(";сервера");
+				zzz.println("SERVER_ADDRESS_1 = trio.priroda.com.ua");
+				zzz.println("SERVER_ADDRESS_2 = mts.priroda.com.ua");
+			}
 			zzz.close();
 		} catch (FileNotFoundException e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -101,10 +108,18 @@ public class ConfigReader {
 			inChars = new InputStreamReader(file, "UTF-8");
 			props.load(inChars);
 		}
+		str = props.getProperty("SERVER_ADDRESS_1");//проверим есть ли настройки для ценников
+		if(str==null) {
+			addInfoIntoConfig("SERVERS");
+			file = new FileInputStream(fileConf);
+			inChars = new InputStreamReader(file, "UTF-8");
+			props.load(inChars);
+		}
 
 		FORM_TITLE      = props.getProperty("FORM_TITLE");
         ICON_IMAGE      = props.getProperty("ICON_IMAGE");
-        SERVER_ADDRESS  = props.getProperty("SERVER_ADDRESS");
+        SERVER_ADDRESS_1= props.getProperty("SERVER_ADDRESS_1");
+        SERVER_ADDRESS_2= props.getProperty("SERVER_ADDRESS_2");
         SERVER_PORT     = props.getProperty("SERVER_PORT");
         SERVER_DB       = props.getProperty("SERVER_DB");
         USER_NAME       = props.getProperty("USER_NAME");

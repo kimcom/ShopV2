@@ -109,6 +109,11 @@ public class ShopMain {
 						//running timer task as daemon thread
 						Timer timer3 = new Timer(true);
 						timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз
+
+						TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
+						//running timer task as daemon thread
+						Timer timer4 = new Timer(true);
+						timer4.scheduleAtFixedRate(timerTask4, 0, config.TIME_WAIT * 1000 * 60);
 						
 //						final FrmSearch frmSearch = FrmSearch.getInstance();
 //                      final FrmDiscount frmDiscount = FrmDiscount.getInstance();

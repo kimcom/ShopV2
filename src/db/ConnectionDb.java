@@ -11,15 +11,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.MyUtil;
 
 public final class ConnectionDb{
     private static ConnectionDb instance    = null;
-    private String              cnnString   = "";
+    private String              cnnString1  = "";
+    private String              cnnString2  = "";
     private String              userName    = "";
     private String              password    = "";
     private Connection          cnn         = null;
@@ -28,6 +27,7 @@ public final class ConnectionDb{
     public BigDecimal           currentCheckID;
     public BigDecimal           returnID;
     public BigDecimal           returnIDFiscalNumber;
+    public int					serverID;
     private int                 userID;
     public int					clientID;
     public int					matrixID;
@@ -73,7 +73,8 @@ public final class ConnectionDb{
     private void Init(){
         //ConfigReader config = ConfigReader.getInstance();
 		//&amp;AutoCommit=true&amp;autoReconnect=true
-        cnnString   = "jdbc:mysql://" + config.SERVER_ADDRESS + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
+        cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
+        cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
         //cnnString   = "jdbc:mariadb://" + config.SERVER_ADDRESS + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&allowMultiQueries=true";
         userName    = config.SERVER_DB;
         password    = "149521";
@@ -91,7 +92,6 @@ public final class ConnectionDb{
 		try {
 			return cnn.isValid(config.TIME_WAIT-2);
 		} catch (SQLException ex) {
-			//Logger.getLogger(ConnectionDb.class.getName()).log(Level.SEVERE, null, ex);
 			MyUtil.errorToLog(this.getClass().getName(), ex);
 			return false;
 		}
@@ -108,11 +108,20 @@ public final class ConnectionDb{
 			throw new IllegalArgumentException("Error load driver.");
 		}
 		try {
-			cnn = DriverManager.getConnection(cnnString, userName, password);
+//System.out.println(MyUtil.getCurrentDateTime(1) + " " + cnnString1);
+			cnn = DriverManager.getConnection(cnnString1, userName, password);
+			serverID = 1;
 			status = true;
 		} catch (SQLException err) {
 			MyUtil.errorToLog(this.getClass().getName(), err);
-			//throw new IllegalArgumentException("Error: " + err);
+			try {
+//System.out.println(MyUtil.getCurrentDateTime(1) + " " + cnnString2);
+				cnn = DriverManager.getConnection(cnnString2, userName, password);
+				serverID = 2;
+				status = true;
+			} catch (SQLException err2) {
+				MyUtil.errorToLog(this.getClass().getName(), err2);
+			}
 		}
 		return status;
 	}
@@ -128,11 +137,20 @@ public final class ConnectionDb{
 			throw new IllegalArgumentException("Error load driver.");
 		}
 		try {
-			cnn = DriverManager.getConnection(cnnString, userName, password);
+//System.out.println(MyUtil.getCurrentDateTime(1) + " " + cnnString1);
+			cnn = DriverManager.getConnection(cnnString1, userName, password);
+			serverID = 1;
 		} catch (SQLException err) {
-			//Logger.getLogger(ConnectionDb.class.getName()).log(Level.SEVERE, null, err);
 			MyUtil.errorToLog(this.getClass().getName(), err);
-			throw new IllegalArgumentException("Error: " + err);
+			//throw new IllegalArgumentException("Error: " + err);
+			try {
+//System.out.println(MyUtil.getCurrentDateTime(1) + " " + cnnString2);
+				cnn = DriverManager.getConnection(cnnString2, userName, password);
+				serverID = 2;
+			} catch (SQLException err2) {
+				MyUtil.errorToLog(this.getClass().getName(), err2);
+				throw new IllegalArgumentException("Error: " + err);
+			}
 		}
     }
 	public void close() {
