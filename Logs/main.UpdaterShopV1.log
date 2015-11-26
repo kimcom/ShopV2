@@ -68,3 +68,13 @@ java.io.FileNotFoundException: ..\shop-k\SHOP_MasterZoo.ini (Системе не
 	at main.UpdaterShopV1.run(UpdaterShopV1.java:83)
 	at java.lang.Thread.run(Thread.java:745)
 
+ноя 17, 2015 9:47:17 AM main.MyUtil errorToLog
+SEVERE: Exception:
+java.io.FileNotFoundException: ..\shop-k\SHOP_MasterZoo.ini (Системе не удается найти указанный путь)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at main.UpdaterShopV1.run(UpdaterShopV1.java:83)
+	at java.lang.Thread.run(Thread.java:745)
+
