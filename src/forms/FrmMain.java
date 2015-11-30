@@ -30,7 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import main.ConfigReader;
 import main.DialogBoxs;
-import main.MyEKKA;
+import main.EKKA;
 import main.MyTimerTask;
 import main.MyUtil;
 import main.Updater;
@@ -1147,7 +1147,7 @@ public class FrmMain extends javax.swing.JFrame {
 					return;
 				}
 				try {
-					MyEKKA me = new MyEKKA();
+					EKKA me = new EKKA();
 					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1210,7 +1210,7 @@ public class FrmMain extends javax.swing.JFrame {
 					return;
 				}
 				try {
-					MyEKKA me = new MyEKKA();
+					EKKA me = new EKKA();
 					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1343,7 +1343,7 @@ public class FrmMain extends javax.swing.JFrame {
 					if (cnn == null) {
 						return;
 					}
-					cnn.setCheckDiscount(frmDiscount.iTypeDiscount, frmDiscount.bdDiscount, frmDiscount.goodID, "");
+					cnn.setCheckDiscount(frmDiscount.iTypeDiscount, frmDiscount.bdDiscount, frmDiscount.goodID, "", frmDiscount.iTypeReason);
 					requery();
 				} else {
 					DialogBoxs.viewMessage("Скидка не назначена!");
@@ -1360,31 +1360,28 @@ public class FrmMain extends javax.swing.JFrame {
             DialogBoxs.viewMessage("Для ввода скидки необходимо ввести товары!");
             return;
         }
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-				final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
-				frmCardDiscount.setModal(true);
-				frmCardDiscount.setVisible(true);
-				if (frmCardDiscount.blDisposeStatus) {
-					if (!checkCnnStatus()) {
-						return;
-					}
-					cnn = ConnectionDb.getInstance();
-					if (cnn == null) {
-						return;
-					}
-					if (!cnn.setCheckDiscountByCard(frmCardDiscount.strBarCode)) {
-						requery();
-						DialogBoxs.viewMessage("Ошибка при назначении скидки!");
-					} else {
-						//blDiscountCardFuture = true;
-						requery();
-					}
-				} else {
-					DialogBoxs.viewMessage("Скидка не назначена!");
-				}
-//			}
-//		});
+		final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
+		frmCardDiscount.setModal(true);
+		frmCardDiscount.setVisible(true);
+		if (frmCardDiscount.blDiscountCardReplace) {
+			if (!checkCnnStatus()) return;
+			cnn = ConnectionDb.getInstance();
+			if (cnn == null) return;
+			jButtonNewDiscountCardActionPerformed(frmCardDiscount.strBarCode);
+		} else if (frmCardDiscount.blDisposeStatus) {
+			if (!checkCnnStatus()) return;
+			cnn = ConnectionDb.getInstance();
+			if (cnn == null) return;
+			if (!cnn.setCheckDiscountByCard(frmCardDiscount.strBarCode)) {
+				requery();
+				DialogBoxs.viewMessage("Ошибка при назначении скидки!");
+			} else {
+				//blDiscountCardFuture = true;
+				requery();
+			}
+		} else {
+			DialogBoxs.viewMessage("Скидка не назначена!");
+		}
     }
     private void jButtonCalcActionPerformed(){
         if (!checkCnnStatus()) return;
@@ -1421,25 +1418,30 @@ public class FrmMain extends javax.swing.JFrame {
 			}
 		}
     }
-    private void jButtonNewDiscountCardActionPerformed(){
+    private void jButtonNewDiscountCardActionPerformed(String parentCardID){
 		if (blDiscountCardFuture) return;
 		if (cnn.checkFlagReturn == -1) return;
 		if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-        if (cnn.checkIsBlank()) {
-            DialogBoxs.viewMessage("Для ввода скидки необходимо ввести товары!");
-            return;
-        }
-        BigDecimal bdDiscountSumStart = cnn.getDiscountScaleStart();
-        if (cnn.checkSum.compareTo(bdDiscountSumStart) < 0 ){
-            DialogBoxs.viewMessage("Сумма товаров недостаточна \nдля выдачи новой карты!\nМинимальная сумма: "+bdDiscountSumStart.setScale(2,RoundingMode.HALF_UP).toPlainString());
-            return;
-        }
-		final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(0);
+		BigDecimal bdDiscountSumStart = cnn.getDiscountScaleStart();
+		final FrmCardAttribute frmCardAttribute;
+		if (parentCardID.equals("")) {
+			if (cnn.checkIsBlank()) {
+				DialogBoxs.viewMessage("Для ввода скидки необходимо ввести товары!");
+				return;
+			}
+			if (cnn.checkSum.compareTo(bdDiscountSumStart) < 0 ){
+				DialogBoxs.viewMessage("Сумма товаров недостаточна \nдля выдачи новой карты!\nМинимальная сумма: "+bdDiscountSumStart.setScale(2,RoundingMode.HALF_UP).toPlainString());
+				return;
+			}
+			frmCardAttribute = new FrmCardAttribute(0,"");
+		} else {
+			frmCardAttribute = new FrmCardAttribute(3,parentCardID);
+		}
 		frmCardAttribute.setModal(true);
 		frmCardAttribute.setVisible(true);
-		if (frmCardAttribute.blDisposeStatus) {
+		if (frmCardAttribute.blDisposeStatus && parentCardID.equals("")) {
 			if (!checkCnnStatus()) return;
 			cnn = ConnectionDb.getInstance();
 			if (cnn == null) return;
@@ -1448,6 +1450,17 @@ public class FrmMain extends javax.swing.JFrame {
 				DialogBoxs.viewMessage("Ошибка при назначении скидки!");
 			} else {
 				blDiscountCardFuture = true;
+				requery();
+			}
+		} else if (frmCardAttribute.blDisposeStatus && !parentCardID.equals("")) {
+			if (!checkCnnStatus()) return;
+			cnn = ConnectionDb.getInstance();
+			if (cnn == null) return;
+			if (!cnn.setCheckDiscountByCard(frmCardAttribute.strBarCode)) {
+				requery();
+				DialogBoxs.viewMessage("Ошибка при назначении скидки!");
+			} else {
+				//blDiscountCardFuture = true;
 				requery();
 			}
 		} else {
@@ -1524,7 +1537,7 @@ public class FrmMain extends javax.swing.JFrame {
 	private void jButtonCheckCopyActionPerformed(){
 		if (conf.EKKA_TYPE == 0) return;
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.copyCheck();
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -1580,7 +1593,7 @@ public class FrmMain extends javax.swing.JFrame {
         jButtonPayTypeActionPerformed();
     }//GEN-LAST:event_jButtonPayTypeActionPerformed
     private void jButtonNewDiscountCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewDiscountCardActionPerformed
-        jButtonNewDiscountCardActionPerformed();
+        jButtonNewDiscountCardActionPerformed("");
     }//GEN-LAST:event_jButtonNewDiscountCardActionPerformed
     private void jButtonAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdminActionPerformed
         jButtonAdminActionPerformed();

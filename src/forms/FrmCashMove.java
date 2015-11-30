@@ -30,7 +30,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 import main.ConfigReader;
 import main.DialogBoxs;
-import main.MyEKKA;
+import main.EKKA;
 import main.MyUtil;
 import tablemodel.TmCashMove;
 import tablemodel.TmCashTotal;
@@ -183,7 +183,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.nullCheck();
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -199,7 +199,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 		String returnSum = db.showOptionDialogGetSum("Внесение денег в кассу регистратора", "<html>Введите сумму<br>вносимых денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")));
 		if(returnSum.equals("0")) return;
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.in(returnSum);
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -217,7 +217,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.out(returnSum);
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -230,7 +230,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.report("X1");
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -245,7 +245,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 		int i = JOptionPane.showConfirmDialog(null, "После закрытия смены\nпечать чеков возможна только на следующий день!\n\nЗакрыть смену?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 		if (i != 0) return;
 		try {
-			MyEKKA me = new MyEKKA();
+			EKKA me = new EKKA();
 			me.report("Z1");
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);

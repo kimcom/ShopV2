@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UnsupportedLookAndFeelException;
 import main.ConfigReader;
@@ -28,6 +29,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
     private static String barCode = "";
     private long timeBarCode = 0;
 	private boolean blDiscountCardFuture = false;
+	public boolean blDiscountCardReplace = false;
     public boolean blDisposeStatus = false;
     public String  strBarCode;
 	private int iStatus;
@@ -68,6 +70,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 		jTextField1.setText("Просканируйте дисконтную карту");
 
 //jTextField1.setText("9800000000007");
+//jTextField1.setText("2200000000007");
 //barCode = jTextField1.getText();
 //requery();
     }
@@ -82,7 +85,6 @@ public class FrmCardDiscount extends javax.swing.JDialog {
     }
     private void requery(){
         if (cnn == null) return;
-
         if (cnn.getDiscountCardInfo(barCode)) {
             jLabel21.setText(cnn.getDiscountCardInfo("Name","String"));
             jLabel22.setText("<html>"+cnn.getDiscountCardInfo("Animal", "String")+"</html>");
@@ -138,6 +140,17 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 					jButtonOK.requestFocus();
 				}
 			}
+			String pod = cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal");
+			BigDecimal bgpod = new BigDecimal(pod);
+			if (barCode.startsWith("22") && bgpod.compareTo(new BigDecimal("3")) >= 0) {
+				int i = JOptionPane.showOptionDialog(this, "Нужно заменить карту!\n\nДиск.карта:" + barCode + "\nтекущая скидка: " + pod + "\n\nВыдать новую карту?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Да", "Нет"}, "Да");
+				if (i == 0) {
+					strBarCode = barCode;
+					blDiscountCardReplace = true;
+					jButtonExitActionPerformed();
+					return;
+				}
+			}
         } else {
             jTextField1.requestFocus();
             DialogBoxs.viewMessage("Не найдена карта с штрих-кодом: ".concat(barCode));
@@ -175,10 +188,10 @@ public class FrmCardDiscount extends javax.swing.JDialog {
  //jTextField1.setText("9800000000830");
  jTextField1.setText("9800000000151");
  //jTextField1.setText("9800000436639");
- barCode = jTextField1.getText();
- requery();
  break;
  /**/
+//jTextField1.setText("2200000000007");
+//barCode = "2200000000007";
 			switch (keyCode) {
                 case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {

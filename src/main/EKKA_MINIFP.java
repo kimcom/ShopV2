@@ -1,13 +1,12 @@
 package main;
 import db.ConnectionDb;
 import com.jacob.activeX.*;
-import com.jacob.com.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MyEKKA {
+public class EKKA_MINIFP {
 	private ActiveXComponent ecr = new ActiveXComponent("ecrmini.t400");
 	private ConfigReader conf = ConfigReader.getInstance();
 	private ConnectionDb cnn  = ConnectionDb.getInstance();
@@ -77,8 +76,6 @@ public class MyEKKA {
 			if (!sendCommand("close_port"))	return;
 		}
 	}
-	public MyEKKA() {
-	}
 	public boolean printCheck(BigDecimal checkID, String typePay, BigDecimal returnIDFiscalNumber) {
 		if (cnn == null) return false;
 		this.currentCheckID = checkID;
@@ -142,5 +139,7 @@ public class MyEKKA {
 			return false;
 		}
 		return true;
+	}
+	public EKKA_MINIFP() {
 	}
 }

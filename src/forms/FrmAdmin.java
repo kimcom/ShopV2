@@ -4,20 +4,15 @@ import db.ConnectionDb;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.UnsupportedLookAndFeelException;
 import main.ConfigReader;
 import main.DialogBoxs;
 import main.MyUtil;
@@ -25,7 +20,6 @@ import reports.ReportBarcodeShort;
 import reports.ReportCash;
 import reports.ReportCheck;
 import reports.ReportMarkup;
-import reports.ReportMarkup2;
 import reports.ReportSale;
 
 public class FrmAdmin extends javax.swing.JDialog {
@@ -163,13 +157,13 @@ public class FrmAdmin extends javax.swing.JDialog {
 	}
 	private void jButtonNewDiscountCardActionPerformed() {
 		dispose();
-		final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(1); //выдача новой
+		final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(1,""); //выдача новой
 		frmCardAttribute.setModal(true);
 		frmCardAttribute.setVisible(true);
 	}
 	private void jButtonDiscountCardActionPerformed() {
 		dispose();
-		final FrmCardAttribute frmCardAttribute =new FrmCardAttribute(2); //ввод анкеты
+		final FrmCardAttribute frmCardAttribute =new FrmCardAttribute(2,""); //ввод анкеты
 		frmCardAttribute.setModal(true);
 		frmCardAttribute.setVisible(true);
 	}

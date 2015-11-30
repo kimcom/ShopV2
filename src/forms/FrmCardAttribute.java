@@ -39,12 +39,14 @@ public class FrmCardAttribute extends javax.swing.JDialog {
     public boolean blDisposeStatus = false;
     private boolean blStatusBarCode = false;
 	public String strBarCode;
+	public String parentCardID = "";
     private int iStatus;
 	private	ResultSet resScaleTable;
 
-    public FrmCardAttribute(int _iStatus) {
+    public FrmCardAttribute(int _iStatus, String _parentCardID) {
         initComponents();
         iStatus = _iStatus;
+		parentCardID = _parentCardID;
         conf = ConfigReader.getInstance();
         setTitle("Дисконтная карта. "+conf.FORM_TITLE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
@@ -125,12 +127,16 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			return;
 		}
 		BigDecimal bdSumma = new BigDecimal(jTextField28.getText());
-        if (cnn.setDiscountCardAttribute((iStatus==2)?"card_attr_edit":"card_attr_new", strBarCode,
+		String action = "card_attr_new";
+		String cardID = strBarCode;
+		if (iStatus==2) action = "card_attr_edit";
+		if (iStatus==3) action = "card_attr_new_by_parent";
+		if (cnn.setDiscountCardAttribute(action, cardID,
                 jTextField21.getText(), jTextField22.getText(), jTextField23.getText(),
                 jTextField24.getText(), jTextField25.getText(), jTextField26.getText(),
                 dt1,
                 bdPercent,bdSumma,
-                dt2,"СМС")) {
+                dt2,"СМС",parentCardID)) {
 			JOptionPane.showMessageDialog(this, "Информация о дисконтной карте успешно записана!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
             blDisposeStatus = true;
             dispose();
@@ -159,6 +165,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
     private void requery(){
         if (cnn == null) return;
 
+		if (!parentCardID.equals("")) barCode = parentCardID;
         if (cnn.getDiscountCardInfo(barCode)) {
             jTextField21.setText(cnn.getDiscountCardInfo("Name","String"));
             jTextField22.setText(cnn.getDiscountCardInfo("Address", "String"));
@@ -185,6 +192,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			} else if (iStatus == 1) {
 				jLabel25.setText(dateFormatOut.format(new Date()));
 				jComboBox1.setSelectedItem(cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal"));
+			} else if (iStatus == 3) {
+				jLabel25.setText(dateFormatOut.format(new Date()));
+				jComboBox1.setSelectedItem(cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal"));
+				jTextField28.setText(cnn.getDiscountCardInfo("AmountOfBuying", "BigDecimal"));
             } else if (iStatus == 2) {
 				if (bgPercentCard.compareTo(BigDecimal.ZERO) == 0) {
 					JOptionPane.showMessageDialog(this, "Данную карту еще не выдавали!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
@@ -316,10 +327,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			 jTextField1.setText("9800000436639");
 			 barCode = jTextField1.getText();
 			 requery();
-			 //barCode = "";
 			 break;
 			 /**/
 //			System.out.println("keyCode: "+Integer.toString(keyCode));
+//barCode = "9800000000106";
             switch (keyCode) {
 				case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {

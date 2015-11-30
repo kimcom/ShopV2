@@ -477,7 +477,7 @@ public final class ConnectionDb{
                                             String strEmail, String strAnimal, String strNotes,
                                             String dtDateOfIssue, BigDecimal bdPercentOfDiscount, 
                                             BigDecimal bdAmountOfBuying, String dtDateOfCancellation,
-                                            String strHowWeLearn) {
+                                            String strHowWeLearn, String parentCardID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setDiscountCardAttribute: parameter [cnn] cannot be null!"));
 			return false;
@@ -486,16 +486,17 @@ public final class ConnectionDb{
             return false;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_card_attribute(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            if(action.equals("card_attr_new")){
-                cs.setString(1, "card_attr_new");
-                cs.setBigDecimal(10, bdPercentOfDiscount);
-                cs.setBigDecimal(11, bdAmountOfBuying);
-            } else if(action.equals("card_attr_edit")) {
-                cs.setString(1, "card_attr_edit");
-                cs.setBigDecimal(10, bdPercentOfDiscount);
-                cs.setBigDecimal(11, bdAmountOfBuying);
-            } else return false;
+            CallableStatement cs = cnn.prepareCall("{call pr_card_attribute(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+//            if(action.equals("card_attr_new")){
+//                cs.setString(1, "card_attr_new");
+//                cs.setBigDecimal(10, bdPercentOfDiscount);
+//                cs.setBigDecimal(11, bdAmountOfBuying);
+//            } else if(action.equals("card_attr_edit")) {
+//                cs.setString(1, "card_attr_edit");
+//                cs.setBigDecimal(10, bdPercentOfDiscount);
+//                cs.setBigDecimal(11, bdAmountOfBuying);
+//            } else return false;
+			cs.setString(1, action);
             cs.setString(2, strCardID);
             cs.setString(3, strName);
             cs.setString(4, strAddress);
@@ -504,12 +505,15 @@ public final class ConnectionDb{
             cs.setString(7, strAnimal);
             cs.setString(8, strNotes);
             cs.setString(9, dtDateOfIssue);
+			cs.setBigDecimal(10, bdPercentOfDiscount);
+			cs.setBigDecimal(11, bdAmountOfBuying);
             cs.setString(12, dtDateOfCancellation);
             cs.setString(13, Integer.toString(clientID));
             cs.setString(14, strHowWeLearn);
-            cs.registerOutParameter(15, Types.DOUBLE);
+            cs.setString(15, parentCardID);
+            cs.registerOutParameter(16, Types.DOUBLE);
             cs.execute();
-            BigDecimal percent = cs.getBigDecimal(15);
+            BigDecimal percent = cs.getBigDecimal(16);
             if (percent.compareTo(bdPercentOfDiscount)==0) return true;
             return false;
         } catch (SQLException e) {
@@ -856,9 +860,7 @@ public final class ConnectionDb{
             cs.registerOutParameter(6, Types.INTEGER);
             cs.execute();
             if (cs.getInt(6) == paymentType) {
-System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
                 getCheckInfo(currentCheckID);
-System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
                 //DialogBoxs.viewMessage("Тип оплаты установлен успешно!");
                 return true;
             } else {
@@ -1102,7 +1104,7 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
         }
     }
 //check discount
-    public boolean setCheckDiscount(int typeDiscount, BigDecimal discount, int goodID, String cardID) {
+    public boolean setCheckDiscount(int typeDiscount, BigDecimal discount, int goodID, String cardID, int typeReason) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckDiscount: parameter [cnn] cannot be null!"));
 			return false;
@@ -1118,7 +1120,8 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
             cs.setBigDecimal(4, discount);
             cs.setInt(5, clientID);
             cs.setInt(6, goodID);
-            cs.setString(7, cardID);
+            //cs.setString(7, cardID);
+			cs.setInt(7, typeReason);
             cs.execute();
             getCheckInfo(currentCheckID);
             return cs.getInt(2) != 0;
@@ -1180,6 +1183,25 @@ System.out.println("setCheckPaymentType currentCheckID = " + currentCheckID);
             return false;
         }
     }
+	public ResultSet getTypeReasonList() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getTypeReasonList: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_select2(?,?,?,?)}");
+			cs.setString(1, "type_reason_list");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setString(3, "");
+			cs.setInt(4, 0);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
 //price over
 	public ResultSet getPriceOverList() {
 		if (cnn == null) {

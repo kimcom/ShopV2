@@ -25,6 +25,8 @@ public class ConfigReader {
     public int          MARKET_ID = 0;
     public int          TERMINAL_ID = 0;
     public int          EKKA_TYPE = 0;
+    public String       EKKA_NAME = "";
+    public String       EKKA_HOST = "";
     public int          EKKA_PORT = 0;
     public int          EKKA_BAUD = 0;
 	public int			TIME_WAIT = 10;//in second
@@ -84,6 +86,12 @@ public class ConfigReader {
 				zzz.println("SERVER_ADDRESS_1 = trio.priroda.com.ua");
 				zzz.println("SERVER_ADDRESS_2 = mts.priroda.com.ua");
 			}
+			if(typeInfo.equals("EKKA")){
+				zzz.println("");
+				zzz.println(";настройки для фиск. регистраторов");
+				zzz.println("EKKA_NAME = MGN707TS");
+				zzz.println("EKKA_HOST = 192.168.8.2");
+			}
 			zzz.close();
 		} catch (FileNotFoundException e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -115,6 +123,13 @@ public class ConfigReader {
 			inChars = new InputStreamReader(file, "UTF-8");
 			props.load(inChars);
 		}
+		str = props.getProperty("EKKA_NAME");//проверим есть ли настройки для ценников
+		if(str==null) {
+			addInfoIntoConfig("EKKA");
+			file = new FileInputStream(fileConf);
+			inChars = new InputStreamReader(file, "UTF-8");
+			props.load(inChars);
+		}
 
 		FORM_TITLE      = props.getProperty("FORM_TITLE");
         ICON_IMAGE      = props.getProperty("ICON_IMAGE");
@@ -128,6 +143,8 @@ public class ConfigReader {
 		EKKA_TYPE		= getIntegerValue(props,"EKKA_TYPE");
 		EKKA_PORT		= getIntegerValue(props,"EKKA_PORT");
 		EKKA_BAUD		= getIntegerValue(props,"EKKA_BAUD");
+		EKKA_NAME		= props.getProperty("EKKA_NAME");
+		EKKA_HOST		= props.getProperty("EKKA_HOST");
 
 		PAGE_WIDTH				= getDoubleValue(props, "PAGE_WIDTH");
 		PAGE_HEIGHT				= getDoubleValue(props, "PAGE_HEIGHT");

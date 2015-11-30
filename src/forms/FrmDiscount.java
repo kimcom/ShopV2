@@ -4,23 +4,21 @@ import db.ConnectionDb;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 import main.ConfigReader;
@@ -36,7 +34,23 @@ public class FrmDiscount extends javax.swing.JDialog {
     public BigDecimal rowSum;
     public boolean blDisposeStatus = false;
     public int iTypeDiscount;
+    public int iTypeReason = 0;
     public BigDecimal bdDiscount;
+
+	class TypeReason {
+		private int value;
+		private String representation;
+		TypeReason(int value, String representation) {
+			this.value = value;
+			this.representation = representation;
+		}
+		public String toString() {
+			return representation;
+		}
+		public int getValue() {
+			return value;
+		}
+	}
 
 	public FrmDiscount() {
         initComponents();
@@ -61,12 +75,33 @@ public class FrmDiscount extends javax.swing.JDialog {
 
 		blDisposeStatus = false;
 		iTypeDiscount = 1;
+		
+		try {
+			cnn = ConnectionDb.getInstance();
+			ResultSet res = cnn.getTypeReasonList();
+			jComboBoxTypeReason.addItem(new TypeReason(0, "не указано"));
+			while (res.next()) {
+				jComboBoxTypeReason.addItem(new TypeReason(res.getInt(1), res.getString(2)));
+			}
+		} catch (SQLException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+			DialogBoxs.viewError(ex);
+		}
+		
 	}
 
     private void jButtonOKActionPerformed(){
+		TypeReason tr = (TypeReason) jComboBoxTypeReason.getSelectedItem();
         bdDiscount = new BigDecimal(BigInteger.ZERO);
         if (!jFormattedTextField1.getText().equals("")) {
             bdDiscount = new BigDecimal(jFormattedTextField1.getValue().toString());
+			if (bdDiscount.compareTo(BigDecimal.ZERO)!=0) {
+				iTypeReason = tr.getValue();
+				if (iTypeReason == 0) {
+					JOptionPane.showMessageDialog(this, "Укажите основание скидки!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+			}
             blDisposeStatus = true;
         }
         dispose();
@@ -183,7 +218,13 @@ public class FrmDiscount extends javax.swing.JDialog {
             jFormattedTextField1ActionPerformed();
         }
     }
-            
+	private void jComboBoxTypeReasonFocusGained(){
+		jComboBoxTypeReason.showPopup();
+	}
+	private void jComboBoxTypeReasonActionPerformed(int keyCode){
+		if (keyCode==10) jButtonOK.requestFocus();
+	}
+	
     private List<Component> getAllComponents(final Container c) {
         Component[] comps = c.getComponents();
         List<Component> compList = new ArrayList<Component>();
@@ -279,7 +320,8 @@ public class FrmDiscount extends javax.swing.JDialog {
         }
     }
     @SuppressWarnings("unchecked")
-    private void initComponents() {//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
         checkboxGroupTapeDiscount = new javax.swing.ButtonGroup();
         jPanelGroupTapeDiscount = new javax.swing.JPanel();
@@ -297,6 +339,8 @@ public class FrmDiscount extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabelTypeReason = new javax.swing.JLabel();
+        jComboBoxTypeReason = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -357,7 +401,7 @@ public class FrmDiscount extends javax.swing.JDialog {
                     .addComponent(jRadioButton3)
                     .addComponent(jRadioButton2)
                     .addComponent(jRadioButton1))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jPanelGroupTapeDiscountLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4});
@@ -439,7 +483,7 @@ public class FrmDiscount extends javax.swing.JDialog {
                 .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -472,14 +516,38 @@ public class FrmDiscount extends javax.swing.JDialog {
         jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jFormattedTextField1.setAutoscrolls(false);
         jFormattedTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jFormattedTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFormattedTextField1FocusLost(evt);
+            }
+        });
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField1ActionPerformed(evt);
             }
         });
-        jFormattedTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFormattedTextField1FocusLost(evt);
+
+        jLabelTypeReason.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabelTypeReason.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelTypeReason.setText("Основание для скидки:");
+        jLabelTypeReason.setAutoscrolls(true);
+        jLabelTypeReason.setFocusable(false);
+        jLabelTypeReason.setPreferredSize(new java.awt.Dimension(41, 17));
+        jLabelTypeReason.setRequestFocusEnabled(false);
+        jLabelTypeReason.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        jComboBoxTypeReason.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jComboBoxTypeReason.setBorder(null);
+        jComboBoxTypeReason.setMinimumSize(new java.awt.Dimension(240, 26));
+        jComboBoxTypeReason.setPreferredSize(new java.awt.Dimension(240, 26));
+        jComboBoxTypeReason.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jComboBoxTypeReasonFocusGained(evt);
+            }
+        });
+        jComboBoxTypeReason.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBoxTypeReasonKeyPressed(evt);
             }
         });
 
@@ -489,9 +557,16 @@ public class FrmDiscount extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxTypeReason, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelTypeReason, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -501,7 +576,11 @@ public class FrmDiscount extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTypeReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBoxTypeReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Информация о сумме:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -554,7 +633,7 @@ public class FrmDiscount extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -579,8 +658,7 @@ public class FrmDiscount extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 8, Short.MAX_VALUE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jButtonOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/ok-64.png"))); // NOI18N
@@ -617,7 +695,7 @@ public class FrmDiscount extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -653,15 +731,15 @@ public class FrmDiscount extends javax.swing.JDialog {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addGap(0, 0, 0))
         );
 
         pack();
-    }//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponents
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         jButtonOKActionPerformed();
     }//GEN-LAST:event_jButtonOKActionPerformed
@@ -686,10 +764,19 @@ public class FrmDiscount extends javax.swing.JDialog {
     private void jFormattedTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFormattedTextField1FocusLost
         jFormattedTextField1ActionPerformed();
     }//GEN-LAST:event_jFormattedTextField1FocusLost
+    private void jComboBoxTypeReasonFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxTypeReasonFocusGained
+        jComboBoxTypeReasonFocusGained();
+    }//GEN-LAST:event_jComboBoxTypeReasonFocusGained
+
+    private void jComboBoxTypeReasonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxTypeReasonKeyPressed
+        jComboBoxTypeReasonActionPerformed(evt.getKeyCode());
+    }//GEN-LAST:event_jComboBoxTypeReasonKeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup checkboxGroupTapeDiscount;
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonOK;
+    private javax.swing.JComboBox jComboBoxTypeReason;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -701,6 +788,7 @@ public class FrmDiscount extends javax.swing.JDialog {
     public javax.swing.JLabel jLabel52;
     public javax.swing.JLabel jLabel53;
     public javax.swing.JLabel jLabel55;
+    public javax.swing.JLabel jLabelTypeReason;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

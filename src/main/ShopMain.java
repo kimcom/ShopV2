@@ -5,13 +5,9 @@ import forms.*;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
-import reports.ReportMarkup;
-import reports.ReportPricePlank;
-import reports.ReportPriceSticker;
 
 public class ShopMain {
 
@@ -45,6 +41,8 @@ public class ShopMain {
 //				ReportMarkup reportMarkup = new ReportMarkup();
 //				reportMarkup.setModal(true);
 //				reportMarkup.setVisible(true);
+//System.out.println(config.EKKA_NAME);
+//System.out.println(config.EKKA_HOST);
 //				if (1 == 1) System.exit(0);
 				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
@@ -108,7 +106,7 @@ public class ShopMain {
 						TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
 						//running timer task as daemon thread
 						Timer timer3 = new Timer(true);
-						timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз
+						timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
 
 						TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
 						//running timer task as daemon thread
