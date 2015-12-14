@@ -89,6 +89,7 @@ public class EKKA_MINIFP {
 			if ( returnIDFiscalNumber == null){
 				if (!sendCommand("open_receipt;0;")) return false;//открытие чека
 			}else{
+MyUtil.messageToLog("minifp", "open_receipt;1;");
 				if (!sendCommand("open_receipt;1;")) return false;//открытие чека
 			}
 			ResultSet res = cnn.getCheckContent(currentCheckID);
@@ -113,8 +114,11 @@ public class EKKA_MINIFP {
 					//System.out.println(""+goodid+"	"+name+"	"+quantity+" "+price+" "+sum);
 					//System.out.println("add_plu;" + goodid + ";0;" + weight + ";0;0;0;" + division + ";" + price + ";0;'" + name + "';" + quantity + ";");
 //DialogBoxs.viewMessage("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";");
+//MyUtil.messageToLog("minifp", "goodid:"+goodid+"	quantity="+quantity+"	price="+price+"	sum="+sum);
+//MyUtil.messageToLog("minifp", "add_plu;" + goodid + ";0;" + weight + ";0;0;0;" + division + ";0;0;" + name + ";" + quantity + ";");
 					if (!sendCommand("add_plu;"+goodid+";0;"+weight+";0;0;0;"+division+";0;0;"+name+";"+quantity+";")) return false;
 //DialogBoxs.viewMessage("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"");
+//MyUtil.messageToLog("minifp", "sale_plu;0;0;1;" + quantity + ";" + goodid + ";" + price + "");
 					if (!sendCommand("sale_plu;0;0;1;"+quantity+";"+goodid+";"+price+"")) return false;
 					//res.getBigDecimal("Quantity").setScale(2, RoundingMode.HALF_UP).toString() + " шт. X " + 
 					//res.getBigDecimal("Price").setScale(2, RoundingMode.HALF_UP).toString()
@@ -127,6 +131,7 @@ public class EKKA_MINIFP {
 			}
 			//show_subtotal
 			//cancel_receipt
+MyUtil.messageToLog("minifp", "pay;" + typePay + ";0;");
 			if (!sendCommand("pay;"+typePay+";0;"))return false;//закрытие чека "pay;2;0;"-безнал
 			if (sendCommand("get_last_receipt_number;")){
 				//MyUtil.errorToLog("test EKKA", last_result);

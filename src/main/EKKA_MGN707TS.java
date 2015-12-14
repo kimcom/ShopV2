@@ -238,7 +238,7 @@ public class EKKA_MGN707TS {
 			this.currentCheckID = cnn.currentCheckID;
 		}
 		if (!online){
-			DialogBoxs.viewMessageError("Ошибка! Нет связи с регистратором MGN707TS");
+			//DialogBoxs.viewMessageError("Ошибка! Нет связи с регистратором MGN707TS");
 			return false;
 		}
 		ResultSet res = cnn.getCheckContent(currentCheckID);
