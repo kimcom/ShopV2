@@ -1132,8 +1132,8 @@ public class FrmMain extends javax.swing.JFrame {
 			return;
 		}
 
-		if(conf.EKKA_TYPE!=0){
-			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null){
+		if(conf.EKKA_TYPE==2){//только для Харьков Таврии
+			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null) {
 //				System.out.println("обычный чек");
 				String typePay = "0";
 				String typePayMsg = "НАЛИЧНЫЙ расчет";
@@ -1152,10 +1152,10 @@ public class FrmMain extends javax.swing.JFrame {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 						}
-					} else {
-						if (cnn.setCheckStatus(2)) {
-							jButtonNewCheckActionPerformed();//без распечатки
-						}
+//					} else {
+//						if (cnn.setCheckStatus(2)) {
+//							jButtonNewCheckActionPerformed();//без распечатки
+//						}
 					}
 				} catch (Exception e) {
 					MyUtil.errorToLog(this.getClass().getName(), e);
@@ -1215,10 +1215,149 @@ public class FrmMain extends javax.swing.JFrame {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 						}
+//					} else {
+//						if (cnn.setCheckStatus(2)) {
+//							jButtonNewCheckActionPerformed();//без распечатки
+//						}
+					}
+				} catch (Exception e) {
+					MyUtil.errorToLog(this.getClass().getName(), e);
+					return;
+				}
+			} else {
+				MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("jButtonPrintCheckActionPerformed: ошибка определения типа чека при печати!"));
+				DialogBoxs.viewMessage("ОШИБКА определения типа чека при печати!");
+			}
+		}else if(conf.EKKA_TYPE!=0){
+			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null){
+//				System.out.println("обычный чек");
+				String typePay = "0";
+				String typePayMsg = "НАЛИЧНЫЙ расчет";
+				String typePrinter = "ПРИНТЕРЕ";
+				if (cnn.checkTypePayment != 0) {
+					typePay = "2";
+					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+					typePrinter = "РЕГИСТРАТОРЕ";
+					int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на "+typePrinter+" ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+					if (i != 0) return;
+					try {
+						EKKA me = new EKKA();
+						if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
+							if (cnn.setCheckStatus(1)) {
+								jButtonNewCheckActionPerformed();//чек распечатан успешно
+							}
+//						} else {
+//							if (cnn.setCheckStatus(2)) {
+//								jButtonNewCheckActionPerformed();//без распечатки
+//							}
+						}
+					} catch (Exception e) {
+						MyUtil.errorToLog(this.getClass().getName(), e);
+						return;
+					}
+				} else {
+					int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на " + typePrinter + " ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+					if (i != 0) return;
+					final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
+					if (!blIconified) {
+						rc.setModal(true);
+						rc.setVisible(true);
+						if (!checkCnnStatus()) {
+							return;
+						}
+						if (rc.blStatusPrintButton) {
+							if (rc.blStatusPrinted) {
+								if (cnn.setCheckStatus(1)) {
+									jButtonNewCheckActionPerformed();//чек распечатан успешно
+								}
+							} else {
+								if (cnn.setCheckStatus(2)) {
+									jButtonNewCheckActionPerformed();//без распечатки
+								}
+							}
+						}
+					} else {
+	//			rc.setModal(true);
+						//одобрено караваном !!!
+						rc.setVisible(true);
+						if (rc.silentPrint()) {
+							if (cnn.setCheckStatus(1)) {
+								jButtonNewCheckActionPerformed();//чек распечатан успешно
+							}
+						} else {
+							if (cnn.setCheckStatus(2)) {
+								jButtonNewCheckActionPerformed();//без распечатки
+							}
+						}
+						rc.dispose();
+					}
+				}
+//				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+//				if (i != 0) {
+//					jButtonPayTypeActionPerformed();
+//					return;
+//				}
+
+			} else if (cnn.returnID != null && cnn.returnIDFiscalNumber == null) {
+//				System.out.println("возврат не фискальный");
+				final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
+				if (!blIconified) {
+					rc.setModal(true);
+					rc.setVisible(true);
+					if (!checkCnnStatus()) {
+						return;
+					}
+					if (rc.blStatusPrintButton) {
+						if (rc.blStatusPrinted) {
+							if (cnn.setCheckStatus(1)) {
+								jButtonNewCheckActionPerformed();//чек распечатан успешно
+							}
+						} else {
+							if (cnn.setCheckStatus(2)) {
+								jButtonNewCheckActionPerformed();//без распечатки
+							}
+						}
+					}
+				} else {
+//					rc.setModal(true);
+					//одобрено караваном !!!
+					rc.setVisible(true);
+					if (rc.silentPrint()) {
+						if (cnn.setCheckStatus(1)) {
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+						}
 					} else {
 						if (cnn.setCheckStatus(2)) {
 							jButtonNewCheckActionPerformed();//без распечатки
 						}
+					}
+					rc.dispose();
+				}
+			} else if (cnn.returnID != null && cnn.returnIDFiscalNumber != null) {
+//				System.out.println("возврат фискальный");
+				String typePay = "0";
+				String typePayMsg = "НАЛИЧНЫЙ расчет";
+				String typePrinter = "ПРИНТЕРЕ";
+				if (cnn.checkTypePayment != 0) {
+					typePay = "2";
+					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+					typePrinter = "РЕГИСТРАТОРЕ";
+				} else {
+					JOptionPane.showMessageDialog(null, "Возврат для фискального чека\n\nвозможно делать только по безналу!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
+					return;
+				}
+				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать возвратный чек на " + typePrinter + " ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+				if (i != 0) return;
+				try {
+					EKKA me = new EKKA();
+					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
+						if (cnn.setCheckStatus(1)) {
+							jButtonNewCheckActionPerformed();//чек распечатан успешно
+						}
+//					} else {
+//						if (cnn.setCheckStatus(2)) {
+//							jButtonNewCheckActionPerformed();//без распечатки
+//						}
 					}
 				} catch (Exception e) {
 					MyUtil.errorToLog(this.getClass().getName(), e);

@@ -73,6 +73,8 @@ public final class ConnectionDb{
     private void Init(){
         //ConfigReader config = ConfigReader.getInstance();
 		//&amp;AutoCommit=true&amp;autoReconnect=true
+//        cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
+//        cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
         cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
         cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
         //cnnString   = "jdbc:mariadb://" + config.SERVER_ADDRESS + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&allowMultiQueries=true";

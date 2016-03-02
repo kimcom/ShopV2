@@ -170,8 +170,12 @@ public class EKKA_MGN707TS {
 				if (ja.size() != 0) {
 					JSONObject jo = (JSONObject) ja.get(0);
 					err_code = jo.get("e").toString();
-					System.out.println(err.get(err_code));
-					DialogBoxs.viewMessageError("Ошибка "+err_code+": "+err.get(err_code));
+					if (err.get(err_code)==null) {
+						online = true; // если на регистраторе ошибка: Document transfer error
+					} else {
+						//System.out.println(err.get(err_code));
+						DialogBoxs.viewMessageError("Ошибка "+err_code+": "+err.get(err_code));
+					}
 				}
 				if (fskMode == 1 && err_code.equals("")) {
 					online = true;
@@ -191,6 +195,7 @@ public class EKKA_MGN707TS {
 	}
 	
 	public void report(String reportType) {
+		if (!online) return;
 		String rep = "";
 		if (reportType.equals("X1")) {
 			rep = "10";
@@ -202,6 +207,7 @@ public class EKKA_MGN707TS {
 		sendGet("/cgi/proc/printreport?"+rep);
 	}
 	public void in(String summa) {
+		if (!online) return;
 		JSONArray jar = new JSONArray();
 		JSONObject joC1 = new JSONObject();
 		JSONObject joC2 = new JSONObject();
@@ -219,12 +225,15 @@ public class EKKA_MGN707TS {
 		sendPost("/cgi/chk", joR.toJSONString());
 	}
 	public void out(String summa) {
+		if (!online) return;
 		in("-"+summa);
 	}
 	public void nullCheck() {
+		if (!online) return;
 		sendPost("/cgi/chk", "{}");
 	}
 	public void copyCheck() {
+		if (!online) return;
 		JSONArray jar = new JSONArray();
 		JSONObject joR = new JSONObject();
 		joR.put("L", jar);

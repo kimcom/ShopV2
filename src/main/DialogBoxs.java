@@ -1,6 +1,7 @@
 package main;
 
 import forms.FrmMain;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -63,12 +64,18 @@ public class DialogBoxs {
 		}
 	}
 	private List<Component> getAllComponents(final Container c) {
+		return getAllComponents(c, null);
+	}
+	private List<Component> getAllComponents(final Container c, Color color) {
 		Component[] comps = c.getComponents();
 		List<Component> compList = new ArrayList<Component>();
+		//System.out.println("comps: " + comps.length+" "+c.getClass().getCanonicalName());
+		String canName = c.getClass().getCanonicalName();
+		if(color != null && !canName.endsWith("JButton") && !canName.endsWith("TextField")) c.setBackground(color);
 		for (Component comp : comps) {
             String canonicalName = comp.getClass().getCanonicalName();
 			if (comp.isDisplayable()) {
-//				System.out.println("1. addKeyListener: " + comp.getName() + "  " + canonicalName + "    display=" + comp.isDisplayable());
+				//System.out.println("1. addKeyListener: " + comp.getName() + "  " + canonicalName + "    display=" + comp.isDisplayable());
 				comp.addKeyListener(new MyKeyListener());
 			}
 			if (comp.isFocusable()) {
@@ -78,7 +85,7 @@ public class DialogBoxs {
 			}
 			compList.add(comp);
 			if (comp instanceof Container) {
-				compList.addAll(getAllComponents((Container) comp));
+				compList.addAll(getAllComponents((Container) comp, color));
 			}
 		}
 		return compList;
@@ -186,7 +193,7 @@ public class DialogBoxs {
 			return "0";
 		}
 	}
-	public String showOptionDialogGetSum(String title, String textMessage, Icon icon) {
+	public String showOptionDialogGetSum(String title, String textMessage, Icon icon, Color color) {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel(textMessage);
 		JFormattedTextField jFormattedTextField3 = new JFormattedTextField();
@@ -210,7 +217,7 @@ public class DialogBoxs {
 		panel.add(jFormattedTextField3);
 		String[] options = new String[]{"Ввод", "Отмена"};
 		JOptionPane jop = new JOptionPane(panel, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon, options, title);
-        getAllComponents((Container) jop);
+        getAllComponents((Container) jop, color);
 		JDialog dialog = jop.createDialog(null, title);
 		dialog.setVisible(true);
 		Object opt = jop.getValue();
@@ -220,6 +227,24 @@ public class DialogBoxs {
 			return jFormattedTextField3.getValue().toString();
 		} else {
 			return "0";
+		}
+	}
+	public int showOptionDialog(String title, String textMessage, Icon icon, Color color) {
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel(textMessage);
+		panel.add(label);
+		String[] options = new String[]{"Ввод", "Отмена"};
+		JOptionPane jop = new JOptionPane(panel, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon, options, title);
+        getAllComponents((Container) jop, color);
+		JDialog dialog = jop.createDialog(null, title);
+		dialog.setVisible(true);
+		Object opt = jop.getValue();
+		if (opt == null) return 1;
+		if (opt.toString() == "Ввод") // pressing OK button
+		{
+			return 0;
+		} else {
+			return 1;
 		}
 	}
 }

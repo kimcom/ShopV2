@@ -2,6 +2,7 @@ package main;
 
 import db.ConnectionDb;
 import forms.*;
+import java.awt.Color;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,6 +28,7 @@ public class ShopMain {
 					MyUtil.errorToLog(FrmMain.class.getName(), ex);
 				}
                 final ConfigReader config = ConfigReader.getInstance();
+
 //				MyEKKA me = new MyEKKA();
 //				//me.report("z1");
 //				me.printCheck(new BigDecimal(12961.2009));
@@ -43,6 +45,10 @@ public class ShopMain {
 //				reportMarkup.setVisible(true);
 //System.out.println(config.EKKA_NAME);
 //System.out.println(config.EKKA_HOST);
+//				DialogBoxs db = new DialogBoxs();
+//				String returnSum = db.showOptionDialogGetSum("Выдача денег из кассы регистратора", "<html>Введите сумму<br>выданных денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")), new Color(255, 152, 0));
+////				JFrameHelp j = new JFrameHelp();
+//				j.setVisible(true);
 //				if (1 == 1) System.exit(0);
 				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));

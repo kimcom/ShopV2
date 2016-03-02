@@ -24,7 +24,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
@@ -190,13 +192,14 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 	}
-	private void jButtonFiscalInputActionPerformed() {
+	private void jButtonFiscalInputActionPerformed(java.awt.event.ActionEvent evt, int x) {
 		if (conf.EKKA_TYPE == 0) {
 			JOptionPane.showMessageDialog(this, "Кассовый регистратор НЕ активирован\n\nв Вашей программе!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
+		JButton btn = (JButton) evt.getSource();
 		DialogBoxs db = new DialogBoxs();
-		String returnSum = db.showOptionDialogGetSum("Внесение денег в кассу регистратора", "<html>Введите сумму<br>вносимых денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")));
+		String returnSum = db.showOptionDialogGetSum("Внесение денег в кассу регистратора", "<html>Введите сумму<br>вносимых денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")),btn.getBackground());
 		if(returnSum.equals("0")) return;
 		try {
 			EKKA me = new EKKA();
@@ -206,13 +209,14 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 	}
-	private void jButtonFiscalOutputActionPerformed() {
+	private void jButtonFiscalOutputActionPerformed(java.awt.event.ActionEvent evt, int x) {
 		if (conf.EKKA_TYPE == 0) {
 			JOptionPane.showMessageDialog(this, "Кассовый регистратор НЕ активирован\n\nв Вашей программе!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
+		JButton btn = (JButton) evt.getSource();
 		DialogBoxs db = new DialogBoxs();
-		String returnSum = db.showOptionDialogGetSum("Выдача денег из кассы регистратора", "<html>Введите сумму<br>выданных денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")));
+		String returnSum = db.showOptionDialogGetSum("Выдача денег из кассы регистратора", "<html>Введите сумму<br>выданных денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")), btn.getBackground());
 		if (returnSum.equals("0")) {
 			return;
 		}
@@ -237,12 +241,15 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 	}
-	private void jButtonFiscalReportZ1ActionPerformed() {
+	private void jButtonFiscalReportZ1ActionPerformed(java.awt.event.ActionEvent evt, int x) {
 		if (conf.EKKA_TYPE == 0) {
 			JOptionPane.showMessageDialog(this, "Кассовый регистратор НЕ активирован\n\nв Вашей программе!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		int i = JOptionPane.showConfirmDialog(null, "После закрытия смены\nпечать чеков возможна только на следующий день!\n\nЗакрыть смену?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		JButton btn = (JButton) evt.getSource();
+		DialogBoxs db = new DialogBoxs();
+		int i = db.showOptionDialog("ВНИМАНИЕ! Z-Отчет!", "<html><strong>После закрытия смены<br>печать чеков возможна только на следующий день!<br><br>Закрыть смену?</strong></html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")), btn.getBackground());
+//		int i = JOptionPane.showConfirmDialog(null, "После закрытия смены\nпечать чеков возможна только на следующий день!\n\nЗакрыть смену?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 		if (i != 0) return;
 		try {
 			EKKA me = new EKKA();
@@ -454,6 +461,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 
         jPanelButtonFiscal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Управление регистратором", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
 
+        jButtonFiscalNullCheck.setBackground(new java.awt.Color(92, 184, 92));
         jButtonFiscalNullCheck.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonFiscalNullCheck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png"))); // NOI18N
         jButtonFiscalNullCheck.setText("Печать нулевого чека");
@@ -469,11 +477,11 @@ public class FrmCashMove extends javax.swing.JDialog {
             }
         });
 
+        jButtonFiscalInput.setBackground(new java.awt.Color(91, 192, 222));
         jButtonFiscalInput.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonFiscalInput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png"))); // NOI18N
         jButtonFiscalInput.setText("Внесение денег");
         jButtonFiscalInput.setToolTipText("Внесение денег в кассовый регистратор");
-        jButtonFiscalInput.setActionCommand("Внесение денег");
         jButtonFiscalInput.setBorderPainted(false);
         jButtonFiscalInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonFiscalInput.setMaximumSize(new java.awt.Dimension(70, 70));
@@ -485,6 +493,7 @@ public class FrmCashMove extends javax.swing.JDialog {
             }
         });
 
+        jButtonFiscalOutput.setBackground(new java.awt.Color(245, 230, 37));
         jButtonFiscalOutput.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonFiscalOutput.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png"))); // NOI18N
         jButtonFiscalOutput.setText("Выдача денег");
@@ -500,6 +509,7 @@ public class FrmCashMove extends javax.swing.JDialog {
             }
         });
 
+        jButtonFiscalReportX1.setBackground(new java.awt.Color(92, 184, 92));
         jButtonFiscalReportX1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonFiscalReportX1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png"))); // NOI18N
         jButtonFiscalReportX1.setText("Отчет X1");
@@ -515,6 +525,7 @@ public class FrmCashMove extends javax.swing.JDialog {
             }
         });
 
+        jButtonFiscalReportZ1.setBackground(new java.awt.Color(255, 0, 57));
         jButtonFiscalReportZ1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonFiscalReportZ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png"))); // NOI18N
         jButtonFiscalReportZ1.setText("Закрытие смены Z1");
@@ -640,25 +651,23 @@ public class FrmCashMove extends javax.swing.JDialog {
         jPanelButtonMove.setLayout(jPanelButtonMoveLayout);
         jPanelButtonMoveLayout.setHorizontalGroup(
             jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelButtonMoveLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonMoveLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jButtonSetCashInput, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRecordAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRecordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRecordDel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonSetCashInput, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jButtonRecordDel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelButtonMoveLayout.setVerticalGroup(
             jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelButtonMoveLayout.createSequentialGroup()
-                .addGroup(jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRecordAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRecordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRecordDel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSetCashInput, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+            .addGroup(jPanelButtonMoveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButtonRecordAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonRecordEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonRecordDel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSetCashInput, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanelNewCashMove.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Введите информацию о выдаче денежных средств:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -767,11 +776,8 @@ public class FrmCashMove extends javax.swing.JDialog {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPaneCashTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanelButtonFiscal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, 0)))
+                    .addComponent(jPanelButtonFiscal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(jPanelButtonMove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -811,19 +817,19 @@ public class FrmCashMove extends javax.swing.JDialog {
 		jFormattedTextField1ActionPerformed();
     }//GEN-LAST:event_jFormattedTextField1FocusLost
     private void jButtonFiscalInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiscalInputActionPerformed
-        jButtonFiscalInputActionPerformed();
+        jButtonFiscalInputActionPerformed(evt, 0);
     }//GEN-LAST:event_jButtonFiscalInputActionPerformed
     private void jButtonFiscalNullCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiscalNullCheckActionPerformed
         jButtonFiscalNullCheckActionPerformed();
     }//GEN-LAST:event_jButtonFiscalNullCheckActionPerformed
     private void jButtonFiscalOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiscalOutputActionPerformed
-        jButtonFiscalOutputActionPerformed();
+        jButtonFiscalOutputActionPerformed(evt, 0);
     }//GEN-LAST:event_jButtonFiscalOutputActionPerformed
     private void jButtonFiscalReportX1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiscalReportX1ActionPerformed
         jButtonFiscalReportX1ActionPerformed();
     }//GEN-LAST:event_jButtonFiscalReportX1ActionPerformed
     private void jButtonFiscalReportZ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiscalReportZ1ActionPerformed
-        jButtonFiscalReportZ1ActionPerformed();
+        jButtonFiscalReportZ1ActionPerformed(evt, 0);
     }//GEN-LAST:event_jButtonFiscalReportZ1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
