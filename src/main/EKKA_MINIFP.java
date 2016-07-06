@@ -89,7 +89,7 @@ public class EKKA_MINIFP {
 			if ( returnIDFiscalNumber == null){
 				if (!sendCommand("open_receipt;0;")) return false;//открытие чека
 			}else{
-MyUtil.messageToLog("minifp", "open_receipt;1;");
+//MyUtil.messageToLog("minifp", "open_receipt;1;");
 				if (!sendCommand("open_receipt;1;")) return false;//открытие чека
 			}
 			ResultSet res = cnn.getCheckContent(currentCheckID);
@@ -131,7 +131,7 @@ MyUtil.messageToLog("minifp", "open_receipt;1;");
 			}
 			//show_subtotal
 			//cancel_receipt
-MyUtil.messageToLog("minifp", "pay;" + typePay + ";0;");
+//MyUtil.messageToLog("minifp", "pay;" + typePay + ";0;");
 			if (!sendCommand("pay;"+typePay+";0;"))return false;//закрытие чека "pay;2;0;"-безнал
 			if (sendCommand("get_last_receipt_number;")){
 				//MyUtil.errorToLog("test EKKA", last_result);

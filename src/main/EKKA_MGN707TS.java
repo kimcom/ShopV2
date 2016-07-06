@@ -232,6 +232,36 @@ public class EKKA_MGN707TS {
 		if (!online) return;
 		sendPost("/cgi/chk", "{}");
 	}
+	public void nullCheckTEST() {
+		if (!online) return;
+		json_response = "";
+		JSONArray jar = new JSONArray();
+		JSONObject joC1 = new JSONObject();
+		JSONObject joC2 = new JSONObject();
+		JSONObject joID1 = new JSONObject();
+		JSONObject joID2 = new JSONObject();
+		JSONObject joP1 = new JSONObject();
+		JSONObject joP2 = new JSONObject();
+		JSONObject joR = new JSONObject();
+		joC2.put("cm", "Оператор № " + conf.TERMINAL_ID + "(" + conf.MARKET_ID + ")");
+		joC1.put("C", joC2);
+		jar.add(joC1);
+		joID2.put("cm", "ID: 32471.5411");
+		joID1.put("C", joID2);
+		jar.add(joID1);
+		joP1.put("P", joP2);
+		jar.add(joP1);
+		joR.put("F", jar);
+//System.out.println(joR.toJSONString());
+MyUtil.errorToLog(this.getClass().getName(), "joR: "+joR.toJSONString());
+		if (sendPost("/cgi/chk", joR.toJSONString()) != 0) {
+			if (!json_response.equals("")) {
+MyUtil.errorToLog(this.getClass().getName(), "json_response: "+json_response);
+			}
+		}
+		//sendPost("/cgi/chk", "{\"F\":[{\"P\":{}}]}");
+		//sendPost("/cgi/chk", "{}");
+	}
 	public void copyCheck() {
 		if (!online) return;
 		JSONArray jar = new JSONArray();
@@ -282,6 +312,7 @@ public class EKKA_MGN707TS {
 				joS2.put("price", price);
 				joS2.put("name", name);
 				joS2.put("qty", quantity);
+				joS2.put("tax", "0");
 				joS1.put("S", joS2);
 				jar.add(joS1);
 			}

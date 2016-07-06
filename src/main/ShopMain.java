@@ -49,6 +49,20 @@ public class ShopMain {
 //				String returnSum = db.showOptionDialogGetSum("Выдача денег из кассы регистратора", "<html>Введите сумму<br>выданных денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")), new Color(255, 152, 0));
 ////				JFrameHelp j = new JFrameHelp();
 //				j.setVisible(true);
+/*
+				String str = "TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTE/G1HA0TEP";
+				String mer = "";
+				int mid = 0;
+				String[] s = str.split("/");
+				mer = s[1].replace("S1", "X1").replace("0", "1");
+				int i = 0;
+				while (i<s.length){
+					if (s[i].equals(mer)) mid = i;
+					//System.out.println(s[i]);
+					i++;
+				}
+				System.out.println(mid);
+*/						
 //				if (1 == 1) System.exit(0);
 				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));

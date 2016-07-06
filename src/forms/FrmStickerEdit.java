@@ -114,10 +114,14 @@ public class FrmStickerEdit extends javax.swing.JDialog {
         });
 
         //реквизиты документа
-        jComboBoxStickerType.addItem("только стикеры");
-		jComboBoxStickerType.addItem("только ценовые планки");
-		jComboBoxStickerType.addItem("все как стикеры");
-		jComboBoxStickerType.addItem("все как ценовые планки");
+        jComboBoxStickerType.addItem("только стикеры");						//0
+        jComboBoxStickerType.addItem("только стикеры клуб. цена");			//1
+		jComboBoxStickerType.addItem("только ценовые планки");				//2
+		jComboBoxStickerType.addItem("только ценовые планки клуб. цена");	//3
+		jComboBoxStickerType.addItem("все как стикеры");					//4
+		jComboBoxStickerType.addItem("все как стикеры клуб. цена");			//5
+		jComboBoxStickerType.addItem("все как ценовые планки");				//6
+		jComboBoxStickerType.addItem("все как ценовые планки клуб. цена");	//7
 		jFormattedTextFieldQtySticker.setText("65");
 		jFormattedTextFieldQtySticker.setVisible(false);
 		jLabelQtySticker.setVisible(false);
@@ -133,7 +137,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
     }
 	private void viewQty() {
 		int type = jComboBoxStickerType.getSelectedIndex();
-		if (type == 0 || type == 2) {
+		if (type == 0 || type == 1 || type == 4 || type == 5) {
 			jLabelQtySticker.setVisible(true);
 			jFormattedTextFieldQtySticker.setVisible(true);
 		} else {
@@ -142,21 +146,23 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		}
 		viewQtyInfo();
 	}
-	private void viewQtyInfo() {
+	private void viewQtyInfo() {//для расчета к-ва ценников
 		String str = "";
 		int type = jComboBoxStickerType.getSelectedIndex();
 		countStickers = 0;
 		countPlanks = 0;
 		for (int i=0; i<jTableDocContent.getModel().getRowCount(); i++){
 			str = jTableDocContent.getModel().getValueAt(i, 4).toString(); // StickerType
-			if (type == 0 || type == 1) {
+			if (type >= 0 && type <= 3) { 
 				int qty = new BigDecimal(jTableDocContent.getModel().getValueAt(i, 5).toString()).intValue();
 				if(str.equalsIgnoreCase("стикеры")) countStickers += qty;
+				if(str.equalsIgnoreCase("стикеры клуб. цена")) countStickers += qty;
 				if(str.equalsIgnoreCase("ценовые планки")) countPlanks ++;
-			} else if (type == 2) {
+				if(str.equalsIgnoreCase("ценовые планки клуб. цена")) countPlanks ++;
+			} else if (type == 4 || type == 5) {
 				int qty = new BigDecimal(jTableDocContent.getModel().getValueAt(i, 5).toString()).intValue();
 				countStickers += qty;
-			} else if (type == 3) {
+			} else if (type == 6 || type == 7) {
 				countPlanks++;
 			}
 		}
@@ -408,20 +414,32 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
 		int type = jComboBoxStickerType.getSelectedIndex();
-		if (type == 0 || type == 2) {
+		if (type == 0 || type == 1 || type == 4 || type == 5) {
 			int countStickers1Page = Integer.parseInt(jFormattedTextFieldQtySticker.getText());
 			if (countStickers1Page > 65){
 				DialogBoxs.viewMessage("Стикеров на 1 странице не может быть больше 65!");
 				jFormattedTextFieldQtySticker.setText("65");
 				return;
 			}
-			ReportPriceSticker reportPrice = new ReportPriceSticker(docID, type, countStickers1Page);
-			reportPrice.setModal(true);
-			reportPrice.setVisible(true);
-		} else {
-			ReportPricePlank reportPrice = new ReportPricePlank(docID, type);
-			reportPrice.setModal(true);
-			reportPrice.setVisible(true);
+			if(type == 0 || type == 4){
+				ReportPriceSticker reportPrice = new ReportPriceSticker(docID, type, countStickers1Page);
+				reportPrice.setModal(true);
+				reportPrice.setVisible(true);
+			}else{
+//				ReportPriceSticker reportPrice = new ReportPriceSticker(docID, type, countStickers1Page);
+//				reportPrice.setModal(true);
+//				reportPrice.setVisible(true);
+			}
+		} else if (type == 2 || type == 3 || type == 6 || type == 7){
+			if (type == 2 || type == 6) {
+				ReportPricePlank reportPrice = new ReportPricePlank(docID, type);
+				reportPrice.setModal(true);
+				reportPrice.setVisible(true);
+			}else{
+//				ReportPricePlank reportPrice = new ReportPricePlank(docID, type);
+//				reportPrice.setModal(true);
+//				reportPrice.setVisible(true);
+			}
 		}
 	}
 	private void jButtonExitActionPerformed() {

@@ -8,10 +8,10 @@ import javax.swing.table.AbstractTableModel;
 import main.MyUtil;
 
 public class TmSearchContent extends AbstractTableModel{
-    private final int colnum = 7;
+    private final int colnum = 8;
     private int rownum;
     private final String[] colNames = {
-        "ID","Артикул","Название","Отдел","Прайс","MAX%","Остаток"
+        "ID","Артикул","Название","Отдел","Прайс","MAX%","Остаток","Краткий ШК"
     };
     private ArrayList<Object[]> ResultSets;
 
@@ -27,6 +27,7 @@ public class TmSearchContent extends AbstractTableModel{
                     rs.getDouble("PriceShop"),
                     rs.getDouble("DiscountMax"),
                     rs.getDouble("BalanceStop"),
+                    rs.getString("EAN13"),
                 };
 //				System.out.println("" 
 //						+ " " + rs.getString("GoodID").toString()
@@ -49,7 +50,7 @@ public class TmSearchContent extends AbstractTableModel{
             res = "";
             if (row[columnindex] == null) return res;
             res = row[columnindex];
-        }else if(columnindex < 3){
+        }else if(columnindex == 1 || columnindex == 2 || columnindex == 7){
             res = "";
             if (row[columnindex] == null) return res;
             res = row[columnindex].toString();

@@ -971,6 +971,28 @@ public final class ConnectionDb{
             return null;
         }
     }
+	public ResultSet getCheckNotPayPart(BigDecimal checkID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCheckNotPayPart: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
+			cs.setString(1, "check_pay_part");
+			cs.setBigDecimal(2, checkID);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setInt(5, config.TERMINAL_ID);
+			cs.registerOutParameter(6, Types.DOUBLE);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	
 //check add good
     public double addGoodInCheck(String barCode){
         if (cnn == null) {

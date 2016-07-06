@@ -50,6 +50,7 @@ public class FrmSearch extends javax.swing.JDialog {
         jTableFind.setDefaultRenderer(jTableFind.getColumnClass(1), new FrmSearch.MyRenderer());
         jTableFind.setDefaultRenderer(jTableFind.getColumnClass(4), new FrmSearch.MyRenderer());
         jTableFind.setDefaultRenderer(jTableFind.getColumnClass(6), new FrmSearch.MyRenderer());
+        jTableFind.setDefaultRenderer(jTableFind.getColumnClass(7), new FrmSearch.MyRenderer());
         jTableFind.getTableHeader().setDefaultRenderer(new FrmSearch.HeaderRenderer());
 
         jTableFind.setRowHeight(25);
@@ -62,7 +63,7 @@ public class FrmSearch extends javax.swing.JDialog {
         jTableFind.getColumnModel().getColumn(4).setPreferredWidth(30);
         jTableFind.getColumnModel().getColumn(5).setPreferredWidth(30);
         jTableFind.getColumnModel().getColumn(6).setPreferredWidth(30);
-//        jTableFind.getColumnModel().getColumn(7).setPreferredWidth(30);
+        jTableFind.getColumnModel().getColumn(7).setPreferredWidth(50);
     }
     public FrmSearch() {
         initComponents();
@@ -144,7 +145,7 @@ public class FrmSearch extends javax.swing.JDialog {
 			//System.out.println("row:"+Integer.toString(row)+"	column:" + Integer.toString(column)+ "	value="+value.toString());
             if (column == 1 || column == 2) {
 				setHorizontalAlignment(SwingConstants.LEFT);
-			} else if (column == 3 || column == 5) {
+			} else if (column == 3 || column == 5 || column == 7) {
 				setHorizontalAlignment(SwingConstants.CENTER);
             } else {
                 setHorizontalAlignment(SwingConstants.RIGHT);

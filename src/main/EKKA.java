@@ -2,10 +2,12 @@ package main;
 
 import db.ConnectionDb;
 import java.math.BigDecimal;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class EKKA {
 	private final ConfigReader conf;
-	private ConnectionDb cnn;
+	private final ConnectionDb cnn;
 
 	public EKKA() {
 		this.conf = ConfigReader.getInstance();
@@ -63,6 +65,42 @@ public class EKKA {
 		}
 	}
 	public boolean printCheck(BigDecimal checkID, String typePay, BigDecimal returnIDFiscalNumber){
+		boolean pos = true;
+		if (typePay.equals("2") && returnIDFiscalNumber==null) { //если безнал
+			if (!conf.POS_ACTIVE.equals("0")){
+				POS_Terminal t = new POS_Terminal();
+				//FrmMessage t = new FrmMessage();
+				if (!t.load()) {
+					//JOptionPane.showMessageDialog(new JFrame(), "Ошибка регистрации библиотеки!\nРабота с POS-терминалом невозможна!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				if (!t.checkStatus()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Ошибка подключения к POS-терминалу!\n\n"
+							+ "Номер ошибки: "+t.lastErrorCode+"\nОписание: "+t.lastErrorDescription + "\n\n"
+							+ "1. Проверте подключение терминала к компьютеру (USB кабель).\n"
+							+ "2. Проверте питание терминала (кабель к розетке)."
+							, "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+					int i = JOptionPane.showOptionDialog(null, "Вы можете продолжить работу\n"
+							+ "с POS-терминалом в РУЧНОМ режиме!\n\n"
+							+ "ВНИМАНИЕ!\n"
+							+ "Автоматический режим снова будет\n"
+							+ "активирован после перезапуска программы!\n\n"
+							+ "Активировать РУЧНОЙ режим?"
+							, "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+					if (i == 0) {
+						conf.POS_ACTIVE = "0";
+//						JOptionPane.showMessageDialog(new JFrame(), "РУЧНОЙ режим работы с POS-терминалом\n"
+//								+ "успешно активирован!\n\n"
+//								+ "Для печати чека на регистраторе - снова нажмите 'Печать'!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+						//return true;
+					}else{
+						return false;
+					}
+				}
+				pos = t.purchase();
+			}
+		}
+		if (!pos) return false;
 		if (conf.EKKA_NAME.equals("MINIFP")){
 			EKKA_MINIFP me = new EKKA_MINIFP();
 			return me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber);
@@ -72,5 +110,46 @@ public class EKKA {
 			return me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber);
 		}
 		return false;
+	}
+	public boolean terminalCheck(BigDecimal checkID, String typePay, BigDecimal returnIDFiscalNumber){
+		boolean pos = true;
+		if (typePay.equals("2")) { //если безнал
+			if (!conf.POS_ACTIVE.equals("0")){
+				MyUtil.messageToLog(getClass().getName(), "test 1");
+				POS_Terminal t = new POS_Terminal();
+				MyUtil.messageToLog(getClass().getName(), "test 2");
+				if (!t.load()) {
+					//JOptionPane.showMessageDialog(new JFrame(), "Ошибка регистрации библиотеки!\nРабота с POS-терминалом невозможна!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				MyUtil.messageToLog(getClass().getName(), "test 3");
+				if (!t.checkStatus()) {
+					JOptionPane.showMessageDialog(new JFrame(), "Ошибка подключения к POS-терминалу!\n\n"
+							+ "Номер ошибки: "+t.lastErrorCode+"\nОписание: "+t.lastErrorDescription + "\n\n"
+							+ "1. Проверте подключение терминала к компьютеру (USB кабель).\n"
+							+ "2. Проверте питание терминала (кабель к розетке)."
+							, "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+					int i = JOptionPane.showOptionDialog(null, "Вы можете продолжить работу\n"
+							+ "с POS-терминалом в РУЧНОМ режиме!\n\n"
+							+ "ВНИМАНИЕ!\n"
+							+ "Автоматический режим снова будет\n"
+							+ "активирован после перезапуска программы!\n\n"
+							+ "Активировать РУЧНОЙ режим?"
+							, "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+					if (i == 0) {
+						conf.POS_ACTIVE = "0";
+//						JOptionPane.showMessageDialog(new JFrame(), "РУЧНОЙ режим работы с POS-терминалом\n"
+//								+ "успешно активирован!\n\n"
+//								+ "Для печати чека на регистраторе - снова нажмите 'Печать'!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+						//return true;
+					}else{
+						return false;
+					}
+				}
+				pos = t.purchase();
+			}
+		}
+		if (!pos) return false;
+		return true;
 	}
 }

@@ -880,6 +880,36 @@ public class FrmMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private boolean checkPayPartStatus() {
+		if (!checkCnnStatus()) return false;
+		ResultSet rs = cnn.getCheckNotPayPart(cnn.currentCheckID);
+		boolean bl = false;
+		String str = "<html><table border=1 cellspacing=0><thead><tr>"
+				+ "<th>Код</th>"
+				+ "<th>Артикул</th>"
+				+ "<th>Название</th>"
+				+ "<th>Кол-во</th>"
+				+ "</tr></thead>"
+				+ "<tbody>";
+		try {
+			while (rs.next()) {
+				bl = true;
+				//str += rs.getString("GoodID").toString() + "\t" +rs.getString("Article").toString()+"\t"+rs.getString("Name").toString()+"\n";
+				str += "<tr><td>"+rs.getString("GoodID").toString() + "</td><td>" +rs.getString("Article").toString()+"</td><td>"+rs.getString("Name").toString()+"</td><td>" + rs.getString("Quantity").toString() + "</td></tr>";
+			}
+			str += "</tbody></table></html>";
+		} catch (Exception e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+		}
+		if (bl){
+			JOptionPane.showMessageDialog(new JFrame(), "В чеке есть товары для которых оплата частями НЕ РАЗРЕШЕНА!\n"
+					+ "Удалите эти товары из чека или измените тип оплаты!\n\n"
+					+ "Список товаров:\n"
+					+ str, "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
 	private boolean checkCnnStatus() {
 		if(!cnnState)
 			JOptionPane.showMessageDialog(null, "Нет связи с сервером!\n\nПовторите операцию позже.", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE,new javax.swing.ImageIcon(getClass().getResource("/png/connect lost.png")));
@@ -915,7 +945,10 @@ public class FrmMain extends javax.swing.JFrame {
         int selectedRow = jTableCheck.getSelectedRow();
 //System.out.println("cnn.currentCheckID:"+cnn.currentCheckID.toString());
         jLabel2.setText(cnn.currentCheckID.setScale(4, RoundingMode.HALF_UP).toPlainString());
-        jLabel4.setText(cnn.checkTypePayment == 1 ? "безналичный расчет" : "наличный расчет");
+        //jLabel4.setText(cnn.checkTypePayment == 1 ? "безналичный расчет" : "наличный расчет");
+        if (cnn.checkTypePayment == 0) jLabel4.setText("наличный расчет");
+        if (cnn.checkTypePayment == 1) jLabel4.setText("безналичный расчет");
+        if (Integer.toString(cnn.checkTypePayment).startsWith("2")) jLabel4.setText("оплата частями ("+Integer.toString(cnn.checkTypePayment).substring(1)+" плат.)");
         jLabel6.setText(cnn.checkSumBase.toString());
         jLabel8.setText(cnn.checkSumDiscount.toString());
         jLabel10.setText(cnn.checkSum.toString());
@@ -1132,14 +1165,20 @@ public class FrmMain extends javax.swing.JFrame {
 			return;
 		}
 
-		if(conf.EKKA_TYPE==2){//только для Харьков Таврии
+		if(conf.EKKA_TYPE==2){//если и нал и безнал проводим через РРО
 			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null) {
 //				System.out.println("обычный чек");
 				String typePay = "0";
 				String typePayMsg = "НАЛИЧНЫЙ расчет";
-				if (cnn.checkTypePayment != 0) {
+				if (cnn.checkTypePayment == 1) {
 					typePay = "2";
 					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				}else if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
+					typePay = "2";
+					typePayMsg = "Оплата частями ("+Integer.toString(cnn.checkTypePayment).substring(1)+" плат.)";
+					if (!checkPayPartStatus()) {
+						return;
+					}
 				}
 				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 				if (i != 0) {
@@ -1152,10 +1191,6 @@ public class FrmMain extends javax.swing.JFrame {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 						}
-//					} else {
-//						if (cnn.setCheckStatus(2)) {
-//							jButtonNewCheckActionPerformed();//без распечатки
-//						}
 					}
 				} catch (Exception e) {
 					MyUtil.errorToLog(this.getClass().getName(), e);
@@ -1200,9 +1235,15 @@ public class FrmMain extends javax.swing.JFrame {
 //				System.out.println("возврат фискальный");
 				String typePay = "0";
 				String typePayMsg = "НАЛИЧНЫЙ расчет";
-				if (cnn.checkTypePayment != 0) {
+				if (cnn.checkTypePayment == 1) {
 					typePay = "2";
 					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				} else if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
+					typePay = "2";
+					typePayMsg = "Оплата частями (" + Integer.toString(cnn.checkTypePayment).substring(1) + " плат.)";
+					if (!checkPayPartStatus()) {
+						return;
+					}
 				}
 				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 				if (i != 0) {
@@ -1234,9 +1275,17 @@ public class FrmMain extends javax.swing.JFrame {
 				String typePay = "0";
 				String typePayMsg = "НАЛИЧНЫЙ расчет";
 				String typePrinter = "ПРИНТЕРЕ";
-				if (cnn.checkTypePayment != 0) {
+				if (cnn.checkTypePayment == 1) {
 					typePay = "2";
 					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				} else if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
+					typePay = "2";
+					typePayMsg = "Оплата частями (" + Integer.toString(cnn.checkTypePayment).substring(1) + " плат.)";
+					if (!checkPayPartStatus()) {
+						return;
+					}
+				}
+				if (cnn.checkTypePayment != 0) {
 					typePrinter = "РЕГИСТРАТОРЕ";
 					int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на "+typePrinter+" ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 					if (i != 0) return;
@@ -1246,10 +1295,6 @@ public class FrmMain extends javax.swing.JFrame {
 							if (cnn.setCheckStatus(1)) {
 								jButtonNewCheckActionPerformed();//чек распечатан успешно
 							}
-//						} else {
-//							if (cnn.setCheckStatus(2)) {
-//								jButtonNewCheckActionPerformed();//без распечатки
-//							}
 						}
 					} catch (Exception e) {
 						MyUtil.errorToLog(this.getClass().getName(), e);
@@ -1292,12 +1337,6 @@ public class FrmMain extends javax.swing.JFrame {
 						rc.dispose();
 					}
 				}
-//				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на регистраторе?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
-//				if (i != 0) {
-//					jButtonPayTypeActionPerformed();
-//					return;
-//				}
-
 			} else if (cnn.returnID != null && cnn.returnIDFiscalNumber == null) {
 //				System.out.println("возврат не фискальный");
 				final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
@@ -1338,9 +1377,17 @@ public class FrmMain extends javax.swing.JFrame {
 				String typePay = "0";
 				String typePayMsg = "НАЛИЧНЫЙ расчет";
 				String typePrinter = "ПРИНТЕРЕ";
-				if (cnn.checkTypePayment != 0) {
+				if (cnn.checkTypePayment == 1) {
 					typePay = "2";
 					typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+				} else if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
+					typePay = "2";
+					typePayMsg = "Оплата частями (" + Integer.toString(cnn.checkTypePayment).substring(1) + " плат.)";
+					if (!checkPayPartStatus()) {
+						return;
+					}
+				}
+				if (cnn.checkTypePayment != 0) {
 					typePrinter = "РЕГИСТРАТОРЕ";
 				} else {
 					JOptionPane.showMessageDialog(null, "Возврат для фискального чека\n\nвозможно делать только по безналу!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
@@ -1368,6 +1415,38 @@ public class FrmMain extends javax.swing.JFrame {
 				DialogBoxs.viewMessage("ОШИБКА определения типа чека при печати!");
 			}
 		}else{
+			String typePay = "0";
+			String typePayMsg = "НАЛИЧНЫЙ расчет";
+			String typePrinter = "ПРИНТЕРЕ";
+			if (cnn.checkTypePayment == 1) {
+				typePay = "2";
+				typePayMsg = "БЕЗНАЛИЧНЫЙ расчет";
+			} else if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
+				typePay = "2";
+				typePayMsg = "Оплата частями (" + Integer.toString(cnn.checkTypePayment).substring(1) + " плат.)";
+				if (!checkPayPartStatus()) {
+					return;
+				}
+			}
+			if (!typePay.equals("0")){
+//				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на " + typePrinter + " ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
+//				if (i != 0) {
+//					return;
+//				}
+				try {
+					EKKA me = new EKKA();
+					if (!me.terminalCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
+//						if (cnn.setCheckStatus(1)) {
+//							jButtonNewCheckActionPerformed();//чек распечатан успешно
+//						}
+						if (!conf.POS_ACTIVE.equals("0")) return;
+					}
+				} catch (Exception e) {
+					MyUtil.errorToLog(this.getClass().getName(), e);
+					return;
+				}
+			}
+
 			final ReportCheck rc = new ReportCheck(cnn.currentCheckID);
 			if (!blIconified) {
 				rc.setModal(true);
@@ -1543,7 +1622,15 @@ public class FrmMain extends javax.swing.JFrame {
 		if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-		if (cnn.checkTypePayment == 0){
+		
+		FrmPaymentType frmPaymentType = new FrmPaymentType();
+		frmPaymentType.setModal(true);
+		frmPaymentType.setVisible(true);
+		if (frmPaymentType.typePayment==-1) return;
+		cnn.setCheckPaymentType(frmPaymentType.typePayment, cnn.currentCheckID); // уст. тип оплаты
+		requery();
+		
+/*		if (cnn.checkTypePayment == 0){
 			int i = JOptionPane.showConfirmDialog(null, "Оплата безналичным расчетом?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (i==0){
 				cnn.setCheckPaymentType(1, cnn.currentCheckID); // уст. тип оплаты БЕЗНАЛ
@@ -1552,10 +1639,11 @@ public class FrmMain extends javax.swing.JFrame {
 		}else{
 			int i = JOptionPane.showConfirmDialog(null, "Оплата НАЛИЧНЫМИ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (i == 0) {
-				cnn.setCheckPaymentType(0, cnn.currentCheckID); // уст. тип оплаты БЕЗНАЛ
+				cnn.setCheckPaymentType(0, cnn.currentCheckID); // уст. тип оплаты НАЛ
 				requery();
 			}
 		}
+*/
     }
     private void jButtonNewDiscountCardActionPerformed(String parentCardID){
 		if (blDiscountCardFuture) return;
