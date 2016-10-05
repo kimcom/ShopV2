@@ -303,7 +303,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x418;&#x422;&#x41e;&#x413;&#x41e; &#x431;&#x435;&#x437; &#x441;&#x43a;&#x438;&#x434;&#x43a;&#x438;:"/>
+            <Property name="text" type="java.lang.String" value="&#x420;&#x430;&#x437;&#x43e;&#x43c; &#x431;&#x435;&#x437; &#x437;&#x43d;&#x438;&#x436;&#x43a;&#x438;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
@@ -320,7 +320,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x421;&#x43a;&#x438;&#x434;&#x43a;&#x430;:"/>
+            <Property name="text" type="java.lang.String" value="&#x417;&#x43d;&#x438;&#x436;&#x43a;&#x430;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel24">
@@ -345,7 +345,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x41a; &#x41e;&#x41f;&#x41b;&#x410;&#x422;&#x415;:"/>
+            <Property name="text" type="java.lang.String" value="&#x414;&#x41e; &#x41e;&#x41f;&#x41b;&#x410;&#x422;&#x418;:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel27">
@@ -363,7 +363,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&#x411;&#x41b;&#x410;&#x413;&#x41e;&#x414;&#x410;&#x420;&#x418;&#x41c; &#x417;&#x410; &#x41f;&#x41e;&#x41a;&#x423;&#x41f;&#x41a;&#x423;!"/>
+            <Property name="text" type="java.lang.String" value="&#x414;&#x42f;&#x41a;&#x423;&#x404;&#x41c;&#x41e; &#x417;&#x410; &#x41f;&#x41e;&#x41a;&#x423;&#x41f;&#x41a;&#x423;!"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel29">
@@ -372,7 +372,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&#x41d;&#x435; &#x444;&#x438;&#x441;&#x43a;&#x430;&#x43b;&#x44c;&#x43d;&#x44b;&#x439; &#x447;&#x435;&#x43a;"/>
+            <Property name="text" type="java.lang.String" value="&#x41d;&#x435; &#x444;&#x456;&#x441;&#x43a;&#x430;&#x43b;&#x44c;&#x43d;&#x438;&#x439; &#x447;&#x435;&#x43a;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel30">
@@ -381,7 +381,7 @@
               <Font name="Tahoma" size="10" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x442;&#x430;: 15/04/14 &#x412;&#x440;&#x435;&#x43c;&#x44f;: 16:37:22"/>
+            <Property name="text" type="java.lang.String" value="&#x414;&#x430;&#x442;&#x430;: 15/04/14 &#x427;&#x430;&#x441;: 16:37:22"/>
           </Properties>
         </Component>
       </SubComponents>

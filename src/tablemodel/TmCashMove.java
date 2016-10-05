@@ -9,10 +9,10 @@ import main.MyUtil;
 import reports.ReportSale;
 
 public class TmCashMove extends AbstractTableModel{
-    private final int colnum = 5;
+    private final int colnum = 6;
     private int rownum;
     private final String[] colNames = {
-        "MoveID","Дата и время","Сумма","Описание","Пользователь"
+        "MoveID","Дата и время","Нал/безнал","Сумма","Описание","Пользователь"
     };
     private ArrayList<Object[]> ResultSets;
 
@@ -23,6 +23,7 @@ public class TmCashMove extends AbstractTableModel{
                 Object[] row = {
                     rs.getBigDecimal("MoveID").setScale(4, RoundingMode.HALF_UP),
                     rs.getString("DT_create"), 
+                    rs.getString("TypePayment"), 
                     rs.getBigDecimal("Summa").setScale(2, RoundingMode.HALF_UP),
                     rs.getString("Notes"),
                     rs.getInt("UserID"),
@@ -43,13 +44,13 @@ public class TmCashMove extends AbstractTableModel{
             if (row[columnindex] == null) return BigDecimal.ZERO;
 			BigDecimal bd = (BigDecimal) row[columnindex];
 			res = bd.setScale(4,RoundingMode.HALF_UP);
-        }else if(columnindex == 3){ //article and name
+        }else if(columnindex == 4 || columnindex == 2){ //article and name typepayment
             if (row[columnindex] == null) return "";
             res = row[columnindex].toString();
-        }else if(columnindex == 4){ //userID
+        }else if(columnindex == 5){ //userID
             if (row[columnindex] == null) return 0;
 			res = row[columnindex].toString();
-        }else if(columnindex == 2) { //summa
+        }else if(columnindex == 3) { //summa
             if (row[columnindex] == null) return "";
             BigDecimal bd = (BigDecimal) row[columnindex];
             if (bd.compareTo(BigDecimal.ZERO)==0) return "";

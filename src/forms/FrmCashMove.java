@@ -72,8 +72,9 @@ public class FrmCashMove extends javax.swing.JDialog {
         jTableCashMove.getColumnModel().getColumn(0).setResizable(false);
         jTableCashMove.getColumnModel().getColumn(1).setPreferredWidth(80);
         jTableCashMove.getColumnModel().getColumn(2).setPreferredWidth(30);
-        jTableCashMove.getColumnModel().getColumn(3).setPreferredWidth(300);
-        jTableCashMove.getColumnModel().getColumn(4).setPreferredWidth(80);
+        jTableCashMove.getColumnModel().getColumn(3).setPreferredWidth(30);
+        jTableCashMove.getColumnModel().getColumn(4).setPreferredWidth(300);
+        jTableCashMove.getColumnModel().getColumn(5).setPreferredWidth(80);
 
         jTableCashTotal.setModel(new TmCashTotal(getCashTotal()));
         jTableCashTotal.setDefaultRenderer(jTableCashTotal.getColumnClass(0), new MyRendererTotal());
@@ -112,8 +113,13 @@ public class FrmCashMove extends javax.swing.JDialog {
 		int selectedRow = jTableCashMove.getSelectedRow();
 		if (selectedRow == -1) return;
 		currentMoveID = (BigDecimal) jTableCashMove.getModel().getValueAt(selectedRow, 0);
-		jFormattedTextField1.setValue(new BigDecimal(jTableCashMove.getModel().getValueAt(selectedRow, 2).toString()));
-		jTextField2.setText(jTableCashMove.getModel().getValueAt(selectedRow, 3).toString());
+		jFormattedTextField1.setValue(new BigDecimal(jTableCashMove.getModel().getValueAt(selectedRow, 3).toString()));
+		jTextField2.setText(jTableCashMove.getModel().getValueAt(selectedRow, 4).toString());
+		if (jTableCashMove.getModel().getValueAt(selectedRow, 2).toString().equals("нал.")) {
+			jCheckBox1.setSelected(false);
+		} else {
+			jCheckBox1.setSelected(true);
+		}
 		setjPanelNewCashMove(true);
 		jFormattedTextField1.requestFocus();
 	}
@@ -148,9 +154,9 @@ public class FrmCashMove extends javax.swing.JDialog {
 		}
 		try {
 			if (currentMoveID.compareTo(BigDecimal.ZERO)==0) {
-				cnn.addCashNewRecord(bdSumma,jTextField2.getText());
+				cnn.addCashNewRecord(bdSumma,jTextField2.getText(),jCheckBox1.isSelected());
 			} else {
-				cnn.editCashRecord(currentMoveID, bdSumma, jTextField2.getText());
+				cnn.editCashRecord(currentMoveID, bdSumma, jTextField2.getText(), jCheckBox1.isSelected());
 			}
 			requery();
 			setjPanelNewCashMove(false);
@@ -185,7 +191,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(null);
 			me.nullCheck();
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -202,7 +208,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 		String returnSum = db.showOptionDialogGetSum("Внесение денег в кассу регистратора", "<html>Введите сумму<br>вносимых денег:</html>", new javax.swing.ImageIcon(getClass().getResource("/png/Cash-register-32.png")),btn.getBackground());
 		if(returnSum.equals("0")) return;
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(null);
 			me.in(returnSum);
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -221,7 +227,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(null);
 			me.out(returnSum);
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -234,7 +240,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 			return;
 		}
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(null);
 			me.report("X1");
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -252,7 +258,7 @@ public class FrmCashMove extends javax.swing.JDialog {
 //		int i = JOptionPane.showConfirmDialog(null, "После закрытия смены\nпечать чеков возможна только на следующий день!\n\nЗакрыть смену?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 		if (i != 0) return;
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(null);
 			me.report("Z1");
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -295,9 +301,9 @@ public class FrmCashMove extends javax.swing.JDialog {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (column == 2) {
+            if (column == 3) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
-            } else if (column == 1) {
+            } else if (column == 1 || column == 2) {
                 setHorizontalAlignment(SwingConstants.CENTER);
             } else {
                 setHorizontalAlignment(SwingConstants.LEFT);
@@ -423,6 +429,7 @@ public class FrmCashMove extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButtonRecordSave = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jScrollPaneCashMove = new javax.swing.JScrollPane();
         jTableCashMove = new javax.swing.JTable();
 
@@ -706,6 +713,8 @@ public class FrmCashMove extends javax.swing.JDialog {
             }
         });
 
+        jCheckBox1.setText("безнал");
+
         javax.swing.GroupLayout jPanelNewCashMoveLayout = new javax.swing.GroupLayout(jPanelNewCashMove);
         jPanelNewCashMove.setLayout(jPanelNewCashMoveLayout);
         jPanelNewCashMoveLayout.setHorizontalGroup(
@@ -720,7 +729,9 @@ public class FrmCashMove extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonRecordSave, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCheckBox1)
+                .addGap(14, 14, 14)
+                .addComponent(jButtonRecordSave, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelNewCashMoveLayout.setVerticalGroup(
@@ -731,8 +742,9 @@ public class FrmCashMove extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
+                .addContainerGap(11, Short.MAX_VALUE))
             .addComponent(jButtonRecordSave, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -844,6 +856,7 @@ public class FrmCashMove extends javax.swing.JDialog {
     private javax.swing.JButton jButtonRecordEdit;
     private javax.swing.JButton jButtonRecordSave;
     private javax.swing.JButton jButtonSetCashInput;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

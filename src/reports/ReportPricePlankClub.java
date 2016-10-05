@@ -16,6 +16,7 @@ import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComponent;
@@ -28,7 +29,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import main.ConfigReader;
 import main.MyUtil;
 
-public class ReportPricePlank extends JDialog{
+public class ReportPricePlankClub extends JDialog{
     private ConfigReader conf;
     private ConnectionDb cnn;
 	private final BigDecimal currentDocID;
@@ -118,7 +119,7 @@ public class ReportPricePlank extends JDialog{
 		}
 		return true;
     }
-    public ReportPricePlank(BigDecimal docID, int type) {
+    public ReportPricePlankClub(BigDecimal docID, int type) {
 //		try {
 //			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //				if ("Nimbus".equals(info.getName())) {
@@ -147,7 +148,7 @@ public class ReportPricePlank extends JDialog{
     private void clientInfo() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
         conf = ConfigReader.getInstance();
-        setTitle("Ценники. Ценовые планки. ".concat(conf.FORM_TITLE));
+        setTitle("Ценники. Ценовые планки клубная цена. ".concat(conf.FORM_TITLE));
 	}
 	private void addTabPane(JPanel panel){
 		JScrollPane jScrollPane = new JScrollPane();
@@ -161,8 +162,8 @@ public class ReportPricePlank extends JDialog{
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
 		ResultSet res;
-		if (type == 2) {
-			res = cnn.getStickerReport(currentDocID,"5157");//планки
+		if (type == 3) {
+			res = cnn.getStickerReport(currentDocID,"6762");//планки
 		} else {
 			res = cnn.getStickerReport(currentDocID, "%");//планки
 		}
@@ -205,25 +206,28 @@ public class ReportPricePlank extends JDialog{
 					JLabel jLabel16 = new javax.swing.JLabel();
 					JLabel jLabel17 = new javax.swing.JLabel();
 					JLabel jLabel18 = new javax.swing.JLabel();
+					JLabel jLabel19 = new javax.swing.JLabel();
 //					JSeparator jSeparator2 = new javax.swing.JSeparator();
 
 					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // название
 					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена
-					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // артикул
+					jLabel19.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена клуб
+					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 11)); // артикул
 					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 10)); // дата время
 					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // кат.наценки
-					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // производитель
-					jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "Цена: "
-					jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "грн."
+					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 11)); // производитель
+					jLabel16.setFont(new java.awt.Font("Tahoma", 0, 11)); // текст за один.
+					jLabel17.setFont(new java.awt.Font("Tahoma", 0, 11)); // текст за 5 од.
 
-//					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 0, 0)));
 //					jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+//					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
+//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 128)));
 					//дата время
 					height_label = (int) (h * 1);
 					str = "";
@@ -238,60 +242,73 @@ public class ReportPricePlank extends JDialog{
 					jLabel14.setText("<html>" + MyUtil.getCurrentDate() + "</html>");
 					jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
-					//производитель
-					y = y + height_label;
-					height_label = (int) (h * 1);
-					str = res.getString("Producer");
-					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel15.setText("<html>Производитель:&nbsp;<strong>" + str + "</strong></html>");
-					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-
-					//артикул
-					y = y + height_label;
-					height_label = h * 1;
-					str = res.getString("Article");
-					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel13.setText("<html>Артикул:&nbsp;&nbsp;<strong>" + str + "</strong></html>");
-					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-
 					//название
 					y = y + height_label;
-					height_label = (int) (h * 3);
+					//height_label = (int) (h * 3);
+					height_label = 54;
 					str = res.getString("Name");
 					jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 					jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel11.setText("<html>Название:&nbsp;<strong>" + str + "</strong></html>");
+					jLabel11.setText("<html><strong>" + str + "</strong></html>");
 					jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
-					//текст "Цена:"
-					int segment = 6;
+					//текст "Ціна за одиницю"
 					y = y + height_label;
-					height_label = h * 2;
+					height_label = 15;
 					jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel16.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel16.setText("<html>Цена:&nbsp;</html>");
-					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / segment, height_label - 5));
+					jLabel16.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel16.setText("<html>Ціна за одиницю</html>");
+					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
+					//текст ""Клубна ціна" від 5-ти одиниць"
+					jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel17.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					if(res.getString("QtyClub").equals("0")) {
+						jLabel17.setText("");
+					}else{
+						jLabel17.setText("<html>Ціна від "+res.getString("QtyClub")+" одиниць</html>");
+					}
+					jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
 
 					//цена
-					//y = y + height_label;
-					//height_label = h * 2;
+					y = y + height_label;
+					height_label = h * 2;
 					str = res.getString("Price") + "&nbsp;";
 					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 					jLabel12.setText("<html>" + str + "</html>");
-					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / segment, y, (width_out - padding_right) / segment * (segment - 2), height_label));
+					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
 
-					//текст "грн."
+					str = "";
+					if (!res.getString("DiscountClub").toString().equals("0")){
+						BigDecimal discountClub = new BigDecimal(100).subtract(new BigDecimal(res.getString("DiscountClub"))).divide(new BigDecimal(100));
+						BigDecimal priceClub = new BigDecimal(res.getString("Price")).multiply(discountClub).setScale(2, RoundingMode.HALF_UP);
+						str = priceClub.toPlainString() + "&nbsp;";
+					}
+					jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+					jLabel19.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
+
+					//артикул
+					y = y + height_label;
+					//height_label = (int) (h * 1.5);
+					height_label = 27;
+					str = res.getString("Article");
+					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+					jLabel13.setText("<html>Арт:&nbsp;" + str + "</html>");
+					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
+
+					//производитель
 					//y = y + height_label;
-					//height_label = h * 2;
-					jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel17.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel17.setText("<html>&nbsp;грн.</html>");
-					jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / segment * (segment - 1), y, (width_out - padding_right) / segment, height_label - 5));
+					//height_label = (int) (h * 1.5);
+					str = res.getString("Producer");
+					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
+					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
+					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+					jLabel15.setText("<html>Произв.:&nbsp;" + str + "</html>");
+					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
 
 					jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(x_out, y_out, width_out, height_out));
 					count++;

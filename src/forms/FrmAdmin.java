@@ -266,7 +266,7 @@ public class FrmAdmin extends javax.swing.JDialog {
         jButtonPriceOver = new javax.swing.JButton();
         jButtonOrder = new javax.swing.JButton();
         jButtonReceipt = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonSticker = new javax.swing.JButton();
         jPanelReport = new javax.swing.JPanel();
         jButtonBarcodeShortReport = new javax.swing.JButton();
         jButtonReportCash = new javax.swing.JButton();
@@ -280,8 +280,8 @@ public class FrmAdmin extends javax.swing.JDialog {
         jButtonCashMove = new javax.swing.JButton();
         jButtonDiscountCard = new javax.swing.JButton();
         jButtonNewDiscountCard = new javax.swing.JButton();
-        jButtonSticker = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -348,17 +348,18 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButton2.setToolTipText("");
-        jButton2.setEnabled(false);
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.setIconTextGap(10);
-        jButton2.setMaximumSize(new java.awt.Dimension(70, 70));
-        jButton2.setMinimumSize(new java.awt.Dimension(70, 70));
-        jButton2.setPreferredSize(new java.awt.Dimension(70, 70));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSticker.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonSticker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/check-32.png"))); // NOI18N
+        jButtonSticker.setText("Ценники");
+        jButtonSticker.setToolTipText("Ценники");
+        jButtonSticker.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonSticker.setIconTextGap(10);
+        jButtonSticker.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonSticker.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonSticker.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonSticker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonStickerActionPerformed(evt);
             }
         });
 
@@ -372,7 +373,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                     .addComponent(jButtonOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPriceOver, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonSticker, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelForms1Layout.setVerticalGroup(
@@ -385,9 +386,8 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addComponent(jButtonOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonSticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanelReport.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Отчеты", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 12))); // NOI18N
@@ -586,21 +586,6 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
-        jButtonSticker.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButtonSticker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/check-32.png"))); // NOI18N
-        jButtonSticker.setText("Ценники");
-        jButtonSticker.setToolTipText("Ценники");
-        jButtonSticker.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButtonSticker.setIconTextGap(10);
-        jButtonSticker.setMaximumSize(new java.awt.Dimension(70, 70));
-        jButtonSticker.setMinimumSize(new java.awt.Dimension(70, 70));
-        jButtonSticker.setPreferredSize(new java.awt.Dimension(70, 70));
-        jButtonSticker.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonStickerActionPerformed(evt);
-            }
-        });
-
         jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButton1.setToolTipText("");
         jButton1.setEnabled(false);
@@ -615,17 +600,31 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButton2.setToolTipText("");
+        jButton2.setEnabled(false);
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton2.setIconTextGap(10);
+        jButton2.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButton2.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButton2.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelForms2Layout = new javax.swing.GroupLayout(jPanelForms2);
         jPanelForms2.setLayout(jPanelForms2Layout);
         jPanelForms2Layout.setHorizontalGroup(
             jPanelForms2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelForms2Layout.createSequentialGroup()
-                .addGroup(jPanelForms2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCashMove, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSticker, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelForms2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonCashMove, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelForms2Layout.setVerticalGroup(
@@ -637,7 +636,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonSticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))

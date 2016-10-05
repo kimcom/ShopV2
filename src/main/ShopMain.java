@@ -6,9 +6,12 @@ import java.awt.Color;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
+import reports.ReportPricePlankClub;
+import reports.ReportPriceStickerClub;
 
 public class ShopMain {
 
@@ -63,6 +66,10 @@ public class ShopMain {
 				}
 				System.out.println(mid);
 */						
+				//ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(new BigDecimal("940.1453"),1,65);
+//				ReportPricePlankClub reportPrice = new ReportPricePlankClub(new BigDecimal("940.1453"),2);
+//				reportPrice.setModal(true);
+//				reportPrice.setVisible(true);
 //				if (1 == 1) System.exit(0);
 				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
@@ -84,16 +91,11 @@ public class ShopMain {
 //				frmCardAttribute.setModal(true);
 //				frmCardAttribute.setVisible(true);
 
-//				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(2); //ввод анкеты
-//				frmCardAttribute.setModal(true);
-//				frmCardAttribute.setVisible(true);
-				
-				//if (1==1) System.exit(0);
 				
                 if (config == null) System.exit(0);
                 ConnectionDb cnn = ConnectionDb.getInstance();
                 if (cnn == null) System.exit(0);
-                
+
 				if(!config.USER_NAME.equals("")){
                     String password = new StringBuffer(config.USER_NAME).reverse().toString();
                     boolean loginStatus = cnn.login(config.USER_NAME, password);
@@ -111,7 +113,14 @@ public class ShopMain {
 //						if (1 == 1) {
 //							return;
 //						}
-                        final FrmMain frmMain = FrmMain.getInstance();
+
+//						final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(2,""); //ввод анкеты
+//						frmCardAttribute.setModal(true);
+//						frmCardAttribute.setVisible(true);
+//						cnn.destroy();
+//						if (1==1) System.exit(0);
+
+						final FrmMain frmMain = FrmMain.getInstance();
 
 						TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
 						//running timer task as daemon thread

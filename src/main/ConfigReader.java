@@ -100,7 +100,7 @@ public class ConfigReader {
 				zzz.println("POS_TYPE = BPOS1");
 				zzz.println("POS_COM_PORT = 0");
 				zzz.println("POS_BAUD_RATE = 115200");
-				zzz.println("POS_MerchantIdx = 1");
+				zzz.println("POS_MerchantIdx = 0");
 			}
 			zzz.close();
 		} catch (FileNotFoundException e) {

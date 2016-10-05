@@ -69,8 +69,8 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 
 		jTextField1.setText("Просканируйте дисконтную карту");
 
-//jTextField1.setText("9800000000007");
-//jTextField1.setText("2200000000007");
+//jTextField1.setText("9800000000960");
+//jTextField1.setText("9800000929285");
 //barCode = jTextField1.getText();
 //requery();
     }

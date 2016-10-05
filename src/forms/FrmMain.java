@@ -364,7 +364,7 @@ public class FrmMain extends javax.swing.JFrame {
 		comp.setFocusable(value);
 		comp.setEnabled(value);
 	}
-    private FrmMain() {
+    public FrmMain() {
         initComponents();
         conf = ConfigReader.getInstance();
         setTitle(conf.FORM_TITLE);
@@ -1186,7 +1186,7 @@ public class FrmMain extends javax.swing.JFrame {
 					return;
 				}
 				try {
-					EKKA me = new EKKA();
+					EKKA me = new EKKA(this);
 					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1251,7 +1251,7 @@ public class FrmMain extends javax.swing.JFrame {
 					return;
 				}
 				try {
-					EKKA me = new EKKA();
+					EKKA me = new EKKA(this);
 					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1290,7 +1290,7 @@ public class FrmMain extends javax.swing.JFrame {
 					int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на "+typePrinter+" ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 					if (i != 0) return;
 					try {
-						EKKA me = new EKKA();
+						EKKA me = new EKKA(this);
 						if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 							if (cnn.setCheckStatus(1)) {
 								jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1396,7 +1396,7 @@ public class FrmMain extends javax.swing.JFrame {
 				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать возвратный чек на " + typePrinter + " ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 				if (i != 0) return;
 				try {
-					EKKA me = new EKKA();
+					EKKA me = new EKKA(this);
 					if (me.printCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1428,13 +1428,13 @@ public class FrmMain extends javax.swing.JFrame {
 					return;
 				}
 			}
-			if (!typePay.equals("0")){
+			if (!typePay.equals("0") && cnn.returnID==null && cnn.returnIDFiscalNumber==null){
 //				int i = JOptionPane.showOptionDialog(null, "Указан тип оплаты: " + typePayMsg + "\n\nРаспечатать чек на " + typePrinter + " ?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[]{"Да", "Нет"}, "Нет");
 //				if (i != 0) {
 //					return;
 //				}
 				try {
-					EKKA me = new EKKA();
+					EKKA me = new EKKA(this);
 					if (!me.terminalCheck(cnn.currentCheckID, typePay, cnn.returnIDFiscalNumber)) {
 //						if (cnn.setCheckStatus(1)) {
 //							jButtonNewCheckActionPerformed();//чек распечатан успешно
@@ -1764,7 +1764,7 @@ public class FrmMain extends javax.swing.JFrame {
 	private void jButtonCheckCopyActionPerformed(){
 		if (conf.EKKA_TYPE == 0) return;
 		try {
-			EKKA me = new EKKA();
+			EKKA me = new EKKA(this);
 			me.copyCheck();
 		} catch (Exception e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);

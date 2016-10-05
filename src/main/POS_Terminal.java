@@ -4,6 +4,7 @@ import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
 import com.jacob.com.Dispatch;
 import db.ConnectionDb;
+import forms.FrmMain;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,12 +27,13 @@ public class POS_Terminal {
 	private ActiveXComponent pos;
 	private final ConfigReader conf;
 	private final ConnectionDb cnn;
-	public String lastResult;
-	public String lastErrorCode;
-	public String lastErrorDescription;
-	public String lastStatMsgCode;
-	public String lastStatMsgDescription;
-	private String sum;
+	public String lastResult = "";
+	public String lastErrorCode = "";
+	public String lastErrorDescription = "";
+	public String lastStatMsgCode = "";
+	public String lastStatMsgDescription = "";
+//	public FrmMain frmMain;
+	private String sum = "";
 	
 	public POS_Terminal() {
 		this.conf = ConfigReader.getInstance();
@@ -43,6 +45,7 @@ public class POS_Terminal {
 		lastErrorDescription = Dispatch.call(pos, "LastErrorDescription").toString();
 		lastStatMsgCode = Dispatch.call(pos, "LastStatMsgCode").toString();
 		lastStatMsgDescription = Dispatch.call(pos, "LastStatMsgDescription").toString();
+//System.out.println("lastResult: " + lastResult + "\tlastError: " + lastErrorCode + " " + lastErrorDescription + "\tlastStatMsg: " + lastStatMsgCode + " " + lastStatMsgDescription);
 	}
 
 	public boolean load() {
@@ -96,14 +99,21 @@ public class POS_Terminal {
 		pos.invoke("CommClose");
 		//pos.invoke("SetErrorLang", "2");
 		Dispatch.call(pos, "SetErrorLang", "2");
-		Dispatch.call(pos, "useLogging", 1, conf.CURDIR+"\\logs\\pos-terminal.log");
+		Dispatch.call(pos, "useLogging", 2, conf.CURDIR+"\\logs\\pos-terminal.log");
 		if (conf.POS_COM_PORT.equals("0")) {
 			Dispatch.call(pos, "CommOpenAuto", conf.POS_BAUD_RATE);
 		}else{
 			Dispatch.call(pos, "CommOpen", conf.POS_COM_PORT, conf.POS_BAUD_RATE);
 		}
+//		str = Dispatch.call(pos, "MerchantID").toString();
+
+		str = Dispatch.call(pos, "PosGetInfo").toString();
 		waitResponse();
+//		str = Dispatch.call(pos, "TerminalInfo").toString();
+//System.out.println("TerminalInfo=" + str);
 		checkError();
+//System.out.println("1 lastResult: " + lastResult + "\tlastError: " + lastErrorCode + " " + lastErrorDescription + "\tlastStatMsg: " + lastStatMsgCode + " " + lastStatMsgDescription);
+		Dispatch.call(pos, "CommClose");
 		if (lastResult.equals("0")) {
 			return true;
 		}
@@ -116,8 +126,13 @@ public class POS_Terminal {
 		String entrymode = "";
 		String lastStMsCode = "0";
 		while (Dispatch.call(pos, "LastResult").toString().equals("2")){
-			Thread.yield();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException ex) {
+				MyUtil.errorToLog(this.getClass().getName(), (Exception) ex);
+			}
 			String result = Dispatch.call(pos, "LastStatMsgCode").toString();
+//System.out.println("2 lastResult: " + lastResult + "\tlastError: " + lastErrorCode + " " + lastErrorDescription + "\tlastStatMsg: " + lastStatMsgCode + " " + lastStatMsgDescription);
 //System.out.println("result:"+result);
 			if (!result.equals("0") && !result.equals(lastStMsCode)) lastStMsCode = result;
 			if (lastStMsCode.equals("11")) {
@@ -183,12 +198,14 @@ public class POS_Terminal {
 		}
 	}
 	public boolean purchase(){
-//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTE/G1HA0TEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/						   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTE /G1HA0TEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/				   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTEP/G1HA0TEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/L1HA3TEP/P1HACTEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/S112T4QP/G11234QP/G1HA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTEP
 		String str = "";
 		pos.invoke("CommClose");
 		//pos.invoke("SetErrorLang","2");
 		Dispatch.call(pos, "SetErrorLang", "2");
-		Dispatch.call(pos, "useLogging", 1, conf.CURDIR + "\\logs\\pos-terminal.log");
+		Dispatch.call(pos, "useLogging", 2, conf.CURDIR + "\\logs\\pos-terminal.log");
 		
 		if (conf.POS_COM_PORT.equals("0")) {
 			//pos.invoke("CommOpenAuto", conf.POS_BAUD_RATE);
@@ -241,11 +258,16 @@ public class POS_Terminal {
 			Dispatch.call(pos, "Purchase", sum, "0", conf.POS_MerchantIdx);
 		}
 
-		returnValues();
+		//returnValues();
+		//MyUtil.messageToLog(getClass().getName(), "returnValues() - ok");
+		waitResponse();
+		//MyUtil.messageToLog(getClass().getName(), "waitResponse() - ok");
 		String receiptSlip = null;
 		checkError();
+		//MyUtil.messageToLog(getClass().getName(), "checkError() - ok");
 		if (lastResult.equals("0")) {
 			Dispatch.call(pos, "Confirm");
+			//MyUtil.messageToLog(getClass().getName(), "Confirm() - ok");
 			waitResponse();
 			if (Dispatch.call(pos, "LastResult").toString().equals("0")) {
 				Dispatch.call(pos, "ReqCurrReceipt").toString();
@@ -271,6 +293,7 @@ public class POS_Terminal {
 			checkError();
 			MyUtil.messageToLog(getClass().getName(), "lastResult: " + lastResult + "\tlastError: " + lastErrorCode + " " + lastErrorDescription + "\tlastStatMsg: " + lastStatMsgCode + " " + lastStatMsgDescription);
 			Dispatch.call(pos, "CommClose");
+			JOptionPane.showMessageDialog(new JFrame(), "Операция отменена!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}else{
 			checkError();

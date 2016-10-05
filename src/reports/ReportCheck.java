@@ -316,14 +316,14 @@ public class ReportCheck extends JDialog implements Printable{
         jPanel3.setPreferredSize(new java.awt.Dimension(210, 160));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel21.setText("ИТОГО без скидки:");
+        jLabel21.setText("Разом без знижки:");
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel22.setText("6.00");
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel23.setText("Скидка:");
+        jLabel23.setText("Знижка:");
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -333,7 +333,7 @@ public class ReportCheck extends JDialog implements Printable{
         jLabel25.setText("Без ПДВ");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel26.setText("К ОПЛАТЕ:");
+        jLabel26.setText("ДО ОПЛАТИ:");
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -341,15 +341,15 @@ public class ReportCheck extends JDialog implements Printable{
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setText("БЛАГОДАРИМ ЗА ПОКУПКУ!");
+        jLabel28.setText("ДЯКУЄМО ЗА ПОКУПКУ!");
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Не фискальный чек");
+        jLabel29.setText("Не фіскальний чек");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("Дата: 15/04/14 Время: 16:37:22");
+        jLabel30.setText("Дата: 15/04/14 Час: 16:37:22");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -412,10 +412,7 @@ public class ReportCheck extends JDialog implements Printable{
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -474,9 +474,10 @@ public final class ConnectionDb{
 			return null;
 		}
 	}
-    public boolean setDiscountCardAttribute(String action, String strCardID, String strName, 
-                                            String strAddress, String strPhone, 
-                                            String strEmail, String strAnimal, String strNotes,
+    public boolean setDiscountCardAttribute(String action, String strCardID, 
+											String strFamily, String strName, String strMiddleName,
+                                            String strAddress, String strPhone1, String strPhone2,
+                                            String strEmail, String strAnimalType, String strAnimalBreed, String strNotes,
                                             String dtDateOfIssue, BigDecimal bdPercentOfDiscount, 
                                             BigDecimal bdAmountOfBuying, String dtDateOfCancellation,
                                             String strHowWeLearn, String parentCardID) {
@@ -488,34 +489,29 @@ public final class ConnectionDb{
             return false;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_card_attribute(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-//            if(action.equals("card_attr_new")){
-//                cs.setString(1, "card_attr_new");
-//                cs.setBigDecimal(10, bdPercentOfDiscount);
-//                cs.setBigDecimal(11, bdAmountOfBuying);
-//            } else if(action.equals("card_attr_edit")) {
-//                cs.setString(1, "card_attr_edit");
-//                cs.setBigDecimal(10, bdPercentOfDiscount);
-//                cs.setBigDecimal(11, bdAmountOfBuying);
-//            } else return false;
+            CallableStatement cs = cnn.prepareCall("{call pr_card_attribute(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, action);
             cs.setString(2, strCardID);
-            cs.setString(3, strName);
-            cs.setString(4, strAddress);
-            cs.setString(5, strPhone);
-            cs.setString(6, strEmail);
-            cs.setString(7, strAnimal);
-            cs.setString(8, strNotes);
-            cs.setString(9, dtDateOfIssue);
-			cs.setBigDecimal(10, bdPercentOfDiscount);
-			cs.setBigDecimal(11, bdAmountOfBuying);
-            cs.setString(12, dtDateOfCancellation);
-            cs.setString(13, Integer.toString(clientID));
-            cs.setString(14, strHowWeLearn);
-            cs.setString(15, parentCardID);
-            cs.registerOutParameter(16, Types.DOUBLE);
+            cs.setString(3, strFamily);
+            cs.setString(4, strName);
+            cs.setString(5, strMiddleName);
+            cs.setString(6, strAddress);
+            cs.setString(7, strPhone1);
+            cs.setString(8, strPhone2);
+            cs.setString(9, strEmail);
+            cs.setString(10, strAnimalType);
+            cs.setString(11, strAnimalBreed);
+            cs.setString(12, strNotes);
+            cs.setString(13, dtDateOfIssue);
+			cs.setBigDecimal(14, bdPercentOfDiscount);
+			cs.setBigDecimal(15, bdAmountOfBuying);
+            cs.setString(16, dtDateOfCancellation);
+            cs.setString(17, Integer.toString(clientID));
+            cs.setString(18, strHowWeLearn);
+            cs.setString(19, parentCardID);
+            cs.registerOutParameter(20, Types.DOUBLE);
             cs.execute();
-            BigDecimal percent = cs.getBigDecimal(16);
+            BigDecimal percent = cs.getBigDecimal(20);
             if (percent.compareTo(bdPercentOfDiscount)==0) return true;
             return false;
         } catch (SQLException e) {
@@ -524,6 +520,85 @@ public final class ConnectionDb{
             return false;
         }
     }
+	public ResultSet getCardAnimals(String barCode) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCardAnimals: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "card_animal");
+			cs.setString(2, barCode);
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public ResultSet getListAnimals() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getListAnimals: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "list_animal");
+			cs.setString(2, "");
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public ResultSet getListBreeds(String animal) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getListBreeds: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "list_breed");
+			cs.setString(2, animal);
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public boolean delDiscountCardAnimal(String barCode, int code) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("delDiscountCardAnimal: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (barCode.equals("")) {
+			return false;
+		}
+		if (code == 0) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "del_animal");
+			cs.setString(2, barCode);
+			cs.setInt(3, code);
+			cs.registerOutParameter(3, Types.INTEGER);
+			cs.execute();
+			return cs.getInt(3) != 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
 //cash
     public ResultSet getCashMove() {
         if (cnn == null) {
@@ -531,7 +606,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "content");
             cs.setInt(2, userID);
             cs.setInt(3, clientID);
@@ -539,7 +614,8 @@ public final class ConnectionDb{
             cs.setDate(5, null);
             cs.setBigDecimal(6, null);
             cs.setString(7, null);
-            cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
             ResultSet res = cs.executeQuery();
             return res;
         } catch (SQLException e) {
@@ -554,7 +630,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "total");
             cs.setInt(2, userID);
             cs.setInt(3, clientID);
@@ -562,7 +638,8 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, null);
 			cs.setString(7, null);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
             ResultSet res = cs.executeQuery();
             return res;
         } catch (SQLException e) {
@@ -577,7 +654,7 @@ public final class ConnectionDb{
 			return null;
 		}
 		try {
-			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "report_cash");
 			cs.setInt(2, userID);
 			cs.setInt(3, clientID);
@@ -585,7 +662,8 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, null);
 			cs.setString(7, null);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
 			ResultSet res = cs.executeQuery();
 			return res;
 		} catch (SQLException e) {
@@ -594,13 +672,13 @@ public final class ConnectionDb{
 			return null;
 		}
 	}
-    public boolean addCashNewRecord(BigDecimal bdSumma, String strNotes) {
+    public boolean addCashNewRecord(BigDecimal bdSumma, String strNotes, boolean cashless) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addCashNewRecord: parameter [cnn] cannot be null!"));
 			return false;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "add_rec");
             cs.setInt(2, userID);
             cs.setInt(3, clientID);
@@ -608,22 +686,23 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, bdSumma);
 			cs.setString(7, strNotes);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, (cashless)?1:0);
+			cs.registerOutParameter(9, Types.INTEGER);
             cs.execute();
-            return (cs.getInt(8)!=0);
+            return (cs.getInt(9)!=0);
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
             return false;
         }
     }
-	public boolean editCashRecord(BigDecimal moveID, BigDecimal bdSumma, String strNotes) {
+	public boolean editCashRecord(BigDecimal moveID, BigDecimal bdSumma, String strNotes, boolean cashless) {
 		if (cnn == null) {
 			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("editCashRecord: parameter [cnn] cannot be null!"));
 			return false;
 		}
 		try {
-			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "edit_rec");
 			cs.setInt(2, userID);
 			cs.setInt(3, clientID);
@@ -631,9 +710,10 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, bdSumma);
 			cs.setString(7, strNotes);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, (cashless) ? 1 : 0);
+			cs.registerOutParameter(9, Types.INTEGER);
 			cs.execute();
-			return (cs.getInt(8) != 0);
+			return (cs.getInt(9) != 0);
 		} catch (SQLException e) {
 			MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
@@ -646,7 +726,7 @@ public final class ConnectionDb{
 			return false;
 		}
 		try {
-			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "del_rec");
 			cs.setInt(2, userID);
 			cs.setInt(3, clientID);
@@ -654,9 +734,10 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, null);
 			cs.setString(7, null);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
 			cs.execute();
-			return (cs.getInt(8) != 0);
+			return (cs.getInt(9) != 0);
 		} catch (SQLException e) {
 			MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
@@ -669,7 +750,7 @@ public final class ConnectionDb{
 			return false;
 		}
 		try {
-			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "set_cash_in");
 			cs.setInt(2, userID);
 			cs.setInt(3, clientID);
@@ -677,9 +758,10 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, summa);
 			cs.setString(7, null);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
 			cs.execute();
-			return (cs.getInt(8) != 0);
+			return (cs.getInt(9) != 0);
 		} catch (SQLException e) {
 			MyUtil.errorToLog(this.getClass().getName(),e);
 			DialogBoxs.viewError(e);
@@ -693,7 +775,7 @@ public final class ConnectionDb{
 			return null;
 		}
 		try {
-			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?)}");
+			CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "report_sale");
 			cs.setInt(2, userID);
 			cs.setInt(3, clientID);
@@ -703,7 +785,8 @@ public final class ConnectionDb{
 			cs.setDate(5, null);
 			cs.setBigDecimal(6, null);
 			cs.setString(7, null);
-			cs.registerOutParameter(8, Types.INTEGER);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
 			ResultSet res = cs.executeQuery();
 			return res;
 		} catch (SQLException e) {
@@ -2353,8 +2436,8 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-            //CALL pr_promo_info('getPromoListForShop',0,'',0,'','','',null,null,null);
-            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?)}");
+            //CALL pr_promo_info('getPromoListForShop',0,'',0,'','','',null,null,null,null);
+            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "getPromoListForShop");
             cs.setInt(2, 0);
             cs.setString(3, "");
@@ -2365,6 +2448,7 @@ public final class ConnectionDb{
             cs.setInt(8, 0);
             cs.setInt(9, 0);
             cs.setDouble(10, 0);
+            cs.setString(11, Integer.toString(clientID));
             ResultSet res = cs.executeQuery();
             return res;
         } catch (SQLException e) {
@@ -2382,7 +2466,7 @@ public final class ConnectionDb{
             return false;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "getById");
             cs.setInt(2, promoID);
             cs.setString(3, "");
@@ -2393,6 +2477,7 @@ public final class ConnectionDb{
             cs.setInt(8, 0);
             cs.setInt(9, 0);
             cs.setDouble(10, 0);
+			cs.setString(11, Integer.toString(clientID));
             resPromoInfo = cs.executeQuery();
             //resPromoInfo.last();
             resPromoInfo.absolute(1);
