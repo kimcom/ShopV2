@@ -194,6 +194,7 @@ public class ReportPricePlankClub extends JDialog{
 					int x = 0, y = 0, height_label = 0;
 					int padding_left = 5, padding_right = padding_left + 5;
 					x += padding_left;
+					int delta_y = (width_out - padding_right) / 4;
 					JPanel jPanel1 = new javax.swing.JPanel();
 					jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 					jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -207,17 +208,34 @@ public class ReportPricePlankClub extends JDialog{
 					JLabel jLabel17 = new javax.swing.JLabel();
 					JLabel jLabel18 = new javax.swing.JLabel();
 					JLabel jLabel19 = new javax.swing.JLabel();
+					JLabel jLabel20 = new javax.swing.JLabel();
+					JLabel jLabel21 = new javax.swing.JLabel();
+					JLabel jLabel22 = new javax.swing.JLabel();
 //					JSeparator jSeparator2 = new javax.swing.JSeparator();
 
+					jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // артикул текст
+					jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // артикул
+					jLabel22.setFont(new java.awt.Font("Tahoma", 0, 11)); // вiд 3-5 одиниць
 					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // название
-					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена
-					jLabel19.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена клуб
-					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 11)); // артикул
+					jLabel12.setFont(new java.awt.Font("Tahoma", 0, 30)); // цена
+					jLabel19.setFont(new java.awt.Font("Tahoma", 0, 30)); // цена клуб
+					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 11)); // 
 					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 10)); // дата время
-					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // кат.наценки
-					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 11)); // производитель
-					jLabel16.setFont(new java.awt.Font("Tahoma", 0, 11)); // текст за один.
-					jLabel17.setFont(new java.awt.Font("Tahoma", 0, 11)); // текст за 5 од.
+					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 11)); // кат.наценки
+					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 11)); // 
+					jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // текст за один.
+					jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // текст за 5 од.
+					
+					jLabel16.setBackground(new java.awt.Color(128, 128, 128));
+					jLabel16.setForeground(new Color(255,255,255));
+					jLabel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(128, 128, 128), 1, true));
+					jLabel16.setOpaque(true);
+
+					jLabel17.setBackground(new java.awt.Color(128, 128, 128));
+					jLabel17.setForeground(new Color(255,255,255));
+					jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(128, 128, 128), 1, true));
+					jLabel17.setOpaque(true);
+					
 
 //					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 0, 0)));
 //					jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
@@ -227,25 +245,44 @@ public class ReportPricePlankClub extends JDialog{
 //					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
 //					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 //					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 128)));
-					//дата время
+//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 0, 128)));
+//					jLabel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 128)));
+//					jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 128, 0)));
+//					jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 128, 0)));
+					//артикул
 					height_label = (int) (h * 1);
+					int width = 55;
+					jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel20.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel20.setText("<html>Артикул:</html>");
+					jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 55, height_label));
+
+					str = res.getString("Article");
+					jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel21.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel21.setText("<html>"+str+"</html>");
+					jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + 54, y, width_out - padding_right - 13 - 55 * 2, height_label));
+					
+					//дата время
+					jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel14.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel14.setText("<html>" + MyUtil.getCurrentDate2() + "</html>");
+					jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(width_out - padding_right - 10 - 55, y, 55, height_label));
+
+//					height_label = (int) (h * 1);
 					str = "";
 					if (!res.getString("CatMargin").equals(""))
-						str = "&nbsp;&nbsp;&nbsp;("+res.getString("CatMargin")+")";
-					jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+						str = "("+res.getString("CatMargin")+")";
+					jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					jLabel18.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 					jLabel18.setText("<html>" + str + "</html>");
-					jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-					jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-					jLabel14.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-					jLabel14.setText("<html>" + MyUtil.getCurrentDate() + "</html>");
-					jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
+					jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(width_out - padding_right - 10, y, 15, height_label));
+
 
 					//название
 					y = y + height_label;
 					//height_label = (int) (h * 3);
-					height_label = 54;
+					height_label = 67;
 					str = res.getString("Name");
 					jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 					jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -253,33 +290,45 @@ public class ReportPricePlankClub extends JDialog{
 					jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
 					//текст "Ціна за одиницю"
-					y = y + height_label;
-					height_label = 15;
-					jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					y = y + 67;
+					height_label = 30;
+					jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					jLabel16.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-					jLabel16.setText("<html>Ціна за одиницю</html>");
-					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
+					jLabel16.setText("<html>ЦIНА:</html>");
+					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 50, height_label));
+
 					//текст ""Клубна ціна" від 5-ти одиниць"
-					jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					jLabel17.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 					if(res.getString("QtyClub").equals("0")) {
 						jLabel17.setText("");
 					}else{
-						jLabel17.setText("<html>Ціна від "+res.getString("QtyClub")+" одиниць</html>");
+						jLabel17.setText("<html><center>Клубна<br>ціна:</html>");
 					}
-					jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
+					jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, 50, height_label));
+
+					jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel22.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					if(res.getString("QtyClub").equals("0")) {
+						jLabel22.setText("");
+					}else{
+						jLabel22.setText("<html>від "+res.getString("QtyClub")+" одиниць</html>");
+					}
+					jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2 + 50, y, 77, height_label));
 
 					//цена
 					y = y + height_label;
 					height_label = h * 2;
 					str = res.getString("Price") + "&nbsp;";
-					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 					jLabel12.setText("<html>" + str + "</html>");
 					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
 
 					str = "";
-					if (!res.getString("DiscountClub").toString().equals("0")){
+					if (res.getString("Price").toString().equals("") || res.getString("DiscountClub").toString().equals("")) {
+						str = "";
+					} else {
 						BigDecimal discountClub = new BigDecimal(100).subtract(new BigDecimal(res.getString("DiscountClub"))).divide(new BigDecimal(100));
 						BigDecimal priceClub = new BigDecimal(res.getString("Price")).multiply(discountClub).setScale(2, RoundingMode.HALF_UP);
 						str = priceClub.toPlainString() + "&nbsp;";
@@ -290,25 +339,25 @@ public class ReportPricePlankClub extends JDialog{
 					jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
 
 					//артикул
-					y = y + height_label;
-					//height_label = (int) (h * 1.5);
-					height_label = 27;
-					str = res.getString("Article");
-					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel13.setText("<html>Арт:&nbsp;" + str + "</html>");
-					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
+//					y = y + height_label;
+//					//height_label = (int) (h * 1.5);
+//					height_label = 27;
+//					str = res.getString("Article");
+//					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+//					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+//					jLabel13.setText("<html>Арт:&nbsp;" + str + "</html>");
+//					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / 2, height_label));
 
 					//производитель
 					//y = y + height_label;
 					//height_label = (int) (h * 1.5);
-					str = res.getString("Producer");
-					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel15.setText("<html>Произв.:&nbsp;" + str + "</html>");
-					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
+//					str = res.getString("Producer");
+//					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
+//					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
+//					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+//					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+//					jLabel15.setText("<html>Произв.:&nbsp;" + str + "</html>");
+//					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
 
 					jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(x_out, y_out, width_out, height_out));
 					count++;

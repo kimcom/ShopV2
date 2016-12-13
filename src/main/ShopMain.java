@@ -2,7 +2,6 @@ package main;
 
 import db.ConnectionDb;
 import forms.*;
-import java.awt.Color;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -66,10 +65,15 @@ public class ShopMain {
 				}
 				System.out.println(mid);
 */						
-				//ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(new BigDecimal("940.1453"),1,65);
-//				ReportPricePlankClub reportPrice = new ReportPricePlankClub(new BigDecimal("940.1453"),2);
+//				ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(new BigDecimal("943.1453"),2,65);
+//				ReportPricePlankClub reportPrice = new ReportPricePlankClub(new BigDecimal("943.1453"),2);
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
+//				if (1 == 1) System.exit(0);
+
+//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal("1797.4914"));
+//				frmStickerEdit.setModal(true);
+//				frmStickerEdit.setVisible(true);
 //				if (1 == 1) System.exit(0);
 				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));

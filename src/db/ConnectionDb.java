@@ -98,6 +98,14 @@ public final class ConnectionDb{
 			return false;
 		}
 	}
+	public boolean statusValid(int timeout) {
+		try {
+			return cnn.isValid(timeout);
+		} catch (SQLException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+			return false;
+		}
+	}
     public boolean startConnect() {
 		boolean status = false;
 //		java.util.Date dt = new java.util.Date();

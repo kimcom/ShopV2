@@ -51,6 +51,11 @@ public class MyUtil {
 		SimpleDateFormat formatDT = new SimpleDateFormat("Дата: dd.MM.yyyy");
 		return formatDT.format(curdate);
 	}
+	public static String getCurrentDate2(){
+		Date curdate = new Date();
+		SimpleDateFormat formatDT = new SimpleDateFormat("dd.MM.yyyy");
+		return formatDT.format(curdate);
+	}
 	public static String getClientID(){
 		ConnectionDb cnn = ConnectionDb.getInstance();
 		return Integer.toString(cnn.clientID);

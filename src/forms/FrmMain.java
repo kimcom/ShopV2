@@ -1,6 +1,8 @@
 package forms;
 
 import db.ConnectionDb;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -13,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -217,6 +220,10 @@ public class FrmMain extends javax.swing.JFrame {
 					if (blDiscountCardFuture) break;
 					//barCode = "3182550711142";
 					if (barCode.equals("")) break;
+					System.out.println("cnnState: "+cnnState);
+					if (!checkCnnStatus()) break;
+					System.out.println("cnnState 5: "+cnn.statusValid(5));
+					System.out.println("cnnState 0: "+cnn.statusValid(0));
 					double res = cnn.addGoodInCheck(barCode);
 					if (res == 1) {
 						requery();
@@ -911,8 +918,13 @@ public class FrmMain extends javax.swing.JFrame {
 		return true;
 	}
 	private boolean checkCnnStatus() {
-		if(!cnnState)
+		cnnState = cnn.statusValid(0);
+		if(!cnnState){
+			URL url = getClass().getResource("/wav/error.wav");
+			AudioClip clip = Applet.newAudioClip(url);
+			clip.play();
 			JOptionPane.showMessageDialog(null, "Нет связи с сервером!\n\nПовторите операцию позже.", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE,new javax.swing.ImageIcon(getClass().getResource("/png/connect lost.png")));
+		}	
 		return cnnState;
 	}
 	public void setCnnStatus(int status){

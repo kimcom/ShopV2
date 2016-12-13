@@ -1,9 +1,12 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,6 +27,7 @@ public class ConfigReader {
     public String       SERVER_DB;
     public String       USER_NAME;
 	public String		APP_VERSION;
+    public int          RESET_CONFIG = 0;
     public int          MARKET_ID = 0;
     public int          TERMINAL_ID = 0;
     public int          EKKA_TYPE = 0;
@@ -77,8 +81,8 @@ public class ConfigReader {
 			File fileConf = new File(CONF_FILE_NAME);
 			zzz = new PrintWriter(new FileOutputStream(fileConf, true), true);
 			if(typeInfo.equals("ценники")){
-				zzz.println("");
-				zzz.println(";ценники");
+				//zzz.println("");
+				zzz.println(";stickers");
 				zzz.println("PAGE_WIDTH             = 595");
 				zzz.println("PAGE_HEIGHT            = 842");
 				zzz.println("STICKER_HEIGHT_CORRECT = 1"); //canon LBP-2900 харьков деревянко
@@ -88,13 +92,13 @@ public class ConfigReader {
 				zzz.println("PLANK_PADDING_TOP      = 20");
 			}
 			if(typeInfo.equals("SERVERS")){
-				zzz.println("");
-				zzz.println(";сервера");
-				zzz.println("SERVER_ADDRESS_1 = trio.priroda.com.ua");
-				zzz.println("SERVER_ADDRESS_2 = mts.priroda.com.ua");
+				//zzz.println("");
+				zzz.println(";servers");
+				zzz.println("SERVER_ADDRESS_1 = shopv2.priroda.pp.ua");
+				zzz.println("SERVER_ADDRESS_2 = shopv2.priroda.pp.ua");
 			}
 			if(typeInfo.equals("POS")){
-				zzz.println("");
+				//zzz.println("");
 				zzz.println(";setting POS-terminal");
 				zzz.println("POS_ACTIVE = 0");
 				zzz.println("POS_TYPE = BPOS1");
@@ -109,7 +113,26 @@ public class ConfigReader {
 	}
 	private ConfigReader() throws FileNotFoundException, UnsupportedEncodingException, IOException
     {
-        Properties props = new Properties();
+		Properties props = new Properties();
+		Package p = this.getClass().getPackage();
+		APP_VERSION = p.getImplementationVersion();
+		if (APP_VERSION == null) {
+			//Properties propsMF = new Properties();
+			File fileConfMF = new File(MANIFEST_FILE_NAME);
+			if (!fileConfMF.exists()) {
+				//throw new FileNotFoundException("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
+				DialogBoxs.viewMessage("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
+				return;
+			}
+			FileInputStream fileMF = new FileInputStream(fileConfMF);
+			InputStreamReader inCharsMF = new InputStreamReader(fileMF, "UTF-8");
+			props.load(inCharsMF);
+			APP_VERSION = props.getProperty("Implementation-Version");
+			RESET_CONFIG = Integer.parseInt(props.getProperty("Implementation-reset").toString());
+		}
+
+		reset_SERVER_ADDRESS();
+		
         File fileConf = new File(CONF_FILE_NAME);
         if(!fileConf.exists()) {
 			DialogBoxs.viewMessage("Не найден файл конфигурации:\n" + CONF_FILE_NAME);
@@ -176,25 +199,31 @@ public class ConfigReader {
 		POS_COM_PORT			= props.getProperty("POS_COM_PORT");
 		POS_BAUD_RATE			= props.getProperty("POS_BAUD_RATE");
 		POS_MerchantIdx			= props.getProperty("POS_MerchantIdx");
-
-		Package p = this.getClass().getPackage();
-		APP_VERSION = p.getImplementationVersion();
-		if(APP_VERSION == null) {
-			//Properties propsMF = new Properties();
-			File fileConfMF = new File(MANIFEST_FILE_NAME);
-			if (!fileConfMF.exists()) {
-				//throw new FileNotFoundException("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
-				DialogBoxs.viewMessage("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
-				return;
-			}
-			FileInputStream fileMF = new FileInputStream(fileConfMF);
-			InputStreamReader inCharsMF = new InputStreamReader(fileMF, "UTF-8");
-			props.load(inCharsMF);
-			APP_VERSION = props.getProperty("Implementation-Version");
-		}
 		FORM_TITLE = FORM_TITLE + " v." + APP_VERSION;
 	}
 
+	private void reset_SERVER_ADDRESS() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+		if (RESET_CONFIG > 1000) return;
+		StringBuilder builder = new StringBuilder();
+		File fileConf = new File(CONF_FILE_NAME);
+		if (!fileConf.exists()) {
+			DialogBoxs.viewMessage("Не найден файл конфигурации:\n" + CONF_FILE_NAME);
+			return;
+		}
+		BufferedReader reader = new BufferedReader(new FileReader(fileConf));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			if (!line.startsWith("SERVER_ADDRESS") && !line.startsWith(";") && !line.equals(""))
+				builder.append(line.concat("\r\n"));
+			if (line.startsWith("SERVER_DB") || line.startsWith("TERMINAL_ID") || line.startsWith("PLANK_PADDING_TOP") || line.startsWith("EKKA_HOST") || line.startsWith("POS_MerchantIdx"))
+				builder.append("\r\n");
+		}
+		FileWriter writer = new FileWriter(fileConf);
+		writer.write(builder.toString());
+		writer.close();
+		reader.close();
+	}
+			
     public static ConfigReader getInstance() {
         if (instance == null) {
             try {

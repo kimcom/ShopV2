@@ -34,8 +34,8 @@ public class UpdaterShopV1 implements Runnable {
 	private String fileShopK = "SHOP_MasterZoo.ini";
 	//private final String UPDATE_PATH = "d:/shop-k-T/";
 	private final String UPDATE_PATH = "../shop-k/";
-	private final String SITE_URL = "http://stat.priroda.com.ua/shopv2/shop-k/";
-	private final String DEL_URL = "http://stat.priroda.com.ua/engine/deletefile?clientID=";
+	private final String SITE_URL = "http://stat.priroda.pp.ua/shopv2/shop-k/";
+	private final String DEL_URL = "http://stat.priroda.pp.ua/engine/deletefile?clientID=";
 //	private final String SITE_URL = "http://stat-new.localhost/shopv2/shop-k/";
 //	private final String DEL_URL = "http://stat-new.localhost/engine/deletefile?clientID=";
 	

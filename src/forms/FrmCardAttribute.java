@@ -109,7 +109,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //jTextField1.setText("2200000450234");
 //jTextField1.setText("2200000191847");
 //jTextField1.setText("2200000363497");
-//jTextField1.setText("9800001547372");
+//jTextField1.setText("2200000999993");
 //barCode = jTextField1.getText();
 //requery();
 
@@ -215,6 +215,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		jPanelAnimalAdd.setEnabled(true);
 		jPanelAnimalAdd.setVisible(true);
 		pack();
+		jComboBox2.requestFocus();
 	}
 	private void jButtonAnimalDelActionPerformed(){
 		int selectedRow = jTableAnimals.getSelectedRow();
@@ -227,7 +228,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		if (i == 0) {
 			barCode = jTextField1.getText();
 			if(cnn.delDiscountCardAnimal(barCode, Integer.decode(jTableAnimals.getModel().getValueAt(rowNum, 0).toString()))){
-				requery();
+				requeryTableAnimals();
+				jTextFieldNotes.requestFocus();
 			}else{
 				JOptionPane.showMessageDialog(this, "Возникла ошибка при удалении.\n\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -267,7 +269,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		if (cnn.setDiscountCardAttribute("add_animal", barCode,	"", "", "", "", "", "",	"",  
 				jComboBox2.getSelectedItem().toString(), jComboBox3.getSelectedItem().toString(), "", "", BigDecimal.ZERO, BigDecimal.ZERO, "", "", "")) {
 			JOptionPane.showMessageDialog(this, "Информация о питомце успешно записана!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
-			requery();
+			requeryTableAnimals();
 			jComboBox2.setSelectedIndex(0);
 			jComboBox3.setSelectedIndex(0);
 			jPanelAnimalAdd.setEnabled(false);
@@ -275,6 +277,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			pack();
 			jButtonAnimalAdd.setVisible(true);
 			jButtonAnimalDel.setVisible(true);
+			jTextFieldNotes.requestFocus();
 		} else {
 			JOptionPane.showMessageDialog(this, "Ошибка при записи информации о питомце!\n\nВозможно Вы уже добавили такого питомца.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 		}
@@ -416,18 +419,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                 }
             }
     
-
-			jTableAnimals.setModel(new TmCardAnimals(getCardAnimals()));
-			jTableAnimals.setDefaultRenderer(jTableAnimals.getColumnClass(0), new MyRenderer());
-			jTableAnimals.getTableHeader().setDefaultRenderer(new HeaderRenderer());
-
-			jTableAnimals.setRowHeight(17);
-			jTableAnimals.getColumnModel().getColumn(0).setMinWidth(0);
-			jTableAnimals.getColumnModel().getColumn(0).setMaxWidth(0);
-			jTableAnimals.getColumnModel().getColumn(0).setResizable(false);
-//			jTableAnimals.getColumnModel().getColumn(0).setPreferredWidth(20);
-			jTableAnimals.getColumnModel().getColumn(1).setPreferredWidth(40);
-			jTableAnimals.getColumnModel().getColumn(2).setPreferredWidth(80);
+			requeryTableAnimals();
 			
             blStatusBarCode = true;
         } else {
@@ -435,6 +427,19 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, "Не найдена карта с штрих-кодом: ".concat(barCode), "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
         }
     }
+	private void requeryTableAnimals(){
+		jTableAnimals.setModel(new TmCardAnimals(getCardAnimals()));
+		jTableAnimals.setDefaultRenderer(jTableAnimals.getColumnClass(0), new MyRenderer());
+		jTableAnimals.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+
+		jTableAnimals.setRowHeight(17);
+		jTableAnimals.getColumnModel().getColumn(0).setMinWidth(0);
+		jTableAnimals.getColumnModel().getColumn(0).setMaxWidth(0);
+		jTableAnimals.getColumnModel().getColumn(0).setResizable(false);
+//			jTableAnimals.getColumnModel().getColumn(0).setPreferredWidth(20);
+		jTableAnimals.getColumnModel().getColumn(1).setPreferredWidth(40);
+		jTableAnimals.getColumnModel().getColumn(2).setPreferredWidth(80);
+	}
 
 	private ResultSet getCardAnimals() {
 		if (cnn == null) {
@@ -873,7 +878,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 
         jFormattedTextFieldPhone1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         try {
-            jFormattedTextFieldPhone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+380## ### ## ##")));
+            jFormattedTextFieldPhone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+380#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -881,7 +886,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 
         jFormattedTextFieldPhone2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         try {
-            jFormattedTextFieldPhone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+380## ### ## ##")));
+            jFormattedTextFieldPhone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+380#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

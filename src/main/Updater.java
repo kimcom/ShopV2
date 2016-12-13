@@ -19,7 +19,7 @@ public class Updater implements Runnable {
 	private Download d;
 	private String fileName;
 	private final String UPDATE_PATH = "update/";
-	private final String SITE_URL = "http://stat.priroda.com.ua/shopv2/";
+	private final String SITE_URL = "http://stat.priroda.pp.ua/shopv2/";
 	
 	public Updater() {
 		Thread thread = new Thread(this);

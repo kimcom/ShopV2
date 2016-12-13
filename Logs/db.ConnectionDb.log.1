@@ -1,0 +1,22 @@
+ноя 23, 2016 11:00:15 AM main.MyUtil errorToLog
+SEVERE: Exception:
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:389)
+	at com.mysql.jdbc.Util.getInstance(Util.java:372)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:958)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:937)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:926)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:872)
+	at com.mysql.jdbc.ConnectionImpl.throwConnectionClosedException(ConnectionImpl.java:1236)
+	at com.mysql.jdbc.ConnectionImpl.checkClosed(ConnectionImpl.java:1231)
+	at com.mysql.jdbc.ConnectionImpl.versionMeetsMinimum(ConnectionImpl.java:5244)
+	at com.mysql.jdbc.ConnectionImpl.prepareCall(ConnectionImpl.java:4005)
+	at com.mysql.jdbc.ConnectionImpl.prepareCall(ConnectionImpl.java:3986)
+	at db.ConnectionDb.createFileForShopV1(ConnectionDb.java:2621)
+	at main.UpdaterShopV1.run(UpdaterShopV1.java:60)
+	at java.lang.Thread.run(Thread.java:745)
+
