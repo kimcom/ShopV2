@@ -8,16 +8,25 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.Attributes.Name;
+import java.util.jar.Manifest;
 
 public class ConfigReader {
     public static final String CURDIR  = Paths.get("").toAbsolutePath().toString();;
     private static final String CONF_FILE_NAME  = "res/shop.conf";
-    private static final String MANIFEST_FILE_NAME  = "manifest.mf";
+    private static final String MANIFEST_FILE_NAME  = "/META-INF/MANIFEST.MF";
     private static ConfigReader instance   = null;
     public String       FORM_TITLE;
     public String       ICON_IMAGE;
@@ -27,7 +36,7 @@ public class ConfigReader {
     public String       SERVER_DB;
     public String       USER_NAME;
 	public String		APP_VERSION;
-    public int          RESET_CONFIG = 0;
+    public int          RESET_CONFIG = 1001;
     public int          MARKET_ID = 0;
     public int          TERMINAL_ID = 0;
     public int          EKKA_TYPE = 0;
@@ -50,6 +59,7 @@ public class ConfigReader {
 	public String		POS_COM_PORT;
 	public String		POS_BAUD_RATE;
 	public String		POS_MerchantIdx;
+	public boolean		POS_SendInfo = false;
 
 	private int getIntegerValue(Properties props, String paramName){
 		int result = 0;
@@ -111,24 +121,19 @@ public class ConfigReader {
 			MyUtil.errorToLog(this.getClass().getName(), e);
 		}
 	}
-	private ConfigReader() throws FileNotFoundException, UnsupportedEncodingException, IOException
+	private ConfigReader() throws FileNotFoundException, UnsupportedEncodingException, IOException, URISyntaxException
     {
 		Properties props = new Properties();
 		Package p = this.getClass().getPackage();
 		APP_VERSION = p.getImplementationVersion();
 		if (APP_VERSION == null) {
-			//Properties propsMF = new Properties();
-			File fileConfMF = new File(MANIFEST_FILE_NAME);
-			if (!fileConfMF.exists()) {
-				//throw new FileNotFoundException("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
-				DialogBoxs.viewMessage("Не найден файл манифеста:\n" + MANIFEST_FILE_NAME);
-				return;
-			}
-			FileInputStream fileMF = new FileInputStream(fileConfMF);
-			InputStreamReader inCharsMF = new InputStreamReader(fileMF, "UTF-8");
-			props.load(inCharsMF);
+			//так работает в jar но не работает в нетбинс
+			InputStream is = getClass().getResourceAsStream(MANIFEST_FILE_NAME);
+			props.load(is);
 			APP_VERSION = props.getProperty("Implementation-Version");
-			RESET_CONFIG = Integer.parseInt(props.getProperty("Implementation-reset").toString());
+			//RESET_CONFIG = Integer.parseInt(props.getProperty("Implementation-reset").toString());
+			//DialogBoxs.viewMessage("APP_VERSION=" + APP_VERSION + "\nRESET_CONFIG=" + props.getProperty("Implementation-reset"));
+			is.close();
 		}
 
 		reset_SERVER_ADDRESS();

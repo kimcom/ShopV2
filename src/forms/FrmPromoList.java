@@ -39,6 +39,7 @@ public class FrmPromoList extends javax.swing.JDialog {
     public boolean blDisposeStatus = false;
     public int currentPromoID = 0;
     public int promoID = 0;
+    public boolean blPromoAll = false;
 
     public FrmPromoList() {
         initComponents();
@@ -99,6 +100,12 @@ public class FrmPromoList extends javax.swing.JDialog {
         promoID = currentPromoID;
         dispose();
     }
+	private void jButtonOK1ActionPerformed(){
+		blPromoAll = true;
+		promoID = 0;
+		dispose();
+	}
+			
     private ResultSet getPromoListRS() {
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return null;
@@ -253,6 +260,7 @@ public class FrmPromoList extends javax.swing.JDialog {
         jPanelButton = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
         jButtonOK = new javax.swing.JButton();
+        jButtonOK1 = new javax.swing.JButton();
         jScrollPanePromoList = new javax.swing.JScrollPane();
         jTablePromoList = new javax.swing.JTable();
         jPanelDesc = new javax.swing.JPanel();
@@ -300,6 +308,20 @@ public class FrmPromoList extends javax.swing.JDialog {
             }
         });
 
+        jButtonOK1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Conversion 64.png"))); // NOI18N
+        jButtonOK1.setToolTipText("Назначить акции автоматически");
+        jButtonOK1.setActionCommand("Поиск");
+        jButtonOK1.setAlignmentX(0.5F);
+        jButtonOK1.setBorderPainted(false);
+        jButtonOK1.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonOK1.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonOK1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonOK1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOK1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
         jPanelButton.setLayout(jPanelButtonLayout);
         jPanelButtonLayout.setHorizontalGroup(
@@ -308,7 +330,8 @@ public class FrmPromoList extends javax.swing.JDialog {
                 .addGap(26, 26, 26)
                 .addGroup(jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonOK1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
         jPanelButtonLayout.setVerticalGroup(
@@ -318,6 +341,8 @@ public class FrmPromoList extends javax.swing.JDialog {
                 .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonOK1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -536,7 +561,7 @@ public class FrmPromoList extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPanePromoList, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                    .addComponent(jScrollPanePromoList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelDesc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -553,10 +578,14 @@ public class FrmPromoList extends javax.swing.JDialog {
     private void jTablePromoListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePromoListMouseClicked
         jTablePromoListMouseClicked(evt,0);
     }//GEN-LAST:event_jTablePromoListMouseClicked
+    private void jButtonOK1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOK1ActionPerformed
+        jButtonOK1ActionPerformed();
+    }//GEN-LAST:event_jButtonOK1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonOK;
+    private javax.swing.JButton jButtonOK1;
     public javax.swing.JLabel jLabel21;
     public javax.swing.JLabel jLabel22;
     public javax.swing.JLabel jLabel23;

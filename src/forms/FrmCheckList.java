@@ -4,32 +4,25 @@ import db.ConnectionDb;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
 import main.ConfigReader;
 import main.DialogBoxs;
-import main.MyUtil;
 import reports.ReportCheck;
 import tablemodel.TmCheckContent;
 import tablemodel.TmCheckList;
@@ -51,32 +44,32 @@ public class FrmCheckList extends javax.swing.JDialog {
         
 		requery();
 		setLocationRelativeTo(null);
-		jTableChechList.requestFocus();
+		jTableCheckList.requestFocus();
 	}
     
 	private void requery(){
 
-        jTableChechList.setModel(new TmCheckList(getCheckListRS()));
-        jTableChechList.setDefaultRenderer(jTableChechList.getColumnClass(0), new MyRendererTotal());
-        jTableChechList.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+        jTableCheckList.setModel(new TmCheckList(getCheckListRS()));
+        jTableCheckList.setDefaultRenderer(jTableCheckList.getColumnClass(0), new MyRendererTotal());
+        jTableCheckList.getTableHeader().setDefaultRenderer(new HeaderRenderer());
 
-        jTableChechList.setRowHeight(17);
-        jTableChechList.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableChechList.getColumnModel().getColumn(1).setPreferredWidth(100);
-        jTableChechList.getColumnModel().getColumn(2).setPreferredWidth(30);
-        jTableChechList.getColumnModel().getColumn(3).setPreferredWidth(30);
-        jTableChechList.getColumnModel().getColumn(4).setPreferredWidth(30);
-        jTableChechList.getColumnModel().getColumn(5).setPreferredWidth(30);
-        jTableChechList.getColumnModel().getColumn(6).setPreferredWidth(30);
+        jTableCheckList.setRowHeight(17);
+        jTableCheckList.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableCheckList.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableCheckList.getColumnModel().getColumn(2).setPreferredWidth(30);
+        jTableCheckList.getColumnModel().getColumn(3).setPreferredWidth(30);
+        jTableCheckList.getColumnModel().getColumn(4).setPreferredWidth(30);
+        jTableCheckList.getColumnModel().getColumn(5).setPreferredWidth(30);
+        jTableCheckList.getColumnModel().getColumn(6).setPreferredWidth(30);
 		
-		if (jTableChechList.getRowCount() > 0) {
+		if (jTableCheckList.getRowCount() > 0) {
 			//jTableChechList.setRowSelectionInterval(jTableChechList.getRowCount() - 1, jTableChechList.getRowCount() - 1);
-			jTableChechList.setRowSelectionInterval(0, 0);
+			jTableCheckList.setRowSelectionInterval(0, 0);
 		}
 
 		requeryCheckList();
 		
-		ListSelectionModel selModel = jTableChechList.getSelectionModel();
+		ListSelectionModel selModel = jTableCheckList.getSelectionModel();
 		selModel.addListSelectionListener(new MyListSelectionListener());
     }
 	private void requeryCheckContent(BigDecimal checkID) {
@@ -106,9 +99,9 @@ public class FrmCheckList extends javax.swing.JDialog {
 		jTableCheckContent.getColumnModel().getColumn(10).setResizable(false);
 	}
 	private void requeryCheckList(){
-		int selectedRow = jTableChechList.getSelectedRow();
+		int selectedRow = jTableCheckList.getSelectedRow();
 		if (selectedRow == -1) return;
-		currentCheckID = new BigDecimal(jTableChechList.getModel().getValueAt(selectedRow, 0).toString());
+		currentCheckID = new BigDecimal(jTableCheckList.getModel().getValueAt(selectedRow, 0).toString());
 		requeryCheckContent(currentCheckID);
 	}
 			
@@ -117,9 +110,9 @@ public class FrmCheckList extends javax.swing.JDialog {
 	private void jButtonPrintCheckActionPerformed(java.awt.event.ActionEvent evt, boolean blIconified) {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		int selectedRow = jTableChechList.getSelectedRow();
+		int selectedRow = jTableCheckList.getSelectedRow();
 		if (selectedRow == -1) return;
-		currentCheckID = new BigDecimal(jTableChechList.getModel().getValueAt(selectedRow, 0).toString());
+		currentCheckID = new BigDecimal(jTableCheckList.getModel().getValueAt(selectedRow, 0).toString());
 //currentCheckID = new BigDecimal(5458.1247);
 		cnn.getCheckInfo(currentCheckID);
 		if (cnn.checkIsBlank()) {
@@ -143,10 +136,10 @@ public class FrmCheckList extends javax.swing.JDialog {
 	private void jButtonSetStatusActionPerformed() {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		int selectedRow = jTableChechList.getSelectedRow();
+		int selectedRow = jTableCheckList.getSelectedRow();
 		if (selectedRow == -1) return;
-		currentCheckID = new BigDecimal(jTableChechList.getModel().getValueAt(selectedRow, 0).toString());
-		String typePay = jTableChechList.getModel().getValueAt(selectedRow, 3).toString();
+		currentCheckID = new BigDecimal(jTableCheckList.getModel().getValueAt(selectedRow, 0).toString());
+		String typePay = jTableCheckList.getModel().getValueAt(selectedRow, 3).toString();
 		String typePayNew = (typePay.equals("нал")) ? "безнал" : "нал";
 		int i = JOptionPane.showConfirmDialog(null, "Чек №" + currentCheckID.toString() + "\nустановлен тип оплаты: "+typePay+"\n\nИзменить на "+typePayNew+"?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (i == 0) {
@@ -157,7 +150,7 @@ public class FrmCheckList extends javax.swing.JDialog {
 			}
 		}
 		requery();
-		jTableChechList.requestFocus();
+		jTableCheckList.requestFocus();
 	}
 	private void jButtonExitActionPerformed() {
 		dispose();
@@ -287,7 +280,7 @@ public class FrmCheckList extends javax.swing.JDialog {
 					if (e.getModifiers() != 0) {
 						break;
 					}
-					jTableChechList.requestFocus();
+					jTableCheckList.requestFocus();
                     break;
                 default:
                     //String objCanonicalName = e.getSource().getClass().getCanonicalName();
@@ -313,7 +306,7 @@ public class FrmCheckList extends javax.swing.JDialog {
         jButtonPrintCheck = new javax.swing.JButton();
         jButtonSetStatus = new javax.swing.JButton();
         jScrollPaneCheckList = new javax.swing.JScrollPane();
-        jTableChechList = new javax.swing.JTable();
+        jTableCheckList = new javax.swing.JTable();
         jScrollPaneCheckContent = new javax.swing.JScrollPane();
         jTableCheckContent = new javax.swing.JTable();
 
@@ -400,9 +393,9 @@ public class FrmCheckList extends javax.swing.JDialog {
         jScrollPaneCheckList.setFocusable(false);
         jScrollPaneCheckList.setRequestFocusEnabled(false);
 
-        jTableChechList.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTableChechList.setForeground(new java.awt.Color(0, 0, 102));
-        jTableChechList.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCheckList.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTableCheckList.setForeground(new java.awt.Color(0, 0, 102));
+        jTableCheckList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -410,8 +403,8 @@ public class FrmCheckList extends javax.swing.JDialog {
 
             }
         ));
-        jTableChechList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneCheckList.setViewportView(jTableChechList);
+        jTableCheckList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPaneCheckList.setViewportView(jTableCheckList);
 
         jScrollPaneCheckContent.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Список товаров в чеке:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
 
@@ -482,7 +475,7 @@ public class FrmCheckList extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelButton;
     private javax.swing.JScrollPane jScrollPaneCheckContent;
     private javax.swing.JScrollPane jScrollPaneCheckList;
-    private javax.swing.JTable jTableChechList;
     private javax.swing.JTable jTableCheckContent;
+    private javax.swing.JTable jTableCheckList;
     // End of variables declaration//GEN-END:variables
 }

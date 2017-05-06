@@ -103,6 +103,7 @@ public class Updater implements Runnable {
 			  + "Обновить программу сейчас?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (i == 0) {
 			try {
+				Loader.clientSocketListener(Loader.PORTadmin, Loader.exitProgram);
 				Runtime.getRuntime().exec("java -jar update/update.jar");
 				System.exit(0);
 			} catch (IOException ex) {
@@ -169,7 +170,7 @@ public class Updater implements Runnable {
 			//if directory not exists, create it
 			if (!dest.exists()) {
 				dest.mkdir();
-				System.out.println("Directory copied from "	+ src + "  to " + dest);
+				//System.out.println("Directory copied from "	+ src + "  to " + dest);
 			}
 			//list all the directory contents
 			String files[] = src.list();

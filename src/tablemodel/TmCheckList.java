@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import main.MyUtil;
 
 public class TmCheckList extends AbstractTableModel{
+	protected Vector dataVector;
     private final int colnum = 7;
     private int rownum;
     private final String[] colNames = {
@@ -43,6 +45,7 @@ public class TmCheckList extends AbstractTableModel{
     public Object getValueAt(int rowindex, int columnindex) {
         Object res;
         Object[] row = ResultSets.get(rowindex);
+		//System.out.println("rowindex="+rowindex+" columnindex="+columnindex+" row[columnindex]="+row[columnindex]);
         if (columnindex == 0) { //id
             if (row[columnindex] == null) return BigDecimal.ZERO;
 			BigDecimal bd = (BigDecimal) row[columnindex];
@@ -77,4 +80,77 @@ public class TmCheckList extends AbstractTableModel{
     public String getColumnName(int param) {
         return colNames[param];
     }
+	
+	/**
+	 * Adds a row to the end of the model. The new row will contain <code>null</code> values unless <code>rowData</code>
+	 * is specified. Notification of the row being added will be generated.
+	 *
+	 * @param rowData optional data of the row being added
+	 */
+	public void addRow(Vector rowData) {
+		insertRow(getRowCount(), rowData);
+	}
+
+	/**
+	 * Adds a row to the end of the model. The new row will contain <code>null</code> values unless <code>rowData</code>
+	 * is specified. Notification of the row being added will be generated.
+	 *
+	 * @param rowData optional data of the row being added
+	 */
+	public void addRow(Object[] rowData) {
+		ResultSets.add(rowData);
+		//addRow(convertToVector(rowData));
+	}
+
+	/**
+	 * Inserts a row at <code>row</code> in the model. The new row will contain <code>null</code> values unless
+	 * <code>rowData</code> is specified. Notification of the row being added will be generated.
+	 *
+	 * @param row the row index of the row to be inserted
+	 * @param rowData optional data of the row being added
+	 * @exception ArrayIndexOutOfBoundsException if the row was invalid
+	 */
+	public void insertRow(int row, Vector rowData) {
+		dataVector.insertElementAt(rowData, row);
+		justifyRows(row, row + 1);
+		fireTableRowsInserted(row, row);
+	}
+
+	/**
+	 * Inserts a row at <code>row</code> in the model. The new row will contain <code>null</code> values unless
+	 * <code>rowData</code> is specified. Notification of the row being added will be generated.
+	 *
+	 * @param row the row index of the row to be inserted
+	 * @param rowData optional data of the row being added
+	 * @exception ArrayIndexOutOfBoundsException if the row was invalid
+	 */
+	public void insertRow(int row, Object[] rowData) {
+		insertRow(row, convertToVector(rowData));
+	}
+
+	private void justifyRows(int from, int to) {
+		// Sometimes the DefaultTableModel is subclassed
+		// instead of the AbstractTableModel by mistake.
+		// Set the number of rows for the case when getRowCount
+		// is overridden.
+		dataVector.setSize(getRowCount());
+
+		for (int i = from; i < to; i++) {
+			if (dataVector.elementAt(i) == null) {
+				dataVector.setElementAt(new Vector(), i);
+			}
+			((Vector) dataVector.elementAt(i)).setSize(getColumnCount());
+		}
+	}
+
+	protected static Vector convertToVector(Object[] anArray) {
+		if (anArray == null) {
+			return null;
+		}
+		Vector<Object> v = new Vector<Object>(anArray.length);
+		for (Object o : anArray) {
+			v.addElement(o);
+		}
+		return v;
+	}
 }

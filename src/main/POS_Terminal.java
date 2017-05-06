@@ -3,6 +3,7 @@ package main;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComFailException;
 import com.jacob.com.Dispatch;
+import com.sun.org.apache.bcel.internal.generic.FNEG;
 import db.ConnectionDb;
 import forms.FrmMain;
 import java.awt.BorderLayout;
@@ -92,6 +93,7 @@ public class POS_Terminal {
 			return false;
 		}
 //System.out.println(pos.toString());
+		if(!conf.POS_SendInfo) getInfo();
 		return true;
 	}
 	public boolean checkStatus() {
@@ -197,10 +199,37 @@ public class POS_Terminal {
 			MyUtil.messageToLog(getClass().getName(), str);
 		}
 	}
+	public void getInfo(){
+		conf.POS_SendInfo = true;
+		if (conf.POS_ACTIVE.equals("0")) return;
+//		load();
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/						   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTE /G1HA0TEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/				   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTEP/G1HA0TEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/L1HA3TEP/P1HACTEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/S112T4QP/G11234QP/G1HA0TEP/X1/HA1TEP/X1HA2TEP/X1HAXTEP
+		String str = "";
+		pos.invoke("CommClose");
+		//pos.invoke("SetErrorLang","2");
+		Dispatch.call(pos, "SetErrorLang", "2");
+		Dispatch.call(pos, "useLogging", 2, conf.CURDIR + "\\logs\\pos-terminal.log");
+
+		if (conf.POS_COM_PORT.equals("0")) {
+			//pos.invoke("CommOpenAuto", conf.POS_BAUD_RATE);
+			Dispatch.call(pos, "CommOpenAuto", conf.POS_BAUD_RATE);
+		} else {
+			Dispatch.call(pos, "CommOpen", conf.POS_COM_PORT, conf.POS_BAUD_RATE);
+		}
+		waitResponse();
+//тип оплаты "оплата частями"
+		str = Dispatch.call(pos, "PosGetInfo").toString();
+		waitResponse();
+		str = Dispatch.call(pos, "TerminalInfo").toString();
+		Dispatch.call(pos, "CommClose");
+		cnn.setCheckInfo(str);
+	}
 	public boolean purchase(){
 //TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/						   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTE /G1HA0TEP
 //TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/				   I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTEP/G1HA0TEP
-//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/L1HA3TEP/P1HACTEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/S112T4QP/G11234QP/G1HA0TEP/X1HA1TEP/X1HA2TEP/X1HAXTEP
+//TE7E121 S1HA0TEP00CT71631274/S1HA0TEP/L1HA2TEP/L1HA3TEP/P1HACTEP/I1HA0TEP/I1HA0TEP/IGHA0TEP/S1HA0TEP/IPHA0TEP/S112T4QP/G11234QP/G1HA0TEP/X1/HA1TEP/X1HA2TEP/X1HAXTEP
 		String str = "";
 		pos.invoke("CommClose");
 		//pos.invoke("SetErrorLang","2");
@@ -224,17 +253,21 @@ public class POS_Terminal {
 		//получим сумму чека * 100 и без запятой
 		sum = cnn.checkSum.multiply(new BigDecimal(100)).setScale(0, RoundingMode.HALF_UP).abs().toString();
 //тип оплаты "оплата частями"
+		str = Dispatch.call(pos, "PosGetInfo").toString();
+		waitResponse();
+		str = Dispatch.call(pos, "TerminalInfo").toString();
+MyUtil.messageToLog(getClass().getName(), str);
 		if (Integer.toString(cnn.checkTypePayment).startsWith("2")) {
-			str = Dispatch.call(pos, "PosGetInfo").toString();
-			waitResponse();
-			str = Dispatch.call(pos, "TerminalInfo").toString();
 //System.out.println("TerminalInfo="+str);
 			String mer = "";
 			String mes = "";
 			int mid = 0;
 			String[] s = str.split("/");
-			mer = s[1].replace("S1", "X1").replace("0", "1");//мерчант оплаты частями
+			//mer = s[1].replace("S1", "X1").replace("0", "1");//мерчант оплаты частями - не работает со старыми терминалами
 			//mer = s[1].replace("S1", "X1").replace("0", "2");//мерчант мгновенной рассрочки
+			//для старых терминалов надо менять 1-ый и 5-ый символы на X и 1 соответственно
+			mer = "X" + s[1].substring(1);
+			mer = mer.substring(0, 4) + "1" + mer.substring(5);
 			int i = 0;
 			while (i < s.length) {
 				if (s[i].equals(mer)) {

@@ -109,7 +109,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //jTextField1.setText("2200000450234");
 //jTextField1.setText("2200000191847");
 //jTextField1.setText("2200000363497");
-//jTextField1.setText("2200000999993");
+//jTextField1.setText("2200000019448");
 //barCode = jTextField1.getText();
 //requery();
 

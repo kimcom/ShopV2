@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="resizable" type="boolean" value="false"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -87,7 +86,7 @@
                   <Component id="jButtonOrder" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonReceipt" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonSticker" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -417,7 +416,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="jLabel1" min="-2" pref="730" max="-2" attributes="0"/>
+                  <Component id="jButtonFrmMain" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jButtonExit" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -425,14 +426,16 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="jButtonExit" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jButtonFrmMain" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonExit" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -472,6 +475,28 @@
             <Property name="text" type="java.lang.String" value="&#x414;&#x43e;&#x43f;&#x43e;&#x43b;&#x43d;&#x438;&#x442;&#x435;&#x43b;&#x44c;&#x43d;&#x44b;&#x435; &#x444;&#x443;&#x43d;&#x43a;&#x446;&#x438;&#x438;"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="jButtonFrmMain">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/png/logo_ori.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x41e;&#x442;&#x43a;&#x440;&#x44b;&#x442;&#x44c; &#x442;&#x435;&#x43a;&#x443;&#x449;&#x438;&#x439; &#x427;&#x415;&#x41a;"/>
+            <Property name="actionCommand" type="java.lang.String" value="StartFrmMain"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFrmMainActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanelForms2">
@@ -491,7 +516,7 @@
                       <Component id="jButtonCashMove" pref="260" max="32767" attributes="0"/>
                       <Component id="jButtonDiscountCard" pref="260" max="32767" attributes="0"/>
                       <Component id="jButtonNewDiscountCard" pref="260" max="32767" attributes="0"/>
-                      <Component id="jButton1" pref="260" max="32767" attributes="0"/>
+                      <Component id="jButtonOffline" pref="260" max="32767" attributes="0"/>
                       <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -507,9 +532,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonNewDiscountCard" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonOffline" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -596,13 +621,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNewDiscountCardActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="jButtonOffline">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="3"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/png/offline64.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#x420;&#x430;&#x431;&#x43e;&#x442;&#x430; &#x441; &#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x43c;&#x438; &#x430;&#x432;&#x442;&#x43e;&#x43d;&#x43e;&#x43c;&#x43d;&#x43e;&#x439; &#x43f;&#x440;&#x43e;&#x433;&#x440;&#x430;&#x43c;&#x43c;&#x44b;&lt;/html&gt;"/>
+            <Property name="toolTipText" type="java.lang.String" value="&#x420;&#x430;&#x431;&#x43e;&#x442;&#x430; &#x441; &#x434;&#x430;&#x43d;&#x43d;&#x44b;&#x43c;&#x438; &#x430;&#x432;&#x442;&#x43e;&#x43d;&#x43e;&#x43c;&#x43d;&#x43e;&#x439; &#x43f;&#x440;&#x43e;&#x433;&#x440;&#x430;&#x43c;&#x43c;&#x44b;"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="iconTextGap" type="int" value="10"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -616,7 +644,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOfflineActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">

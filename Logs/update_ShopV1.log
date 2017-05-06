@@ -1,512 +1,60 @@
-авг 17, 2016 2:03:34 PM main.MyUtil messageToLog
+фев 09, 2017 12:11:46 PM main.MyUtil messageToLog
 INFO: ошибка генерации CSV файла
-авг 17, 2016 2:04:28 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 17, 2016 2:05:56 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 17, 2016 3:18:19 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 17, 2016 3:28:38 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 17, 2016 3:33:23 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 17, 2016 4:20:42 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 9:58:51 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 10:03:24 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 10:04:07 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 10:05:14 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 10:17:13 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 10:19:46 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:08:08 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:10:09 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:39:26 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:51:01 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:54:20 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 11:58:56 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:03:10 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:05:08 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:30:13 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:31:16 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:32:43 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:34:11 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:51:40 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:53:07 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:56:43 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 3:59:04 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:00:16 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:01:51 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:02:44 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:11:48 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:12:32 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:15:23 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:18:02 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:21:46 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:22:37 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:23:19 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:24:27 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:25:52 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:27:54 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:28:26 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:29:05 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:30:17 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:33:57 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 18, 2016 4:39:38 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 11:01:06 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:19:39 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:22:06 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:25:07 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:27:08 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:29:21 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 3:37:16 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 4:21:24 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 22, 2016 4:23:40 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 12:00:33 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 12:38:07 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 1:09:42 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 1:17:02 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 1:43:42 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:15:38 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:21:13 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:30:40 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:32:34 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:33:10 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:36:24 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:37:13 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:38:13 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:39:56 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:41:05 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 2:42:11 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 3:15:32 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 3:21:03 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 3:21:35 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 3:23:24 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 3:24:01 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 5:49:31 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:00:21 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:03:07 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:13:41 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:30:27 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:31:27 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:39:11 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:44:09 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 29, 2016 6:51:28 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 11:11:23 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 11:12:53 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 12:24:50 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 12:59:08 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 1:01:52 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 1:04:15 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 1:06:29 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 1:07:30 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:37:20 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:44:36 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:45:29 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:47:02 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:47:53 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:49:50 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:50:22 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:51:52 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:55:53 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 3:59:30 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:15:13 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:16:05 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:17:30 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:19:24 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:28:37 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:29:51 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 30, 2016 4:32:24 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 31, 2016 2:22:04 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-авг 31, 2016 2:46:29 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-сен 01, 2016 2:04:27 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-сен 02, 2016 1:13:39 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-сен 02, 2016 1:21:28 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-сен 06, 2016 1:18:09 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:18:09 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:18:12 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 1:22:19 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:22:19 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:22:21 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 1:24:46 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:24:46 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:24:50 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 1:35:00 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:35:00 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:35:02 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 1:36:42 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:36:43 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 1:36:45 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 4:31:49 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:31:49 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:31:54 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 4:45:26 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:45:26 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:45:29 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 4:52:17 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:52:17 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 4:52:20 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 5:05:17 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:05:17 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:05:19 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 5:06:18 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:06:18 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:06:20 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 5:07:34 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:07:34 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:07:37 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 5:24:13 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:24:13 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:24:16 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 06, 2016 5:30:51 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:30:51 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 06, 2016 5:30:54 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 07, 2016 3:05:24 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:05:24 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:05:26 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 07, 2016 3:09:58 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:09:58 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:09:59 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 07, 2016 3:39:14 PM main.MyUtil messageToLog
+фев 10, 2017 4:25:04 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:39:14 PM main.MyUtil messageToLog
+фев 10, 2017 4:25:04 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:39:17 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 07, 2016 3:40:59 PM main.MyUtil messageToLog
+фев 10, 2017 4:27:38 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:40:59 PM main.MyUtil messageToLog
+фев 10, 2017 4:27:38 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 07, 2016 3:41:00 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5411.csv
-сен 08, 2016 1:57:43 PM main.MyUtil messageToLog
+фев 10, 2017 4:27:41 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 10, 2017 4:29:19 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 08, 2016 1:57:43 PM main.MyUtil messageToLog
+фев 10, 2017 4:29:19 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 08, 2016 1:57:46 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_3003.csv
-сен 09, 2016 2:01:36 PM main.MyUtil messageToLog
+фев 10, 2017 4:29:23 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 10, 2017 4:29:39 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:01:36 PM main.MyUtil messageToLog
+фев 10, 2017 4:29:39 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:01:40 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:03:26 PM main.MyUtil messageToLog
+фев 10, 2017 4:29:42 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 10, 2017 4:33:11 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:03:26 PM main.MyUtil messageToLog
+фев 10, 2017 4:33:11 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:03:29 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:04:51 PM main.MyUtil messageToLog
+фев 10, 2017 4:33:51 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:04:51 PM main.MyUtil messageToLog
+фев 10, 2017 4:33:51 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:04:54 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:05:14 PM main.MyUtil messageToLog
+фев 10, 2017 4:33:53 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 10, 2017 6:10:52 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:05:14 PM main.MyUtil messageToLog
+фев 10, 2017 6:10:52 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:05:17 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:06:40 PM main.MyUtil messageToLog
+фев 10, 2017 6:10:56 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 11, 2017 10:56:09 AM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:06:40 PM main.MyUtil messageToLog
+фев 11, 2017 10:56:10 AM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:06:42 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:20:43 PM main.MyUtil messageToLog
+фев 11, 2017 10:56:12 AM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+фев 14, 2017 2:27:47 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:20:43 PM main.MyUtil messageToLog
+фев 14, 2017 2:27:47 PM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:20:46 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 09, 2016 2:23:22 PM main.MyUtil messageToLog
+фев 14, 2017 2:27:51 PM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_1000.csv
+мая 01, 2017 11:34:59 AM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 09, 2016 2:23:22 PM main.MyUtil messageToLog
+мая 01, 2017 11:34:59 AM main.MyUtil messageToLog
 INFO: SHOP v.15.08.18 1010
-сен 13, 2016 9:50:51 AM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 9:50:51 AM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 9:50:52 AM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-сен 13, 2016 3:24:08 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:24:08 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:24:57 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:24:57 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:24:59 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_1453.csv
-сен 13, 2016 3:27:09 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:27:09 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 13, 2016 3:27:11 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_1453.csv
-сен 23, 2016 1:41:16 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 23, 2016 1:41:16 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-сен 23, 2016 1:41:18 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_1453.csv
-сен 23, 2016 1:41:45 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-окт 31, 2016 10:53:16 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-окт 31, 2016 11:01:50 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-окт 31, 2016 11:04:21 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-окт 31, 2016 11:16:26 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 21, 2016 12:08:08 PM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:09:51 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:14:00 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:16:20 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:17:36 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:20:27 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 10:56:44 AM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 23, 2016 10:56:44 AM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 23, 2016 10:56:45 AM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_1000.csv
-ноя 23, 2016 11:00:48 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 11:07:18 AM main.MyUtil messageToLog
+мая 01, 2017 11:35:01 AM main.MyUtil messageToLog
+INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_6211.csv
+мая 05, 2017 11:09:48 AM main.MyUtil messageToLog
 INFO: ошибка генерации CSV файла
-ноя 23, 2016 11:27:03 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 11:29:56 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 23, 2016 11:43:26 AM main.MyUtil messageToLog
-INFO: ошибка генерации CSV файла
-ноя 29, 2016 3:34:55 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:34:55 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:34:56 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-ноя 29, 2016 3:38:49 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:38:49 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:38:52 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-ноя 29, 2016 3:43:48 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:43:48 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:43:50 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-ноя 29, 2016 3:45:05 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:45:05 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:45:06 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-ноя 29, 2016 3:55:21 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:55:21 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 3:55:22 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-ноя 29, 2016 4:07:47 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 4:07:47 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-ноя 29, 2016 4:07:49 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_5694.csv
-дек 02, 2016 4:06:45 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 02, 2016 4:06:45 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 02, 2016 4:06:46 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-дек 02, 2016 4:32:27 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 02, 2016 4:32:27 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 02, 2016 4:32:28 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.com.ua/shopv2/shop-k/goods_4914.csv
-дек 10, 2016 1:15:12 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 10, 2016 1:15:12 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 10, 2016 1:15:15 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.tor.pp.ua/shopv2/shop-k/goods_2010.csv
-дек 10, 2016 1:39:28 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 10, 2016 1:39:29 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 10, 2016 1:39:31 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.tor.pp.ua/shopv2/shop-k/goods_2010.csv
-дек 12, 2016 12:32:13 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 12, 2016 12:32:13 PM main.MyUtil messageToLog
-INFO: SHOP v.15.08.18 1010
-дек 12, 2016 12:32:16 PM main.MyUtil messageToLog
-INFO: файл скачан успешно: http://stat.priroda.pp.ua/shopv2/shop-k/goods_2010.csv

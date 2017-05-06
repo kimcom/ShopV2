@@ -127,7 +127,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		jFormattedTextFieldQtySticker.setText("65");
 		jFormattedTextFieldQtySticker.setVisible(false);
 		jLabelQtySticker.setVisible(false);
-        requery();
+		requery();
         //табличные части
         requeryGoodsList(-1,0);
         requeryDocContent();

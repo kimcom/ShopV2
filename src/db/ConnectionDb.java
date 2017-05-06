@@ -28,7 +28,7 @@ public final class ConnectionDb{
     public BigDecimal           returnID;
     public BigDecimal           returnIDFiscalNumber;
     public int					serverID;
-    private int                 userID;
+    public int                  userID;
     public int					clientID;
     public int					matrixID;
 	public int					checkFlagReturn;
@@ -151,14 +151,14 @@ public final class ConnectionDb{
 			cnn = DriverManager.getConnection(cnnString1, userName, password);
 			serverID = 1;
 		} catch (SQLException err) {
-			MyUtil.errorToLog(this.getClass().getName(), err);
+			MyUtil.errorToLog(this.getClass().getName(), cnnString1 +"\n"+ err);
 			//throw new IllegalArgumentException("Error: " + err);
 			try {
 //System.out.println(MyUtil.getCurrentDateTime(1) + " " + cnnString2);
 				cnn = DriverManager.getConnection(cnnString2, userName, password);
 				serverID = 2;
 			} catch (SQLException err2) {
-				MyUtil.errorToLog(this.getClass().getName(), err2);
+				MyUtil.errorToLog(this.getClass().getName(), cnnString2 + "\n" + err2);
 				throw new IllegalArgumentException("Error: " + err);
 			}
 		}
@@ -249,6 +249,7 @@ public final class ConnectionDb{
             }else{
                 userID = cs.getInt(3);
                 clientID = cs.getInt(4);
+				if(clientID == 0) clientID = 1000;
                 accessLevel = cs.getInt(6);
                 if (lastCheck().compareTo(BigDecimal.ZERO)==0){
                     DialogBoxs.viewMessage("Возникла ошибка при получении\nномера последнего чека!\n\nПродолжение работы невозможно!");
@@ -321,7 +322,7 @@ public final class ConnectionDb{
 			cs.setString(3, config.APP_VERSION);
 			cs.setString(4, "");
 			cs.setInt(5, clientID);
-			cs.setInt(6, 0);
+			cs.setInt(6, userID);
 			cs.execute();
 			return;
 		} catch (SQLException e) {
@@ -634,12 +635,36 @@ public final class ConnectionDb{
     }
     public ResultSet getCashTotal() {
         if (cnn == null) {
-            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCashMove: parameter [cnn] cannot be null!"));
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCashTotal: parameter [cnn] cannot be null!"));
 			return null;
         }
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "total");
+            cs.setInt(2, userID);
+            cs.setInt(3, clientID);
+			cs.setBigDecimal(4, null);
+			cs.setDate(5, null);
+			cs.setBigDecimal(6, null);
+			cs.setString(7, null);
+			cs.setInt(8, 0);
+			cs.registerOutParameter(9, Types.INTEGER);
+            ResultSet res = cs.executeQuery();
+            return res;
+        } catch (SQLException e) {
+            MyUtil.errorToLog(this.getClass().getName(),e);
+			DialogBoxs.viewError(e);
+            return null;
+        }
+    }
+    public ResultSet getCashTotalOffline() {
+        if (cnn == null) {
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCashTotalOffline: parameter [cnn] cannot be null!"));
+			return null;
+        }
+        try {
+            CallableStatement cs = cnn.prepareCall("{call pr_cash(?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1, "total offline");
             cs.setInt(2, userID);
             cs.setInt(3, clientID);
 			cs.setBigDecimal(4, null);
@@ -827,6 +852,29 @@ public final class ConnectionDb{
             return BigDecimal.ZERO;
         }
     }
+	public BigDecimal newCheck(int terminal_ID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("newCheck: parameter [cnn] cannot be null!"));
+			return BigDecimal.ZERO;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
+			cs.setString(1, "new");
+			cs.setBigDecimal(2, BigDecimal.ZERO);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setInt(5, terminal_ID);
+			cs.registerOutParameter(6, Types.DOUBLE);
+			cs.execute();
+			currentCheckID = cs.getBigDecimal(6);
+			getCheckInfo(currentCheckID);
+			return currentCheckID;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return BigDecimal.ZERO;
+		}
+	}
     public BigDecimal lastCheck() {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("lastCheck: parameter [cnn] cannot be null!"));
@@ -884,6 +932,29 @@ public final class ConnectionDb{
             return false;
         }
     }
+	public boolean setCheckInfo(String info){
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckInfo: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check_content(?,?,?,?,?,?,?)}");
+			cs.setString(1, "terminal_info");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setBigDecimal(3, currentCheckID);
+			cs.setInt(4, userID);
+			cs.setInt(5, clientID);
+			cs.setInt(6, 0);
+			cs.setString(7, info);
+			cs.execute();
+			getCheckInfo(currentCheckID);
+			return true;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
     public boolean setCheckStatus(int StatusCheck) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckStatus: parameter [cnn] cannot be null!"));
@@ -1020,6 +1091,27 @@ public final class ConnectionDb{
 			return null;
 		}
 	}
+	public ResultSet getCheckListByTerminalID(int terminalID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCheckListByTerminalID: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check(?,?,?,?,?,?)}");
+			cs.setString(1, "list by terminalID");
+			cs.setBigDecimal(2, null);
+			cs.setInt(3, userID);
+			cs.setInt(4, clientID);
+			cs.setInt(5, terminalID);
+			cs.registerOutParameter(6, Types.DOUBLE);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
     public ResultSet getCheckContent(BigDecimal checkID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCheckContent: parameter [cnn] cannot be null!"));
@@ -1112,7 +1204,7 @@ public final class ConnectionDb{
     }
     public double addGoodInCheck(int goodID,String barCodeNew) {
         if (cnn == null) {
-            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deleteGoodFromCheck: parameter [cnn] cannot be null!"));
+            MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInCheck: parameter [cnn] cannot be null!"));
 			return 0;
         }
         if (goodID == 0) {
@@ -1137,6 +1229,26 @@ public final class ConnectionDb{
             return 0;
         }
     }
+	public double addGoodInCheckOffline(String param) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("addGoodInCheckOffline: parameter [cnn] cannot be null!"));
+			return 0;
+		}
+		if (param.equals("")) return 0;
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check_update(?,?,?)}");
+			cs.setString(1, "good add");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setString(3, param);
+			cs.execute();
+			return cs.getInt(2);
+		} catch (SQLException e) {
+			MyUtil.messageToLog(this.getClass().getName(), param);
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return 0;
+		}
+	}
     public double deleteGoodFromCheck(int goodID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deleteGoodFromCheck: parameter [cnn] cannot be null!"));
@@ -2444,8 +2556,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-            //CALL pr_promo_info('getPromoListForShop',0,'',0,'','','',null,null,null,null);
-            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "getPromoListForShop");
             cs.setInt(2, 0);
             cs.setString(3, "");
@@ -2457,6 +2568,7 @@ public final class ConnectionDb{
             cs.setInt(9, 0);
             cs.setDouble(10, 0);
             cs.setString(11, Integer.toString(clientID));
+            cs.setInt(12, 0);
             ResultSet res = cs.executeQuery();
             return res;
         } catch (SQLException e) {
@@ -2474,7 +2586,7 @@ public final class ConnectionDb{
             return false;
         }
         try {
-            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cnn.prepareCall("{call pr_promo_info(?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "getById");
             cs.setInt(2, promoID);
             cs.setString(3, "");
@@ -2486,6 +2598,7 @@ public final class ConnectionDb{
             cs.setInt(9, 0);
             cs.setDouble(10, 0);
 			cs.setString(11, Integer.toString(clientID));
+            cs.setInt(12, 0);
             resPromoInfo = cs.executeQuery();
             //resPromoInfo.last();
             resPromoInfo.absolute(1);
@@ -2550,6 +2663,26 @@ public final class ConnectionDb{
             return false;
         }
     }
+	public boolean assignPromoAll() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("assignPromoAll: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_promo_assign(?,?,?,?)}");
+			cs.setString(1, "setPromoAll");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setInt(3, clientID);
+			cs.setBigDecimal(4, currentCheckID);
+			cs.execute();
+			getCheckInfo(currentCheckID);
+			return cs.getInt(2) != 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
 //tree
     public ResultSet getTreeNodeList(int nodeID){
         if (cnn == null) {

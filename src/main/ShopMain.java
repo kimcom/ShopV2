@@ -2,18 +2,33 @@ package main;
 
 import db.ConnectionDb;
 import forms.*;
+import java.awt.Component;
+import java.awt.Frame;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import reports.ReportPricePlankClub;
 import reports.ReportPriceStickerClub;
 
 public class ShopMain {
 
+	public static FrmMain frmMain = null;
+	public static FrmAdmin frmAdmin = null;
+	public static boolean startAdmin = false;
+	
 	public static void main(final String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -29,8 +44,22 @@ public class ShopMain {
 					//java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 					MyUtil.errorToLog(FrmMain.class.getName(), ex);
 				}
+				if(args.length > 0){
+					if (args[0].equals("admin")) startAdmin = true;
+				}
+				//JOptionPane.showMessageDialog(null, args.length);
+				
+				//AppActivate aa = new AppActivate();
+				//AppActivate.getCurrentPid(args);
+				//AppActivate.WinActivate("7284");
+				//AppActivate.WinActivate("Калькулятор");
+				//AppActivate.WinActivate("MasterZoo");
+				//Date dt = new DateTime();
+				//AppActivate.getProcessList();
+				//AppActivate.getProcessList2();
+				//if (1 == 1) System.exit(0);
+				
                 final ConfigReader config = ConfigReader.getInstance();
-
 //				MyEKKA me = new MyEKKA();
 //				//me.report("z1");
 //				me.printCheck(new BigDecimal(12961.2009));
@@ -86,15 +115,22 @@ public class ShopMain {
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
 
-//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(40.1453));
+//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(2482.1453));
 //				//final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal(17.5411));
 //				frmStickerEdit.setModal(true);
 //				frmStickerEdit.setVisible(true);
+//				System.exit(0);
 
 //				final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(1); //выдача новой
 //				frmCardAttribute.setModal(true);
 //				frmCardAttribute.setVisible(true);
 
+//				String[] portNames = SerialPortList.getPortNames();
+//				for (int i = 0; i < portNames.length; i++) {
+//					System.out.println(portNames[i]);
+//					//MyUtil.messageToLog("ports", portNames[i]);
+//				}
+//				if (1==1) return;
 				
                 if (config == null) System.exit(0);
                 ConnectionDb cnn = ConnectionDb.getInstance();
@@ -103,73 +139,95 @@ public class ShopMain {
 				if(!config.USER_NAME.equals("")){
                     String password = new StringBuffer(config.USER_NAME).reverse().toString();
                     boolean loginStatus = cnn.login(config.USER_NAME, password);
-//                    if(loginStatus){
-//                        //final FrmOrderList frmOrderList = FrmOrderList.getInstance(new JFrame(),0);
-//                        //final FrmOrderEdit frmOrderEdit = FrmOrderEdit.getInstance(new JFrame(),new BigDecimal(2.1453));
-//						FrmCashMove frmCashMove = new FrmCashMove();
-//						frmCashMove.setModal(true);
-//						frmCashMove.setVisible(true);
-//						cnn.destroy();
-//						System.exit(0);
-//                    }else 
                     if(loginStatus) {
-//						UpdaterShopV1 updaterShopV1 = new UpdaterShopV1();
-//						if (1 == 1) {
-//							return;
-//						}
+						Loader.checkFrmStart();
+						if(startAdmin) {
+							frmAdmin = FrmAdmin.getInstance();
+//							FrmOffline frmOffline = new FrmOffline();
+//							frmOffline.setModal(true);
+//							frmOffline.setVisible(true);
+						}else{
+							frmMain = FrmMain.getInstance();
+							TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
+							//running timer task as daemon thread
+							Timer timer1 = new Timer(true);
+							final Locale locale = new Locale("ru");
+							GregorianCalendar calendar = new GregorianCalendar();
+							calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+							calendar.setTime(new Date());
+							calendar.set(Calendar.HOUR, 22);
+							calendar.set(Calendar.MINUTE, 30);
+							calendar.set(Calendar.SECOND, 0);
+							timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:10
 
-//						final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(2,""); //ввод анкеты
-//						frmCardAttribute.setModal(true);
-//						frmCardAttribute.setVisible(true);
-//						cnn.destroy();
-//						if (1==1) System.exit(0);
+							TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
+							//running timer task as daemon thread
+							Timer timer = new Timer(true);
+							timer.scheduleAtFixedRate(timerTask, 0, config.TIME_WAIT * 1000);
 
-						final FrmMain frmMain = FrmMain.getInstance();
+							TimerTask timerTask2 = new MyTimerTask(frmMain, "updateAppTask");
+							//running timer task as daemon thread
+							Timer timer2 = new Timer(true);
+							timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
 
-						TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
-						//running timer task as daemon thread
-						Timer timer = new Timer(true);
-						timer.scheduleAtFixedRate(timerTask, 0, config.TIME_WAIT * 1000);
+							TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
+							//running timer task as daemon thread
+							Timer timer3 = new Timer(true);
+							timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
 
-						TimerTask timerTask2 = new MyTimerTask(frmMain, "updateAppTask");
-						//running timer task as daemon thread
-						Timer timer2 = new Timer(true);
-						timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
-
-						TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
-						//running timer task as daemon thread
-						Timer timer3 = new Timer(true);
-						timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
-
-						TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
-						//running timer task as daemon thread
-						Timer timer4 = new Timer(true);
-						timer4.scheduleAtFixedRate(timerTask4, 0, config.TIME_WAIT * 1000 * 60);
-						
-//						final FrmSearch frmSearch = FrmSearch.getInstance();
-//                      final FrmDiscount frmDiscount = FrmDiscount.getInstance();
+							TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
+							//running timer task as daemon thread
+							Timer timer4 = new Timer(true);
+							timer4.scheduleAtFixedRate(timerTask4, 0, config.TIME_WAIT * 1000 * 60);
+						}
                     }else{
 						cnn.destroy();
                         System.exit(0);
                     }
                 }else{
-                    //final FrmLoginTest frmLogin = FrmLoginTest.getInstance();
                     final FrmLogin frmLogin = FrmLogin.getInstance();
                     frmLogin.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosed(WindowEvent e) {
                             //System.out.println("login status= " + frmLogin.loginStatus);
                             if (frmLogin.loginStatus) {
-                                final FrmMain frmMain = FrmMain.getInstance();
-								TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
-								//running timer task as daemon thread
-								Timer timer = new Timer(true);
-								timer.scheduleAtFixedRate(timerTask, 0, config.TIME_WAIT * 1000);
+								Loader.checkFrmStart();
+								if (startAdmin) {
+									frmAdmin = FrmAdmin.getInstance();
+								}else{
+									frmMain = FrmMain.getInstance();
+									TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
+									//running timer task as daemon thread
+									Timer timer1 = new Timer(true);
+									final Locale locale = new Locale("ru");
+									GregorianCalendar calendar = new GregorianCalendar();
+									calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+									calendar.setTime(new Date());
+									calendar.set(Calendar.HOUR, 22);
+									calendar.set(Calendar.MINUTE, 10);
+									calendar.set(Calendar.SECOND, 0);
+									timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:10
 
-								TimerTask timerTask2 = new MyTimerTask(frmMain, "updateAppTask");
-								//running timer task as daemon thread
-								Timer timer2 = new Timer(true);
-								timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
+									TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
+									//running timer task as daemon thread
+									Timer timer = new Timer(true);
+									timer.scheduleAtFixedRate(timerTask, 0, config.TIME_WAIT * 1000);
+
+									TimerTask timerTask2 = new MyTimerTask(frmMain, "updateAppTask");
+									//running timer task as daemon thread
+									Timer timer2 = new Timer(true);
+									timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
+
+									TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
+									//running timer task as daemon thread
+									Timer timer3 = new Timer(true);
+									timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
+
+									TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
+									//running timer task as daemon thread
+									Timer timer4 = new Timer(true);
+									timer4.scheduleAtFixedRate(timerTask4, 0, config.TIME_WAIT * 1000 * 60);
+								}
 							}else{
                                 ConnectionDb cnn = ConnectionDb.getInstance();
                                 cnn.destroy();

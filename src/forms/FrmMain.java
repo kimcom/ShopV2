@@ -13,6 +13,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,6 +37,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import main.ConfigReader;
 import main.DialogBoxs;
 import main.EKKA;
+import main.Loader;
 import main.MyTimerTask;
 import main.MyUtil;
 import main.Updater;
@@ -927,6 +931,17 @@ public class FrmMain extends javax.swing.JFrame {
 		}	
 		return cnnState;
 	}
+	private boolean checkPromo(String msg, boolean manual){
+		if (cnn.checkSumDiscount.compareTo(BigDecimal.ZERO) == 0 || manual == true) {
+			cnn.assignPromoAll();
+			if (cnn.checkSumDiscount.compareTo(BigDecimal.ZERO) != 0) {
+				requery();
+				JOptionPane.showMessageDialog(null, "Для этого чека сработали акции!\n\nСумма скидки изменилась!\n\n"+msg, "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/Akcia.png")));
+				return false;
+			}
+		}
+		return true;
+	}
 	public void setCnnStatus(int status){
 		if (status==0) {
 			jButtonLink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/connect on.png")));
@@ -1157,6 +1172,9 @@ public class FrmMain extends javax.swing.JFrame {
 		cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
         if (cnn.checkIsBlank()) return;
+
+		if (!checkPromo("Проверте скидки и снова нажмите печать!",false)) return;
+
 		int countGoods = 0;
 		int goodID = 0;
 		for (int row = 0; row <= jTableCheck.getRowCount() - 1; row++) {
@@ -1219,6 +1237,7 @@ public class FrmMain extends javax.swing.JFrame {
 					}
 					if (rc.blStatusPrintButton) {
 						if (rc.blStatusPrinted) {
+							if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 							if (cnn.setCheckStatus(1)) {
 								jButtonNewCheckActionPerformed();//чек распечатан успешно
 							}
@@ -1233,6 +1252,7 @@ public class FrmMain extends javax.swing.JFrame {
 					//одобрено караваном !!!
 					rc.setVisible(true);
 					if (rc.silentPrint()) {
+						if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 						}
@@ -1324,6 +1344,7 @@ public class FrmMain extends javax.swing.JFrame {
 						}
 						if (rc.blStatusPrintButton) {
 							if (rc.blStatusPrinted) {
+								if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 								if (cnn.setCheckStatus(1)) {
 									jButtonNewCheckActionPerformed();//чек распечатан успешно
 								}
@@ -1338,6 +1359,7 @@ public class FrmMain extends javax.swing.JFrame {
 						//одобрено караваном !!!
 						rc.setVisible(true);
 						if (rc.silentPrint()) {
+							if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 							if (cnn.setCheckStatus(1)) {
 								jButtonNewCheckActionPerformed();//чек распечатан успешно
 							}
@@ -1360,6 +1382,7 @@ public class FrmMain extends javax.swing.JFrame {
 					}
 					if (rc.blStatusPrintButton) {
 						if (rc.blStatusPrinted) {
+							if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 							if (cnn.setCheckStatus(1)) {
 								jButtonNewCheckActionPerformed();//чек распечатан успешно
 							}
@@ -1374,6 +1397,7 @@ public class FrmMain extends javax.swing.JFrame {
 					//одобрено караваном !!!
 					rc.setVisible(true);
 					if (rc.silentPrint()) {
+						if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 						if (cnn.setCheckStatus(1)) {
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 						}
@@ -1466,6 +1490,7 @@ public class FrmMain extends javax.swing.JFrame {
 				if (!checkCnnStatus()) return;
 				if (rc.blStatusPrintButton) {
 					if (rc.blStatusPrinted) {
+						if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 						if (cnn.setCheckStatus(1)) 
 							jButtonNewCheckActionPerformed();//чек распечатан успешно
 					} else {
@@ -1478,6 +1503,7 @@ public class FrmMain extends javax.swing.JFrame {
 	//одобрено караваном !!!
 				rc.setVisible(true);
 				if (rc.silentPrint()) {
+					if (blDiscountCardFuture) rc.silentPrint(); // если выдана новая карта печатаем 2 чека
 					if (cnn.setCheckStatus(1)) jButtonNewCheckActionPerformed();//чек распечатан успешно
 				} else {
 					if (cnn.setCheckStatus(2)) jButtonNewCheckActionPerformed();//без распечатки
@@ -1523,73 +1549,75 @@ public class FrmMain extends javax.swing.JFrame {
 //		});
     }
     private void jButtonDiscountActionPerformed() {
-		if (!checkCnnStatus()) return;
-		if (blDiscountCardFuture) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
+		if (!checkCnnStatus()) return;
+		if (blDiscountCardFuture) return;
         if (cnn.checkIsBlank()) {
             DialogBoxs.viewMessage("Для ввода скидки необходимо ввести товары!");
             return;
         }
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-				final FrmDiscount frmDiscount = new FrmDiscount();
-				frmDiscount.setModal(false);
-				int selectedRow = jTableCheck.getSelectedRow();
-				if (selectedRow == -1) {
-					frmDiscount.jLabel5.setText("");
-					frmDiscount.jLabel55.setText("");
-				}else{
-					int rowNum = jTableCheck.getRowSorter().convertRowIndexToModel(selectedRow);
-					String obj = "";
-					obj = jTableCheck.getModel().getValueAt(rowNum, 4).toString(); if (obj.equals("")) obj = "0";
-					BigDecimal bdQ = new BigDecimal(obj);
-					obj = jTableCheck.getModel().getValueAt(rowNum, 5).toString(); if (obj.equals("")) obj = "0";
-					BigDecimal bdP = new BigDecimal(obj);
-					obj = jTableCheck.getModel().getValueAt(rowNum, 6).toString(); if (obj.equals("")) obj = "0";
-					BigDecimal bdD = new BigDecimal(obj);
-					obj = jTableCheck.getModel().getValueAt(rowNum, 9).toString(); if (obj.equals("")) obj = "0";
-					BigDecimal bdS = new BigDecimal(obj);
 
-					frmDiscount.goodID = Integer.parseInt(jTableCheck.getModel().getValueAt(rowNum, 0).toString());
+		if (!checkPromo("Проверте скидки, после этого можете ввести дисконт!", false)) return;
+		
+		final FrmDiscount frmDiscount = new FrmDiscount();
+		frmDiscount.setModal(false);
+		int selectedRow = jTableCheck.getSelectedRow();
+		if (selectedRow == -1) {
+			frmDiscount.jLabel5.setText("");
+			frmDiscount.jLabel55.setText("");
+		}else{
+			int rowNum = jTableCheck.getRowSorter().convertRowIndexToModel(selectedRow);
+			String obj = "";
+			obj = jTableCheck.getModel().getValueAt(rowNum, 4).toString(); if (obj.equals("")) obj = "0";
+			BigDecimal bdQ = new BigDecimal(obj);
+			obj = jTableCheck.getModel().getValueAt(rowNum, 5).toString(); if (obj.equals("")) obj = "0";
+			BigDecimal bdP = new BigDecimal(obj);
+			obj = jTableCheck.getModel().getValueAt(rowNum, 6).toString(); if (obj.equals("")) obj = "0";
+			BigDecimal bdD = new BigDecimal(obj);
+			obj = jTableCheck.getModel().getValueAt(rowNum, 9).toString(); if (obj.equals("")) obj = "0";
+			BigDecimal bdS = new BigDecimal(obj);
 
-					frmDiscount.rowSumBase = bdQ.multiply(bdP);
-					frmDiscount.rowSumDiscount = bdQ.multiply(bdD);
-					frmDiscount.rowSum = bdS;
+			frmDiscount.goodID = Integer.parseInt(jTableCheck.getModel().getValueAt(rowNum, 0).toString());
 
-					frmDiscount.jLabel5.setText(jTableCheck.getModel().getValueAt(rowNum, 2).toString());
-					frmDiscount.jLabel51.setText(bdQ.toString());
-					frmDiscount.jLabel52.setText(bdP.toString());
-					frmDiscount.jLabel53.setText(bdD.toString());
-					frmDiscount.jLabel55.setText(bdS.toString());
-				}
-				frmDiscount.setModal(true);
-				frmDiscount.setVisible(true);
-				if (frmDiscount.blDisposeStatus) {
-					if (!checkCnnStatus()) {
-						return;
-					}
-					cnn = ConnectionDb.getInstance();
-					if (cnn == null) {
-						return;
-					}
-					cnn.setCheckDiscount(frmDiscount.iTypeDiscount, frmDiscount.bdDiscount, frmDiscount.goodID, "", frmDiscount.iTypeReason);
-					requery();
-				} else {
-					DialogBoxs.viewMessage("Скидка не назначена!");
-				}
-//			}
-//		});
+			frmDiscount.rowSumBase = bdQ.multiply(bdP);
+			frmDiscount.rowSumDiscount = bdQ.multiply(bdD);
+			frmDiscount.rowSum = bdS;
+
+			frmDiscount.jLabel5.setText(jTableCheck.getModel().getValueAt(rowNum, 2).toString());
+			frmDiscount.jLabel51.setText(bdQ.toString());
+			frmDiscount.jLabel52.setText(bdP.toString());
+			frmDiscount.jLabel53.setText(bdD.toString());
+			frmDiscount.jLabel55.setText(bdS.toString());
+		}
+		frmDiscount.setModal(true);
+		frmDiscount.setVisible(true);
+		if (frmDiscount.blDisposeStatus) {
+			if (!checkCnnStatus()) {
+				return;
+			}
+			cnn = ConnectionDb.getInstance();
+			if (cnn == null) {
+				return;
+			}
+			cnn.setCheckDiscount(frmDiscount.iTypeDiscount, frmDiscount.bdDiscount, frmDiscount.goodID, "", frmDiscount.iTypeReason);
+			requery();
+		} else {
+			DialogBoxs.viewMessage("Скидка не назначена!");
+		}
     }
     private void jButtonDiscountCardActionPerformed(){
 		if (blDiscountCardFuture) return;
-        if (!checkCnnStatus())return;
 		cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
+        if (!checkCnnStatus())return;
         if (cnn.checkIsBlank()) {
             DialogBoxs.viewMessage("Для ввода скидки необходимо ввести товары!");
             return;
         }
+		
+		if (!checkPromo("Проверте скидки, после этого можете ввести дисконтную карту!", false)) return;
+		
 		final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
 		frmCardDiscount.setModal(true);
 		frmCardDiscount.setVisible(true);
@@ -1621,14 +1649,11 @@ public class FrmMain extends javax.swing.JFrame {
             DialogBoxs.viewMessage("Сначала необходимо ввести товары!");
             return;
         }
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-				FrmCalcCash frmCalcCash = new FrmCalcCash();
-				frmCalcCash.jTextField2.setText(cnn.checkSum.setScale(2, RoundingMode.HALF_UP).toPlainString());
-				frmCalcCash.setModal(true);
-				frmCalcCash.setVisible(true);
-//			}
-//		});
+		if (!checkPromo("Проверте скидки и снова нажмите расчет сдачи!", false)) return;
+		FrmCalcCash frmCalcCash = new FrmCalcCash();
+		frmCalcCash.jTextField2.setText(cnn.checkSum.setScale(2, RoundingMode.HALF_UP).toPlainString());
+		frmCalcCash.setModal(true);
+		frmCalcCash.setVisible(true);
     }
     private void jButtonPayTypeActionPerformed(){
 		if (!checkCnnStatus()) return;
@@ -1659,10 +1684,11 @@ public class FrmMain extends javax.swing.JFrame {
     }
     private void jButtonNewDiscountCardActionPerformed(String parentCardID){
 		if (blDiscountCardFuture) return;
-		if (cnn.checkFlagReturn == -1) return;
-		if (!checkCnnStatus()) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
+		if (cnn.checkFlagReturn == -1) return;
+		if (!checkCnnStatus()) return;
+		if (!checkPromo("Проверте скидки, после этого можете выдать дисконтную карту!", false)) return;
 		BigDecimal bdDiscountSumStart = cnn.getDiscountScaleStart();
 		final FrmCardAttribute frmCardAttribute;
 		if (parentCardID.equals("")) {
@@ -1709,22 +1735,22 @@ public class FrmMain extends javax.swing.JFrame {
     private void jButtonPromoActionPerformed(){
         if (!checkCnnStatus()) return;
         if (blDiscountCardFuture) return;
-		if (cnn.checkFlagReturn == -1) return;
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-				final FrmPromoList frmPromoList = new FrmPromoList();
-				frmPromoList.setModal(true);
-				frmPromoList.setVisible(true);
-				if (!checkCnnStatus()) return;
-				if (frmPromoList.promoID > 0) {
-					if (!cnn.assignPromoByID(frmPromoList.promoID))
-						JOptionPane.showMessageDialog(null, "Возникла ошибка при назначении акции.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
-					requery();
-				}
-//			}
-//		});
+		if (cnn.checkFlagReturn == -1) return;
+
+		//if (!checkPromo("Проверте скидки, после этого можете выбрать акцию!",false)) return;
+
+		final FrmPromoList frmPromoList = new FrmPromoList();
+		frmPromoList.setModal(true);
+		frmPromoList.setVisible(true);
+		if (!checkCnnStatus()) return;
+		if (frmPromoList.blPromoAll) if (!checkPromo("Проверте скидки!", true)) return;
+		if (frmPromoList.promoID > 0) {
+			if (!cnn.assignPromoByID(frmPromoList.promoID))
+				JOptionPane.showMessageDialog(null, "Возникла ошибка при назначении акции.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
+			requery();
+		}
     }
 	private void jButtonSellerActionPerformed(final int goodID){
 		if (!checkCnnStatus()) return;
@@ -1744,9 +1770,21 @@ public class FrmMain extends javax.swing.JFrame {
 	private void jButtonAdminActionPerformed(){
 		if (!checkCnnStatus()) return;
 		if (cnn.checkFlagReturn==-1) return;
-		FrmAdmin frmAdmin = new FrmAdmin();
-		frmAdmin.setModal(true);
-		frmAdmin.setVisible(true);
+		try {
+			if (!Loader.checkFrmAdmin()){
+				Runtime.getRuntime().exec("javaw -jar shopv2.jar admin");
+				Thread.sleep(2000);
+				Loader.clientSocketListener(Loader.PORTadmin,Loader.focusProgram);
+			}
+		} catch (IOException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+			DialogBoxs.viewError(ex);
+		} catch (InterruptedException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+		}
+//		FrmAdmin frmAdmin = new FrmAdmin();
+//		frmAdmin.setModal(true);
+//		frmAdmin.setVisible(true);
 	}
 	private void jButtonReturnActionPerformed() {
 		if (!checkCnnStatus()) return;

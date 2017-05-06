@@ -6,15 +6,20 @@ import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import main.ConfigReader;
 import main.DialogBoxs;
+import main.Loader;
 import main.MyUtil;
 import reports.ReportBarcodeShort;
 import reports.ReportCash;
@@ -22,10 +27,23 @@ import reports.ReportCheck;
 import reports.ReportMarkup;
 import reports.ReportSale;
 
-public class FrmAdmin extends javax.swing.JDialog {
+public class FrmAdmin extends javax.swing.JFrame {
+	private static FrmAdmin instance = null;
     private final ConfigReader conf;
     private ConnectionDb cnn;
 
+	public static FrmAdmin getInstance() {
+		if (instance == null) {
+			try {
+				instance = new FrmAdmin();
+			} catch (Exception e) {
+				MyUtil.errorToLog(FrmMain.class.getName(), e);
+				DialogBoxs.viewError(e);
+				instance = null;
+			}
+		}
+		return instance;
+	}
 	public FrmAdmin() {
         initComponents();
         //setModal(true);
@@ -33,15 +51,17 @@ public class FrmAdmin extends javax.swing.JDialog {
         cnn = ConnectionDb.getInstance();
         setTitle("Дополнительные функции. " + conf.FORM_TITLE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
         //назначение MyKeyListener
         getAllComponents((Container) this.getContentPane());
         
         setLocationRelativeTo(null);
+		setVisible(true);
     }
 	private void jButtonCashMoveActionPerformed() {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		FrmCashMove frmCashMove = new FrmCashMove();
 		frmCashMove.setModal(true);
 		frmCashMove.setVisible(true);
@@ -49,7 +69,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 	private void jButtonCheckListActionPerformed() {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		FrmCheckList frmCheckList = new FrmCheckList();
 		frmCheckList.setModal(true);
 		frmCheckList.setVisible(true);
@@ -57,7 +77,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 	private void jButtonPriceOverActionPerformed(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		FrmPriceOverList frmPriceOverList = new FrmPriceOverList();
 		frmPriceOverList.setModal(true);
 		frmPriceOverList.setVisible(true);
@@ -65,7 +85,7 @@ public class FrmAdmin extends javax.swing.JDialog {
     private void jButtonOrderActionPerformed() {
         cnn = ConnectionDb.getInstance();
         if (cnn == null) return;
-		dispose();
+		//dispose();
 		FrmOrderList frmOrderList = new FrmOrderList();
 		frmOrderList.setModal(true);
 		frmOrderList.setVisible(true);
@@ -75,7 +95,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 		if (cnn == null) {
 			return;
 		}
-		dispose();
+		//dispose();
 		FrmReceiptList frmReceiptList = new FrmReceiptList();
 		frmReceiptList.setModal(true);
 		frmReceiptList.setVisible(true);
@@ -87,7 +107,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 		if (!i.equals("")) {
 			try {
 				int division = Integer.parseInt(i);
-				dispose();
+				//dispose();
 				ReportBarcodeShort reportBarcodeShort = new ReportBarcodeShort(division);
 				reportBarcodeShort.setModal(true);
 				reportBarcodeShort.setVisible(true);
@@ -101,7 +121,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 	private void jButtonReportCashActionPerformed(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		ReportCash reportCash = new ReportCash();
 		reportCash.setModal(true);
 		reportCash.setVisible(true);
@@ -113,7 +133,7 @@ public class FrmAdmin extends javax.swing.JDialog {
 		if (i!=null) {
 			try {
 				int division = Integer.parseInt(i);
-				dispose();
+				//dispose();
 				ReportSale reportSale = new ReportSale(division);
 				reportSale.setModal(true);
 				reportSale.setVisible(true);
@@ -150,19 +170,19 @@ public class FrmAdmin extends javax.swing.JDialog {
 	private void jButtonReportMarkupActionPerformed(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		ReportMarkup reportMarkup = new ReportMarkup();
 		reportMarkup.setModal(true);
 		reportMarkup.setVisible(true);
 	}
 	private void jButtonNewDiscountCardActionPerformed() {
-		dispose();
+		//dispose();
 		final FrmCardAttribute frmCardAttribute = new FrmCardAttribute(1,""); //выдача новой
 		frmCardAttribute.setModal(true);
 		frmCardAttribute.setVisible(true);
 	}
 	private void jButtonDiscountCardActionPerformed() {
-		dispose();
+		//dispose();
 		final FrmCardAttribute frmCardAttribute =new FrmCardAttribute(2,""); //ввод анкеты
 		frmCardAttribute.setModal(true);
 		frmCardAttribute.setVisible(true);
@@ -170,14 +190,40 @@ public class FrmAdmin extends javax.swing.JDialog {
 	private void jButtonStickerActionPerformed(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
-		dispose();
+		//dispose();
 		FrmStickerList frmStickerList = new FrmStickerList();
 		frmStickerList.setModal(true);
 		frmStickerList.setVisible(true);
 	}
     private void jButtonExitActionPerformed() {
-        dispose();
-    }
+		if (!Loader.checkFrmMain()) {
+			cnn.destroy();
+			System.exit(0);
+		}
+	}
+	private void jButtonFrmMainActionPerformed(){
+		try {
+			if (!Loader.checkFrmMain()) {
+				Runtime.getRuntime().exec("javaw -jar shopv2.jar");
+				Thread.sleep(3000);
+				Loader.clientSocketListener(Loader.PORTmain,Loader.focusProgram);
+			}
+		} catch (IOException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+			DialogBoxs.viewError(ex);
+		} catch (InterruptedException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+		}
+	}
+	private void jButtonOfflineActionPerformed(){
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) {
+			return;
+		}
+		FrmOffline frmOffline = new FrmOffline();
+		frmOffline.setModal(true);
+		frmOffline.setVisible(true);
+	}
 	
     private List<Component> getAllComponents(final Container c) {
         Component[] comps = c.getComponents();
@@ -276,15 +322,15 @@ public class FrmAdmin extends javax.swing.JDialog {
         jPanelButton = new javax.swing.JPanel();
         jButtonExit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonFrmMain = new javax.swing.JButton();
         jPanelForms2 = new javax.swing.JPanel();
         jButtonCashMove = new javax.swing.JButton();
         jButtonDiscountCard = new javax.swing.JButton();
         jButtonNewDiscountCard = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonOffline = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanelForms1.setBorder(javax.swing.BorderFactory.createTitledBorder(" "));
 
@@ -386,7 +432,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addComponent(jButtonOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -517,24 +563,40 @@ public class FrmAdmin extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Дополнительные функции");
 
+        jButtonFrmMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/logo_ori.png"))); // NOI18N
+        jButtonFrmMain.setToolTipText("Открыть текущий ЧЕК");
+        jButtonFrmMain.setActionCommand("StartFrmMain");
+        jButtonFrmMain.setBorderPainted(false);
+        jButtonFrmMain.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonFrmMain.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonFrmMain.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonFrmMain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFrmMainActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
         jPanelButton.setLayout(jPanelButtonLayout);
         jPanelButtonLayout.setHorizontalGroup(
             jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonFrmMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelButtonLayout.setVerticalGroup(
             jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelButtonLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelButtonLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelButtonLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1))
+                    .addComponent(jButtonFrmMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
 
         jPanelForms2.setBorder(javax.swing.BorderFactory.createTitledBorder(" "));
@@ -586,17 +648,18 @@ public class FrmAdmin extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButton1.setToolTipText("");
-        jButton1.setEnabled(false);
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton1.setIconTextGap(10);
-        jButton1.setMaximumSize(new java.awt.Dimension(70, 70));
-        jButton1.setMinimumSize(new java.awt.Dimension(70, 70));
-        jButton1.setPreferredSize(new java.awt.Dimension(70, 70));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonOffline.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jButtonOffline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/offline64.png"))); // NOI18N
+        jButtonOffline.setText("<html>Работа с данными автономной программы</html>");
+        jButtonOffline.setToolTipText("Работа с данными автономной программы");
+        jButtonOffline.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonOffline.setIconTextGap(10);
+        jButtonOffline.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonOffline.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonOffline.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonOffline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonOfflineActionPerformed(evt);
             }
         });
 
@@ -623,7 +686,7 @@ public class FrmAdmin extends javax.swing.JDialog {
                     .addComponent(jButtonCashMove, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                     .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                     .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(jButtonOffline, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -636,9 +699,9 @@ public class FrmAdmin extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonOffline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -708,26 +771,29 @@ public class FrmAdmin extends javax.swing.JDialog {
     private void jButtonPrintCopyCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintCopyCheckActionPerformed
 		jButtonPrintCopyCheckActionPerformed();
     }//GEN-LAST:event_jButtonPrintCopyCheckActionPerformed
-
     private void jButtonReportMarkupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportMarkupActionPerformed
         jButtonReportMarkupActionPerformed();
     }//GEN-LAST:event_jButtonReportMarkupActionPerformed
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonOfflineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOfflineActionPerformed
+        jButtonOfflineActionPerformed();
+    }//GEN-LAST:event_jButtonOfflineActionPerformed
+    private void jButtonFrmMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFrmMainActionPerformed
+        jButtonFrmMainActionPerformed();
+    }//GEN-LAST:event_jButtonFrmMainActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBarcodeShortReport;
     private javax.swing.JButton jButtonCashMove;
     private javax.swing.JButton jButtonCheckList;
     private javax.swing.JButton jButtonDiscountCard;
     private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonFrmMain;
     private javax.swing.JButton jButtonNewDiscountCard;
+    private javax.swing.JButton jButtonOffline;
     private javax.swing.JButton jButtonOrder;
     private javax.swing.JButton jButtonPriceOver;
     private javax.swing.JButton jButtonPrintCopyCheck;

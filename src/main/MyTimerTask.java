@@ -27,9 +27,15 @@ public class MyTimerTask extends TimerTask {
 			Updater updater = new Updater();
 		} else if (taskName.equals("updaterShopV1")) {
 			UpdaterShopV1 updaterShopV1 = new UpdaterShopV1();
+		} else if (taskName.equals("closeAplication")) {
+			closeAplication();
 		}
 	}
 	
+	private void closeAplication() {
+		Loader.clientSocketListener(Loader.PORTadmin, Loader.exitProgram);
+		System.exit(0);
+	}
 	private void linkStatusTask() {
 		parentJFrame.setCnnStatus(1);
 		if (cnn != null){
