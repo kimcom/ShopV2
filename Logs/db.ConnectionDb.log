@@ -61,3 +61,104 @@ com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Dupl
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
 
+мая 22, 2017 2:30:08 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:33:06 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:33:20 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:33:59 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:43:50 PM main.MyUtil messageToLog
+INFO: exec: ok 
+мая 22, 2017 2:45:09 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:45:09 PM main.MyUtil messageToLog
+INFO: exec: ok 
+мая 22, 2017 2:46:12 PM main.MyUtil messageToLog
+INFO: exec param: 0123
+мая 22, 2017 2:46:12 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 2:51:04 PM main.MyUtil messageToLog
+INFO: exec param: Barcode=0123
+мая 22, 2017 2:51:04 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 2:52:05 PM main.MyUtil messageToLog
+INFO: exec param: BarCode=0123
+мая 22, 2017 2:52:05 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 2:55:33 PM main.MyUtil messageToLog
+INFO: exec param: BarCode=0123
+мая 22, 2017 2:55:33 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 2:55:33 PM main.MyUtil messageToLog
+INFO: exec: ok 0123
+мая 22, 2017 2:55:33 PM main.MyUtil messageToLog
+INFO: exec: ok 472
+мая 22, 2017 2:56:55 PM main.MyUtil messageToLog
+INFO: exec param: BarCode=0123
+мая 22, 2017 2:56:55 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 2:56:55 PM main.MyUtil messageToLog
+INFO: BarCode=0123
+мая 22, 2017 2:56:55 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.sql.SQLException: Column '_BarCode' not found.
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:998)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:937)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:926)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:872)
+	at com.mysql.jdbc.ResultSetImpl.findColumn(ResultSetImpl.java:1073)
+	at com.mysql.jdbc.ResultSetImpl.getString(ResultSetImpl.java:5206)
+	at db.ConnectionDb.getGoodInfoByBarcode(ConnectionDb.java:1350)
+	at forms.FrmMain.jButtonAdminActionPerformed(FrmMain.java:1773)
+	at forms.FrmMain.jButtonAdminActionPerformed(FrmMain.java:1878)
+	at forms.FrmMain.access$3200(FrmMain.java:46)
+	at forms.FrmMain$11.actionPerformed(FrmMain.java:640)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(BasicButtonListener.java:198)
+	at java.awt.AWTEventMulticaster.focusLost(AWTEventMulticaster.java:229)
+	at java.awt.Component.processFocusEvent(Component.java:6427)
+	at java.awt.Component.processEvent(Component.java:6291)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.KeyboardFocusManager.redispatchEvent(KeyboardFocusManager.java:1954)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(DefaultKeyboardFocusManager.java:995)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(DefaultKeyboardFocusManager.java:661)
+	at java.awt.Component.dispatchEventImpl(Component.java:4762)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+мая 22, 2017 3:04:04 PM main.MyUtil messageToLog
+INFO: exec param: BarCode=0123
+мая 22, 2017 3:04:04 PM main.MyUtil messageToLog
+INFO: exec: ok 0
+мая 22, 2017 3:04:04 PM main.MyUtil messageToLog
+INFO: exec: ok 472
+мая 22, 2017 3:04:04 PM main.MyUtil messageToLog
+INFO: exec: ok 27/2*7/50/15
+мая 22, 2017 3:04:04 PM main.MyUtil messageToLog
+INFO: exec: ok Кульки "Природа"

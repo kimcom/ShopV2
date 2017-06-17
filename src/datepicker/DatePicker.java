@@ -4,6 +4,7 @@ import forms.FrmOrderList;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -404,7 +405,9 @@ public class DatePicker extends Observable implements Runnable, WindowFocusListe
                 p = p.getParent();
             }
             // System.out.println("x="+x+ " y="+y);
+			//screen.setLocationRelativeTo(p);
             screen.setLocation(x, y);
+			
         } else {
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             screen.setLocation((int) (dim.getWidth() - screen.getWidth()) / 2,
@@ -415,6 +418,7 @@ public class DatePicker extends Observable implements Runnable, WindowFocusListe
     @Override
     public void run() {
         screen.pack();
+		screen.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         screen.setVisible(true);
     }
     public Date parseDate(String date) {

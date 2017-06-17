@@ -1,11 +1,15 @@
 package forms;
 
+import datepicker.DatePicker;
+import datepicker.ObservingTextField;
 import db.ConnectionDb;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
@@ -14,7 +18,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -118,6 +125,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		
 		final JTextField textfield = (JTextField) jComboBox3.getEditor().getEditorComponent();
 		textfield.addKeyListener(new BreedKeyListener());
+		
     }
 
 	private class BreedKeyListener extends KeyAdapter {
@@ -215,6 +223,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		jPanelAnimalAdd.setEnabled(true);
 		jPanelAnimalAdd.setVisible(true);
 		pack();
+		setLocationRelativeTo(null);
 		jComboBox2.requestFocus();
 	}
 	private void jButtonAnimalDelActionPerformed(){
@@ -239,6 +248,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 	private void jButtonAnimalSaveActionPerformed(){
 		if (jComboBox2.getSelectedItem().toString()=="" || jComboBox3.getSelectedItem().toString()=="") {
 			JOptionPane.showMessageDialog(this, "Заполните вид и породу!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if (jTextFieldPetName.getText().equals("") || jTextFieldPetDT.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Заполните кличку и дату рождения!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		JTextField textfield = (JTextField) jComboBox2.getEditor().getEditorComponent();
@@ -267,7 +280,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		}
 		barCode = jTextField1.getText();
 		if (cnn.setDiscountCardAttribute("add_animal", barCode,	"", "", "", "", "", "",	"",  
-				jComboBox2.getSelectedItem().toString(), jComboBox3.getSelectedItem().toString(), "", "", BigDecimal.ZERO, BigDecimal.ZERO, "", "", "")) {
+				jComboBox2.getSelectedItem().toString(), jComboBox3.getSelectedItem().toString(), jTextFieldPetName.getText(), jTextFieldPetDT.getText(),
+				BigDecimal.ZERO, BigDecimal.ZERO, "", "", "")) {
 			JOptionPane.showMessageDialog(this, "Информация о питомце успешно записана!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			requeryTableAnimals();
 			jComboBox2.setSelectedIndex(0);
@@ -290,6 +304,30 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		pack();
 		jButtonAnimalAdd.setVisible(true);
 		jButtonAnimalDel.setVisible(true);
+	}
+	private void jButtonPetDTActionPerformed(){
+		final Locale locale = new Locale("ru");
+		if (jTextFieldPetDT.getText().equals("")) {
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+			calendar.setTime(new Date());
+//			calendar.add(GregorianCalendar.YEAR, - (calendar.get(GregorianCalendar.YEAR) - 2010));
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+			jTextFieldPetDT.setText(dateFormat.format(calendar.getTime()));
+		}
+		//final Locale locale = new Locale("ru");
+		DatePicker dp = new DatePicker((Observer) jTextFieldPetDT, locale);
+		// previously selected date
+		Date selectedDate = dp.parseDate(jTextFieldPetDT.getText());
+		dp.setSelectedDate(selectedDate);
+		dp.start(jTextFieldPetDT);
+//		dp.getScreen().addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosed(WindowEvent e) {
+//				//здесь обработчик срабатывает 2 раза - не понятно почему так
+//				requeryTableAnimals();
+//			}
+//		});
 	}
 	private void requery(){
         if (cnn == null) return;
@@ -439,6 +477,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //			jTableAnimals.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jTableAnimals.getColumnModel().getColumn(1).setPreferredWidth(40);
 		jTableAnimals.getColumnModel().getColumn(2).setPreferredWidth(80);
+		jTableAnimals.getColumnModel().getColumn(3).setPreferredWidth(40);
+		jTableAnimals.getColumnModel().getColumn(4).setPreferredWidth(40);
 	}
 
 	private ResultSet getCardAnimals() {
@@ -502,7 +542,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 							table, value, isSelected, hasFocus,
 							row, column);
 			label.setBorder(BorderFactory.createLineBorder(java.awt.Color.gray));
-			label.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
+			label.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 11));
 			label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			return label;
 		}
@@ -672,6 +712,11 @@ public class FrmCardAttribute extends javax.swing.JDialog {
         jComboBox3 = new javax.swing.JComboBox<>();
         jButtonAnimalSave = new javax.swing.JButton();
         jButtonAnimalCancel = new javax.swing.JButton();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jTextFieldPetName = new javax.swing.JTextField();
+        jButtonPetDT = new javax.swing.JButton();
+        jTextFieldPetDT = new ObservingTextField();
         jScrollPaneAnimals = new javax.swing.JScrollPane();
         jTableAnimals = new javax.swing.JTable();
         jButtonAnimalAdd = new javax.swing.JButton();
@@ -938,24 +983,67 @@ public class FrmCardAttribute extends javax.swing.JDialog {
             }
         });
 
+        jLabel39.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabel39.setText("Кличка:");
+        jLabel39.setFocusable(false);
+        jLabel39.setPreferredSize(new java.awt.Dimension(41, 17));
+        jLabel39.setRequestFocusEnabled(false);
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabel41.setText("День. рожд.:");
+        jLabel41.setFocusable(false);
+        jLabel41.setPreferredSize(new java.awt.Dimension(41, 17));
+        jLabel41.setRequestFocusEnabled(false);
+
+        jTextFieldPetName.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldPetName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButtonPetDT.setText("...");
+        jButtonPetDT.setToolTipText("выбор даты");
+        jButtonPetDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPetDTActionPerformed(evt);
+            }
+        });
+
+        jTextFieldPetDT.setEditable(false);
+        jTextFieldPetDT.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldPetDT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldPetDT.setToolTipText("начальная дата");
+        jTextFieldPetDT.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextFieldPetDT.setFocusable(false);
+
         javax.swing.GroupLayout jPanelAnimalAddLayout = new javax.swing.GroupLayout(jPanelAnimalAdd);
         jPanelAnimalAdd.setLayout(jPanelAnimalAddLayout);
         jPanelAnimalAddLayout.setHorizontalGroup(
             jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAnimalAddLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAnimalSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAnimalCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addGroup(jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAnimalAddLayout.createSequentialGroup()
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelAnimalAddLayout.createSequentialGroup()
+                        .addComponent(jTextFieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldPetDT, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAnimalAddLayout.createSequentialGroup()
+                        .addComponent(jButtonAnimalSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAnimalCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonPetDT, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelAnimalAddLayout.setVerticalGroup(
             jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -969,13 +1057,20 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
+                .addGap(7, 7, 7)
+                .addGroup(jPanelAnimalAddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPetDT)
+                    .addComponent(jTextFieldPetDT, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4))
         );
 
         jScrollPaneAnimals.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jTableAnimals.setAutoCreateRowSorter(true);
-        jTableAnimals.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTableAnimals.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jTableAnimals.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -1031,7 +1126,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                             .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                             .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1041,7 +1136,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                                 .addComponent(jScrollPaneAnimals, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButtonAnimalAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonAnimalAdd)
                                     .addComponent(jButtonAnimalDel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jTextFieldEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -1062,7 +1157,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                             .addComponent(jTextFieldName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldMiddleName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldAddress, jTextFieldEmail, jTextFieldFamily, jTextFieldNotes});
@@ -1325,6 +1420,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
         jButtonAnimalCancelActionPerformed();
     }//GEN-LAST:event_jButtonAnimalCancelActionPerformed
 
+    private void jButtonPetDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPetDTActionPerformed
+        jButtonPetDTActionPerformed();
+    }//GEN-LAST:event_jButtonPetDTActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnimalAdd;
     private javax.swing.JButton jButtonAnimalCancel;
@@ -1332,6 +1431,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAnimalSave;
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonOK;
+    private javax.swing.JButton jButtonPetDT;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -1357,7 +1457,9 @@ public class FrmCardAttribute extends javax.swing.JDialog {
     public javax.swing.JLabel jLabel36;
     public javax.swing.JLabel jLabel37;
     public javax.swing.JLabel jLabel38;
+    public javax.swing.JLabel jLabel39;
     public javax.swing.JLabel jLabel40;
+    public javax.swing.JLabel jLabel41;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1375,6 +1477,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldMiddleName;
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldNotes;
+    private javax.swing.JTextField jTextFieldPetDT;
+    private javax.swing.JTextField jTextFieldPetName;
     private javax.swing.JTextField jTextFieldSumma;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,12 +2,13 @@ package reports;
 
 import db.ConnectionDb;
 import forms.FrmMain;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
@@ -15,10 +16,12 @@ import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JComponent;
+import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,14 +30,19 @@ import javax.swing.JScrollPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import main.ConfigReader;
 import main.MyUtil;
+import org.krysalis.barcode4j.impl.AbstractBarcodeBean;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
+import org.krysalis.barcode4j.impl.upcean.EAN8Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 
-public class ReportPricePlank extends JDialog{
+public class ReportPriceStickerBarcode extends JDialog{
     private ConfigReader conf;
     private ConnectionDb cnn;
 	private final BigDecimal currentDocID;
 	private final double PPI_W = 100;
 	private final double PPI_H = 102;
-	private int type;
+	private int type, countStickers;
 
 	private class Report extends JPanel implements Printable{
 		@Override
@@ -42,7 +50,7 @@ public class ReportPricePlank extends JDialog{
 			int result = NO_SUCH_PAGE;
 			if (pageIndex < 1) {
 				Graphics2D g2d = (Graphics2D) graphics;
-				g2d.translate(conf.PLANK_PADDING_LEFT, conf.PLANK_PADDING_TOP);
+				g2d.translate(conf.STICKER_PADDING_LEFT, conf.STICKER_PADDING_TOP);
 //System.out.println(""+conf.PLANK_PADDING_LEFT + " " + conf.PLANK_PADDING_TOP);
 				//Get the relation between the label width and image width:
 				double sx = 0.72;
@@ -73,7 +81,7 @@ public class ReportPricePlank extends JDialog{
 				pj.setCopies(1);
 				if (blAllPages) {
 					for (int i=0; i < jTabbedPane.getTabCount(); i++){
-						pj.setJobName("ShopV2 - ценовые планки. Стр. " + (i+1));
+						pj.setJobName("ShopV2 - стикеры. Стр. " + (i+1));
 						Report r = new Report();
 						r.setBackground(new java.awt.Color(255, 255, 255));
 						JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
@@ -92,7 +100,7 @@ public class ReportPricePlank extends JDialog{
 					}
 				}else{
 					int i = jTabbedPane.getSelectedIndex();
-					pj.setJobName("ShopV2 - ценовые планки. Стр. " + (i+1));
+					pj.setJobName("ShopV2 - стикеры. Стр. " + (i+1));
 					Report r = new Report();
 					r.setBackground(new java.awt.Color(255, 255, 255));
 					JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
@@ -118,19 +126,20 @@ public class ReportPricePlank extends JDialog{
 		}
 		return true;
     }
-    public ReportPricePlank(BigDecimal docID, int type) {
-//		try {
-//			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//				if ("Nimbus".equals(info.getName())) {
-//					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//					break;
-//				}
-//			}
-//		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//			MyUtil.errorToLog(FrmMain.class.getName(), ex);
-//		}
+    public ReportPriceStickerBarcode(BigDecimal docID, int type, int countStickers) {
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+			MyUtil.errorToLog(FrmMain.class.getName(), ex);
+		}
 		currentDocID = docID;
 		this.type = type;
+		this.countStickers = countStickers;
 		if (currentDocID.equals("")) dispose();
         initComponents();
         clientInfo();
@@ -147,7 +156,7 @@ public class ReportPricePlank extends JDialog{
     private void clientInfo() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
         conf = ConfigReader.getInstance();
-        setTitle("Ценники. Ценовые планки. ".concat(conf.FORM_TITLE));
+        setTitle("Ценники. Стикеры. ".concat(conf.FORM_TITLE));
 	}
 	private void addTabPane(JPanel panel){
 		JScrollPane jScrollPane = new JScrollPane();
@@ -157,147 +166,140 @@ public class ReportPricePlank extends JDialog{
 		jScrollPane.setViewportView(panel);
 		jTabbedPane.addTab("Страница "+(jTabbedPane.getTabCount()+1), jScrollPane);
 	}
+
+	private int BARCODE_TYPE_AUTO = 1;
+	private int BARCODE_TYPE_EAN13 = 1;
+	private int BARCODE_TYPE_EAN8 = 2;
+	private int BARCODE_TYPE_CODE128 = 0;
+
+	private BufferedImage generateBarcode(String barcode, int barcodeType) {
+		//UPCEANBean bean = null;
+		AbstractBarcodeBean bean = null;
+		if (barcodeType == BARCODE_TYPE_EAN13) {
+			bean = new EAN13Bean();
+			bean.setModuleWidth(0.2);
+		} else if (barcodeType == BARCODE_TYPE_EAN8) {
+			bean = new EAN8Bean();
+			bean.setModuleWidth(0.2);
+		} else if (barcodeType == BARCODE_TYPE_CODE128) {
+			bean = new Code128Bean();
+			bean.setModuleWidth(0.15);
+		} else if (barcode.length() == 12 || barcode.length() == 13) {
+			bean = new EAN13Bean();
+			bean.setModuleWidth(0.2);
+		} else if (barcode.length() == 7 || barcode.length() == 8) {
+			bean = new EAN8Bean();
+			bean.setModuleWidth(0.2);
+		} else if (barcode.length() > 13) {
+			bean = new Code128Bean();
+			bean.setModuleWidth(0.15);
+		}
+		final int dpi = 150;
+		bean.setHeight(7.5);
+		bean.setFontSize(1.8);
+		//bean.setVerticalQuietZone(0);
+		//bean.setQuietZone(3);
+		//Set up the canvas provider to create a monochrome bitmap
+		BitmapCanvasProvider canvas = new BitmapCanvasProvider(dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+		try {
+			bean.generateBarcode(canvas, barcode);
+			canvas.finish();
+			return canvas.getBufferedImage();
+		} catch (IllegalArgumentException ex) {
+			//Logger.getLogger(SampleBarcodeEnhanced.class.getName()).log(Level.SEVERE, null, ex);
+			return generateBarcode(barcode, BARCODE_TYPE_CODE128);
+		} catch (IOException ex) {
+			//Logger.getLogger(SampleBarcodeEnhanced.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+	}
+
 	private void fillCheck(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
 		ResultSet res;
-		if (type == 2) {
-			res = cnn.getStickerReport(currentDocID,"5157");//планки
-		} else {
-			res = cnn.getStickerReport(currentDocID, "%");//планки
-		}
+		res = cnn.getStickerReport(currentDocID,"barcode");//barcode
 		String str;
-		
 		JPanel jPanelMain = new JPanel(false);
 		jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
 		jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 		jPanelMain.setBorder(null);
 
-		int width_mm = 665, height_mm = 400;
-		int width_out = (int) (width_mm / 10 / 25.4 * PPI_W);
-		int height_out = (int) (height_mm / 10 / 25.4 * PPI_H);
-		int h = height_out / 8;
-		height_out--;
+		int width_mm = 381, height_mm = 212;					// формат ценника
+		int width_out = (int) (width_mm / 10 / 25.4 * PPI_W);	// пересчет в разрешение дисплея
+		int height_out = (int) (height_mm / 10 / 25.4 * PPI_H - conf.STICKER_HEIGHT_CORRECT);	// таргет пересчет в разрешение дисплея
+//System.out.println("д "+(height_mm / 10 / 25.4 * PPI_H - conf.STICKER_HEIGHT_CORRECT));
+//System.out.println("т "+(height_mm / 10 / 25.4 * PPI_H - 0));
+		int h = height_out / 6;									// кол-во секций 
 		int x_out = width_out * 0;
 		int y_out = height_out * 0;
-//		System.out.println("height_out: "+height_out);
-//		System.out.println("width_out: "+width_out);
 		int iQuantity = 0, col_number = 1;
 		int count = 0;
 		try {
 			while (res.next()) {
-				//iQuantity = res.getInt("Quantity");
-				iQuantity = 1;//ценовые планки всегда по 1 штуке
+				iQuantity = res.getInt("Quantity");
 				for (int q = 1; q <= iQuantity; q++) {
 //System.out.println("bdQuantity=" + Integer.toString(iQuantity) + " " + Integer.toString(q) + " " + res.getString("Name") + "	y_out:" + Integer.toString(y_out)+ "	col:" + Integer.toString(col_number));
 					int x = 0, y = 0, height_label = 0;
-					int padding_left = 5, padding_right = padding_left + 5;
+					int padding_left = 5, padding_right = padding_left + 5; // отступ от краев стикера
 					x += padding_left;
 					JPanel jPanel1 = new javax.swing.JPanel();
 					jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 					jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-					jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+//					jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 					JLabel jLabel11 = new javax.swing.JLabel();
 					JLabel jLabel12 = new javax.swing.JLabel();
 					JLabel jLabel13 = new javax.swing.JLabel();
-					JLabel jLabel14 = new javax.swing.JLabel();
-					JLabel jLabel15 = new javax.swing.JLabel();
-					JLabel jLabel16 = new javax.swing.JLabel();
-					JLabel jLabel17 = new javax.swing.JLabel();
-					JLabel jLabel18 = new javax.swing.JLabel();
-//					JSeparator jSeparator2 = new javax.swing.JSeparator();
 
-					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // название
-					jLabel12.setFont(new java.awt.Font("Tahoma", 1, 30)); // цена
-					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // артикул
-					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 10)); // дата время
-					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 10)); // кат.наценки
-					jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // производитель
-					jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "Цена: "
-					jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // текст "грн."
+					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 9)); // артикул
+					jLabel12.setFont(new java.awt.Font("Tahoma", 0, 9)); // название
+					jLabel13.setFont(new java.awt.Font("Tahoma", 0, 9)); // barcode
 
 //					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
 //					jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
-					//дата время
-					height_label = (int) (h * 1);
-					str = "";
-					if (!res.getString("CatMargin").equals(""))
-						str = "&nbsp;&nbsp;&nbsp;("+res.getString("CatMargin")+")";
-					jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel18.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-					jLabel18.setText("<html>" + str + "</html>");
-					jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-					jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-					jLabel14.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
-					jLabel14.setText("<html>" + MyUtil.getCurrentDate() + "</html>");
-					jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-
-					//производитель
-					y = y + height_label;
-					height_label = (int) (h * 1);
-					str = res.getString("Producer");
-					jLabel15.setSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setPreferredSize(new Dimension(width_out - padding_right, height_label));
-					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel15.setText("<html>Виробник:&nbsp;<strong>" + str + "</strong></html>");
-					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-
 					//артикул
-					y = y + height_label;
+					y = y + height_label + 5;
 					height_label = h * 1;
 					str = res.getString("Article");
-					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel13.setText("<html>Артикул:&nbsp;&nbsp;<strong>" + str + "</strong></html>");
-					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
+					jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+					jLabel11.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
 					//название
 					y = y + height_label;
-					height_label = (int) (h * 3);
+					height_label = h * 2 - 2;
 					str = res.getString("Name");
-					jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-					jLabel11.setText("<html>Назва:&nbsp;<strong>" + str + "</strong></html>");
-					jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
-
-					//текст "Цена:"
-					int segment = 6;
-					y = y + height_label;
-					height_label = h * 2;
-					jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel16.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel16.setText("<html>Ціна:&nbsp;</html>");
-					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, (width_out - padding_right) / segment, height_label - 5));
-
-					//цена
-					//y = y + height_label;
-					//height_label = h * 2;
-					str = res.getString("Price") + "&nbsp;";
-					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 					jLabel12.setText("<html>" + str + "</html>");
-					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / segment, y, (width_out - padding_right) / segment * (segment - 2), height_label));
+					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
 
-					//текст "грн."
-					//y = y + height_label;
-					//height_label = h * 2;
-					jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-					jLabel17.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel17.setText("<html>&nbsp;грн.</html>");
-					jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / segment * (segment - 1), y, (width_out - padding_right) / segment, height_label - 5));
+					//barcode
+					y = y + height_label;
+					height_label = h * 3;
+					String barcode = res.getString("Barcode");
+					jLabel12.setText("<html>" + res.getString("GoodID") + "</html>");
+					//System.out.println("barcode:"+barcode);
+					if (barcode != null) continue;
+					barcode = "0000000000000" + res.getString("GoodID");
+					barcode = "28" + barcode.substring(barcode.length() - 10);
+					Image image = generateBarcode(barcode, BARCODE_TYPE_AUTO);
+					if (image != null) {
+						jLabel13.setIcon(new ImageIcon(image));
+					} else {
+						jLabel13.setText("<html>Не корректный штрих-код: " + barcode + "</html>");
+					}
+					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel13.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, y, width_out - 2, height_label));
 
 					jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(x_out, y_out, width_out, height_out));
 					count++;
 					x_out = width_out * col_number;
 					col_number++;
-					if (col_number > 3) {
+					if (col_number > 5) {
 						col_number = 1;
 						x_out = 0;
 						y_out += height_out;
@@ -305,7 +307,7 @@ public class ReportPricePlank extends JDialog{
 					if (q >= iQuantity) {
 						break;
 					}
-					if (count > 20) {
+					if (count >= countStickers) {
 						addTabPane(jPanelMain);
 						jPanelMain = new JPanel(false);
 						jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
@@ -315,9 +317,11 @@ public class ReportPricePlank extends JDialog{
 						x_out = 0;
 						y_out = 0;
 						col_number = 1;
+						countStickers = 65;
+						//break; // кол-во не может быть более 21
 					}
 				}
-				if (count > 20) {
+				if (count >= countStickers) {
 					addTabPane(jPanelMain);
 					jPanelMain = new JPanel(false);
 					jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
@@ -327,17 +331,24 @@ public class ReportPricePlank extends JDialog{
 					x_out = 0;
 					y_out = 0;
 					col_number = 1;
+					countStickers = 65;
+					//break; // кол-во не может быть более 21
 				}
+			}
+			pack();
+			if (getHeight() > 600) {
+				setSize(new Dimension(getWidth(), 600));
 			}
 		} catch (SQLException ex) {
 			MyUtil.errorToLog(this.getClass().getName(), ex);
 		}
 		if (jPanelMain.getComponentCount() > 0) addTabPane(jPanelMain);
 		pack();
-		if (jTabbedPane.getComponentCount() > 0) {
+		if (jTabbedPane.getComponentCount()>0){
+	//		setSize(new Dimension(getWidth(), height_out * 6 + 85));
 			Component c = jTabbedPane.getComponent(0);
-	//System.out.println("getY:"+c.getY()+" "+c.getClass().getCanonicalName());
-			setSize(new Dimension(getWidth(), height_out * 3 + c.getY()+55));
+	//System.out.println("getY:" + c.getY() + " " + c.getClass().getCanonicalName());
+			setSize(new Dimension(getWidth(), height_out * 5 + c.getY() + 55));
 			jPanelMenu.setPreferredSize(new Dimension(getWidth() - 8, jPanelMenu.getHeight()));
 		}
 	}

@@ -153,7 +153,7 @@ public class FrmOffline extends javax.swing.JDialog {
 				String status = "не проведен";
 				String payment = "нал";
 				if (row.get("Status").toString().equals("1")) status = "проведен";
-				if (row.get("Payment").toString().equals("true")) payment = "безнал";
+				if (row.get("StatusCheck").toString().equals("1")) payment = "безнал";
 
 				BigDecimal sumW = BigDecimal.ZERO;
 				BigDecimal sumS = BigDecimal.ZERO;
@@ -221,20 +221,29 @@ public class FrmOffline extends javax.swing.JDialog {
 			Date curdate = new Date();
 			for (Row row : bills) {
 				Date dt = (Date) row.get("Дата");
+				//проверяем дату чека
 				if (!fmt.format(dt).equals(fmt.format(curdate))) continue;
 				//if (!row.get("Status").toString().equals("1")) continue;
+				//проверяем был ли чек уже перенесен
+//				System.out.println("Number:"+row.get("Number"));
+//				System.out.println("row.get(\"CheckSum\").toString()="+row.get("CheckSum").toString());
 				if (!row.get("CheckSum").toString().equals("0.0")) continue;
+				//проверяем пустой чек или нет
+				int cnt_row = 0;
+				Object id = row.get("Number");
+				IndexCursor cursor = CursorBuilder.createCursor(billsdetails.getIndex("Number"));
+				for (Row rd : cursor.newEntryIterable(id)) cnt_row++;
+				//если чек не имеет товаров тогда не переносим его
+				if (cnt_row == 0) continue;
+				
 				//create check
 		        cnn.newCheck(9);
 				row.put("CheckSum", cnn.currentCheckID);
 				//System.out.println(row.get("IDCard"));
 				if (row.get("IDCard") != null)
 					cnn.setCheckDiscountByCard(row.get("IDCard").toString());
-				if (row.get("Payment").toString().equals("true"))
+				if (row.get("StatusCheck").toString().equals("1"))
 					cnn.setCheckPaymentType(1, cnn.currentCheckID); // уст. тип оплаты
-				
-				Object id = row.get("Number");
-				IndexCursor cursor = CursorBuilder.createCursor(billsdetails.getIndex("Number"));
 //call pr_check_update('good add', @_id, 'CheckID=80111&BarCode=0123&Quantity=3&PriceBase=1&PriceDiscount=3&Price=4&DiscountPercent=5&UserID=1453001&SellerID=0');
 				String str = "";
 				for (Row rd : cursor.newEntryIterable(id)) {

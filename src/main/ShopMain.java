@@ -2,26 +2,15 @@ package main;
 
 import db.ConnectionDb;
 import forms.*;
-import java.awt.Component;
-import java.awt.Frame;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
-import reports.ReportPricePlankClub;
-import reports.ReportPriceStickerClub;
 
 public class ShopMain {
 
@@ -148,18 +137,20 @@ public class ShopMain {
 //							frmOffline.setVisible(true);
 						}else{
 							frmMain = FrmMain.getInstance();
-							TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
-							//running timer task as daemon thread
-							Timer timer1 = new Timer(true);
-							final Locale locale = new Locale("ru");
-							GregorianCalendar calendar = new GregorianCalendar();
-							calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
-							calendar.setTime(new Date());
-							calendar.set(Calendar.HOUR, 22);
-							calendar.set(Calendar.MINUTE, 30);
-							calendar.set(Calendar.SECOND, 0);
-							timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:10
-
+							if (config.MARKET_ID != 1178){
+								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
+								//running timer task as daemon thread
+								Timer timer1 = new Timer(true);
+								final Locale locale = new Locale("ru");
+								GregorianCalendar calendar = new GregorianCalendar();
+								calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+								calendar.setTime(new Date());
+								calendar.set(Calendar.HOUR, 22);
+								calendar.set(Calendar.MINUTE, 30);
+								calendar.set(Calendar.SECOND, 0);
+								timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:30
+							}
+							
 							TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
 							//running timer task as daemon thread
 							Timer timer = new Timer(true);

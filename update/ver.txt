@@ -1,4 +1,4 @@
-17.02.07_1224
+17.02.20_1227
 
 update.jar
 
@@ -7,7 +7,12 @@ ShopV2.jar
 ;dir:update/res
 ;res/logo.ico
 
-;dir:update/lib
+dir:update/lib
+lib/WMI4Java-1.4.2.jar
+lib/commons-lang-2.6.jar
+lib/jackcess-2.1.6.jar
+lib/jProcesses-1.6.3.jar
+
 ;lib/ECRcommX.dll
 ;lib/jacob-1.18-x86.dll
 ;lib/jacob.jar

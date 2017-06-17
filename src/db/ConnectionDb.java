@@ -1330,6 +1330,34 @@ public final class ConnectionDb{
             return 0;
         }
     }
+	public ResultSet getGoodInfoByBarcode(String param) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getGoodInfoByBarcode: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		if (param.equals("")) {
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_check_update(?,?,?)}");
+			cs.setString(1, "check barcode");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setString(3, param);
+//			MyUtil.messageToLog(this.getClass().getName(), "exec param: " + param);
+			ResultSet res = cs.executeQuery();
+//			MyUtil.messageToLog(this.getClass().getName(), "exec: ok " + Integer.toString(cs.getMaxRows()));
+			res.absolute(1);
+//			MyUtil.messageToLog(this.getClass().getName(), "exec: ok " + res.getString("GoodID"));
+//			MyUtil.messageToLog(this.getClass().getName(), "exec: ok " + res.getString("Article"));
+//			MyUtil.messageToLog(this.getClass().getName(), "exec: ok " + res.getString("Name"));
+			return res;
+		} catch (SQLException e) {
+			MyUtil.messageToLog(this.getClass().getName(), param);
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			return null;
+		}
+	}
+
 //check discount
     public boolean setCheckDiscount(int typeDiscount, BigDecimal discount, int goodID, String cardID, int typeReason) {
         if (cnn == null) {

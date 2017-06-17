@@ -16,7 +16,9 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -74,7 +76,7 @@ public class UpdaterShopV1 implements Runnable {
 //			DialogBoxs.viewMessage("error create dir: " + file.getPath());
 //		}
 		//изменение настроек в файле конфигурации автономной программы ShopV1 на MSACCESS
-		MyUtil.replaceInFile(UPDATE_PATH + fileShopK,"POP3=tor.pp.ua", "POP3=ns.tor.pp.ua");
+//		MyUtil.replaceInFile(UPDATE_PATH + fileShopK,"POP3=tor.pp.ua", "POP3=ns.tor.pp.ua");
 
 		//получим версию автономного клиента
 		Properties props = new Properties();
@@ -147,6 +149,30 @@ public class UpdaterShopV1 implements Runnable {
 		}else{
 			MyUtil.messageToLog("update_ShopV1", "файл скачан успешно: " + SITE_URL + fileName);
 		}
+		//качаем файл c дисконтными картами, если дата локального файла устарела
+		fileName = "cards.csv";
+		File file = new File(UPDATE_PATH + fileName);
+		boolean bl = true;
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+		Date dt1 = new Date(file.lastModified());
+		Date dt2 = new Date();
+		if (file.exists()){
+			if (sdf.format(dt1).equals(sdf.format(dt2))) bl = false; //если дата файла равна текущей
+		}
+		if (bl){
+			d = new Download(SITE_URL + fileName, UPDATE_PATH + fileName);
+			if (d.getStatus() != 2 || d.getSize() == 6228) {
+				file = new File(UPDATE_PATH + fileName);
+				deleteFolder(file);
+				MyUtil.messageToLog("update_ShopV1", "ошибка при скачивании файла: " + SITE_URL + fileName);
+				JOptionPane.showMessageDialog(null, "Возникла ошибка при получении данных\nо дисконтных картах для автономной программы!\n\nСообщите программисту!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+				notifyTread();
+				return;
+			} else {
+				MyUtil.messageToLog("update_ShopV1", "файл скачан успешно: " + SITE_URL + fileName);
+			}
+		}
+		
 		//копируем директорию update
 		//copyFolder(new File(UPDATE_PATH),new File(targetPath));
 		if (!statusUpdate) {

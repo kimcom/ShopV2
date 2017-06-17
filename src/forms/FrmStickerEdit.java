@@ -44,6 +44,7 @@ import main.MyUtil;
 import reports.ReportPricePlank;
 import reports.ReportPricePlankClub;
 import reports.ReportPriceSticker;
+import reports.ReportPriceStickerBarcode;
 import reports.ReportPriceStickerClub;
 import tablemodel.TmStickerContentEdit;
 import tablemodel.TmStickerGoods;
@@ -121,9 +122,8 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		jComboBoxStickerType.addItem("только ценовые планки");				//2
 		jComboBoxStickerType.addItem("только ценовые планки клуб. цена");	//3
 		jComboBoxStickerType.addItem("все как стикеры");					//4
-		//jComboBoxStickerType.addItem("все как стикеры клуб. цена");			//5
-		jComboBoxStickerType.addItem("все как ценовые планки");				//6
-		//jComboBoxStickerType.addItem("все как ценовые планки клуб. цена");	//7
+		jComboBoxStickerType.addItem("все как ценовые планки");				//5
+		jComboBoxStickerType.addItem("штрих-коды");							//6
 		jFormattedTextFieldQtySticker.setText("65");
 		jFormattedTextFieldQtySticker.setVisible(false);
 		jLabelQtySticker.setVisible(false);
@@ -139,7 +139,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
     }
 	private void viewQty() {
 		int type = jComboBoxStickerType.getSelectedIndex();
-		if (type == 0 || type == 1 || type == 4) {
+		if (type == 0 || type == 1 || type == 4 || type == 6) {
 			jLabelQtySticker.setVisible(true);
 			jFormattedTextFieldQtySticker.setVisible(true);
 		} else {
@@ -168,6 +168,9 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 				int qty = new BigDecimal(jTableDocContent.getModel().getValueAt(i, 5).toString()).intValue();
 				if(str.equalsIgnoreCase("ценовые планки клуб. цена")) countPlanks ++;
 			} else if (type == 4) {
+				int qty = new BigDecimal(jTableDocContent.getModel().getValueAt(i, 5).toString()).intValue();
+				countStickers += qty;
+			} else if (type == 6) {
 				int qty = new BigDecimal(jTableDocContent.getModel().getValueAt(i, 5).toString()).intValue();
 				countStickers += qty;
 			} else if (type == 5) {
@@ -422,7 +425,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
 		int type = jComboBoxStickerType.getSelectedIndex();
-		if (type == 0 || type == 1 || type == 4) {
+		if (type == 0 || type == 1 || type == 4 || type == 6) {
 			int countStickers1Page = Integer.parseInt(jFormattedTextFieldQtySticker.getText());
 			if (countStickers1Page > 65){
 				DialogBoxs.viewMessage("Стикеров на 1 странице не может быть больше 65!");
@@ -433,6 +436,10 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 				ReportPriceSticker reportPrice = new ReportPriceSticker(docID, type, countStickers1Page);
 				reportPrice.setModal(true);
 				reportPrice.setVisible(true);
+			} else if (type == 6) {
+					ReportPriceStickerBarcode reportPrice = new ReportPriceStickerBarcode(docID, type, countStickers1Page);
+					reportPrice.setModal(true);
+					reportPrice.setVisible(true);
 			}else{
 				ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(docID, type, countStickers1Page);
 				reportPrice.setModal(true);

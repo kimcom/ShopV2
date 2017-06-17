@@ -1770,6 +1770,8 @@ public class FrmMain extends javax.swing.JFrame {
 	private void jButtonAdminActionPerformed(){
 		if (!checkCnnStatus()) return;
 		if (cnn.checkFlagReturn==-1) return;
+//		cnn.getGoodInfoByBarcode("BarCode=0123");
+//		if (1==1) return;
 		try {
 			if (!Loader.checkFrmAdmin()){
 				Runtime.getRuntime().exec("javaw -jar shopv2.jar admin");

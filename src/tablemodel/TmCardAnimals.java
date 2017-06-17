@@ -8,10 +8,10 @@ import javax.swing.table.AbstractTableModel;
 import main.MyUtil;
 
 public class TmCardAnimals extends AbstractTableModel{
-    private final int colnum = 3;
+    private final int colnum = 5;
     private int rownum;
     private final String[] colNames = {
-        "AnimalID","Вид животного","Порода"
+        "AnimalID","Вид животного","Порода","Кличка","Дата рожд."
     };
     private ArrayList<Object[]> ResultSets;
 
@@ -23,6 +23,8 @@ public class TmCardAnimals extends AbstractTableModel{
                     rs.getInt("AnimalID"), 
                     rs.getString("TypeAnimal"), 
                     rs.getString("Breed"), 
+                    rs.getString("PetName"), 
+                    rs.getString("PetDT"), 
                 };
 				ResultSets.add(row);
             }
@@ -36,7 +38,7 @@ public class TmCardAnimals extends AbstractTableModel{
     public Object getValueAt(int rowindex, int columnindex) {
         Object res;
         Object[] row = ResultSets.get(rowindex);
-        if(columnindex == 1 || columnindex == 2){ //notes
+        if(columnindex == 1 || columnindex == 2 || columnindex == 3 || columnindex == 4){ //notes
             if (row[columnindex] == null) return "";
             res = row[columnindex].toString();
         } else {
