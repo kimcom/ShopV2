@@ -137,7 +137,7 @@ public class ShopMain {
 //							frmOffline.setVisible(true);
 						}else{
 							frmMain = FrmMain.getInstance();
-							if (config.MARKET_ID != 1178){
+							if (config.MARKET_ID != 5390){
 								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								//running timer task as daemon thread
 								Timer timer1 = new Timer(true);

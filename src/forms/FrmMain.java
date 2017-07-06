@@ -224,10 +224,34 @@ public class FrmMain extends javax.swing.JFrame {
 					if (blDiscountCardFuture) break;
 					//barCode = "3182550711142";
 					if (barCode.equals("")) break;
-					System.out.println("cnnState: "+cnnState);
+					//System.out.println("cnnState: "+cnnState);
 					if (!checkCnnStatus()) break;
-					System.out.println("cnnState 5: "+cnn.statusValid(5));
-					System.out.println("cnnState 0: "+cnn.statusValid(0));
+					//System.out.println("cnnState 5: "+cnn.statusValid(5));
+					//System.out.println("cnnState 0: "+cnn.statusValid(0));
+					if (barCode.length()==6 && barCode.startsWith("2")){
+						//проверяем есть ли такая анкета
+						if (cnn.getDiscountCardInfo(barCode)) {
+							//проверяем анкета уже аннулирована или нет
+							if (!cnn.getDiscountCardInfo("DateOfCancellation", "DateTime").equals("")) {
+								DialogBoxs.viewMessageError("Анкета с номером: " + barCode + " уже аннулирована!");
+								barCode = "";
+								break;
+							}
+							//если анкета рабочая тогда навесим скидку
+							if (cnn.setCheckDiscountByCard(barCode)){
+								requery();
+								DialogBoxs.viewMessage("Сработала анкета с номером: " + barCode);
+								//если анкета сработала тогда аннулируем ее
+								if (!cnn.setDiscountCardCancellation(barCode)){
+									DialogBoxs.viewMessageError("При аннулировании анкеты с номером: " + barCode + "\nВозникла ошибка!\n\nСообщите разработчику!");
+								}
+							}
+						}else{
+							DialogBoxs.viewMessageError("Анкета с номером: " + barCode + " не существует!");
+						}
+						barCode = "";
+						break;
+					}
 					double res = cnn.addGoodInCheck(barCode);
 					if (res == 1) {
 						requery();

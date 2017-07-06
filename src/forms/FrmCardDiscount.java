@@ -71,6 +71,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 
 //jTextField1.setText("9800000000960");
 //jTextField1.setText("9800000929285");
+//jTextField1.setText("200136");
 //barCode = jTextField1.getText();
 //requery();
     }

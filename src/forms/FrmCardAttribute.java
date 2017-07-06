@@ -116,7 +116,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //jTextField1.setText("2200000450234");
 //jTextField1.setText("2200000191847");
 //jTextField1.setText("2200000363497");
-//jTextField1.setText("2200000019448");
+//jTextField1.setText("200136");
 //barCode = jTextField1.getText();
 //requery();
 
@@ -476,9 +476,9 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		jTableAnimals.getColumnModel().getColumn(0).setResizable(false);
 //			jTableAnimals.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jTableAnimals.getColumnModel().getColumn(1).setPreferredWidth(40);
-		jTableAnimals.getColumnModel().getColumn(2).setPreferredWidth(80);
+		jTableAnimals.getColumnModel().getColumn(2).setPreferredWidth(50);
 		jTableAnimals.getColumnModel().getColumn(3).setPreferredWidth(40);
-		jTableAnimals.getColumnModel().getColumn(4).setPreferredWidth(40);
+		jTableAnimals.getColumnModel().getColumn(4).setPreferredWidth(50);
 	}
 
 	private ResultSet getCardAnimals() {

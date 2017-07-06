@@ -382,7 +382,6 @@ public final class ConnectionDb{
             cs.setString(2, barCode);
             cs.registerOutParameter(3, Types.INTEGER);
             resCardInfo = cs.executeQuery();
-            //resCardInfo.last();
             resCardInfo.absolute(1);
             return resCardInfo.getRow() != 0;
         } catch (SQLException e) {
@@ -529,6 +528,28 @@ public final class ConnectionDb{
             return false;
         }
     }
+
+	public boolean setDiscountCardCancellation(String barCode) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setDiscountCardCancellation: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (barCode.equals("")) {
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "anketa_cancellation");
+			cs.setString(2, barCode);
+			cs.registerOutParameter(3, Types.INTEGER);
+			cs.execute();
+			return cs.getInt(3) != 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
 	public ResultSet getCardAnimals(String barCode) {
 		if (cnn == null) {
 			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getCardAnimals: parameter [cnn] cannot be null!"));
