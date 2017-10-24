@@ -42,6 +42,7 @@ import main.ConfigReader;
 import main.DialogBoxs;
 import main.MyUtil;
 import reports.ReportPricePlank;
+import reports.ReportPricePlankA4;
 import reports.ReportPricePlankClub;
 import reports.ReportPriceSticker;
 import reports.ReportPriceStickerBarcode;
@@ -60,17 +61,6 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 	private int countPlanks = 0;
     
     public FrmStickerEdit(BigDecimal docID) {
-//		try {
-//			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//				if ("Nimbus".equals(info.getName())) {
-//					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//					break;
-//				}
-//			}
-//		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//			//java.util.logging.Logger.getLogger(FrmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//			MyUtil.errorToLog(FrmMain.class.getName(), ex);
-//		}
         this.docID = docID;
         initComponents();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -124,6 +114,9 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		jComboBoxStickerType.addItem("все как стикеры");					//4
 		jComboBoxStickerType.addItem("все как ценовые планки");				//5
 		jComboBoxStickerType.addItem("штрих-коды");							//6
+		jComboBoxStickerType.addItem("все на А4 стандарт");					//7
+		jComboBoxStickerType.addItem("все на А4 клубная цена");				//8
+		jComboBoxStickerType.addItem("все на А4 старая цена");				//9
 		jFormattedTextFieldQtySticker.setText("65");
 		jFormattedTextFieldQtySticker.setVisible(false);
 		jLabelQtySticker.setVisible(false);
@@ -455,6 +448,10 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 				reportPrice.setModal(true);
 				reportPrice.setVisible(true);
 			}
+		} else if (type == 7 || type == 8 || type == 9) {
+			ReportPricePlankA4 reportPrice = new ReportPricePlankA4(docID, type);
+			reportPrice.setModal(true);
+			reportPrice.setVisible(true);
 		}
 	}
 	private void jButtonExitActionPerformed() {

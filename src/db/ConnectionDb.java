@@ -159,7 +159,7 @@ public final class ConnectionDb{
 				serverID = 2;
 			} catch (SQLException err2) {
 				MyUtil.errorToLog(this.getClass().getName(), cnnString2 + "\n" + err2);
-				throw new IllegalArgumentException("Error: " + err);
+				throw new IllegalArgumentException("Error: " + err2);
 			}
 		}
     }

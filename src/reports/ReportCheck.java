@@ -144,9 +144,10 @@ public class ReportCheck extends JDialog implements Printable{
                 jLabel12.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
                 jLabel13.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
 
-//				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 
 				currentDT = res.getString("CurrentDT").toString();
 //currentDT = res.getString("DT_create").toString();

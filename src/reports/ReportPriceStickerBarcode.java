@@ -81,7 +81,7 @@ public class ReportPriceStickerBarcode extends JDialog{
 				pj.setCopies(1);
 				if (blAllPages) {
 					for (int i=0; i < jTabbedPane.getTabCount(); i++){
-						pj.setJobName("ShopV2 - стикеры. Стр. " + (i+1));
+						pj.setJobName("ShopV2 - штрих-коды. Стр. " + (i+1));
 						Report r = new Report();
 						r.setBackground(new java.awt.Color(255, 255, 255));
 						JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
@@ -100,7 +100,7 @@ public class ReportPriceStickerBarcode extends JDialog{
 					}
 				}else{
 					int i = jTabbedPane.getSelectedIndex();
-					pj.setJobName("ShopV2 - стикеры. Стр. " + (i+1));
+					pj.setJobName("ShopV2 - штрих-коды. Стр. " + (i+1));
 					Report r = new Report();
 					r.setBackground(new java.awt.Color(255, 255, 255));
 					JScrollPane sp = (JScrollPane) jTabbedPane.getComponentAt(i);
@@ -127,16 +127,16 @@ public class ReportPriceStickerBarcode extends JDialog{
 		return true;
     }
     public ReportPriceStickerBarcode(BigDecimal docID, int type, int countStickers) {
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-			MyUtil.errorToLog(FrmMain.class.getName(), ex);
-		}
+//		try {
+//			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//				if ("Nimbus".equals(info.getName())) {
+//					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//					break;
+//				}
+//			}
+//		} catch (ClassCastException | IndexOutOfBoundsException | NullPointerException | IllegalArgumentException | ArithmeticException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//			MyUtil.errorToLog(FrmMain.class.getName(), ex);
+//		}
 		currentDocID = docID;
 		this.type = type;
 		this.countStickers = countStickers;
@@ -156,7 +156,7 @@ public class ReportPriceStickerBarcode extends JDialog{
     private void clientInfo() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
         conf = ConfigReader.getInstance();
-        setTitle("Ценники. Стикеры. ".concat(conf.FORM_TITLE));
+        setTitle("Штрих-коды. ".concat(conf.FORM_TITLE));
 	}
 	private void addTabPane(JPanel panel){
 		JScrollPane jScrollPane = new JScrollPane();
@@ -282,9 +282,12 @@ public class ReportPriceStickerBarcode extends JDialog{
 					String barcode = res.getString("Barcode");
 					jLabel12.setText("<html>" + res.getString("GoodID") + "</html>");
 					//System.out.println("barcode:"+barcode);
-					if (barcode != null) continue;
-					barcode = "0000000000000" + res.getString("GoodID");
-					barcode = "28" + barcode.substring(barcode.length() - 10);
+					//if (barcode != null) continue;
+					if (barcode == null || barcode.equals("")) {
+						barcode = "0000000000000" + res.getString("GoodID");
+						barcode = "28" + barcode.substring(barcode.length() - 10);
+						//barcode = "288000074388";
+					}
 					Image image = generateBarcode(barcode, BARCODE_TYPE_AUTO);
 					if (image != null) {
 						jLabel13.setIcon(new ImageIcon(image));

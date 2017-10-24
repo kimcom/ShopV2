@@ -137,9 +137,10 @@ public class ReportSale extends JDialog implements Printable{
                 jLabel12.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
                 jLabel13.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
 				
+//				jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 //				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 
                 y = y + 2;
 				//название
@@ -172,22 +173,22 @@ public class ReportSale extends JDialog implements Printable{
 				//название
 				jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 				jLabel11.setText("<html>" + str + "</html>");
-				jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, y, 120, h));
+				jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, y, 120, h));
 
 				if (str.startsWith("ИТОГО")){
 					//сумма
 					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel13.setText(strSumma);
-					jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, y, 65, h));
+					jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, y, 65, h));
 				}else{
 					//количество
 					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel12.setText(strQuantity);
-					jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, y, 25, h));
+					jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, y, 25, h));
 					//сумма
 					jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 					jLabel13.setText(strSumma);
-					jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, y, 40, h));
+					jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, y, 40, h));
 				}
                 y = y + h;
                 jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, y, 210, 2));

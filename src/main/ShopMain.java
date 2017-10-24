@@ -4,6 +4,7 @@ import db.ConnectionDb;
 import forms.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
+import reports.ReportPricePlankA4;
 
 public class ShopMain {
 
@@ -49,6 +51,10 @@ public class ShopMain {
 				//if (1 == 1) System.exit(0);
 				
                 final ConfigReader config = ConfigReader.getInstance();
+				if (config == null) System.exit(0);
+				ConnectionDb cnn = ConnectionDb.getInstance();
+				if (cnn == null) System.exit(0);
+
 //				MyEKKA me = new MyEKKA();
 //				//me.report("z1");
 //				me.printCheck(new BigDecimal(12961.2009));
@@ -89,11 +95,6 @@ public class ShopMain {
 //				reportPrice.setVisible(true);
 //				if (1 == 1) System.exit(0);
 
-//				final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal("1797.4914"));
-//				frmStickerEdit.setModal(true);
-//				frmStickerEdit.setVisible(true);
-//				if (1 == 1) System.exit(0);
-				
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
 //				reportPrice.setModal(true);
 //				reportPrice.setVisible(true);
@@ -121,14 +122,27 @@ public class ShopMain {
 //				}
 //				if (1==1) return;
 				
-                if (config == null) System.exit(0);
-                ConnectionDb cnn = ConnectionDb.getInstance();
-                if (cnn == null) System.exit(0);
-
 				if(!config.USER_NAME.equals("")){
                     String password = new StringBuffer(config.USER_NAME).reverse().toString();
                     boolean loginStatus = cnn.login(config.USER_NAME, password);
                     if(loginStatus) {
+
+//						final FrmStickerList frm = new FrmStickerList();
+//						frm.setModal(true);
+//						frm.setVisible(true);
+//						System.exit(0);
+						
+//						final FrmStickerEdit frmStickerEdit = new FrmStickerEdit(new BigDecimal("46.1000"));
+//						frmStickerEdit.setModal(true);
+//						frmStickerEdit.setVisible(true);
+//						if (1 == 1) System.exit(0);
+
+//						ReportPricePlankA4 reportPrice = new ReportPricePlankA4(new BigDecimal("46.1000"), 9);
+//						reportPrice.setModal(true);
+//						reportPrice.setVisible(true);
+//						if (1 == 1) System.exit(0);
+
+
 						Loader.checkFrmStart();
 						if(startAdmin) {
 							frmAdmin = FrmAdmin.getInstance();
@@ -137,7 +151,7 @@ public class ShopMain {
 //							frmOffline.setVisible(true);
 						}else{
 							frmMain = FrmMain.getInstance();
-							if (config.MARKET_ID != 5390){
+							//if (config.MARKET_ID != 5390){
 								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								//running timer task as daemon thread
 								Timer timer1 = new Timer(true);
@@ -145,11 +159,11 @@ public class ShopMain {
 								GregorianCalendar calendar = new GregorianCalendar();
 								calendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
 								calendar.setTime(new Date());
-								calendar.set(Calendar.HOUR, 22);
+								calendar.set(Calendar.HOUR_OF_DAY, 22);
 								calendar.set(Calendar.MINUTE, 30);
 								calendar.set(Calendar.SECOND, 0);
 								timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:30
-							}
+							//}
 							
 							TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
 							//running timer task as daemon thread

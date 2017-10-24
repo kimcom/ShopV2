@@ -138,14 +138,15 @@ public class ReportCash extends JDialog implements Printable{
                 jLabel12.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
                 jLabel13.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
 
-//				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 
                 y = y + 2;
                 jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 jLabel11.setText(res.getString("Notes"));
-                jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, y, 130, 15));
+                jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, y, 130, 15));
 
 				BigDecimal bdSumma = res.getBigDecimal("Summa");
 				String strSumma = "";
@@ -155,7 +156,7 @@ public class ReportCash extends JDialog implements Printable{
                 //y = y + 15;
                 jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
                 jLabel12.setText(strSumma);
-                jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, y, 55, 15));
+                jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, y, 55, 15));
 
 //                jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 //                jLabel13.setText(res.getBigDecimal("Sum").setScale(2, RoundingMode.HALF_UP).toString());

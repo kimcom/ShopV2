@@ -12,7 +12,7 @@ public class TmStickerGoods extends AbstractTableModel{
     private final int colnum = 8;
     private int rownum;
     private final String[] colNames = {
-        "GoodID", "Производитель", "Артикул", "Название", "Тип ценника", "", "Цена", "Остаток"
+        "GoodID", "Производитель", "Артикул", "Название", "Тип ценника", "Старая цена", "Цена", "Остаток"
     };
     private ArrayList<Object[]> ResultSets;
 
@@ -26,7 +26,7 @@ public class TmStickerGoods extends AbstractTableModel{
 					rs.getString("Article"), 
                     rs.getString("Name"),
 					rs.getString("StickerType"),
-					null,
+                    rs.getBigDecimal("PriceOld").setScale(2, RoundingMode.HALF_UP),
                     rs.getBigDecimal("PriceShop").setScale(2, RoundingMode.HALF_UP),
                     rs.getBigDecimal("Balance").setScale(0, RoundingMode.HALF_UP),
                 };
@@ -62,7 +62,9 @@ public class TmStickerGoods extends AbstractTableModel{
 			res = row[columnindex].toString();
 		} else if (columnindex == 5) { //кво
 			if (row[columnindex] == null) return "";
-			res = row[columnindex].toString();
+			BigDecimal bd = (BigDecimal) row[columnindex];
+			if (bd.compareTo(BigDecimal.ZERO) == 0) return "";
+			res = bd.setScale(2, RoundingMode.HALF_UP).toPlainString();
 		} else if (columnindex == 6) { //цена
 			if (row[columnindex] == null) return "";
 			BigDecimal bd = (BigDecimal) row[columnindex];

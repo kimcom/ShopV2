@@ -138,9 +138,10 @@ public class ReportBarcodeShort extends JDialog implements Printable{
 				jLabel12.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
 				jLabel13.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
 
+//				jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 //				jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+//				jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//				jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
 				//артикул
 				y = y + 2;
 				h = 11;
@@ -158,13 +159,13 @@ public class ReportBarcodeShort extends JDialog implements Printable{
 				jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 				jLabel11.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 				jLabel11.setText("<html>" + str + "</html>");
-				jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, y, 160, h));
+				jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, y, 150, h));
 
 				//штрих-код
 				String strEAN13 = res.getString("EAN13");
 				jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 				jLabel13.setText(strEAN13);
-				jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, y, 35, h));
+				jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, y, 35, h));
 
 				y = y + h;
 				jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, y, 210, 2));
