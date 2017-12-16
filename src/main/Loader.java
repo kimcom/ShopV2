@@ -6,22 +6,13 @@
 package main;
 
 //import java.net.ServerSocket;
-import java.awt.Frame;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import jdk.nashorn.internal.objects.Global;
 
 public class Loader {
 

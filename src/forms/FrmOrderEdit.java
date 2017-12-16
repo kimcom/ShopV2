@@ -64,7 +64,7 @@ public class FrmOrderEdit extends javax.swing.JDialog {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
         //дерево
-        treeModel = new TmTree(getTreeNodeListRS(Integer.valueOf(cnn.getClientInfo("MatrixID"))));
+        treeModel = new TmTree(getTreeNodeListRS(Integer.valueOf(cnn.getClientInfo("MatrixID"))),cnn.getClientInfo("MatrixName").toString());
         jTree1.setModel(treeModel);
         jTree1.setEditable(false);
         TreeSelectionModel tsm = jTree1.getSelectionModel();

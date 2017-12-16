@@ -65,7 +65,7 @@ public class FrmOrderEditAuto extends javax.swing.JDialog {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
         //дерево
-        treeModel = new TmTree(getTreeNodeListRS(20));
+        treeModel = new TmTree(getTreeNodeListRS(-20),"Категории для автозаказа");
         jTree1.setModel(treeModel);
         jTree1.setEditable(false);
         TreeSelectionModel tsm = jTree1.getSelectionModel();
@@ -380,7 +380,7 @@ public class FrmOrderEditAuto extends javax.swing.JDialog {
 	private ResultSet getGoodsFoundListRS() {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return null;
-		ResultSet rs = cnn.getSearchContent("", jTextFieldArticle.getText(), jTextFieldName.getText(), "_for_sticker");
+		ResultSet rs = cnn.getSearchContent("", jTextFieldArticle.getText(), jTextFieldName.getText(), "_for_order");
 		return rs;
 	}
     private ResultSet getGoodsDocRS() {

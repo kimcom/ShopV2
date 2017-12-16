@@ -1,14 +1,7 @@
 package main;
 
 import db.ConnectionDb;
-import forms.FrmAdmin;
-import forms.FrmMain;
-import java.awt.Dialog;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.Node;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

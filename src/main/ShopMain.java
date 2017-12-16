@@ -144,6 +144,7 @@ public class ShopMain {
 
 
 						Loader.checkFrmStart();
+						
 						if(startAdmin) {
 							frmAdmin = FrmAdmin.getInstance();
 //							FrmOffline frmOffline = new FrmOffline();
@@ -151,7 +152,21 @@ public class ShopMain {
 //							frmOffline.setVisible(true);
 						}else{
 							frmMain = FrmMain.getInstance();
-							//if (config.MARKET_ID != 5390){
+							
+							boolean timerClose = true;
+							if (config.MARKET_ID == 1356){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
+								GregorianCalendar calendar0 = new GregorianCalendar();
+								calendar0.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+								calendar0.setTime(new Date());
+								GregorianCalendar calendar1 = new GregorianCalendar(2017, 11, 16);// 2017-12-16 дата когда не нужно выключать прогу!
+								if (	   calendar0.get(Calendar.YEAR)	 == calendar1.get(Calendar.YEAR)
+										&& calendar0.get(Calendar.MONTH) == calendar1.get(Calendar.MONTH)
+										&& calendar0.get(Calendar.DAY_OF_MONTH) == calendar1.get(Calendar.DAY_OF_MONTH)) 
+								{
+									timerClose = false;
+								}
+							}
+							if (timerClose){
 								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								//running timer task as daemon thread
 								Timer timer1 = new Timer(true);
@@ -163,7 +178,7 @@ public class ShopMain {
 								calendar.set(Calendar.MINUTE, 30);
 								calendar.set(Calendar.SECOND, 0);
 								timer1.scheduleAtFixedRate(timerTask1, calendar.getTime(), 600 * 1000);//каждые 10 минут начиная с времени 22:30
-							//}
+							}
 							
 							TimerTask timerTask = new MyTimerTask(frmMain,"linkStatusTask");
 							//running timer task as daemon thread

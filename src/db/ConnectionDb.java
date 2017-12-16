@@ -2532,6 +2532,7 @@ public final class ConnectionDb{
 			return null;
         }
         try {
+			//System.out.println("catID: " + catID);
             CallableStatement cs = cnn.prepareCall("{call pr_goods_list(?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "in category for shop");
             cs.setString(2, "Name");

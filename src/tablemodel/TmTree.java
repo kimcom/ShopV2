@@ -40,6 +40,24 @@ public class TmTree implements TreeModel {
             this.setUserObject(name);
         }
     }
+	public TmTree(ResultSet rs, String name) {
+		rootNode = new MyDefaultMutableTreeNode(name, 0);
+		innerModel = new DefaultTreeModel(rootNode);
+		int ind = 0;
+		try {
+			while (rs.next()) {
+				MyDefaultMutableTreeNode newKeyNode = new MyDefaultMutableTreeNode(rs.getString("name"), rs.getInt("CatID"));
+				innerModel.insertNodeInto(newKeyNode, rootNode, ind);
+				ind++;
+				if (rs.getInt("rgt") - rs.getInt("lft") - 1 > 0) {
+					innerModel.insertNodeInto(new MyDefaultMutableTreeNode("уровень 1", -1), newKeyNode, 0);
+				}
+			}
+		} catch (Exception ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+			//DialogBoxs.viewError(ex);
+		}
+	}
     public TmTree(ResultSet rs) {
         innerModel = new DefaultTreeModel(rootNode);
         int ind = 0;

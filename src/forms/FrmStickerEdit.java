@@ -75,7 +75,7 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
         //дерево
-        treeModel = new TmTree(getTreeNodeListRS(10));
+        treeModel = new TmTree(getTreeNodeListRS(10),"Группы товаров для розницы");
         jTree1.setModel(treeModel);
         jTree1.setEditable(false);
         TreeSelectionModel tsm = jTree1.getSelectionModel();

@@ -302,6 +302,7 @@ public class ReportPricePlankClub extends JDialog{
 					jLabel17.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 					if(res.getString("QtyClub").equals("0")) {
 						jLabel17.setText("");
+						jLabel17.setVisible(false);
 					}else{
 						jLabel17.setText("<html><center>Клубна<br>ціна:</html>");
 					}
@@ -311,6 +312,7 @@ public class ReportPricePlankClub extends JDialog{
 					jLabel22.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 					if(res.getString("QtyClub").equals("0")) {
 						jLabel22.setText("");
+						jLabel22.setVisible(false);
 					}else{
 						jLabel22.setText("<html>від "+res.getString("QtyClub")+" одиниць</html>");
 					}
@@ -333,9 +335,14 @@ public class ReportPricePlankClub extends JDialog{
 						BigDecimal priceClub = new BigDecimal(res.getString("Price")).multiply(discountClub).setScale(2, RoundingMode.HALF_UP);
 						str = priceClub.toPlainString() + "&nbsp;";
 					}
-					jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-					jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-					jLabel19.setText("<html>" + str + "</html>");
+					if (res.getString("QtyClub").equals("0")) {
+						jLabel19.setText("");
+						jLabel19.setVisible(false);
+					} else {
+						jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+						jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+						jLabel19.setText("<html>" + str + "</html>");
+					}
 					jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + (width_out - padding_right) / 2, y, (width_out - padding_right) / 2, height_label));
 
 					//артикул
