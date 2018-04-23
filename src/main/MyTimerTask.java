@@ -2,8 +2,6 @@ package main;
 
 import db.ConnectionDb;
 import forms.FrmMain;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.TimerTask;
 
 public class MyTimerTask extends TimerTask {

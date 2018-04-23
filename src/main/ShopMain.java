@@ -127,6 +127,11 @@ public class ShopMain {
                     boolean loginStatus = cnn.login(config.USER_NAME, password);
                     if(loginStatus) {
 
+//						final FrmDelivery frm = new FrmDelivery();
+//						frm.setModal(true);
+//						frm.setVisible(true);
+//						if (1 == 1) return;
+
 //						final FrmStickerList frm = new FrmStickerList();
 //						frm.setModal(true);
 //						frm.setVisible(true);
@@ -142,7 +147,6 @@ public class ShopMain {
 //						reportPrice.setVisible(true);
 //						if (1 == 1) System.exit(0);
 
-
 						Loader.checkFrmStart();
 						
 						if(startAdmin) {
@@ -152,20 +156,29 @@ public class ShopMain {
 //							frmOffline.setVisible(true);
 						}else{
 							frmMain = FrmMain.getInstance();
+
+//							final FrmDelivery frm = new FrmDelivery();
+//							frm.setModal(true);
+//							frm.setVisible(true);
+//							if (1 == 1) {
+//								return;
+//							}
 							
 							boolean timerClose = true;
-							if (config.MARKET_ID == 1356){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
-								GregorianCalendar calendar0 = new GregorianCalendar();
-								calendar0.setFirstDayOfWeek(GregorianCalendar.MONDAY);
-								calendar0.setTime(new Date());
-								GregorianCalendar calendar1 = new GregorianCalendar(2017, 11, 16);// 2017-12-16 дата когда не нужно выключать прогу!
-								if (	   calendar0.get(Calendar.YEAR)	 == calendar1.get(Calendar.YEAR)
-										&& calendar0.get(Calendar.MONTH) == calendar1.get(Calendar.MONTH)
-										&& calendar0.get(Calendar.DAY_OF_MONTH) == calendar1.get(Calendar.DAY_OF_MONTH)) 
-								{
-									timerClose = false;
-								}
-							}
+							if (config.hostname.contains("ALIK")) timerClose = false;
+							//if (config.MARKET_ID == 1356){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
+//							if (config.MARKET_ID == 2004){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
+//								GregorianCalendar calendar0 = new GregorianCalendar();
+//								calendar0.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+//								calendar0.setTime(new Date());
+//								GregorianCalendar calendar1 = new GregorianCalendar(2018, 2 - 1, 17);// месяц с нуля! 2017-12-16 дата когда не нужно выключать прогу!
+//								if (	   calendar0.get(Calendar.YEAR)	 == calendar1.get(Calendar.YEAR)
+//										&& calendar0.get(Calendar.MONTH) == calendar1.get(Calendar.MONTH)
+//										&& calendar0.get(Calendar.DAY_OF_MONTH) == calendar1.get(Calendar.DAY_OF_MONTH)) 
+//								{
+//									timerClose = false;
+//								}
+//							}
 							if (timerClose){
 								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								//running timer task as daemon thread
@@ -190,10 +203,12 @@ public class ShopMain {
 							Timer timer2 = new Timer(true);
 							timer2.scheduleAtFixedRate(timerTask2, config.TIME_UPDATE_START * 1000, config.TIME_UPDATE * 1000);
 
-							TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
-							//running timer task as daemon thread
-							Timer timer3 = new Timer(true);
-							timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
+							if (!config.hostname.contains("ALIK")){
+								TimerTask timerTask3 = new MyTimerTask(frmMain, "updaterShopV1");
+								//running timer task as daemon thread
+								Timer timer3 = new Timer(true);
+								timer3.schedule(timerTask3, config.TIME_WAIT * 1000); //выполняем один раз при каждом старте проги
+							}
 
 							TimerTask timerTask4 = new MyTimerTask(frmMain, "linkStatusServer");
 							//running timer task as daemon thread

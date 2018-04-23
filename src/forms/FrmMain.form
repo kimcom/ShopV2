@@ -48,7 +48,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelLastModi" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPaneCheck" pref="220" max="32767" attributes="0"/>
+              <Component id="jScrollPaneCheck" pref="219" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -105,10 +105,12 @@
                   <Component id="jButtonNewDiscountCard" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonPromo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButtonSeller" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelReturn" pref="27" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButtonDelivery" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabelReturn" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -124,10 +126,11 @@
                       <Component id="jButtonDiscountCard" alignment="0" max="-2" attributes="0"/>
                       <Component id="jButtonNewDiscountCard" max="-2" attributes="0"/>
                       <Component id="jButtonPromo" max="-2" attributes="0"/>
-                      <Component id="jButtonSeller" max="-2" attributes="0"/>
+                      <Component id="jButtonDelivery" max="-2" attributes="0"/>
                       <Component id="jLabelReturn" min="-2" pref="70" max="-2" attributes="0"/>
+                      <Component id="jButtonSeller" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -309,6 +312,45 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPromoActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="jButtonDelivery">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/png/Food_delivery_truck-64.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x417;&#x430;&#x44f;&#x432;&#x43a;&#x430; &#x43d;&#x430; &#x434;&#x43e;&#x441;&#x442;&#x430;&#x432;&#x43a;&#x443; &#x442;&#x43e;&#x432;&#x430;&#x440;&#x430;"/>
+            <Property name="actionCommand" type="java.lang.String" value="&#x421;&#x43f;&#x438;&#x441;&#x43e;&#x43a; &#x430;&#x43a;&#x446;&#x438;&#x439;"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[70, 70]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeliveryActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelReturn">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="30" style="3"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="6a" green="24" id="&#x410;&#x43a;&#x442;&#x438;&#x432;&#x43d;&#x44b;&#x439; &#x437;&#x430;&#x433;&#x43e;&#x43b;&#x43e;&#x432;&#x43e;&#x43a;" palette="2" red="a" type="palette"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value=" "/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 70]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 70]"/>
+            </Property>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JButton" name="jButtonSeller">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -330,23 +372,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSellerActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelReturn">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="30" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="6a" green="24" id="&#x410;&#x43a;&#x442;&#x438;&#x432;&#x43d;&#x44b;&#x439; &#x437;&#x430;&#x433;&#x43e;&#x43b;&#x43e;&#x432;&#x43e;&#x43a;" palette="2" red="a" type="palette"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value=" "/>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 70]"/>
-            </Property>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 70]"/>
-            </Property>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -382,7 +407,7 @@
                       <Component id="jButtonExit" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCheckCopy" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -35,6 +35,7 @@ public final class ConnectionDb{
     public int                  checkStatus;
     public int                  checkTypePayment;
     public String               checkCardID;
+    public String               checkCardKlassID;
     public BigDecimal           checkSumBase;
     public BigDecimal           checkSumDiscount;
     public BigDecimal           checkSum;
@@ -75,8 +76,8 @@ public final class ConnectionDb{
 		//&amp;AutoCommit=true&amp;autoReconnect=true
 //        cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
 //        cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
-        cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
-        cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true";
+        cnnString1   = "jdbc:mysql://" + config.SERVER_ADDRESS_1 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
+        cnnString2   = "jdbc:mysql://" + config.SERVER_ADDRESS_2 + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true";
         //cnnString   = "jdbc:mariadb://" + config.SERVER_ADDRESS + ":" + config.SERVER_PORT + "/" + config.SERVER_DB + "?useCompression=true&allowMultiQueries=true";
         userName    = config.SERVER_DB;
         password    = "149521";
@@ -373,9 +374,8 @@ public final class ConnectionDb{
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getDiscountCardInfo: parameter [cnn] cannot be null!"));
 			return false;
         }
-        if (barCode.equals("")) {
-            return false;
-        }
+		if (barCode == null) return false;
+        if (barCode.equals("")) return false;
         try {
             CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
             cs.setString(1, "info");
@@ -942,6 +942,7 @@ public final class ConnectionDb{
                 checkTypePayment    = res.getInt("TypePayment");
                 checkFlagReturn     = res.getInt("FlagReturn");
                 checkCardID			= res.getString("CardID");
+				checkCardKlassID	= res.getString("checkCardKlassID");
                 checkSumBase        = res.getBigDecimal("SumBase").setScale(2);
                 checkSumDiscount    = res.getBigDecimal("SumDiscount").setScale(2);
                 checkSum            = res.getBigDecimal("Sum").setScale(2);
@@ -1433,6 +1434,37 @@ public final class ConnectionDb{
             return false;
         }
     }
+	public boolean setCheckKlassCard(String cardID) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckKlassCard: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		if (cardID.equals("")) {
+			return false;
+		}
+		try {
+			String param = "";
+			param = "CheckID=" + currentCheckID.setScale(4, RoundingMode.HALF_UP).toPlainString()
+					+ "&ClientID=" + Integer.toString(clientID)
+					+ "&KlassCardID=" + cardID
+					+ "&Sum=" + checkSum.setScale(2,RoundingMode.HALF_UP).toPlainString();
+			if (param.equals("")) return false;
+			//System.out.println("call pr_check_update('klass_card',@_id,'"+param+"')");
+//			String mess = "call pr_check_update('klass_card',@_id,'" + param + "')";
+//			MyUtil.messageToLog(this.getClass().getName(), mess);
+			CallableStatement cs = cnn.prepareCall("{call pr_check_update(?,?,?)}");
+			cs.setString(1, "klass_card");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setString(3, param);
+			cs.execute();
+			getCheckInfo(currentCheckID);
+			return cs.getInt(2) != 0;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
+		}
+	}
     public boolean setCheckNewCard(String cardID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setCheckNewCard: parameter [cnn] cannot be null!"));
@@ -2532,7 +2564,9 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-			//System.out.println("catID: " + catID);
+//			String mess = "call pr_goods_list('in category for shop',@_id,'" + param + "')";
+//			MyUtil.messageToLog(this.getClass().getName(), mess);
+//			System.out.println("catID: " + catID);
             CallableStatement cs = cnn.prepareCall("{call pr_goods_list(?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "in category for shop");
             cs.setString(2, "Name");

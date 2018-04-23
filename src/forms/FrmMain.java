@@ -49,6 +49,8 @@ public class FrmMain extends javax.swing.JFrame {
     private ConnectionDb cnn;
 	private boolean cnnState = true;
     private static String barCode = "";
+	private static String barCodeKlass = "";
+	private static boolean blBarCodeKlass = false;
 	private boolean blDiscountCardFuture = false;
 	private int countRows=0;
 
@@ -205,6 +207,7 @@ public class FrmMain extends javax.swing.JFrame {
         }
         private KeyEvent keyOverride(KeyEvent e) {
             int keyCode = e.getKeyCode();
+			//char keyChar = e.getKeyChar();
             switch (keyCode) {
                 case KeyEvent.VK_DIVIDE:   // тест
                     if (e.getModifiers() == InputEvent.SHIFT_MASK) {
@@ -219,6 +222,12 @@ public class FrmMain extends javax.swing.JFrame {
 					break;
                 case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {
+						break;
+					}
+					if (blBarCodeKlass) {
+						blBarCodeKlass = false;
+						barCodeKlass = "";
+						barCode = "";
 						break;
 					}
 					if (blDiscountCardFuture) break;
@@ -370,12 +379,25 @@ public class FrmMain extends javax.swing.JFrame {
                 default:
                     //String objCanonicalName = e.getSource().getClass().getCanonicalName();
                     //System.out.println("keyOverride: " + objCanonicalName + " keycode:" + Integer.toString(e.getKeyCode()));
-                    //System.out.println("keycode:" + Integer.toString(e.getKeyCode()));
-                    if((keyCode > 47 && keyCode < 58)||(keyCode > 95 && keyCode < 106))
-                        barCode = barCode.concat(Character.toString(e.getKeyChar()));
-                    //System.out.println(barCode);
-                    break;
-            }
+                    
+					//System.out.println("keyChar:" + keyChar + "	keycode:" + Integer.toString(e.getKeyCode()));
+					
+					if ((!blBarCodeKlass)&&((keyCode > 47 && keyCode < 58) || (keyCode > 95 && keyCode < 106))) {
+						barCode = barCode.concat(Character.toString(e.getKeyChar()));
+						//System.out.println("barCode:" + barCode);
+						break;
+					//}else if(keyCode >= 65 && keyCode <= 90){
+					} else {
+						//System.out.println(barCode);
+						if (blBarCodeKlass) {
+							barCodeKlass = barCodeKlass.concat(Character.toString(e.getKeyChar()));
+						}else{
+							blBarCodeKlass = true;
+							barCodeKlass = Character.toString(e.getKeyChar());
+						}
+						//System.out.println("blBarCodeKlass:" + blBarCodeKlass + "	barCodeKlass:" + barCodeKlass);
+					}
+	            }
             return e;
         }        
     }
@@ -426,6 +448,7 @@ public class FrmMain extends javax.swing.JFrame {
 		//уст. русской раскладки для клавиатуры
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
+//		jButtonDelivery.setVisible(false);
 //		FrmStickerList frmStickerList = new FrmStickerList();
 //		frmStickerList.setModal(true);
 //		frmStickerList.setVisible(true);
@@ -449,8 +472,9 @@ public class FrmMain extends javax.swing.JFrame {
         jButtonPayType = new javax.swing.JButton();
         jButtonNewDiscountCard = new javax.swing.JButton();
         jButtonPromo = new javax.swing.JButton();
-        jButtonSeller = new javax.swing.JButton();
+        jButtonDelivery = new javax.swing.JButton();
         jLabelReturn = new javax.swing.JLabel();
+        jButtonSeller = new javax.swing.JButton();
         jPanelRight = new javax.swing.JPanel();
         jButtonAdmin = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
@@ -591,6 +615,25 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        jButtonDelivery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Food_delivery_truck-64.png"))); // NOI18N
+        jButtonDelivery.setToolTipText("Заявка на доставку товара");
+        jButtonDelivery.setActionCommand("Список акций");
+        jButtonDelivery.setBorderPainted(false);
+        jButtonDelivery.setMaximumSize(new java.awt.Dimension(70, 70));
+        jButtonDelivery.setMinimumSize(new java.awt.Dimension(70, 70));
+        jButtonDelivery.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeliveryActionPerformed(evt);
+            }
+        });
+
+        jLabelReturn.setFont(new java.awt.Font("Tahoma", 3, 30)); // NOI18N
+        jLabelReturn.setForeground(java.awt.SystemColor.activeCaption);
+        jLabelReturn.setText(" ");
+        jLabelReturn.setMaximumSize(new java.awt.Dimension(100, 70));
+        jLabelReturn.setPreferredSize(new java.awt.Dimension(100, 70));
+
         jButtonSeller.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/seller.png"))); // NOI18N
         jButtonSeller.setToolTipText("F5 - Список сотрудников");
         jButtonSeller.setActionCommand("Список акций");
@@ -603,12 +646,6 @@ public class FrmMain extends javax.swing.JFrame {
                 jButtonSellerActionPerformed(evt);
             }
         });
-
-        jLabelReturn.setFont(new java.awt.Font("Tahoma", 3, 30)); // NOI18N
-        jLabelReturn.setForeground(java.awt.SystemColor.activeCaption);
-        jLabelReturn.setText(" ");
-        jLabelReturn.setMaximumSize(new java.awt.Dimension(100, 70));
-        jLabelReturn.setPreferredSize(new java.awt.Dimension(100, 70));
 
         javax.swing.GroupLayout jPanelLeftLayout = new javax.swing.GroupLayout(jPanelLeft);
         jPanelLeft.setLayout(jPanelLeftLayout);
@@ -630,10 +667,12 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonPromo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonSeller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelReturn, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addComponent(jButtonDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelLeftLayout.setVerticalGroup(
             jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -647,9 +686,10 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(jButtonDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNewDiscountCard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPromo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSeller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonDelivery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSeller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6))
         );
 
         jButtonAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/admin.png"))); // NOI18N
@@ -758,7 +798,7 @@ public class FrmMain extends javax.swing.JFrame {
                     .addComponent(jButtonLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCheckCopy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
 
         jPanelMiddle.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Информация о текущем чеке:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
@@ -909,7 +949,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLastModi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                .addComponent(jScrollPaneCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
         );
 
         pack();
@@ -1218,7 +1258,30 @@ public class FrmMain extends javax.swing.JFrame {
 			jButtonSellerActionPerformed(-1);
 			return;
 		}
-
+		if (conf.MARKET_ID == 6958) {//только для Харьков 23 августа
+			//if (cnn.checkCardKlassID.equals("")){
+				final FrmCardKlass frmCardKlass = new FrmCardKlass(cnn.checkCardKlassID);
+				frmCardKlass.setModal(true);
+				frmCardKlass.setVisible(true);
+				if (frmCardKlass.blDisposeStatus) {
+					cnn = ConnectionDb.getInstance();
+					//cnn.checkCardKlassID = frmCardKlass.strBarCode;
+					if (cnn == null) return;
+					if (!cnn.setCheckKlassCard(frmCardKlass.strBarCode)) {
+						DialogBoxs.viewMessage("Ошибка при регистрации карты супермаркета!");
+					}
+					if (cnn.checkCardKlassID.length() == 0) {
+						DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!!!");
+					}
+ 				} else {
+					DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!");
+				}
+			//}
+			//System.out.println("checkCardKlassID:"+cnn.checkCardKlassID);
+			//return;
+		}
+		
+		
 		if(conf.EKKA_TYPE==2){//если и нал и безнал проводим через РРО
 			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null) {
 //				System.out.println("обычный чек");
@@ -1791,6 +1854,23 @@ public class FrmMain extends javax.swing.JFrame {
 			requery();
 		}
 	}
+	private void jButtonDeliveryActionPerformed() {
+		if (!checkCnnStatus()) return;
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) return;
+		final FrmDelivery frmDelivery = new FrmDelivery(cnn.checkCardID);
+		frmDelivery.setModal(true);
+		frmDelivery.setVisible(true);
+		if (!checkCnnStatus()) {
+			return;
+		}
+		if (frmDelivery.blDisposeStatus == true) {
+			//if (!cnn.assignSellerByID(0, 0)) {
+				JOptionPane.showMessageDialog(null, "Возникла ошибка при оформлении доставки товара.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
+			//}
+			requery();
+		}
+	}
 	private void jButtonAdminActionPerformed(){
 		if (!checkCnnStatus()) return;
 		if (cnn.checkFlagReturn==-1) return;
@@ -1913,20 +1993,24 @@ public class FrmMain extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         formWindowActivated();
     }//GEN-LAST:event_formWindowActivated
-    private void jButtonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSellerActionPerformed
-        jButtonSellerActionPerformed(0);
-    }//GEN-LAST:event_jButtonSellerActionPerformed
+    private void jButtonDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeliveryActionPerformed
+        jButtonDeliveryActionPerformed();
+    }//GEN-LAST:event_jButtonDeliveryActionPerformed
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
         jButtonReturnActionPerformed();
     }//GEN-LAST:event_jButtonReturnActionPerformed
     private void jButtonCheckCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckCopyActionPerformed
         jButtonCheckCopyActionPerformed();
     }//GEN-LAST:event_jButtonCheckCopyActionPerformed
+    private void jButtonSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSellerActionPerformed
+        jButtonSellerActionPerformed(0);
+    }//GEN-LAST:event_jButtonSellerActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdmin;
     private javax.swing.JButton jButtonCalc;
     private javax.swing.JButton jButtonCheckCopy;
+    private javax.swing.JButton jButtonDelivery;
     private javax.swing.JButton jButtonDiscount;
     private javax.swing.JButton jButtonDiscountCard;
     private javax.swing.JButton jButtonExit;

@@ -91,7 +91,8 @@ public class FrmOrderEditAuto extends javax.swing.JDialog {
             public void valueChanged(TreeSelectionEvent tse) {
                 TreePath tp = tse.getPath();
                 TmTree.MyDefaultMutableTreeNode myNode = (TmTree.MyDefaultMutableTreeNode) tp.getLastPathComponent();
-                if (myNode.getChildCount() == 0) {
+				//System.out.println("Level:"+myNode.getLevel());
+                if (myNode.getLevel()>=2 || myNode.getChildCount()== 0) {
                     requeryGoodsList(myNode.nodeID,0);
                 }
 //                System.out.println("Selection event: " + tp.getLastPathComponent() + " myNode.nodeID: " + Integer.toString(myNode.nodeID));

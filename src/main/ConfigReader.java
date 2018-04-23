@@ -12,10 +12,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.UnknownHostException;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -60,7 +62,7 @@ public class ConfigReader {
 	public String		POS_BAUD_RATE;
 	public String		POS_MerchantIdx;
 	public boolean		POS_SendInfo = false;
-
+	public String		hostname = "";
 	private int getIntegerValue(Properties props, String paramName){
 		int result = 0;
 		try {
@@ -205,6 +207,14 @@ public class ConfigReader {
 		POS_BAUD_RATE			= props.getProperty("POS_BAUD_RATE");
 		POS_MerchantIdx			= props.getProperty("POS_MerchantIdx");
 		FORM_TITLE = FORM_TITLE + " v." + APP_VERSION;
+		
+		try {
+			InetAddress addr;
+			addr = InetAddress.getLocalHost();
+			hostname = addr.getHostName();
+		} catch (UnknownHostException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), "Hostname can not be resolved.\n" + ex);
+		}		
 	}
 
 	private void reset_SERVER_ADDRESS() throws FileNotFoundException, UnsupportedEncodingException, IOException {

@@ -72,8 +72,9 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 //jTextField1.setText("9800000000960");
 //jTextField1.setText("9800000929285");
 //jTextField1.setText("200136");
-//barCode = jTextField1.getText();
-//requery();
+jTextField1.setText("9800000037621");
+barCode = jTextField1.getText();
+requery();
     }
 
     private void jButtonOKActionPerformed(){
@@ -87,10 +88,10 @@ public class FrmCardDiscount extends javax.swing.JDialog {
     private void requery(){
         if (cnn == null) return;
         if (cnn.getDiscountCardInfo(barCode)) {
-            jLabel21.setText(cnn.getDiscountCardInfo("Name","String"));
+            jLabel21.setText("<html>"+cnn.getDiscountCardInfo("Family", "String")+" "+cnn.getDiscountCardInfo("Name", "String")+" "+cnn.getDiscountCardInfo("MiddleName", "String")+"</html>");
             jLabel22.setText("<html>"+cnn.getDiscountCardInfo("Animal", "String")+"</html>");
             jLabel23.setText(cnn.getDiscountCardInfo("Notes", "String"));
-            jLabel24.setText("тел. "+cnn.getDiscountCardInfo("Phone", "String"));
+            jLabel24.setText("тел. "+cnn.getDiscountCardInfo("Phone1", "String"));
             jLabel25t.setText("Дата выдачи карты:");
             jLabel26t.setText("Дата аннулирования:");
             jLabel27t.setText("Накопительная сумма:");
@@ -122,8 +123,6 @@ public class FrmCardDiscount extends javax.swing.JDialog {
             jTextField32.setText(bdSumDiscount.setScale(2, RoundingMode.HALF_UP).toPlainString());
             jTextField33.setText(bdSumBase.subtract(bdSumDiscount).setScale(2, RoundingMode.HALF_UP).toPlainString());
             
-            pack();
-            setLocationRelativeTo(null);
 			blDiscountCardFuture = true;
             
 			if (jLabel25.getText().equals("")) {
@@ -141,6 +140,8 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 					jButtonOK.requestFocus();
 				}
 			}
+			pack();
+			setLocationRelativeTo(null);
 			String pod = cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal");
 			BigDecimal bgpod = new BigDecimal(pod);
 			if (barCode.startsWith("22") && bgpod.compareTo(new BigDecimal("3")) >= 0) {
@@ -156,6 +157,8 @@ public class FrmCardDiscount extends javax.swing.JDialog {
             jTextField1.requestFocus();
             DialogBoxs.viewMessage("Не найдена карта с штрих-кодом: ".concat(barCode));
         }
+		pack();
+		setLocationRelativeTo(null);
     }
 
     private List<Component> getAllComponents(final Container c) {
@@ -208,6 +211,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
                         }
                     }
 					if (e.getSource() == jTextField1) {
+//barCode = "9800000037621";
 						if (!barCode.equals("") && blDiscountCardFuture == false) {
 							jTextField1.setText(barCode);
 							requery();

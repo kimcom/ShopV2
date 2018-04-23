@@ -117,6 +117,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //jTextField1.setText("2200000191847");
 //jTextField1.setText("2200000363497");
 //jTextField1.setText("200136");
+//jTextField1.setText("9800000037621");
+//jTextField1.setText("9800001963332");
 //barCode = jTextField1.getText();
 //requery();
 
@@ -180,6 +182,11 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, "Вы не указали процент скидки!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		if (jTableAnimals.getRowCount()==0) {
+			JOptionPane.showMessageDialog(this, "Вы не указали питомца!\n\nС 23.02.2018 года - согласно указанию руководства,\n\nнеобходимо обязательно указывать питомца!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		BigDecimal bdSumma = new BigDecimal(jTextFieldSumma.getText());
 		String action = "card_attr_new";
 		String cardID = strBarCode;
