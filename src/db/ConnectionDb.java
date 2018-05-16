@@ -398,6 +398,7 @@ public final class ConnectionDb{
         try {
             if (fieldName.equals("")) return "";
             String strResult = "";
+			//System.out.println("fieldName:"+fieldName+"	typeValue:"+typeValue);
             if (resCardInfo.absolute(1)) {
                 if(typeValue.equals("String")) {
                     strResult = resCardInfo.getString(fieldName);
@@ -412,6 +413,7 @@ public final class ConnectionDb{
                         strResult = resCardInfo.getString(fieldName).toString();
                 }
             }
+			//System.out.println("strResult:"+strResult);
             return strResult;
         } catch (SQLException e) {
             MyUtil.errorToLog(this.getClass().getName(),e);

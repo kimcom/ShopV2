@@ -32,6 +32,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 	public boolean blDiscountCardReplace = false;
     public boolean blDisposeStatus = false;
     public String  strBarCode;
+	public boolean blDiscountCardEdit = false;
 	private int iStatus;
 
     public FrmCardDiscount(int _iStatus) {
@@ -72,17 +73,21 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 //jTextField1.setText("9800000000960");
 //jTextField1.setText("9800000929285");
 //jTextField1.setText("200136");
-jTextField1.setText("9800000037621");
-barCode = jTextField1.getText();
-requery();
+//jTextField1.setText("9800000037621");
+//jTextField1.setText("9800001006176");
+//barCode = jTextField1.getText();
+//requery();
     }
 
     private void jButtonOKActionPerformed(){
-        blDisposeStatus = true;
+		if (!blDiscountCardEdit) {
+			blDisposeStatus = true;
+		}
         strBarCode = jTextField1.getText();
         dispose();
     }
     private void jButtonExitActionPerformed() {
+		blDiscountCardEdit = false;
         dispose();
     }
     private void requery(){
@@ -153,6 +158,33 @@ requery();
 					return;
 				}
 			}
+			if (cnn.getDiscountCardInfo("AnimalLen", "String").equals("0")) {
+				//System.out.println("AnimalLen:" + cnn.getDiscountCardInfo("AnimalLen", "String"));
+				blDiscountCardEdit = true;
+				final FrmCardAttribute frmCardAttribute;
+				frmCardAttribute = new FrmCardAttribute(2, barCode);
+				frmCardAttribute.setModal(true);
+				frmCardAttribute.setVisible(true);
+				if (frmCardAttribute.blDisposeStatus) {
+					//System.out.println("закрыли frmCardAttribute");
+					if (cnn == null) return;
+					requery();
+					if (!cnn.getDiscountCardInfo("AnimalLen", "String").equals("0")){
+						//System.out.println("животные установлены.");
+						blDiscountCardEdit = false;
+						blDisposeStatus = true;
+						strBarCode = jTextField1.getText();
+						dispose();
+					}
+				}
+//				strBarCode = barCode;
+//				dispose();
+					pack();
+					setLocationRelativeTo(null);
+					return;
+				} else {
+					blDiscountCardEdit = false;
+				}
         } else {
             jTextField1.requestFocus();
             DialogBoxs.viewMessage("Не найдена карта с штрих-кодом: ".concat(barCode));
@@ -194,8 +226,8 @@ requery();
  //jTextField1.setText("9800000436639");
  break;
  /**/
-//jTextField1.setText("2200000000007");
-//barCode = "2200000000007";
+jTextField1.setText("9800001006176");
+barCode = "9800001006176";
 			switch (keyCode) {
                 case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {

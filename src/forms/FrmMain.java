@@ -449,6 +449,7 @@ public class FrmMain extends javax.swing.JFrame {
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
 //		jButtonDelivery.setVisible(false);
+
 //		FrmStickerList frmStickerList = new FrmStickerList();
 //		frmStickerList.setModal(true);
 //		frmStickerList.setVisible(true);
@@ -1708,6 +1709,9 @@ public class FrmMain extends javax.swing.JFrame {
 		final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
 		frmCardDiscount.setModal(true);
 		frmCardDiscount.setVisible(true);
+//		System.out.println("frmCardDiscount.blDiscountCardReplace=	"+frmCardDiscount.blDiscountCardReplace);
+//		System.out.println("frmCardDiscount.blDisposeStatus=		"+frmCardDiscount.blDisposeStatus);
+//		System.out.println("frmCardDiscount.blDiscountCardEdit=		"+frmCardDiscount.blDiscountCardEdit);
 		if (frmCardDiscount.blDiscountCardReplace) {
 			if (!checkCnnStatus()) return;
 			cnn = ConnectionDb.getInstance();
@@ -1724,6 +1728,8 @@ public class FrmMain extends javax.swing.JFrame {
 				//blDiscountCardFuture = true;
 				requery();
 			}
+		} else if (frmCardDiscount.blDiscountCardEdit) {
+			JOptionPane.showMessageDialog(this, "Требуется ввести питомцев!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 		} else {
 			DialogBoxs.viewMessage("Скидка не назначена!");
 		}

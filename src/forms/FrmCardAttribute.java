@@ -25,6 +25,7 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -70,7 +71,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 //		jComboBox1.setEnabled(iStatus != 0);
 //		jComboBox1.setEditable(iStatus != 0);
 //		jComboBox1.setFocusable(iStatus != 0);
-		
+
 		jLabel32.setVisible(false);
 		jTextField32.setVisible(false);
 		jLabel33.setVisible(false);
@@ -128,6 +129,16 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		final JTextField textfield = (JTextField) jComboBox3.getEditor().getEditorComponent();
 		textfield.addKeyListener(new BreedKeyListener());
 		
+		if (iStatus == 2 && !parentCardID.equals("")) {
+			//DialogBoxs.viewMessage("Требуется ввести питомцев!");
+			JOptionPane.showMessageDialog(this, "Требуется ввести питомцев!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+			jTextField1.setText(parentCardID);
+			barCode = jTextField1.getText();
+			strBarCode = barCode;
+			parentCardID = "";
+			_parentCardID = "";
+			requery();
+		}
     }
 
 	private class BreedKeyListener extends KeyAdapter {
@@ -299,6 +310,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			jButtonAnimalAdd.setVisible(true);
 			jButtonAnimalDel.setVisible(true);
 			jTextFieldNotes.requestFocus();
+			blDisposeStatus = true;
 		} else {
 			JOptionPane.showMessageDialog(this, "Ошибка при записи информации о питомце!\n\nВозможно Вы уже добавили такого питомца.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 		}
@@ -349,6 +361,11 @@ public class FrmCardAttribute extends javax.swing.JDialog {
             jFormattedTextFieldPhone2.setText(cnn.getDiscountCardInfo("Phone2", "String"));
             jTextFieldEmail.setText(cnn.getDiscountCardInfo("Email", "String"));
             jTextFieldNotes.setText(cnn.getDiscountCardInfo("Notes", "String"));
+			if (iStatus==2) {
+				jScrollPaneAnimals.setToolTipText(cnn.getDiscountCardInfo("AnimalOld", "String"));
+				jButtonAnimalAdd.setToolTipText(cnn.getDiscountCardInfo("AnimalOld", "String"));
+			}
+			jTextFieldNotes.setToolTipText(cnn.getDiscountCardInfo("AnimalOld", "String"));
             jLabel25t.setText("Дата выдачи карты:");
             jLabel26t.setText("Дата аннулирования:");
             jLabel26.setText(cnn.getDiscountCardInfo("DateOfCancellation", "DateTime"));
@@ -1089,6 +1106,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 
             }
         ));
+        jTableAnimals.setToolTipText("");
         jScrollPaneAnimals.setViewportView(jTableAnimals);
 
         jButtonAnimalAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/Add-icon.png"))); // NOI18N
@@ -1163,8 +1181,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                             .addComponent(jTextFieldFamily, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldMiddleName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, 0))
+                            .addComponent(jTextFieldAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldAddress, jTextFieldEmail, jTextFieldFamily, jTextFieldNotes});
