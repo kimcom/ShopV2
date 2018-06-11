@@ -431,6 +431,7 @@ public class FrmMain extends javax.swing.JFrame {
 		cnn = ConnectionDb.getInstance();
 		if (cnn != null) cnn.setAppVersion();
 		if (cnn.checkCardID!=null && cnn.returnID==null && cnn.returnIDFiscalNumber==null) blDiscountCardFuture = true;
+		if (cnn.checkFlagDelivery) blDiscountCardFuture = cnn.checkFlagDelivery;
         requery();
 		
 		setVisible(jButtonCheckCopy, false);
@@ -449,13 +450,7 @@ public class FrmMain extends javax.swing.JFrame {
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
 //		jButtonDelivery.setVisible(false);
-
-//		FrmStickerList frmStickerList = new FrmStickerList();
-//		frmStickerList.setModal(true);
-//		frmStickerList.setVisible(true);
-//		ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("1.2009"));
-//		reportPrice.setModal(true);
-//		reportPrice.setVisible(true);
+//		jButtonDeliveryActionPerformed();
     }
 
     @SuppressWarnings("unchecked")
@@ -1864,6 +1859,12 @@ public class FrmMain extends javax.swing.JFrame {
 		if (!checkCnnStatus()) return;
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
+		if (cnn.checkIsBlank()) {
+			DialogBoxs.viewMessage("Сначала необходимо ввести товары!");
+			return;
+		}
+		if (!checkPromo("Проверте скидки и снова нажмите печать!", false)) return;
+		
 		final FrmDelivery frmDelivery = new FrmDelivery(cnn.checkCardID);
 		frmDelivery.setModal(true);
 		frmDelivery.setVisible(true);
@@ -1871,9 +1872,13 @@ public class FrmMain extends javax.swing.JFrame {
 			return;
 		}
 		if (frmDelivery.blDisposeStatus == true) {
-			//if (!cnn.assignSellerByID(0, 0)) {
+			if (!cnn.deliveryInfo(frmDelivery.responce)) {
 				JOptionPane.showMessageDialog(null, "Возникла ошибка при оформлении доставки товара.\nСообщите разработчику.", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/png/exit.png")));
-			//}
+			}
+			if (cnn.checkFlagDelivery) blDiscountCardFuture = cnn.checkFlagDelivery;
+			requery();
+		}else{
+			if (cnn.checkFlagDelivery) blDiscountCardFuture = cnn.checkFlagDelivery;
 			requery();
 		}
 	}

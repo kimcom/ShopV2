@@ -12,7 +12,11 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
+import reports.ReportPricePlank;
 import reports.ReportPricePlankA4;
+import reports.ReportPricePlankClub;
+import reports.ReportPriceSticker;
+import reports.ReportPriceStickerClub;
 
 public class ShopMain {
 
@@ -89,11 +93,6 @@ public class ShopMain {
 				}
 				System.out.println(mid);
 */						
-//				ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(new BigDecimal("943.1453"),2,65);
-//				ReportPricePlankClub reportPrice = new ReportPricePlankClub(new BigDecimal("943.1453"),2);
-//				reportPrice.setModal(true);
-//				reportPrice.setVisible(true);
-//				if (1 == 1) System.exit(0);
 
 //				ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("6.1453"));
 //				reportPrice.setModal(true);
@@ -143,6 +142,14 @@ public class ShopMain {
 //						if (1 == 1) System.exit(0);
 
 //						ReportPricePlankA4 reportPrice = new ReportPricePlankA4(new BigDecimal("46.1000"), 9);
+//						reportPrice.setModal(true);
+//						reportPrice.setVisible(true);
+//						if (1 == 1) System.exit(0);
+
+						//ReportPriceSticker reportPrice = new ReportPriceSticker(new BigDecimal("3541.1453"),10,65);
+						//ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(new BigDecimal("3541.1453"),10,65);
+						//ReportPricePlankClub reportPrice = new ReportPricePlankClub(new BigDecimal("3541.1453"),11);
+						//ReportPricePlankA4 reportPrice = new ReportPricePlankA4(new BigDecimal("3541.1453"),9);
 //						reportPrice.setModal(true);
 //						reportPrice.setVisible(true);
 //						if (1 == 1) System.exit(0);

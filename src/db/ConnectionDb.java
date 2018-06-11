@@ -38,10 +38,13 @@ public final class ConnectionDb{
     public String               checkCardKlassID;
     public BigDecimal           checkSumBase;
     public BigDecimal           checkSumDiscount;
+    public BigDecimal           checkSumDelivery;
     public BigDecimal           checkSum;
+    public boolean				checkFlagDelivery = false;
     //public sql.Date				checkDT_close;
     private ResultSet           resClientInfo;
     private ResultSet           resCardInfo;
+    private ResultSet           resDeliveryInfo;
     private ResultSet           resPromoInfo;
     private ResultSet           resOrderInfo;
     private ResultSet           resStickerInfo;
@@ -947,7 +950,9 @@ public final class ConnectionDb{
 				checkCardKlassID	= res.getString("checkCardKlassID");
                 checkSumBase        = res.getBigDecimal("SumBase").setScale(2);
                 checkSumDiscount    = res.getBigDecimal("SumDiscount").setScale(2);
+				checkSumDelivery    = res.getBigDecimal("SumDelivery").setScale(2);
                 checkSum            = res.getBigDecimal("Sum").setScale(2);
+				checkFlagDelivery   = res.getBoolean("FlagDelivery");
             }
             return true;
         } catch (SQLException e) {
@@ -1197,6 +1202,66 @@ public final class ConnectionDb{
 			MyUtil.errorToLog(this.getClass().getName(), e);
 			DialogBoxs.viewError(e);
 			return null;
+		}
+	}
+	public String getDeliveryInfo(String fieldName, String typeValue) {
+		if (resDeliveryInfo == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getDeliveryInfo: parameter [fieldName] cannot be null!"));
+			return "";
+		}
+		try {
+			if (fieldName.equals("")) {
+				return "";
+			}
+			String strResult = "";
+			//System.out.println("fieldName:"+fieldName+"	typeValue:"+typeValue);
+			if (resDeliveryInfo.absolute(1)) {
+				if (typeValue.equals("String")) {
+					strResult = resDeliveryInfo.getString(fieldName);
+					strResult = (strResult == null) ? "" : strResult;
+				} else if (typeValue.equals("int")) {
+					strResult = Integer.toString(resDeliveryInfo.getInt(fieldName));
+				} else if (typeValue.equals("BigDecimal")) {
+					if (resDeliveryInfo.getBigDecimal(fieldName) != null) {
+						strResult = resDeliveryInfo.getBigDecimal(fieldName).setScale(2, RoundingMode.HALF_UP).toPlainString();
+					}
+				} else if (typeValue.equals("DateTime")) {
+					if (resDeliveryInfo.getDate(fieldName) != null) {
+						strResult = resDeliveryInfo.getString(fieldName).toString();
+					}
+				}
+			}
+			//System.out.println("strResult:"+strResult);
+			return strResult;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
+	public boolean deliveryInfo(String param) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("deliveryInfo: parameter [cnn] cannot be null!"));
+			return false;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_doc_2017(?,?,?)}");
+			cs.setString(1, "action from param");
+			cs.registerOutParameter(2, Types.INTEGER);
+			cs.setString(3, param);
+			if (param.startsWith("action=DeliveryGet")){
+				resDeliveryInfo = cs.executeQuery();
+				resDeliveryInfo.absolute(1);
+				return resDeliveryInfo.getRow() != 0;
+			}else{
+				cs.execute();
+				getCheckInfo(currentCheckID);
+				return true;
+			}
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return false;
 		}
 	}
 	

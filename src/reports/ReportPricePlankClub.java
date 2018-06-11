@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Toolkit;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -136,7 +137,11 @@ public class ReportPricePlankClub extends JDialog{
         initComponents();
         clientInfo();
 		getContentPane().setBackground(new java.awt.Color(255, 255, 255));
-		fillCheck();
+		if (type==11) {
+			fillCheckOldPrice();
+		}else{
+			fillCheckStandart();
+		}
         setLocationRelativeTo(null);
 	}
     private void jButtonPrintAllActionPerformed(){
@@ -158,7 +163,217 @@ public class ReportPricePlankClub extends JDialog{
 		jScrollPane.setViewportView(panel);
 		jTabbedPane.addTab("Страница "+(jTabbedPane.getTabCount()+1), jScrollPane);
 	}
-	private void fillCheck(){
+	class MyJLabel extends JLabel {
+		public void paint(Graphics g) {
+			//System.out.println("paint");
+			super.paint(g);
+			int[] arrayX = { 0,  0, 155, 155};
+			int[] arrayY = {26, 28,  -6,  -8};
+			Polygon poly = new Polygon(arrayX, arrayY, 4);
+			g.setColor(Color.GRAY);
+			g.drawPolygon(poly);
+			g.fillPolygon(poly);
+			g.setColor(Color.WHITE);
+		}
+	}
+	private void fillCheckOldPrice() {
+		cnn = ConnectionDb.getInstance();
+		if (cnn == null) {
+			return;
+		}
+		ResultSet res;
+		if (type == 3) {
+			res = cnn.getStickerReport(currentDocID, "6762");//планки
+		} else {
+			res = cnn.getStickerReport(currentDocID, "%");//планки
+		}
+		String str;
+
+		JPanel jPanelMain = new JPanel(false);
+		jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
+		jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+		jPanelMain.setBorder(null);
+
+		int width_mm = 665, height_mm = 400;
+		int width_out = (int) (width_mm / 10 / 25.4 * PPI_W);
+		int height_out = (int) (height_mm / 10 / 25.4 * PPI_H);
+		int h = height_out / 8;
+		height_out--;
+		int x_out = width_out * 0;
+		int y_out = height_out * 0;
+//		System.out.println("height_out: "+height_out);
+//		System.out.println("width_out: "+width_out);
+		int iQuantity = 0, col_number = 1;
+		int count = 0;
+		try {
+			while (res.next()) {
+				//iQuantity = res.getInt("Quantity");
+				iQuantity = 1;//ценовые планки всегда по 1 штуке
+				for (int q = 1; q <= iQuantity; q++) {
+//System.out.println("bdQuantity=" + Integer.toString(iQuantity) + " " + Integer.toString(q) + " " + res.getString("Name") + "	y_out:" + Integer.toString(y_out)+ "	col:" + Integer.toString(col_number));
+					int x = 0, y = 0, height_label = 0, width_label = 0;
+					int padding_left = 5, padding_right = padding_left + 5;
+					x += padding_left;
+					//int delta_y = (width_out - padding_right) / 4;
+					
+					JPanel jPanel1 = new javax.swing.JPanel();
+					jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+					jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+					jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+					JLabel jLabel11 = new javax.swing.JLabel();
+					JLabel jLabel12 = new javax.swing.JLabel();
+					//JLabel jLabel13 = new MyJLabel();// перечеркивание
+					JLabel jLabel14 = new javax.swing.JLabel();
+					JLabel jLabel15 = new javax.swing.JLabel();
+					JLabel jLabel16 = new javax.swing.JLabel();
+					//JLabel jLabel16 = new MyJLabel2();// косой
+					JLabel jLabel17 = new javax.swing.JLabel();
+					JLabel jLabel18 = new javax.swing.JLabel();
+					JLabel jLabel19 = new MyJLabel();// перечеркивание
+					JLabel jLabel21 = new javax.swing.JLabel();
+//					JSeparator jSeparator2 = new javax.swing.JSeparator();
+
+					jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // название
+					jLabel12.setFont(new java.awt.Font("Tahoma", 0, 30)); // цена
+					//jLabel13.setFont(new java.awt.Font("Tahoma", 0, 90)); // перечеркивание
+					jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // дата время
+					jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // производитель
+					jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // текст 'стара цiна'
+					jLabel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // кат.наценки
+					jLabel19.setFont(new java.awt.Font("Tahoma", 0, 20)); // цена старая + перечеркивание
+					jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // артикул
+
+					jLabel16.setBackground(new java.awt.Color(128, 128, 128));
+					jLabel16.setForeground(new Color(255, 255, 255));
+					jLabel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(128, 128, 128), 1, true));
+					jLabel16.setOpaque(true);
+
+					jLabel17.setBackground(new java.awt.Color(128, 128, 128));
+					jLabel17.setForeground(new Color(255, 255, 255));
+					jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(128, 128, 128), 1, true));
+					jLabel17.setOpaque(true);
+//рамки для теста
+//					jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 0, 0)));
+//					jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					jLabel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 128, 128)));
+//					//jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					//jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+//					jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+//					jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
+//					jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(128, 0, 128)));
+					//jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 128, 0)));
+					//артикул
+					height_label = (int) (h * 1);
+					str = res.getString("Article");
+					String strMargin = "";
+					if (!res.getString("CatMargin").equals("")) {
+						strMargin = "(" + res.getString("CatMargin") + ")";
+					}
+					jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel21.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel21.setText("<html>" + str + "&nbsp;&nbsp;&nbsp;" + strMargin +"</html>");
+					jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right - 75, height_label));
+
+					//дата время
+					jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel14.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel14.setText("<html>" + MyUtil.getCurrentDate2() + "</html>");
+					jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(width_out - padding_right - 70, y, 75, height_label));
+
+					//производитель
+					y = y + height_label;
+					height_label = (int) (h * 1);
+					str = res.getString("Producer");
+					jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel15.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+					jLabel15.setText("<html><strong>" + str + "</strong></html>");
+					jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
+
+					//название
+					y = y + height_label;
+					height_label = 67;
+					str = res.getString("Name");
+					jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+					jLabel11.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width_out - padding_right, height_label));
+
+					//цена
+					y = y + 67;
+					height_label = h * 2;
+					str = res.getString("Price") + "&nbsp;";
+					jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+					jLabel12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+					jLabel12.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, 150, height_label));
+					
+					//старая цена
+					str = res.getString("PriceOld");
+					jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+					jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+					jLabel19.setText("<html>" + str + "</html>");
+					jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + 150, y, (width_out - padding_right) - 150, height_label - 10));
+
+					//текст "стара Ціна"
+					y = y + height_label - 10;
+					height_label = h;
+					jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel16.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+					jLabel16.setText("<html>стара цiна</html>");
+					jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(x + 150, y, (width_out - padding_right) - 145, height_label + 1));
+
+					jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(x_out, y_out, width_out, height_out));
+					count++;
+					x_out = width_out * col_number;
+					col_number++;
+					if (col_number > 3) {
+						col_number = 1;
+						x_out = 0;
+						y_out += height_out;
+					}
+					if (q >= iQuantity) {
+						break;
+					}
+					if (count > 20) {
+						addTabPane(jPanelMain);
+						jPanelMain = new JPanel(false);
+						jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
+						jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+						jPanelMain.setBorder(null);
+						count = 0;
+						x_out = 0;
+						y_out = 0;
+						col_number = 1;
+					}
+				}
+				if (count > 20) {
+					addTabPane(jPanelMain);
+					jPanelMain = new JPanel(false);
+					jPanelMain.setBackground(new java.awt.Color(255, 255, 255));
+					jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+					jPanelMain.setBorder(null);
+					count = 0;
+					x_out = 0;
+					y_out = 0;
+					col_number = 1;
+				}
+			}
+		} catch (SQLException ex) {
+			MyUtil.errorToLog(this.getClass().getName(), ex);
+		}
+		if (jPanelMain.getComponentCount() > 0) {
+			addTabPane(jPanelMain);
+		}
+		pack();
+		if (jTabbedPane.getComponentCount() > 0) {
+			Component c = jTabbedPane.getComponent(0);
+			//System.out.println("getY:"+c.getY()+" "+c.getClass().getCanonicalName());
+			setSize(new Dimension(getWidth(), height_out * 3 + c.getY() + 55));
+			jPanelMenu.setPreferredSize(new Dimension(getWidth() - 8, jPanelMenu.getHeight()));
+		}
+	}
+	private void fillCheckStandart(){
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;
 		ResultSet res;
