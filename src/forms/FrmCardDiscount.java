@@ -75,6 +75,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 //jTextField1.setText("200136");
 //jTextField1.setText("9800000037621");
 //jTextField1.setText("9800001006176");
+//jTextField1.setText("9800001809388");
 //barCode = jTextField1.getText();
 //requery();
     }
@@ -226,8 +227,9 @@ public class FrmCardDiscount extends javax.swing.JDialog {
  //jTextField1.setText("9800000436639");
  break;
  /**/
-jTextField1.setText("9800001006176");
-barCode = "9800001006176";
+//barCode = "9800001006176";
+//barCode = "9800001809388";
+//jTextField1.setText(barCode);
 			switch (keyCode) {
                 case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {

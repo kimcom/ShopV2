@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
@@ -31,8 +33,8 @@ public class Loader {
 			PORT = PORTmain;
 		}
 		if (!isProgramRunning()) {
-//			System.out.println("start form");
 		} else {
+			System.out.println("Program "+(ShopMain.startAdmin?"ShopV2-Main":"ShopV2-Admin")+" is running!");
 			System.exit(0);
 		}
 	}
@@ -69,16 +71,25 @@ public class Loader {
 		return false;
 	}
 
-	public static void serverSocketListener() {  // Server socket
+	public static void serverSocketListener() {  
+		//Server socket
 		//System.out.println("serverSocketListener");
+//		try {
+////			MyUtil.messageToLog("Loader", "server Listener:"+socket.getInputStream().toString());
+//		} catch (IOException ex) {
+//			//MyUtil.errorToLog("Loader", ex);
+//			//return;
+//		}
 		try {
 			while (true) {
 				//System.out.println("Listener socket!");
 				socket = serverSocket.accept();
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String input;
+				//MyUtil.messageToLog("serverSocketListener", "status read ok!");
 				while ((input = in.readLine()) != null) {
 					//System.out.println(input);
+					//MyUtil.messageToLog("Loader receive:", input);
 					//MyUtil.messageToLog("Loader", input);
 					if (input.equalsIgnoreCase(exitProgram)) {
 						//break;
@@ -95,6 +106,8 @@ public class Loader {
 							ShopMain.frmMain.setState(JFrame.NORMAL);
 							ShopMain.frmMain.toFront();
 						}
+//					}else{
+//						MyUtil.messageToLog("Loader receive:", input);
 					}
 				}
 				//System.out.println("no input line");
@@ -107,6 +120,7 @@ public class Loader {
 
 	public static boolean clientSocketListener(int port, String command) {  // Client socket
 		try {
+			//MyUtil.messageToLog("Loader port:", port+"	command:"+command);
 			socket = new Socket(InetAddress.getByAddress(new byte[]{127, 0, 0, 1}), port);
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			out.println(command);

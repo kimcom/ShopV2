@@ -152,6 +152,7 @@
                               <Component id="jLabel30" linkSize="7" alignment="0" pref="89" max="32767" attributes="0"/>
                               <Component id="jLabel34" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel35" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel42" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -163,7 +164,7 @@
                                       <Component id="jButtonAnimalDel" min="-2" pref="105" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jTextFieldEmail" linkSize="5" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
+                              <Component id="jTextFieldEmail" linkSize="5" alignment="0" pref="426" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                   <Component id="jComboBox1" min="-2" pref="100" max="-2" attributes="0"/>
@@ -179,11 +180,12 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jFormattedTextFieldPhone2" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jTextFieldNotes" linkSize="5" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
-                              <Component id="jTextFieldFamily" linkSize="5" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
-                              <Component id="jTextFieldName" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMiddleName" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
-                              <Component id="jTextFieldAddress" linkSize="5" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
+                              <Component id="jTextFieldNotes" linkSize="5" alignment="0" pref="426" max="32767" attributes="0"/>
+                              <Component id="jTextFieldFamily" linkSize="5" alignment="0" pref="426" max="32767" attributes="0"/>
+                              <Component id="jTextFieldName" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTextFieldMiddleName" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTextFieldAddress" linkSize="5" alignment="0" pref="426" max="32767" attributes="0"/>
+                              <Component id="jComboBox4" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -240,6 +242,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextFieldNotes" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jLabel30" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel42" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="jComboBox4" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
@@ -987,6 +994,42 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnimalDelActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel42">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="3"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="&#x423;&#x437;&#x43d;&#x430;&#x43b;&#x438; &#x43e; &#x43d;&#x430;&#x441;:"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[41, 17]"/>
+            </Property>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
+            <Property name="maximumRowCount" type="int" value="10"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

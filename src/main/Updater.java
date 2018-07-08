@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Updater implements Runnable {
@@ -103,7 +105,10 @@ public class Updater implements Runnable {
 			  + "Обновить программу сейчас?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (i == 0) {
 			try {
+				//MyUtil.messageToLog("Loader", "send to port:" + Loader.PORTadmin + "	command:" + Loader.exitProgram);
 				Loader.clientSocketListener(Loader.PORTadmin, Loader.exitProgram);
+				//MyUtil.messageToLog("Loader", "send to port:" + Loader.PORTmain + "	command:" + Loader.exitProgram);
+				Loader.clientSocketListener(Loader.PORTmain, Loader.exitProgram);
 				Runtime.getRuntime().exec("java -jar update/update.jar");
 				System.exit(0);
 			} catch (IOException ex) {

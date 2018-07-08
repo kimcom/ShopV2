@@ -449,8 +449,8 @@ public class FrmMain extends javax.swing.JFrame {
 		//уст. русской раскладки для клавиатуры
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
-//		jButtonDelivery.setVisible(false);
-//		jButtonDeliveryActionPerformed();
+		//jButtonDelivery.setVisible(false);
+		//jButtonDeliveryActionPerformed();
     }
 
     @SuppressWarnings("unchecked")
@@ -1856,6 +1856,10 @@ public class FrmMain extends javax.swing.JFrame {
 		}
 	}
 	private void jButtonDeliveryActionPerformed() {
+		
+//		Loader.clientSocketListener(Loader.PORTadmin, "test send packet!");
+//		if(1==1)return;
+		
 		if (!checkCnnStatus()) return;
 		cnn = ConnectionDb.getInstance();
 		if (cnn == null) return;

@@ -487,13 +487,31 @@ public final class ConnectionDb{
 			return null;
 		}
 	}
+	public ResultSet getDiscountInfoTable() {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getDiscountInfoTable: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		try {
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "info_discount");
+			cs.setString(2, "");
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
     public boolean setDiscountCardAttribute(String action, String strCardID, 
 											String strFamily, String strName, String strMiddleName,
                                             String strAddress, String strPhone1, String strPhone2,
                                             String strEmail, String strAnimalType, String strAnimalBreed, String strNotes,
                                             String dtDateOfIssue, BigDecimal bdPercentOfDiscount, 
                                             BigDecimal bdAmountOfBuying, String dtDateOfCancellation,
-                                            String strHowWeLearn, String parentCardID) {
+                                            String sourceInfoID, String parentCardID) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("setDiscountCardAttribute: parameter [cnn] cannot be null!"));
 			return false;
@@ -520,7 +538,7 @@ public final class ConnectionDb{
 			cs.setBigDecimal(15, bdAmountOfBuying);
             cs.setString(16, dtDateOfCancellation);
             cs.setString(17, Integer.toString(clientID));
-            cs.setString(18, strHowWeLearn);
+            cs.setString(18, sourceInfoID);
             cs.setString(19, parentCardID);
             cs.registerOutParameter(20, Types.DOUBLE);
             cs.execute();
