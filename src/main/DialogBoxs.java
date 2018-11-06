@@ -20,14 +20,26 @@ public class DialogBoxs {
         JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void viewMessage(String msg) {
-        JOptionPane.showMessageDialog(new JFrame(), msg, "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+    public static void viewMessage(String msg, Component obj) {
+		if (obj.equals(null)) obj = new JFrame();
+        JOptionPane.showMessageDialog(obj, msg, "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
     }
+	public static void viewMessage(String msg) {
+		JOptionPane.showMessageDialog(new JFrame(), msg, "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+	}
     
-    public static void viewMessageWarning(String msg) {
-        JOptionPane.showMessageDialog(new JFrame(), msg, "ВНИМАНИЕ!", JOptionPane.WARNING_MESSAGE);
+    public static void viewMessageWarning(String msg, Component obj) {
+		if (obj.equals(null)) obj = new JFrame();
+        JOptionPane.showMessageDialog(obj, msg, "ВНИМАНИЕ!", JOptionPane.WARNING_MESSAGE);
     }
+	public static void viewMessageWarning(String msg) {
+		JOptionPane.showMessageDialog(new JFrame(), msg, "ВНИМАНИЕ!", JOptionPane.WARNING_MESSAGE);
+	}
     
+    public static void viewMessageError(String msg, Component obj) {
+        if (obj.equals(null)) obj = new JFrame();
+		JOptionPane.showMessageDialog(obj, msg, "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
+    }
     public static void viewMessageError(String msg) {
         JOptionPane.showMessageDialog(new JFrame(), msg, "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
     }

@@ -449,8 +449,10 @@ public class FrmMain extends javax.swing.JFrame {
 		//уст. русской раскладки для клавиатуры
 		this.getInputContext().selectInputMethod(new Locale("ru", "RU"));
 
-		//jButtonDelivery.setVisible(false);
-		//jButtonDeliveryActionPerformed();
+		if (!cnn.getClientInfo("VER_1C").equals("SHOP")){
+			jButtonDelivery.setVisible(false);
+			//jButtonDeliveryActionPerformed();
+		}
     }
 
     @SuppressWarnings("unchecked")
@@ -1254,29 +1256,35 @@ public class FrmMain extends javax.swing.JFrame {
 			jButtonSellerActionPerformed(-1);
 			return;
 		}
-		if (conf.MARKET_ID == 6958) {//только для Харьков 23 августа
-			//if (cnn.checkCardKlassID.equals("")){
-				final FrmCardKlass frmCardKlass = new FrmCardKlass(cnn.checkCardKlassID);
-				frmCardKlass.setModal(true);
-				frmCardKlass.setVisible(true);
-				if (frmCardKlass.blDisposeStatus) {
-					cnn = ConnectionDb.getInstance();
-					//cnn.checkCardKlassID = frmCardKlass.strBarCode;
-					if (cnn == null) return;
-					if (!cnn.setCheckKlassCard(frmCardKlass.strBarCode)) {
-						DialogBoxs.viewMessage("Ошибка при регистрации карты супермаркета!");
-					}
-					if (cnn.checkCardKlassID.length() == 0) {
-						DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!!!");
-					}
- 				} else {
-					DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!");
-				}
-			//}
-			//System.out.println("checkCardKlassID:"+cnn.checkCardKlassID);
-			//return;
-		}
 		
+		//if (1==1) {
+		if (conf.MARKET_ID == 6958 || conf.MARKET_ID == 7315 || conf.MARKET_ID == 1000) {//только для Харьков 23 августа и Харьков Класс на Алексеевке
+			final FrmCardKlass frmCardKlass = new FrmCardKlass(cnn.checkCardKlassID);
+			frmCardKlass.setModal(true);
+			frmCardKlass.setVisible(true);
+			if (frmCardKlass.blDisposeStatus) {
+MyUtil.messageToLog("klass_card", "пытаемся записать карту: " + frmCardKlass.strBarCode + " для чека номер: "+cnn.currentCheckID);
+				cnn = ConnectionDb.getInstance();
+				//cnn.checkCardKlassID = frmCardKlass.strBarCode;
+				if (cnn == null) return;
+//DialogBoxs.viewMessage("Klass card:"+frmCardKlass.strBarCode);
+				if (!cnn.setCheckKlassCard(frmCardKlass.strBarCode)) {
+MyUtil.messageToLog("klass_card", "ошибка при записи карты: " + frmCardKlass.strBarCode + " для чека номер: " + cnn.currentCheckID);
+					DialogBoxs.viewMessage("Ошибка при регистрации карты супермаркета!");
+					return;
+				}
+MyUtil.messageToLog("klass_card", "успешно записана карта: " + frmCardKlass.strBarCode + " для чека номер: " + cnn.currentCheckID);
+				
+//				if (frmCardKlass.strBarCode.length() > 0 && cnn.checkCardKlassID.length() == 0) {
+//					DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!!!");
+//					return;
+//				}
+//			} else {
+//				DialogBoxs.viewMessage("Карта супермаркета не зарегистрирована!");
+//				return;
+			}
+		}
+//		if(1==1) return;
 		
 		if(conf.EKKA_TYPE==2){//если и нал и безнал проводим через РРО
 			if (cnn.returnID == null && cnn.returnIDFiscalNumber == null) {
@@ -1701,12 +1709,13 @@ public class FrmMain extends javax.swing.JFrame {
 		
 		if (!checkPromo("Проверте скидки, после этого можете ввести дисконтную карту!", false)) return;
 		
-		final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
+		final FrmCardDiscountForgot frmCardDiscount = new FrmCardDiscountForgot(0);//2 - временно, исправить на 0
+		//final FrmCardDiscount frmCardDiscount = new FrmCardDiscount(0);//2 - временно, исправить на 0
 		frmCardDiscount.setModal(true);
 		frmCardDiscount.setVisible(true);
-//		System.out.println("frmCardDiscount.blDiscountCardReplace=	"+frmCardDiscount.blDiscountCardReplace);
-//		System.out.println("frmCardDiscount.blDisposeStatus=		"+frmCardDiscount.blDisposeStatus);
-//		System.out.println("frmCardDiscount.blDiscountCardEdit=		"+frmCardDiscount.blDiscountCardEdit);
+//System.out.println("frmCardDiscount.blDiscountCardReplace=	"+frmCardDiscount.blDiscountCardReplace);
+//System.out.println("frmCardDiscount.blDisposeStatus=		"+frmCardDiscount.blDisposeStatus);
+//System.out.println("frmCardDiscount.blDiscountCardEdit=		"+frmCardDiscount.blDiscountCardEdit);
 		if (frmCardDiscount.blDiscountCardReplace) {
 			if (!checkCnnStatus()) return;
 			cnn = ConnectionDb.getInstance();

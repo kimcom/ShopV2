@@ -1,4 +1,10 @@
-18.04.18_1607
+18.09.12_0056
+;18.09.11_0230
+;18.09.10_1310
+;18.08.21_1935
+;18.08.17_0903
+;18.06.25_1655
+;18.04.18_1607
 ;25.11.06_0001
 ;17.11.06_2040
 ;17.09.22_1039
@@ -10,8 +16,8 @@ ShopV2.jar
 ;dir:update/res
 ;res/logo.ico
 
-dir:update/java
-java/jre-8u144-windows-i586.exe 
+;dir:update/java
+;java/jre-8u144-windows-i586.exe 
 
 ;dir:update/lib
 ;lib/barcode4j.jar

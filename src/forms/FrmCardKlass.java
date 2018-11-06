@@ -34,7 +34,7 @@ public class FrmCardKlass extends javax.swing.JDialog {
 		setTitle("Карта супермаркета 'Класс'. " + conf.FORM_TITLE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
 		strBarCode = _checkCardKlassID;
-		//jTextField1.setText(strBarCode);
+		jTextField1.setEditable(false);
 		jTextField1.addFocusListener(new MyUtil.MyTextFocusListener());
 		jTextField1.setText("Просканируйте карту супермаркета");
 		jTextField33.setText(cnn.currentCheckID.setScale(4, RoundingMode.HALF_UP).toPlainString());
@@ -54,7 +54,16 @@ public class FrmCardKlass extends javax.swing.JDialog {
 		dispose();
 	}
 	private void jButtonExitActionPerformed() {
+//		strBarCode = jTextField1.getText();
+//		if (jTextField1.getText().length() > 0){
+//			blDisposeStatus = true;
+//		}
 		dispose();
+	}
+	private void requery(){
+		blDiscountCardFuture = true;
+		jButtonOK.setEnabled(true);
+		jButtonOK.requestFocus();
 	}
 
 	private List<Component> getAllComponents(final Container c) {
@@ -80,14 +89,16 @@ public class FrmCardKlass extends javax.swing.JDialog {
 		private KeyEvent keyOverride(KeyEvent e) {
 			String objCanonicalName = e.getSource().getClass().getCanonicalName();
 			int keyCode = e.getKeyCode();
+//MyUtil.messageToLog("klass_card", ""+objCanonicalName+"	keyCode:"+Integer.toString(keyCode)+"	barCode:"+barCode);
 			switch (keyCode) {
 				case KeyEvent.VK_ENTER:    // штрих-код
+//barCode = "DA341120";
+//jTextField1.setText(barCode);
+//requery();
+//System.out.println("barCode:" + barCode);
 					if (e.getModifiers() != 0) {
 						break;
 					}
-//					if (iStatus == 2) {
-//						barCode = jTextField1.getText();
-//					}
 					if (objCanonicalName.endsWith("Field")) {
 						if (!barCode.equals("")) {
 							JTextField tf = (JTextField) e.getSource();
@@ -95,16 +106,16 @@ public class FrmCardKlass extends javax.swing.JDialog {
 						}
 					}
 					if (e.getSource() == jTextField1) {
-						//barCode = "200001";
+//barCode = "DA341120";
 						if (!barCode.equals("") && blDiscountCardFuture == false) {
-							blDiscountCardFuture = true;
-							//DialogBoxs.viewMessage("Карта КЛАССА: "+barCode);
+MyUtil.messageToLog("klass_card", "" + objCanonicalName + "	keyCode:" + Integer.toString(keyCode) + "	barCode:" + barCode);
 							jTextField1.setText(barCode);
-							jButtonOK.setEnabled(true);
-							jButtonOK.requestFocus();
+							requery();
 							barCode = "";
-							jButtonOKActionPerformed();
 							break;
+						} else {
+							JTextField tf = (JTextField) e.getSource();
+							tf.transferFocus();
 						}
 					}
 					if (e.getSource() == jButtonOK) {
@@ -147,29 +158,21 @@ public class FrmCardKlass extends javax.swing.JDialog {
 					jButtonExitActionPerformed();
 					break;
 				default:
-					if (blDiscountCardFuture) {
-						break;
-					}
-//					if ((keyCode > 47 && keyCode < 58) || (keyCode > 95 && keyCode < 106)) {
-//						if (iStatus != 2) {
-//							try {
-//								long newtimeBarCode = new Date().getTime();
-//								if (timeBarCode + 100 < newtimeBarCode) {
-//									barCode = "";
-//								}
-//								timeBarCode = new Date().getTime();
-//							} catch (NoSuchMethodError ex) {
-//								DialogBoxs.viewMessage(ex.getMessage());
-//							}
-//						}
-//						barCode = barCode.concat(Character.toString(e.getKeyChar()));
-//					}
-					if ((keyCode > 47 && keyCode < 58) || (keyCode > 95 && keyCode < 106) || (keyCode >= 65 && keyCode <= 90)) {
+					if (blDiscountCardFuture) break;
+					//if ((keyCode > 47 && keyCode < 58) || (keyCode > 95 && keyCode < 106)) {
+					if (keyCode >= 33 && keyCode <= 255) {
+						try {
+							long newtimeBarCode = new Date().getTime();
+							if (timeBarCode + 100 < newtimeBarCode) {
+								barCode = "";
+							}
+							timeBarCode = new Date().getTime();
+						} catch (NoSuchMethodError ex) {
+							DialogBoxs.viewMessage(ex.getMessage());
+						}
 						barCode = barCode.concat(Character.toString(e.getKeyChar()));
-						//System.out.println("barCode:"+barCode);
-						jTextField1.setText(barCode);
-						break;
 					}
+					break;
 			}
 			return e;
 		}
@@ -254,14 +257,12 @@ public class FrmCardKlass extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(jTextField34, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField34, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addComponent(jTextField33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -357,6 +358,7 @@ public class FrmCardKlass extends javax.swing.JDialog {
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
         jButtonExitActionPerformed();
     }//GEN-LAST:event_jButtonExitActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonOK;

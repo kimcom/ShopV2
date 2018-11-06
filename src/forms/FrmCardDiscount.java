@@ -4,21 +4,16 @@ import db.ConnectionDb;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.UnsupportedLookAndFeelException;
 import main.ConfigReader;
 import main.DialogBoxs;
 import main.MyUtil;
@@ -41,7 +36,6 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         setTitle("Дисконтная карта. "+conf.FORM_TITLE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/png/logo.png")));
 		iStatus = _iStatus;
-		jTextField1.setEditable(iStatus == 2);
 
 		jLabel32.setVisible(false);
 		jTextField32.setVisible(false);
@@ -61,14 +55,15 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 		//назначение MyKeyListener
         getAllComponents((Container) this.getContentPane());
 
+		jTextField1.setEditable(iStatus == 2);
 		jTextField1.addFocusListener(new MyUtil.MyTextFocusListener());
+		jTextField1.setText("Просканируйте дисконтную карту");
 
         cnn = ConnectionDb.getInstance();
         jTextField31.setText(cnn.checkSumBase.setScale(2, RoundingMode.HALF_UP).toPlainString());
         jTextField32.setText(cnn.checkSumDiscount.setScale(2, RoundingMode.HALF_UP).toPlainString());
         jTextField33.setText(cnn.checkSum.setScale(2, RoundingMode.HALF_UP).toPlainString());
 
-		jTextField1.setText("Просканируйте дисконтную карту");
 
 //jTextField1.setText("9800000000960");
 //jTextField1.setText("9800000929285");
@@ -131,15 +126,21 @@ public class FrmCardDiscount extends javax.swing.JDialog {
             
 			blDiscountCardFuture = true;
             
+			pack();
+			setLocationRelativeTo(null);
+			boolean blBlocked = false;
 			if (jLabel25.getText().equals("")) {
-				DialogBoxs.viewMessage("Дисконтная карта НЕ ВЫДАНА!\nСкидка рассчитана не будет!");
+				blBlocked = true;
+				DialogBoxs.viewMessage("Дисконтная карта НЕ ВЫДАНА!\nСкидка рассчитана не будет!",this);
 				jTextField1.requestFocus();
 			} else if (bdPercent.compareTo(BigDecimal.ZERO)==0) {
-				DialogBoxs.viewMessage("Для дисконтной карты\nустановлен НУЛЕВОЙ ПРОЦЕНТ !\nСкидка рассчитана не будет!");
+				blBlocked = true;
+				DialogBoxs.viewMessage("Для дисконтной карты\nустановлен НУЛЕВОЙ ПРОЦЕНТ !\nСкидка рассчитана не будет!",this);
 				jTextField1.requestFocus();
 			} else {
 				if (!jLabel26.getText().equals("")) {
-					DialogBoxs.viewMessage("Дисконтная карта аннулирована!\nСкидка рассчитана не будет!");
+					blBlocked = true;
+					DialogBoxs.viewMessage("Дисконтная карта аннулирована!\nСкидка рассчитана не будет!", this);
 					jButtonExit.requestFocus();
 				}else{
 					jButtonOK.setEnabled(true);
@@ -150,8 +151,11 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 			setLocationRelativeTo(null);
 			String pod = cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal");
 			BigDecimal bgpod = new BigDecimal(pod);
-			if (barCode.startsWith("22") && bgpod.compareTo(new BigDecimal("3")) >= 0) {
-				int i = JOptionPane.showOptionDialog(this, "Нужно заменить карту!\n\nДиск.карта:" + barCode + "\nтекущая скидка: " + pod + "\n\nВыдать новую карту?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Да", "Нет"}, "Да");
+//картонную карту больше не используем - тех.задание 2018/08/17 изменение дисконтной системы
+			//if (barCode.startsWith("22") && bgpod.compareTo(new BigDecimal("3")) >= 0) {
+			if (barCode.startsWith("22") && !blBlocked) {
+				//int i = JOptionPane.showOptionDialog(this, "Нужно заменить карту!\n\nДиск.карта:" + barCode + "\nтекущая скидка: " + pod + "\n\nВыдать новую карту?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Да", "Нет"}, "Да");
+				int i = JOptionPane.showOptionDialog(this, "Согласно указанию необходимо заменить картонную карту!\n\nДиск.карта:" + barCode + "\nтекущая скидка: " + pod + "\n\nВыдать пластиковую карту?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Да", "Нет"}, "Да");
 				if (i == 0) {
 					strBarCode = barCode;
 					blDiscountCardReplace = true;
@@ -159,6 +163,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 					return;
 				}
 			}
+			
 			if (cnn.getDiscountCardInfo("AnimalLen", "String").equals("0")) {
 				//System.out.println("AnimalLen:" + cnn.getDiscountCardInfo("AnimalLen", "String"));
 				blDiscountCardEdit = true;
@@ -188,7 +193,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 				}
         } else {
             jTextField1.requestFocus();
-            DialogBoxs.viewMessage("Не найдена карта с штрих-кодом: ".concat(barCode));
+            DialogBoxs.viewMessage("Не найдена карта с штрих-кодом: ".concat(barCode), this);
         }
 		pack();
 		setLocationRelativeTo(null);
@@ -219,19 +224,13 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         private KeyEvent keyOverride(KeyEvent e) {
             String objCanonicalName = e.getSource().getClass().getCanonicalName();
             int keyCode = e.getKeyCode();
-/*
- case KeyEvent.VK_NUMPAD0:    // штрих-код
- //jTextField1.setText("9800000000823");
- //jTextField1.setText("9800000000830");
- jTextField1.setText("9800000000151");
- //jTextField1.setText("9800000436639");
- break;
- /**/
-//barCode = "9800001006176";
-//barCode = "9800001809388";
-//jTextField1.setText(barCode);
 			switch (keyCode) {
                 case KeyEvent.VK_ENTER:    // штрих-код
+//barCode = "2200001517950";
+//barCode = "9800000436578";
+//jTextField1.setText(barCode);
+//requery();
+//System.out.println("barCode:" + barCode);
 					if (e.getModifiers() != 0) {
 						break;
 					}
@@ -251,6 +250,9 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 							requery();
 							barCode = "";
 							break;
+						}else{
+							JTextField tf = (JTextField) e.getSource();
+							tf.transferFocus();
 						}
 					}
 					if (e.getSource() == jButtonOK) {
@@ -298,7 +300,9 @@ public class FrmCardDiscount extends javax.swing.JDialog {
 						if (iStatus != 2) {
 							try {
 								long newtimeBarCode = new Date().getTime();
-								if (timeBarCode + 100 < newtimeBarCode) barCode = "";
+								if (timeBarCode + 100 < newtimeBarCode) {
+									barCode = "";
+								}
 								timeBarCode = new Date().getTime();
 							} catch (NoSuchMethodError ex) {
 								DialogBoxs.viewMessage(ex.getMessage());
@@ -312,7 +316,8 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         }
     }
     @SuppressWarnings("unchecked")
-    private void initComponents() {//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
@@ -358,7 +363,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                 .addContainerGap())
@@ -501,29 +506,29 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
+                .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
+                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25t, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel25t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26t, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel26t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27t, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel27t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28t, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel28t, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -671,7 +676,7 @@ public class FrmCardDiscount extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -681,13 +686,14 @@ public class FrmCardDiscount extends javax.swing.JDialog {
         );
 
         pack();
-    }//GEN-END:initComponents
+    }// </editor-fold>//GEN-END:initComponents
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
         jButtonOKActionPerformed();
     }//GEN-LAST:event_jButtonOKActionPerformed
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
         jButtonExitActionPerformed();
     }//GEN-LAST:event_jButtonExitActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonOK;

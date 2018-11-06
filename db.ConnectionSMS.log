@@ -1,0 +1,2137 @@
+сен 06, 2018 9:44:45 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 20 856 965 milliseconds ago.  The last packet sent successfully to the server was 20 857 014 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380669271842','MasterZoo', 'Ваша карта:2200001454347
+Секр. код:2130
+Сообщите его продавцу.',0,0,now();
+сен 07, 2018 11:50:40 AM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 429 249 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380993223975','MasterZoo', 'Ваша карта:9800001582342
+Секр. код:5746
+Сообщите его продавцу.',0,0,now();
+сен 07, 2018 7:29:53 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 27 482 597 milliseconds ago.  The last packet sent successfully to the server was 27 482 647 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380968164363','MasterZoo', 'Ваша карта:9800001056270
+Секр. код:1380
+Сообщите его продавцу.',0,0,now();
+сен 08, 2018 12:49:25 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 820 671 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380960408950','MasterZoo', 'Ваша карта:9800001924869
+Секр. код:1814
+Сообщите его продавцу.',0,0,now();
+сен 08, 2018 1:11:46 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 221 921 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380662144763','MasterZoo', 'Ваша карта:2200000561091
+Секр. код:8368
+Сообщите его продавцу.',0,0,now();
+сен 15, 2018 4:50:21 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 240 281 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380508114005','MasterZoo', 'Ваша карта:9800001163909
+Секр. код:8855
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 12:34:39 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 671 717 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380971542125','MasterZoo', 'Ваша карта:9800001547686
+Секр. код:6211
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 2:00:13 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 130 292 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380677436222','MasterZoo', 'Ваша карта:9800001967347
+Секр. код:0489
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 2:09:05 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 526 624 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502308727','MasterZoo', 'Ваша карта:2200001113695
+Секр. код:1598
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 2:40:48 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 898 699 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380632700309','MasterZoo', 'Ваша карта:9800000712122
+Секр. код:0674
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 5:04:55 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 8 642 828 milliseconds ago.  The last packet sent successfully to the server was 8 642 881 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503423844','MasterZoo', 'Ваша карта:9800000867846
+Секр. код:8883
+Сообщите его продавцу.',0,0,now();
+сен 16, 2018 7:19:40 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 8 076 848 milliseconds ago.  The last packet sent successfully to the server was 8 076 899 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380507407269','MasterZoo', 'Ваша карта:2200001810716
+Секр. код:9352
+Сообщите его продавцу.',0,0,now();
+сен 17, 2018 9:21:40 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 13 672 343 milliseconds ago.  The last packet sent successfully to the server was 13 672 391 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380637611165','MasterZoo', 'Ваша карта:9800000446614
+Секр. код:2295
+Сообщите его продавцу.',0,0,now();
+сен 18, 2018 8:20:54 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 648 513 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380500454697','MasterZoo', 'Ваша карта:9800001890935
+Секр. код:6902
+Сообщите его продавцу.',0,0,now();
+сен 18, 2018 9:22:58 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 714 978 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380997073108','MasterZoo', 'Ваша карта:2200000759320
+Секр. код:3859
+Сообщите его продавцу.',0,0,now();
+сен 20, 2018 1:49:41 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 538 776 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380677339198','MasterZoo', 'Ваша карта:9800001853121
+Секр. код:5578
+Сообщите его продавцу.',0,0,now();
+сен 20, 2018 6:39:42 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 17 390 113 milliseconds ago.  The last packet sent successfully to the server was 17 390 161 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380677011343','MasterZoo', 'Ваша карта:2200000605764
+Секр. код:2372
+Сообщите его продавцу.',0,0,now();
+сен 21, 2018 5:04:19 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 14 710 378 milliseconds ago.  The last packet sent successfully to the server was 14 710 430 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380937215785','MasterZoo', 'Ваша карта:9800000162408
+Секр. код:4380
+Сообщите его продавцу.',0,0,now();
+сен 21, 2018 9:12:02 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 690 056 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380932651054','MasterZoo', 'Ваша карта:9800000705698
+Секр. код:8508
+Сообщите его продавцу.',0,0,now();
+сен 22, 2018 4:02:07 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 17 056 266 milliseconds ago.  The last packet sent successfully to the server was 17 056 313 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380970012642','MasterZoo', 'Ваша карта:9800000312230
+Секр. код:0606
+Сообщите его продавцу.',0,0,now();
+сен 22, 2018 4:50:11 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 876 727 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380664421794','MasterZoo', 'Ваша карта:9800001501619
+Секр. код:4636
+Сообщите его продавцу.',0,0,now();
+сен 22, 2018 4:54:13 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 237 031 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380630600004','MasterZoo', 'Ваша карта:9800000581513
+Секр. код:5396
+Сообщите его продавцу.',0,0,now();
+сен 22, 2018 6:53:02 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 7 123 749 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380739001001','MasterZoo', 'Ваша карта:9800001767305
+Секр. код:0744
+Сообщите его продавцу.',0,0,now();
+сен 23, 2018 5:10:21 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 7 200 307 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502497434','MasterZoo', 'Ваша карта:9800000014646
+Секр. код:4287
+Сообщите его продавцу.',0,0,now();
+сен 24, 2018 8:03:17 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 35 053 940 milliseconds ago.  The last packet sent successfully to the server was 35 053 989 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380676990202','MasterZoo', 'Ваша карта:9800001949305
+Секр. код:4914
+Сообщите его продавцу.',0,0,now();
+сен 24, 2018 8:25:40 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 333 729 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380681101830','MasterZoo', 'Ваша карта:9800002062836
+Секр. код:8245
+Сообщите его продавцу.',0,0,now();
+сен 25, 2018 4:16:20 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 11 080 362 milliseconds ago.  The last packet sent successfully to the server was 11 080 411 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380953095804','MasterZoo', 'Ваша карта:9800001874652
+Секр. код:9636
+Сообщите его продавцу.',0,0,now();
+сен 25, 2018 6:40:14 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 8 622 680 milliseconds ago.  The last packet sent successfully to the server was 8 622 729 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380934068109','MasterZoo', 'Ваша карта:9800001570042
+Секр. код:5170
+Сообщите его продавцу.',0,0,now();
+сен 25, 2018 7:04:41 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 460 939 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380972720730','MasterZoo', 'Ваша карта:2200000016126
+Секр. код:1529
+Сообщите его продавцу.',0,0,now();
+сен 25, 2018 9:07:55 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 459 770 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380936536396','MasterZoo', 'Ваша карта:9800000684009
+Секр. код:9191
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 12:09:08 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 7 696 397 milliseconds ago.  The last packet sent successfully to the server was 7 696 446 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380677747092','MasterZoo', 'Ваша карта:9800001710875
+Секр. код:3716
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 1:21:58 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 360 790 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380979279162','MasterZoo', 'Ваша карта:9800001448839
+Секр. код:3288
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 2:50:25 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 302 140 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380500318729','MasterZoo', 'Ваша карта:9800002060450
+Секр. код:7597
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 3:42:19 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 110 456 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380500325848','MasterZoo', 'Ваша карта:9800001983187
+Секр. код:9044
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 5:43:52 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 7 286 790 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380676022977','MasterZoo', 'Ваша карта:9800000946329
+Секр. код:6865
+Сообщите его продавцу.',0,0,now();
+сен 26, 2018 8:32:14 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 10 094 613 milliseconds ago.  The last packet sent successfully to the server was 10 094 664 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380990303883','MasterZoo', 'Ваша карта:9800000607909
+Секр. код:7796
+Сообщите его продавцу.',0,0,now();
+сен 27, 2018 4:36:43 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 11 514 557 milliseconds ago.  The last packet sent successfully to the server was 11 514 616 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380666326142','MasterZoo', 'Ваша карта:9800001031086
+Секр. код:6456
+Сообщите его продавцу.',0,0,now();
+сен 27, 2018 7:57:50 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 365 493 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380661669442','MasterZoo', 'Ваша карта:9800001164289
+Секр. код:7399
+Сообщите его продавцу.',0,0,now();
+сен 27, 2018 8:13:17 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 919 236 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675671991','MasterZoo', 'Ваша карта:9800000211656
+Секр. код:1843
+Сообщите его продавцу.',0,0,now();
+сен 28, 2018 6:30:46 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 20 218 405 milliseconds ago.  The last packet sent successfully to the server was 20 218 455 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380951370499','MasterZoo', 'Ваша карта:9800002079896
+Секр. код:5986
+Сообщите его продавцу.',0,0,now();
+сен 28, 2018 8:17:28 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 394 764 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380992926043','MasterZoo', 'Ваша карта:9800001718475
+Секр. код:1549
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 11:31:29 AM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 508 752 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380958580529','MasterZoo', 'Ваша карта:2200001413900
+Секр. код:6905
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 12:23:37 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 124 694 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509028637','MasterZoo', 'Ваша карта:9800002206964
+Секр. код:6530
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 2:09:39 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 357 398 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380990392283','MasterZoo', 'Ваша карта:9800002206315
+Секр. код:0552
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 2:49:16 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 373 766 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380661600139','MasterZoo', 'Ваша карта:2200000605924
+Секр. код:5339
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 4:14:18 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 097 517 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380990764709','MasterZoo', 'Ваша карта:9800000889763
+Секр. код:8748
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 4:33:16 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 070 135 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675748212','MasterZoo', 'Ваша карта:9800001974345
+Секр. код:5983
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 4:54:29 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 269 226 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675748212','MasterZoo', 'Ваша карта:9800001974345
+Секр. код:1467
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 5:30:10 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 123 059 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675891470','MasterZoo', 'Ваша карта:9800000919132
+Секр. код:0542
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 5:43:28 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 794 573 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380937036133','MasterZoo', 'Ваша карта:9800001876151
+Секр. код:5278
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 5:55:56 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 744 641 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509756251','MasterZoo', 'Ваша карта:9800000163436
+Секр. код:4307
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 6:18:50 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 301 263 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380991353295','MasterZoo', 'Ваша карта:9800002006557
+Секр. код:5274
+Сообщите его продавцу.',0,0,now();
+сен 29, 2018 6:20:58 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 124 063 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380991353295','MasterZoo', 'Ваша карта:9800002006557
+Секр. код:0567
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 3:47:44 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 12 732 211 milliseconds ago.  The last packet sent successfully to the server was 12 732 260 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380962202053','MasterZoo', 'Ваша карта:9800000814154
+Секр. код:8102
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 3:53:00 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 228 046 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380962202053','MasterZoo', 'Ваша карта:9800000814154
+Секр. код:7514
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 5:28:16 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 713 034 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503235072','MasterZoo', 'Ваша карта:2200001810891
+Секр. код:9558
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 5:30:32 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 132 725 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503235072','MasterZoo', 'Ваша карта:2200001810891
+Секр. код:9749
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 8:15:39 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 9 903 230 milliseconds ago.  The last packet sent successfully to the server was 9 903 281 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380951759510','MasterZoo', 'Ваша карта:9800001542940
+Секр. код:0805
+Сообщите его продавцу.',0,0,now();
+сен 30, 2018 9:18:43 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 778 021 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380976581304','MasterZoo', 'Ваша карта:9800002213917
+Секр. код:3147
+Сообщите его продавцу.',0,0,now();
+окт 01, 2018 7:38:24 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 968 076 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509321415','MasterZoo', 'Ваша карта:2200001192751
+Секр. код:9153
+Сообщите его продавцу.',0,0,now();
+окт 01, 2018 7:42:15 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 227 262 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380953263767','MasterZoo', 'Ваша карта:2200001810648
+Секр. код:8538
+Сообщите его продавцу.',0,0,now();
+окт 03, 2018 3:51:21 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 768 714 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380956253489','MasterZoo', 'Ваша карта:9800001570929
+Секр. код:5462
+Сообщите его продавцу.',0,0,now();
+окт 04, 2018 12:25:39 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 488 235 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380504760913','MasterZoo', 'Ваша карта:9800000424216
+Секр. код:7100
+Сообщите его продавцу.',0,0,now();
+окт 04, 2018 12:30:51 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 309 130 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380504760913','MasterZoo', 'Ваша карта:9800000424216
+Секр. код:7888
+Сообщите его продавцу.',0,0,now();
+окт 04, 2018 7:52:48 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 26 512 971 milliseconds ago.  The last packet sent successfully to the server was 26 513 023 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380934068109','MasterZoo', 'Ваша карта:9800001570042
+Секр. код:6673
+Сообщите его продавцу.',0,0,now();
+окт 04, 2018 8:00:12 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 435 343 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503232651','MasterZoo', 'Ваша карта:9800001332862
+Секр. код:4696
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 11:51:13 AM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 243 434 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380958034512','MasterZoo', 'Ваша карта:2200001766297
+Секр. код:2869
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 1:13:23 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 925 642 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380676742622','MasterZoo', 'Ваша карта:9800000872710
+Секр. код:0165
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 2:56:07 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 044 633 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502506030','MasterZoo', 'Ваша карта:2200001199354
+Секр. код:0024
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 3:55:21 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 549 711 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380994451565','MasterZoo', 'Ваша карта:9800002216703
+Секр. код:5894
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 5:38:50 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 205 673 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380634933715','MasterZoo', 'Ваша карта:9800002206285
+Секр. код:5686
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 5:41:15 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 140 899 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380634933715','MasterZoo', 'Ваша карта:9800002206285
+Секр. код:4408
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 6:24:20 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 582 110 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380996639967','MasterZoo', 'Ваша карта:9800000595176
+Секр. код:0049
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 8:09:36 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 344 815 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380963133571','MasterZoo', 'Ваша карта:2200001810754
+Секр. код:7385
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 9:05:56 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 375 869 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380682878587','MasterZoo', 'Ваша карта:9800001718673
+Секр. код:4011
+Сообщите его продавцу.',0,0,now();
+окт 06, 2018 10:00:38 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 275 499 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380631897296','MasterZoo', 'Ваша карта:9800001784319
+Секр. код:8250
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 2:13:23 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 631 884 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509554498','MasterZoo', 'Ваша карта:9800000875773
+Секр. код:3600
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 2:35:26 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 318 830 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380977656103','MasterZoo', 'Ваша карта:9800002216697
+Секр. код:0393
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 2:54:19 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 128 646 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502379121','MasterZoo', 'Ваша карта:9800001889380
+Секр. код:9961
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 3:10:41 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 977 773 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380993726367','MasterZoo', 'Ваша карта:9800001767640
+Секр. код:3786
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 3:51:13 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 428 712 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380951759510','MasterZoo', 'Ваша карта:9800001542940
+Секр. код:1681
+Сообщите его продавцу.',0,0,now();
+окт 07, 2018 3:59:02 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 465 986 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380972360236','MasterZoo', 'Ваша карта:9800000618905
+Секр. код:2976
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 3:26:09 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 17 529 946 milliseconds ago.  The last packet sent successfully to the server was 17 529 994 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380505818975','MasterZoo', 'Ваша карта:9800001514596
+Секр. код:6894
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 4:46:35 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 818 165 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380930728898','MasterZoo', 'Ваша карта:9800002079872
+Секр. код:2814
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 6:13:02 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 183 179 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380669647464','MasterZoo', 'Ваша карта:9800000937983
+Секр. код:4660
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 7:22:16 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 150 678 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380508619988','MasterZoo', 'Ваша карта:2200000120489
+Секр. код:6060
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 8:38:42 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 581 815 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380986155187','MasterZoo', 'Ваша карта:9800001860563
+Секр. код:7427
+Сообщите его продавцу.',0,0,now();
+окт 08, 2018 8:42:57 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 250 977 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380972980158','MasterZoo', 'Ваша карта:9800001890126
+Секр. код:8022
+Сообщите его продавцу.',0,0,now();
+окт 09, 2018 4:09:34 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 15 409 524 milliseconds ago.  The last packet sent successfully to the server was 15 409 584 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380638210489','MasterZoo', 'Ваша карта:9800002245147
+Секр. код:0820
+Сообщите его продавцу.',0,0,now();
+окт 09, 2018 4:42:43 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 982 047 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380664541772','MasterZoo', 'Ваша карта:9800000020098
+Секр. код:4786
+Сообщите его продавцу.',0,0,now();
+окт 10, 2018 11:27:09 AM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 167 301 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380667119991','MasterZoo', 'Ваша карта:9800000959725
+Секр. код:6364
+Сообщите его продавцу.',0,0,now();
+окт 10, 2018 2:44:43 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 11 850 477 milliseconds ago.  The last packet sent successfully to the server was 11 850 530 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380934788224','MasterZoo', 'Ваша карта:9800000359228
+Секр. код:4402
+Сообщите его продавцу.',0,0,now();
+окт 10, 2018 4:41:42 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 7 013 188 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380935278873','MasterZoo', 'Ваша карта:9800001448068
+Секр. код:6919
+Сообщите его продавцу.',0,0,now();
+окт 10, 2018 9:20:03 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 16 697 599 milliseconds ago.  The last packet sent successfully to the server was 16 697 650 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380667809720','MasterZoo', 'Ваша карта:9800000002032
+Секр. код:1722
+Сообщите его продавцу.',0,0,now();
+окт 11, 2018 4:49:34 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 747 507 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380674934058','MasterZoo', 'Ваша карта:9800000852125
+Секр. код:7575
+Сообщите его продавцу.',0,0,now();
+окт 11, 2018 4:52:12 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 155 616 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380674934058','MasterZoo', 'Ваша карта:9800000852125
+Секр. код:9178
+Сообщите его продавцу.',0,0,now();
+окт 11, 2018 6:01:25 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 149 311 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380505249636','MasterZoo', 'Ваша карта:9800001949725
+Секр. код:4080
+Сообщите его продавцу.',0,0,now();
+окт 11, 2018 8:24:38 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 8 589 602 milliseconds ago.  The last packet sent successfully to the server was 8 589 651 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380667229150','MasterZoo', 'Ваша карта:9800000632338
+Секр. код:4428
+Сообщите его продавцу.',0,0,now();
+окт 12, 2018 3:15:31 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 9 270 038 milliseconds ago.  The last packet sent successfully to the server was 9 270 087 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380674305163','MasterZoo', 'Ваша карта:9800001406372
+Секр. код:2453
+Сообщите его продавцу.',0,0,now();
+окт 12, 2018 4:16:16 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 637 045 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503554322','MasterZoo', 'Ваша карта:9800002303243
+Секр. код:1589
+Сообщите его продавцу.',0,0,now();
+окт 12, 2018 6:10:23 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 842 225 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503432321','MasterZoo', 'Ваша карта:9800001563266
+Секр. код:3061
+Сообщите его продавцу.',0,0,now();
+окт 12, 2018 6:26:25 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 958 211 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503002644','MasterZoo', 'Ваша карта:9800000615683
+Секр. код:7744
+Сообщите его продавцу.',0,0,now();
+окт 13, 2018 2:41:10 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 14 168 372 milliseconds ago.  The last packet sent successfully to the server was 14 168 424 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380679189228','MasterZoo', 'Ваша карта:9800000270790
+Секр. код:0643
+Сообщите его продавцу.',0,0,now();
+окт 13, 2018 5:14:11 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 9 172 719 milliseconds ago.  The last packet sent successfully to the server was 9 172 767 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380972980158','MasterZoo', 'Ваша карта:9800001890126
+Секр. код:4740
+Сообщите его продавцу.',0,0,now();
+окт 13, 2018 5:29:02 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 884 112 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380956928529','MasterZoo', 'Ваша карта:9800002088690
+Секр. код:3941
+Сообщите его продавцу.',0,0,now();
+окт 13, 2018 5:33:48 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 281 239 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380937007099','MasterZoo', 'Ваша карта:9800002250325
+Секр. код:4694
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 1:16:45 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 961 499 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380660298868','MasterZoo', 'Ваша карта:2200000944504
+Секр. код:4922
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 3:28:43 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 7 913 993 milliseconds ago.  The last packet sent successfully to the server was 7 914 041 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675789004','MasterZoo', 'Ваша карта:9800000289464    
+Секр. код:2653
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 3:46:52 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 080 273 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380675707115','MasterZoo', 'Ваша карта:9800000358498
+Секр. код:6585
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 4:01:42 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 865 417 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380996272799','MasterZoo', 'Ваша карта:2200001463240
+Секр. код:0802
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 5:44:55 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 187 954 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380958686433','MasterZoo', 'Ваша карта:9800001718406
+Секр. код:7089
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 5:47:08 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 106 807 milliseconds ago.  The last packet sent successfully to the server was 19 202 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380958686433','MasterZoo', 'Ваша карта:9800001718406
+Секр. код:5243
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 6:01:41 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 784 690 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380939496450','MasterZoo', 'Ваша карта:9800000057025
+Секр. код:8875
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 6:16:36 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 891 555 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509651379','MasterZoo', 'Ваша карта:9800002066490
+Секр. код:1281
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 7:00:45 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 625 206 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380964607193','MasterZoo', 'Ваша карта:9800001853893
+Секр. код:3460
+Сообщите его продавцу.',0,0,now();
+окт 14, 2018 9:38:14 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 9 443 764 milliseconds ago.  The last packet sent successfully to the server was 9 443 821 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502969933','MasterZoo', 'Ваша карта:9800001045571
+Секр. код:7428
+Сообщите его продавцу.',0,0,now();
+окт 15, 2018 1:44:00 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 11 781 364 milliseconds ago.  The last packet sent successfully to the server was 11 781 413 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380671947622','MasterZoo', 'Ваша карта:9800001487777
+Секр. код:8721
+Сообщите его продавцу.',0,0,now();
+окт 15, 2018 2:39:10 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 303 442 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380994451565','MasterZoo', 'Ваша карта:9800002216703
+Секр. код:1894
+Сообщите его продавцу.',0,0,now();
+окт 15, 2018 3:43:07 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 830 237 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380502169915','MasterZoo', 'Ваша карта:9800000275702
+Секр. код:0560
+Сообщите его продавцу.',0,0,now();
+окт 15, 2018 8:08:26 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 823 486 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380990960735','MasterZoo', 'Ваша карта:2200000084446
+Секр. код:8461
+Сообщите его продавцу.',0,0,now();
+окт 15, 2018 9:02:12 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3 222 454 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509103962','MasterZoo', 'Ваша карта:2200001099876
+Секр. код:9782
+Сообщите его продавцу.',0,0,now();
+окт 16, 2018 12:18:28 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 126 257 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380667098925','MasterZoo', 'Ваша карта:9800000489352
+Секр. код:6651
+Сообщите его продавцу.',0,0,now();
+окт 16, 2018 3:10:46 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 10 332 440 milliseconds ago.  The last packet sent successfully to the server was 10 332 487 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380994002608','MasterZoo', 'Ваша карта:9800000614921
+Секр. код:9330
+Сообщите его продавцу.',0,0,now();
+окт 16, 2018 3:31:32 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 240 201 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380509340545','MasterZoo', 'Ваша карта:9800001265252
+Секр. код:4743
+Сообщите его продавцу.',0,0,now();
+окт 16, 2018 5:12:24 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 043 621 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380667136790','MasterZoo', 'Ваша карта:9800002303045
+Секр. код:3830
+Сообщите его продавцу.',0,0,now();
+окт 17, 2018 1:32:18 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 978 135 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380676071913','MasterZoo', 'Ваша карта:9800000927229
+Секр. код:2838
+Сообщите его продавцу.',0,0,now();
+окт 18, 2018 12:32:08 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 137 207 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380997522797','MasterZoo', 'Ваша карта:9800001501480
+Секр. код:7468
+Сообщите его продавцу.',0,0,now();
+окт 18, 2018 1:54:37 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 4 943 271 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380999747824','MasterZoo', 'Ваша карта:9800002250233
+Секр. код:3147
+Сообщите его продавцу.',0,0,now();
+окт 18, 2018 8:02:28 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 2 257 588 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380994308880','MasterZoo', 'Ваша карта:9800001762713
+Секр. код:5798
+Сообщите его продавцу.',0,0,now();
+окт 19, 2018 2:27:42 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 13 234 826 milliseconds ago.  The last packet sent successfully to the server was 13 234 874 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380676022977','MasterZoo', 'Ваша карта:9800000946329
+Секр. код:1982
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 1:53:37 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 848 799 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380953682860','MasterZoo', 'Ваша карта:9800001981251
+Секр. код:8516
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 1:57:57 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 244 980 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380990392283','MasterZoo', 'Ваша карта:9800002206315
+Секр. код:2206
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 3:38:55 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 6 054 308 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380954005648','MasterZoo', 'Ваша карта:9800001486176
+Секр. код:9176
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 5:38:58 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 7 199 462 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380972980158','MasterZoo', 'Ваша карта:9800001890126
+Секр. код:8413
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 5:56:26 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 043 972 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380679538099','MasterZoo', 'Ваша карта:9800002354573
+Секр. код:1697
+Сообщите его продавцу.',0,0,now();
+окт 20, 2018 9:51:58 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 14 127 086 milliseconds ago.  The last packet sent successfully to the server was 14 127 135 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380504006824','MasterZoo', 'Ваша карта:9800001281900
+Секр. код:0655
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 5:07:37 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 833 812 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380634502828','MasterZoo', 'Ваша карта:9800000024775
+Секр. код:2563
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 5:32:17 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 476 663 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380501897070','MasterZoo', 'Ваша карта:9800001981053
+Секр. код:5688
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 5:34:48 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 147 293 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380662939558','MasterZoo', 'Ваша карта:9800001874577
+Секр. код:1325
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 5:46:52 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 720 761 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380662111182','MasterZoo', 'Ваша карта:9800000183687
+Секр. код:2120
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 6:05:57 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 071 630 milliseconds ago.  The last packet sent successfully to the server was 0 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380669539375','MasterZoo', 'Ваша карта:9800002408344
+Секр. код:0147
+Сообщите его продавцу.',0,0,now();
+окт 21, 2018 9:35:00 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 12 521 343 milliseconds ago.  The last packet sent successfully to the server was 12 521 394 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380996245299','MasterZoo', 'Ваша карта:9800002314638
+Секр. код:4567
+Сообщите его продавцу.',0,0,now();
+окт 22, 2018 2:43:01 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 12 270 246 milliseconds ago.  The last packet sent successfully to the server was 12 270 294 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380955162512','MasterZoo', 'Ваша карта:9800000599082
+Секр. код:8883
+Сообщите его продавцу.',0,0,now();
+окт 22, 2018 4:20:29 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5 839 555 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380677007026','MasterZoo', 'Ваша карта:9800001514169
+Секр. код:1969
+Сообщите его продавцу.',0,0,now();
+окт 22, 2018 4:46:39 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1 566 127 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380668822803','MasterZoo', 'Ваша карта:9800001164739
+Секр. код:0075
+Сообщите его продавцу.',0,0,now();
+окт 22, 2018 4:49:01 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 139 199 milliseconds ago.  The last packet sent successfully to the server was 1 milliseconds ago.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380668822803','MasterZoo', 'Ваша карта:9800001164739
+Секр. код:3459
+Сообщите его продавцу.',0,0,now();
+окт 22, 2018 9:05:54 PM main.MyUtil errorToLog
+SEVERE: Exception:com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 15 408 823 milliseconds ago.  The last packet sent successfully to the server was 15 408 871 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380503014230','MasterZoo', 'Ваша карта:9800000479315
+Секр. код:7963
+Сообщите его продавцу.',0,0,now();
+окт 23, 2018 1:15:26 PM main.MyUtil errorToLog
+SEVERE: Exception:jdbc:mysql://sms.priroda.pp.ua:3306/users?useCompression=true&autoReconnect=true&noAccessToProcedureBodies=true
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+окт 23, 2018 1:15:26 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:31 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:33 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:41 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:46 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:48 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:51 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 1:15:55 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 2:59:56 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 2:59:59 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 3:00:02 PM main.MyUtil errorToLog
+SEVERE: Exception:
+java.lang.IllegalArgumentException: sendSMS: parameter [sms] cannot be null!
+	at db.ConnectionSMS.sendSMS(ConnectionSMS.java:148)
+	at forms.FrmCardDiscountForgot.requeryCardFind(FrmCardDiscountForgot.java:365)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:302)
+	at forms.FrmCardDiscountForgot.jButtonSendSMSActionPerformed(FrmCardDiscountForgot.java:1154)
+	at forms.FrmCardDiscountForgot.access$2200(FrmCardDiscountForgot.java:39)
+	at forms.FrmCardDiscountForgot$8.actionPerformed(FrmCardDiscountForgot.java:1075)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1711)
+	at forms.FrmMain.jButtonDiscountCardActionPerformed(FrmMain.java:1993)
+	at forms.FrmMain.access$2700(FrmMain.java:46)
+	at forms.FrmMain$5.actionPerformed(FrmMain.java:560)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.focusLost(Unknown Source)
+	at java.awt.AWTEventMulticaster.focusLost(Unknown Source)
+	at java.awt.Component.processFocusEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.KeyboardFocusManager.redispatchEvent(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.typeAheadAssertions(Unknown Source)
+	at java.awt.DefaultKeyboardFocusManager.dispatchEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+
+окт 23, 2018 4:23:56 PM main.MyUtil messageToLog
+INFO: insert ignore into kimcom (number, `sign`, message, wappush, is_flash, send_time) 
+	select '+380992554284','MasterZoo', 'Ваша карта:200136
+Секр. код:8355
+Сообщите его продавцу.',0,0,now();

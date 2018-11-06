@@ -34,7 +34,9 @@ public class ConfigReader {
     public String       ICON_IMAGE;
     public String       SERVER_ADDRESS_1;
     public String       SERVER_ADDRESS_2;
+    public String       SERVER_ADDRESS_SMS;
     public String       SERVER_PORT;
+    public String       SERVER_PORT_SMS;
     public String       SERVER_DB;
     public String       USER_NAME;
 	public String		APP_VERSION;
@@ -107,7 +109,14 @@ public class ConfigReader {
 				//zzz.println("");
 				zzz.println(";servers");
 				zzz.println("SERVER_ADDRESS_1 = shopv2.priroda.pp.ua");
-				zzz.println("SERVER_ADDRESS_2 = shopv2.priroda.pp.ua");
+				//zzz.println("SERVER_ADDRESS_2 = shopv2.priroda.pp.ua");
+				zzz.println("SERVER_ADDRESS_2 = shop.masterzoo.ua");
+			}
+			if (typeInfo.equals("SERVER_SMS")) {
+				//zzz.println("");
+				zzz.println(";server sms");
+				zzz.println("SERVER_ADDRESS_SMS = sms.priroda.pp.ua");
+				zzz.println("SERVER_PORT_SMS = 3306");
 			}
 			if(typeInfo.equals("POS")){
 				//zzz.println("");
@@ -163,6 +172,13 @@ public class ConfigReader {
 			inChars = new InputStreamReader(file, "UTF-8");
 			props.load(inChars);
 		}
+		str = props.getProperty("SERVER_ADDRESS_SMS");//проверим есть ли настройки для ценников
+		if(str==null) {
+			addInfoIntoConfig("SERVER_SMS");
+			file = new FileInputStream(fileConf);
+			inChars = new InputStreamReader(file, "UTF-8");
+			props.load(inChars);
+		}
 		str = props.getProperty("EKKA_NAME");//проверим есть ли настройки для ценников
 		if(str==null) {
 			addInfoIntoConfig("EKKA");
@@ -182,7 +198,9 @@ public class ConfigReader {
         ICON_IMAGE      = props.getProperty("ICON_IMAGE");
         SERVER_ADDRESS_1= props.getProperty("SERVER_ADDRESS_1");
         SERVER_ADDRESS_2= props.getProperty("SERVER_ADDRESS_2");
+        SERVER_ADDRESS_SMS= props.getProperty("SERVER_ADDRESS_SMS");
         SERVER_PORT     = props.getProperty("SERVER_PORT");
+        SERVER_PORT_SMS = props.getProperty("SERVER_PORT_SMS");
         SERVER_DB       = props.getProperty("SERVER_DB");
         USER_NAME       = props.getProperty("USER_NAME");
 		MARKET_ID		= getIntegerValue(props,"MARKET_ID");

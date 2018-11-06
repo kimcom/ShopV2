@@ -4,7 +4,6 @@ import db.ConnectionDb;
 import forms.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,11 +11,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.UnsupportedLookAndFeelException;
-import reports.ReportPricePlank;
-import reports.ReportPricePlankA4;
-import reports.ReportPricePlankClub;
-import reports.ReportPriceSticker;
-import reports.ReportPriceStickerClub;
 
 public class ShopMain {
 
@@ -173,6 +167,7 @@ public class ShopMain {
 							
 							boolean timerClose = true;
 							if (config.hostname.contains("ALIK")) timerClose = false;
+							//if (config.MARKET_ID == 1356) timerClose = false;
 							//if (config.MARKET_ID == 1356){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
 //							if (config.MARKET_ID == 2004){ // проверяем магазин и дату и определяем нужно выключать прогу в 22-30 или нет!
 //								GregorianCalendar calendar0 = new GregorianCalendar();
@@ -187,8 +182,8 @@ public class ShopMain {
 //								}
 //							}
 							if (timerClose){
-								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								//running timer task as daemon thread
+								TimerTask timerTask1 = new MyTimerTask(frmMain, "closeAplication");
 								Timer timer1 = new Timer(true);
 								final Locale locale = new Locale("ru");
 								GregorianCalendar calendar = new GregorianCalendar();

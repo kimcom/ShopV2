@@ -438,9 +438,9 @@ public class FrmStickerEdit extends javax.swing.JDialog {
 				reportPrice.setModal(true);
 				reportPrice.setVisible(true);
 			} else if (type == 6) {
-					ReportPriceStickerBarcode reportPrice = new ReportPriceStickerBarcode(docID, type, countStickers1Page);
-					reportPrice.setModal(true);
-					reportPrice.setVisible(true);
+				ReportPriceStickerBarcode reportPrice = new ReportPriceStickerBarcode(docID, type, countStickers1Page);
+				reportPrice.setModal(true);
+				reportPrice.setVisible(true);
 			}else{
 				ReportPriceStickerClub reportPrice = new ReportPriceStickerClub(docID, type, countStickers1Page);
 				reportPrice.setModal(true);

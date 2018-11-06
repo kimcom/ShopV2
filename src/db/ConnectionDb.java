@@ -372,6 +372,33 @@ public final class ConnectionDb{
         }
     }
 //discount card
+    public ResultSet getDiscountCardInfoFind(String phone) {
+		if (cnn == null) {
+			MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getDiscountCardInfoFind: parameter [cnn] cannot be null!"));
+			return null;
+		}
+		if (phone == null) {
+			return null;
+		}
+		if (phone.equals("")) {
+			return null;
+		}
+		try {
+//			System.out.println("sql phone:"+phone);
+			CallableStatement cs = cnn.prepareCall("{call pr_card(?,?,?)}");
+			cs.setString(1, "find_by_phone");
+			cs.setString(2, phone);
+			cs.registerOutParameter(3, Types.INTEGER);
+			ResultSet res = cs.executeQuery();
+//			System.out.println("resCardInfo.getRow():"+resCardInfo.getRow()+"	<>0"+(resCardInfo.getRow() != 0));
+//			System.out.println("resCardInfo.absolute(1):"+(resCardInfo.absolute(1)==false));
+			return res;
+		} catch (SQLException e) {
+			MyUtil.errorToLog(this.getClass().getName(), e);
+			DialogBoxs.viewError(e);
+			return null;
+		}
+	}
     public boolean getDiscountCardInfo(String barCode) {
         if (cnn == null) {
             MyUtil.errorToLog(this.getClass().getName(), new IllegalArgumentException("getDiscountCardInfo: parameter [cnn] cannot be null!"));
@@ -1263,6 +1290,7 @@ public final class ConnectionDb{
 			return false;
 		}
 		try {
+//System.out.println("param:	"+param);
 			CallableStatement cs = cnn.prepareCall("{call pr_doc_2017(?,?,?)}");
 			cs.setString(1, "action from param");
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -1534,15 +1562,16 @@ public final class ConnectionDb{
 					+ "&KlassCardID=" + cardID
 					+ "&Sum=" + checkSum.setScale(2,RoundingMode.HALF_UP).toPlainString();
 			if (param.equals("")) return false;
-			//System.out.println("call pr_check_update('klass_card',@_id,'"+param+"')");
-//			String mess = "call pr_check_update('klass_card',@_id,'" + param + "')";
-//			MyUtil.messageToLog(this.getClass().getName(), mess);
+//String mess = "call pr_check_update('klass_card',@_id,'" + param + "')";
+//MyUtil.messageToLog(this.getClass().getName(), "call pr_check_update('klass_card',@_id,'" + param + "')");
 			CallableStatement cs = cnn.prepareCall("{call pr_check_update(?,?,?)}");
 			cs.setString(1, "klass_card");
 			cs.registerOutParameter(2, Types.INTEGER);
 			cs.setString(3, param);
 			cs.execute();
 			getCheckInfo(currentCheckID);
+//MyUtil.messageToLog(this.getClass().getName(), "result:"+cs.getString(2));
+//DialogBoxs.viewMessage("cnn:" +cs.getString(2));
 			return cs.getInt(2) != 0;
 		} catch (SQLException e) {
 			MyUtil.errorToLog(this.getClass().getName(), e);
@@ -2023,6 +2052,8 @@ public final class ConnectionDb{
 			return false;
 		}
 		try {
+//String mess = "call pr_order_content('add_group_"+action+"', @_id, "+docID.setScale(4, RoundingMode.HALF_UP).toPlainString()+", "+userID+", "+clientID+", "+nodeID+", '')";
+//MyUtil.messageToLog(this.getClass().getName(), mess);
 			CallableStatement cs = cnn.prepareCall("{call pr_order_content(?,?,?,?,?,?,?)}");
 			cs.setString(1, "add_group_" + action);
 			cs.registerOutParameter(2, Types.INTEGER);
@@ -2489,6 +2520,7 @@ public final class ConnectionDb{
 			return false;
 		}
 		try {
+//System.out.println("call pr_doc_sticker('status',@_id,"+docID.setScale(4, RoundingMode.HALF_UP).toPlainString()+","+statusDoc+","+clientID+","+config.TERMINAL_ID+",null,null,null)");
 			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "status");
 			cs.registerOutParameter(2, Types.DOUBLE);
@@ -2577,6 +2609,7 @@ public final class ConnectionDb{
 			return null;
 		}
 		try {
+//System.out.println("call pr_doc_sticker('print_stickers',@_id," + docID.setScale(4, RoundingMode.HALF_UP).toPlainString() + "," + userID + "," + clientID + "," + config.TERMINAL_ID + ",null,null,'"+stickerType+"')");
 			CallableStatement cs = cnn.prepareCall("{call pr_doc_sticker(?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, "print_stickers");
 			cs.registerOutParameter(2, Types.DOUBLE);
@@ -2649,9 +2682,8 @@ public final class ConnectionDb{
 			return null;
         }
         try {
-//			String mess = "call pr_goods_list('in category for shop',@_id,'" + param + "')";
-//			MyUtil.messageToLog(this.getClass().getName(), mess);
-//			System.out.println("catID: " + catID);
+//String mess = "call pr_goods_list('in category for shop',@_id,'" + param + "')";
+//MyUtil.messageToLog(this.getClass().getName(), mess);
             CallableStatement cs = cnn.prepareCall("{call pr_goods_list(?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setString(1, "in category for shop");
             cs.setString(2, "Name");

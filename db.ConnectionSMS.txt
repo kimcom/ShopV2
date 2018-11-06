@@ -1,0 +1,9 @@
+You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+Не удалось создать соединение с сервером базы данных. Попытка повторного подключения 3 раза. Сдаваться.
+
+The last packet successfully received from the server was 15 408 823 milliseconds ago.  The last packet sent successfully to the server was 15 408 871 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+Последний пакет, успешно полученный с сервера, был 15 408 823 миллисекунд назад. Последний пакет, успешно отправленный на сервер, был 15 408 871 миллисекунд назад. больше, чем заданное сервером значение «wait_timeout». Перед использованием в своем приложении вы должны рассмотреть вопрос об истечении срока действия и / или проверять достоверность подключения, увеличивая настроенные сервером значения для тайм-аутов клиента или используя свойство соединения Connector / J «autoReconnect = true», чтобы избежать этой проблемы.
+
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+Не удалось создать соединение с сервером базы данных. Попытка повторного подключения 3 раза. Сдаваться.
+

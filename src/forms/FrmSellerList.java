@@ -105,7 +105,7 @@ public class FrmSellerList extends javax.swing.JDialog {
         ResultSet rs = cnn.getSellerList(jTextField2.getText(),jTextField3.getText());
         return rs;
     }
-    public class MyRendererTotal extends DefaultTableCellRenderer {
+    public  class MyRendererTotal extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
@@ -131,7 +131,7 @@ public class FrmSellerList extends javax.swing.JDialog {
 			return this;
 		}
 	}
-    public class HeaderRenderer extends DefaultTableCellRenderer {
+    public  class HeaderRenderer extends DefaultTableCellRenderer {
         // метод возвращает компонент для прорисовки
         @Override
         public Component getTableCellRendererComponent(

@@ -114,7 +114,6 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 		resInfoTable = cnn.getDiscountInfoTable();
 		try {
 			while (resInfoTable.next()) {
-				//jComboBox4.addItem(resInfoTable.getBigDecimal("InfoID").setScale(2, RoundingMode.HALF_UP).toPlainString());
 				jComboBox4.addItem(resInfoTable.getString("Info").toString());
 			}
 		} catch (SQLException e) {
@@ -208,6 +207,7 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, "Вы не указали процент скидки!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		//по требованию Путятиной В.
 		if (jTableAnimals.getRowCount()==0) {
 			JOptionPane.showMessageDialog(this, "Вы не указали питомца!\n\nС 23.02.2018 года - согласно указанию руководства,\n\nнеобходимо обязательно указывать питомца!", "ВНИМАНИЕ!", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -219,15 +219,31 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 					+ "Желаете указать сейчас?", "ВНИМАНИЕ!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (i == 0)	return;
 		}
-		
-		BigDecimal bdSumma = new BigDecimal(jTextFieldSumma.getText());
+		BigDecimal bdSumma = BigDecimal.ZERO;
+		if (!jTextFieldSumma.getText().equals("")){
+			bdSumma = new BigDecimal(jTextFieldSumma.getText());
+		}
+		String phone1 = jFormattedTextFieldPhone1.getText().trim().replaceAll(" ","");
+		String phone2 = jFormattedTextFieldPhone2.getText().trim().replaceAll(" ","");
+		if (phone1.length() != 13 || phone1.length() == 4){
+			DialogBoxs.viewMessageWarning("Некорректно указан 1-ый телефон!",this);
+			return;
+		}
+		if (phone2.length() != 13 && phone2.length() !=4){
+			DialogBoxs.viewMessageWarning("Некорректно указан 2-ый телефон!",this);
+			return;
+		}
+		phone1 = jFormattedTextFieldPhone1.getText().trim().replaceAll(" ", "%");
+		phone2 = jFormattedTextFieldPhone2.getText().trim().replaceAll(" ", "%");
+
+//if (0 == 0) return;
 		String action = "card_attr_new";
 		String cardID = strBarCode;
 		if (iStatus==2) action = "card_attr_edit";
 		if (iStatus==3) action = "card_attr_new_by_parent";
 		if (cnn.setDiscountCardAttribute(action, cardID,
                 jTextFieldFamily.getText(), jTextFieldName.getText(), jTextFieldMiddleName.getText(),
-				jTextFieldAddress.getText(), jFormattedTextFieldPhone1.getText(), jFormattedTextFieldPhone2.getText(),
+				jTextFieldAddress.getText(), phone1, phone2,
                 jTextFieldEmail.getText(), "", "", jTextFieldNotes.getText(),
                 dt1,
                 bdPercent, bdSumma,
@@ -290,10 +306,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, "Заполните вид и породу!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		if (jTextFieldPetName.getText().equals("") || jTextFieldPetDT.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "Заполните кличку и дату рождения!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
+//		if (jTextFieldPetName.getText().equals("") || jTextFieldPetDT.getText().equals("")) {
+//			JOptionPane.showMessageDialog(this, "Заполните кличку и дату рождения!", "ВНИМАНИЕ!", JOptionPane.INFORMATION_MESSAGE);
+//			return;
+//		}
 		JTextField textfield = (JTextField) jComboBox2.getEditor().getEditorComponent();
 		String enteredText = textfield.getText();
 		List<String> filterArray = new ArrayList<String>();
@@ -410,6 +426,8 @@ public class FrmCardAttribute extends javax.swing.JDialog {
 			} else if (iStatus == 3) {
 				jLabel25.setText(dateFormatOut.format(new Date()));
 				jComboBox1.setSelectedItem(cnn.getDiscountCardInfo("PercentOfDiscount", "BigDecimal"));
+				//jComboBox4.setSelectedItem(cnn.getDiscountCardInfo("HowWeLearn", "String"));
+				jComboBox4.setSelectedIndex(Integer.parseInt(cnn.getDiscountCardInfo("SourceInfo", "String")));
 				jTextFieldSumma.setText(cnn.getDiscountCardInfo("AmountOfBuying", "BigDecimal"));
             } else if (iStatus == 2) {
 				if (bgPercentCard.compareTo(BigDecimal.ZERO) == 0) {
@@ -632,18 +650,18 @@ public class FrmCardAttribute extends javax.swing.JDialog {
         private KeyEvent keyOverride(KeyEvent e) {
             String objCanonicalName = e.getSource().getClass().getCanonicalName();
             int keyCode = e.getKeyCode();
-			/*
-			 case KeyEvent.VK_NUMPAD0:    // штрих-код
+			//case KeyEvent.VK_NUMPAD0:    // штрих-код
 			 //jTextField1.setText("9800000000823");
 			 //jTextField1.setText("9800000000830");
 			 //jTextField1.setText("9800000000151");
-			 jTextField1.setText("9800000436639");
-			 barCode = jTextField1.getText();
-			 requery();
-			 break;
+//jTextField1.setText("9800000436578");
+//barCode = jTextField1.getText();
+//requery();
+			 //break;
 			 /**/
 //			System.out.println("keyCode: "+Integer.toString(keyCode));
-//barCode = "9800000000106";
+//barCode = "9800000000151";
+//barCode = "9800001906087";
             switch (keyCode) {
 				case KeyEvent.VK_ENTER:    // штрих-код
 					if (e.getModifiers() != 0) {
@@ -653,6 +671,10 @@ public class FrmCardAttribute extends javax.swing.JDialog {
                             JTextField tf = (JTextField) e.getSource();
                             tf.transferFocus();
                     }
+//jTextField1.setText("9800000000151");
+//jTextField1.setText("9800002294008");
+//barCode = jTextField1.getText();
+//requery();
                     if (e.getSource() == jButtonOK) {
                         jButtonOKActionPerformed();
                         break;

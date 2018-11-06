@@ -27,12 +27,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
 import javax.swing.SwingConstants;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import main.ConfigReader;
@@ -145,6 +148,7 @@ public class FrmOrderEdit extends javax.swing.JDialog {
         jTableGoodsList.getColumnModel().getColumn(4).setPreferredWidth(40);
         jTableGoodsList.getColumnModel().getColumn(5).setPreferredWidth(40);
         jTableGoodsList.getColumnModel().getColumn(6).setPreferredWidth(40);
+        jTableGoodsList.getColumnModel().getColumn(7).setPreferredWidth(40);
     }
     private void requeryOrderContent() {
         if (!checkCnnStatus()) return;

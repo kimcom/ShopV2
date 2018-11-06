@@ -34,7 +34,7 @@ public class FrmDelivery extends javax.swing.JDialog {
 	public String responce = "";
 	private BigDecimal checkSumWithoutDelivery = BigDecimal.ZERO; // сумма чека без учета доставки
 	private BigDecimal checkSumFull = BigDecimal.ZERO; // сумма чека к оплате
-	private BigDecimal maxSumCheckForDelivery = new BigDecimal("1500"); // если сумма чека больше или равно 1500 - тогда доставка 0 грн иначе 120 грн.
+	private BigDecimal maxSumCheckForDelivery = BigDecimal.ZERO; // если сумма чека больше или равно 1500 - тогда доставка 0 грн иначе 200 грн.
 	private BigDecimal deliverySum = BigDecimal.ZERO; // сумма за доставку по умолчанию равна 0
 			
 	public FrmDelivery(String IDCard) {
@@ -91,7 +91,12 @@ public class FrmDelivery extends javax.swing.JDialog {
 			jComboBoxDeliveryOption.setSelectedIndex(Integer.parseInt(cnn.getDeliveryInfo("DeliveryOption", "String")));
 			if (!cnn.getDeliveryInfo("DT_delivery", "String").equals(""))
 				jTextFieldDT_Delivery.setText(cnn.getDeliveryInfo("DT_delivery", "String"));
+
+			checkSumWithoutDelivery = cnn.checkSumBase.subtract(cnn.checkSumDiscount);
+			deliverySum = new BigDecimal(cnn.getDeliveryInfo("SumDelivery", "String"));
+			checkSumFull = checkSumWithoutDelivery.add(deliverySum);
 		}
+/*
 //		System.out.println("cnn.checkSumBase="+cnn.checkSumBase);
 //		System.out.println("cnn.checkSumDiscount="+cnn.checkSumDiscount);
 		checkSumWithoutDelivery = cnn.checkSumBase.subtract(cnn.checkSumDiscount);
@@ -99,6 +104,7 @@ public class FrmDelivery extends javax.swing.JDialog {
 			deliverySum = new BigDecimal("120");
 		}
 		checkSumFull = checkSumWithoutDelivery.add(deliverySum);
+*/
 		jTextField31.setText(checkSumWithoutDelivery.setScale(2, RoundingMode.HALF_UP).toPlainString());
 		jTextField32.setText(deliverySum.setScale(2, RoundingMode.HALF_UP).toPlainString());
 		jTextField33.setText(checkSumFull.setScale(2, RoundingMode.HALF_UP).toPlainString());
@@ -166,6 +172,20 @@ public class FrmDelivery extends javax.swing.JDialog {
 		Date selectedDate = dp.parseDate(jTextFieldDT_Delivery.getText());
 		dp.setSelectedDate(selectedDate);
 		dp.start(jTextFieldDT_Delivery);
+//		dp.getScreen().addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosed(WindowEvent e) {
+//				//здесь обработчик срабатывает 2 раза - не понятно почему так
+//				//requery();
+//			}
+//		});
+
+//		final Locale locale = new Locale("ru");
+//		DatePicker dp = new DatePicker((Observer) jTextFieldDT_Delivery, locale);
+//		// previously selected date
+//		Date selectedDate = dp.parseDate(jTextFieldDT_Delivery.getText());
+//		dp.setSelectedDate(selectedDate);
+//		dp.start(jTextFieldDT_Delivery);
 	}
 	
 	private List<Component> getAllComponents(final Container c) {
@@ -303,11 +323,11 @@ public class FrmDelivery extends javax.swing.JDialog {
         jLabel25 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextFieldCity = new javax.swing.JTextField();
-        jTextFieldDT_Delivery = new ObservingTextField();
         jLabel23 = new javax.swing.JLabel();
         jFormattedTextFieldPhone1 = new javax.swing.JFormattedTextField();
         jLabel36 = new javax.swing.JLabel();
         jFormattedTextFieldPhone2 = new javax.swing.JFormattedTextField();
+        jTextFieldDT_Delivery = new ObservingTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -712,19 +732,6 @@ public class FrmDelivery extends javax.swing.JDialog {
             }
         });
 
-        jTextFieldDT_Delivery.setEditable(false);
-        jTextFieldDT_Delivery.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldDT_Delivery.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldDT_Delivery.setToolTipText("Введите дату доставки");
-        jTextFieldDT_Delivery.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextFieldDT_Delivery.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextFieldDT_Delivery.setFocusable(false);
-        jTextFieldDT_Delivery.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDT_DeliveryActionPerformed(evt);
-            }
-        });
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel23.setText("Телефон:");
         jLabel23.setFocusable(false);
@@ -757,6 +764,10 @@ public class FrmDelivery extends javax.swing.JDialog {
                 jFormattedTextFieldPhone2ActionPerformed(evt);
             }
         });
+
+        jTextFieldDT_Delivery.setEditable(false);
+        jTextFieldDT_Delivery.setToolTipText("дата");
+        jTextFieldDT_Delivery.setFocusable(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -793,8 +804,8 @@ public class FrmDelivery extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jFormattedTextFieldPhone2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextFieldDT_Delivery, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(14, 14, 14)
+                                .addComponent(jTextFieldDT_Delivery, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonDT_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jComboBoxDeliveryOption, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -826,7 +837,7 @@ public class FrmDelivery extends javax.swing.JDialog {
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonDT_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldDT_Delivery, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldDT_Delivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -885,9 +896,6 @@ public class FrmDelivery extends javax.swing.JDialog {
     private void jButtonDT_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDT_StartActionPerformed
         jButtonDT_StartActionPerformed();
     }//GEN-LAST:event_jButtonDT_StartActionPerformed
-
-    private void jTextFieldDT_DeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDT_DeliveryActionPerformed
-    }//GEN-LAST:event_jTextFieldDT_DeliveryActionPerformed
 
     private void jTextFieldFamilyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFamilyActionPerformed
         // TODO add your handling code here:
